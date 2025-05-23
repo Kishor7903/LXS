@@ -12,7 +12,7 @@ function Footer() {
 
     const handleSendWhatsApp = () => {
         const url = `https://wa.me/${+918987888368}`;
-        window.open(url, '_blank'); // Opens WhatsApp Web or App
+        window.open(url, '_blank');
       };
 
 
