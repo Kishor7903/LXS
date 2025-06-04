@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
-import facebookLogo from "../assets/Socials /Facebook.png"
-import instagramLogo from "../assets/Socials /Instagram.png"
-import twitterLogo from "../assets/Socials /Twitter.png"
-import youtubeLogo from "../assets/Socials /Youtube.png"
-import linkedinLogo from "../assets/Socials /Linkedin.png"
-import whatsappLogo from "../assets/Socials /Whatsapp (Fill).png"
+import facebookLogo from "../assets/Socials/Facebook.png"
+import instagramLogo from "../assets/Socials/Instagram.png"
+import twitterLogo from "../assets/Socials/Twitter.png"
+import youtubeLogo from "../assets/Socials/Youtube.png"
+import linkedinLogo from "../assets/Socials/Linkedin.png"
+import whatsappLogo from "../assets/Socials/Whatsapp (Fill).png"
 import LxsLogo from "../assets/commonIcons/Website Logo (TM).png"
 
 

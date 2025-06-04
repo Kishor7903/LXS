@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import facebookLogo from "../assets/Socials /Facebook.png"
-import instagramLogo from "../assets/Socials /Instagram.png"
-import twitterLogo from "../assets/Socials /Twitter.png"
-import youtubeLogo from "../assets/Socials /Youtube.png"
-import linkedinLogo from "../assets/Socials /Linkedin.png"
+import facebookLogo from "../assets/Socials/Facebook.png"
+import instagramLogo from "../assets/Socials/Instagram.png"
+import twitterLogo from "../assets/Socials/Twitter.png"
+import youtubeLogo from "../assets/Socials/Youtube.png"
+import linkedinLogo from "../assets/Socials/Linkedin.png"
 
 const ShareButton = ({ url = window.location.href, title = "Check this out!" }) => {
   const [isOpen, setIsOpen] = useState(false);
