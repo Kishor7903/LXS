@@ -137,10 +137,9 @@ const MultiImageCarousel = () => {
                         index === currentIndex + centerOffset - 1 ||
                         index === currentIndex + centerOffset + 1;
 
-                    let scaleClass = 'scale-75 opacity-10';
-                    if (isCenter) scaleClass = 'scale-100';
-                    else if (isNeighbor) scaleClass = 'scale-90 opacity-40';
-
+                    let scaleClass = "h-[80%] w-[20%] opacity-40"
+                    if (isCenter) scaleClass = "scale-100";
+                    else if (isNeighbor) scaleClass = "scale-90 opacity-40";
                     return (
                         <div
                             key={`${index}-${image}`}

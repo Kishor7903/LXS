@@ -29,7 +29,13 @@ function Blogs() {
             "date": "13.06.2024",
             "image": "./vite.svg",
             "content": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid autem ab iste rem nam cupiditate accusamus natus tenetur debitis molestias sunt optio atque perspiciatis blanditiis ullam at assumenda, excepturi sit incidunt earum modi ducimus. Magni assumenda quo doloremque vitae adipisci?"
-        }
+        },
+        {
+            "title": "Eco-Friendly Fashion: How LXS Store is Leading The Way",
+            "date": "13.06.2024",
+            "image": "./vite.svg",
+            "content": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid autem ab iste rem nam cupiditate accusamus natus tenetur debitis molestias sunt optio atque perspiciatis blanditiis ullam at assumenda, excepturi sit incidunt earum modi ducimus. Magni assumenda quo doloremque vitae adipisci?"
+        },
     ];
 
     return (
@@ -53,7 +59,7 @@ function Blogs() {
                 <ViewAllIcon navigate="/blog" className="hidden md:flex" />
             </div>
 
-            <div className="h-auto w-full grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 px-5 md:px-8 lg:px-12 xl:px-16">
+            <div className="h-auto w-full grid grid-cols-2 md:grid-cols-5 gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 px-5 md:px-8 lg:px-12 xl:px-16">
                 {
                     blogs.map((item, index) => {
                         return (

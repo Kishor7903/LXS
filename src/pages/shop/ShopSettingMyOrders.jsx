@@ -12,17 +12,18 @@ function ShopSettingMyOrders() {
     let { products } = useSelector(state => state.admin);
     let dispatch = useDispatch();
     let navigate = useNavigate();
+    
 
     let orderItems = orders?.map(item => {
         let product = products.find(p => p.id === item.productInfo.product_id);
         return product ? { ...product, quantity: item.productInfo.quantity, size: item.productInfo.size, orderId: item.orderId, amount: item.amount, timestamp: item.timestamp, id:item.id } : null;
     }).filter(item => item !== null);
 
-    // useEffect(() => {
-    //     getAllOrders(user.uid).then((res) => {
-    //         dispatch(getAllOrdersItems(res.items));
-    //     })
-    // }, [])
+    useEffect(() => {
+        getAllOrders(user.uid).then((res) => {
+            dispatch(getAllOrdersItems(res.items));
+        })
+    }, [])
 
     return (
         <div className="w-full h-full px-5 flex gap-8 ">

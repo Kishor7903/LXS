@@ -28,6 +28,7 @@ function HomePageLayout() {
             <FeaturedProducts />
             <Blogs />
             <EventGallery />
+            
             {/* <AnimatingMan className="h-40 md:h-72 lg:h-96" /> */}
             <Contributers />
         </>
