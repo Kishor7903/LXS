@@ -38,6 +38,7 @@ function AdminWorkWithUs() {
                                     <p className='mr-5 ml-5'>{item.email}</p>|
                                     <p className='ml-5'>+91 {item.phone}</p>
                                 </div>
+                                <p className='font-medium text-sm'>Address: {item.address}</p>
                                 <p className='font-medium text-sm'>Description: {item.describe}</p>
                                 <p className='font-medium text-sm'>Skills: {item.skill}</p>
                                 <span className='absolute bottom-1 right-2 text-xs font-medium opacity-70'>{item.timestamp}</span>

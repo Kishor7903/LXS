@@ -27,7 +27,7 @@ function AdminNewsletter() {
             <div className="p-8 flex flex-wrap gap-5 bg-white">
                 {
                     newsletter.map((item, index) => (
-                        <div key={index} className="relative w-[49%] border border-[rgb(8,43,61)] h-10 px-4 py-2 rounded-xl">
+                        <div key={index} className="relative w-[49%] border border-[rgb(8,43,61)] h-32 overflow-y-scroll no-scrollbar px-4 py-2 rounded-xl">
                             <p className="font-semibold">{item.email}</p>
                             <span className="text-xs opacity-70 absolute right-2 bottom-1">{item.timestamp}</span>
                         </div>

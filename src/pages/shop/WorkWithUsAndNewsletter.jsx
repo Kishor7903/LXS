@@ -82,14 +82,14 @@ function WorkWithUsAndNewsletter() {
             <div className="w-full md:w-5/12 bg-[rgb(210,224,232)] rounded-xl px-6 lg:px-8 py-5 lg:py-6 flex flex-col">
                 <p className="text-base lg:text-xl font-semibold">Response Deck </p>
                 <h2 className="text-2xl lg:text-3xl font-bold mb-1 lg:mb-3 tracking-tight lg:tracking-normal relative bottom-1">Uplink your Thoughts! 🔮📡</h2>
-                <p className="text-[10px] md:text-[12px] lg:text-sm leading-[1.3] md:leading-[1.2] tracking-tight lg:tracking-normal space-y-1">
+                <span className="text-[10px] md:text-[12px] lg:text-sm leading-[1.3] md:leading-[1.2] tracking-tight lg:tracking-normal space-y-1">
                     <p>Hey, it's me — Lupin, your guide through the LXS universe. </p>
                     <p>Your voice truly matters. Every idea, suggestion, or bit of feedback you share helps us improve and grow — not just for you, but for every explorer in our galaxy. </p>
                     <p>Whether it’s a cool feature you’d love to see, something we can do better, or just your honest thoughts — I’m all ears. This journey isn’t one-way; it’s a collaboration. Together, we’re shaping a smarter, more creative universe. 💫 </p>
                     <p>Drop your thoughts below — and let’s keep building something extraordinary, side by side.
                     I’m listening. Always. 🚀</p>
                     <p className="font-semibold">— Lupin (Cipher)</p>
-                </p>
+                </span>
                 <form className="flex flex-col gap-4">
                     <textarea type="text" value={email} onChange={(e) => { e.preventDefault(), setEmail(e.target.value) }} className="h-9 xl:h-24 lg:h-10 w-full py-2  lg:px-5 mt-3 lg:mt-5 text-xs lg:text-base rounded-xl font-medium focus:outline-none placeholder:text-[rgb(8,43,61,0.4)]" placeholder="Cosmic Feedback..." ></textarea>
                     <HoverButton className="w-32 py-2 flex justify-center items-center font-semibold self-end" onClick={handleNewsletterSubmit}>🛰️Transmit</HoverButton>

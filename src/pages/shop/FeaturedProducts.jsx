@@ -2,66 +2,14 @@ import HeadingText from '@/components/HeadingText';
 import TabSwitcher from '@/components/TabSwitcher'
 import ViewAllIcon from '@/components/ViewAllIcon';
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import heartIcon from "../../assets/commonIcons/Wishlist (Stroke).png"
-import heartIcon2 from "../../assets/commonIcons/Wishlist (Fill).png"
-import { addCartItem, addWishlistItem, deleteWishlistItem } from '@/firebase/auth';
-import { addToCart, addToWishlist, deleteFromWishlist } from '@/store/features/cartSlice';
+import { useSelector } from 'react-redux';
 import ProductCard from '@/components/ProductCard';
 
 function FeaturedProducts() {
     const tabs = ["New Arrival", "Best Selling"];
     const [activeTab, setActiveTab] = useState(tabs[0]);
-    let dispatch = useDispatch();
     let { products } = useSelector(state => state.admin)
-    const navigate = useNavigate();
-    let { user } = useSelector(state => state.auth);
-    let { cart, wishlist } = useSelector(state => state.cart);
-
-    const addCart = (e, item_id) => {
-        e.preventDefault();
-
-        let quantity = 1;
-        let size = "S"
-        let itemDetails = {
-            item_id,
-            quantity,
-            size
-        }
-
-        if (user) {
-            addCartItem(user?.id, itemDetails).then(() => {
-                dispatch(addToCart(itemDetails));
-                toast.success("Product Added To Cart ...");
-            })
-        } else {
-            toast.error("Please Login First ...")
-        }
-    }
-
-    const addWishlist = (e, item_id) => {
-        e.preventDefault();
-
-        if (user) {
-            addWishlistItem(user?.id, item_id).then((res) => {
-                dispatch(addToWishlist(res));
-                toast.success("Product Added To Wishlist ...");
-            })
-        } else {
-            toast.error("Please Login First ...")
-        }
-    }
-
-    const deleteItemFromWishlist = (e, item_id) => {
-        e.preventDefault();
-
-        deleteWishlistItem(user.id, item_id).then(() => {
-            dispatch(deleteFromWishlist(item_id));
-            toast.success("Product Removed From Cart ...")
-        })
-    }
+    
 
     return (
         <div className='space-y-2 lg:space-y-1 px-5 md:px-8 lg:px-12 xl:px-16 border-y py-5 flex flex-col gap-0 lg:gap-2'>
