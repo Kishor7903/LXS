@@ -216,10 +216,13 @@ function PaymentsPage() {
                                     </div>
                                     {
                                         paymentMode !== -1 ? (
-                                            <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToPayment}>Proceed To Payments</button>
+                                            <>
+                                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToPayment}>Proceed To Payments</button>
+                                                <p className='opacity-70 text-xs mt-1 text-center'>(You can tell your Big Brother and Sister to pay 😁)</p>
+                                            </>
                                         )
-                                        : 
-                                        null
+                                            :
+                                            null
                                     }
                                 </div>
                             </div>
