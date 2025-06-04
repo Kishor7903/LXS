@@ -1,0 +1,248 @@
+import mainLogo from "../assets/commonIcons/Logo.png";
+import accountIcon from "../assets/commonIcons/Account Icon White.png";
+import createAccount from "../assets/loginIcons/Create Account.png";
+import viewPasswordIcon from "../assets/loginIcons/View Password.png";
+import hidePasswordIcon from "../assets/loginIcons/Hide Password.png";
+import { useEffect, useState } from "react";
+import DialogBox from "./DialogBox";
+import { toast } from "react-toastify";
+import { loginUser, registerUser } from "@/firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/features/authSlice";
+
+
+let userData = {
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    DOB: "",
+    altPhone: "",
+    profilePic: "",
+    role: "user"
+}
+
+function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen }) {
+    const [loginState, setLoginState] = useState("user-account")
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [formData, setFormData] = useState(userData);
+    let navigate = useNavigate();
+    let dispatch = useDispatch();
+
+
+    useEffect(() => {
+        setLoginState("user-account");
+        setFormData(userData);
+        setShowPassword(false);
+        setShowConfirmPassword(false);
+    }, [isOpen, setIsOpen])
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handlePhoneNoChange = (e) => {
+        if (e.target.value.length <= 10) {
+            setFormData({ ...formData, [e.target.name]: e.target.value });
+        }
+    }
+
+    const handleSignUpSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!formData.name || !formData.phone || !formData.email || !formData.password || !formData.confirmPassword) {
+            toast.error("Required All Fields!!")
+            return
+        }
+
+        if (formData.phone.length > 10 || formData.phone.length < 10) {
+            toast.error("Phone Number is Invalid ...");
+            return
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            toast.error("Password and Confirm Password doesn't match..")
+            return
+        }
+
+        registerUser(formData).then(() => {
+            setFormData(userData);
+            setUserState("login");
+        })
+    }
+
+    const handleLoginSubmit = (e) => {
+        e.preventDefault();
+
+        if (!formData.email || !formData.password) {
+            alert("All Fields Required..");
+            return
+        }
+
+        loginUser(formData).then((res) => {
+            dispatch(login(res))
+
+            if (res?.role === "admin") {
+                navigate("/admin/dashboard");
+            } else {
+                navigate("/shop")
+            }
+
+            setIsOpen(false);
+            setFormData(userData);
+        })
+    }
+
+    return (
+        <>
+            <button className="flex items-center gap-2 font-semibold bg-[rgb(8,43,61)] text-white px-2 py-[5px] text-sm lg:text-base rounded-full" onClick={() => { setIsOpen(true), setUserState("login") }}>
+                <img src={accountIcon} alt="" className="h-6 lg:h-7 hidden md:block" />
+                SignUp
+            </button>
+            {
+                userState === "signup" ?
+                    <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="h-[550px] lg:h-[600px] w-[320px] xl:w-[950px] p-6 bg-[rgb(210,224,232)] rounded-[30px] flex flex-col gap-5" parentDivClassName="flex justify-center items-center" >
+                        {/* <div className="flex justify-between gap-1 text-base font-medium w-full h-[8%]">
+                            <button name="user-account" onClick={() => setLoginState("user-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "user-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>User Account</button>
+                            <button name="seller-account" onClick={() => setLoginState("seller-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "seller-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Seller Account</button>
+                            <button name="creator-collab" onClick={() => setLoginState("creator-collab")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "creator-collab" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Creator Collab Account</button>
+                            <button name="job-account" onClick={() => setLoginState("job-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "job-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Job Account</button>
+                            <button name="artist-account" onClick={() => setLoginState("artist-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "artist-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Artist Account</button>
+                        </div> */}
+                        <div className="flex gap-8 w-full h-full">
+                            <div className="w-1/2 h-full hidden lg:block bg-white font-bold rounded-3xl shadow-[0_0_10px_-3px_rgb(8,34,61)] p-5"></div>
+
+                            <div className="w-full xl:w-1/2 h-full flex flex-col gap-8">
+                                <div className="flex flex-col justify-center items-center gap-1">
+                                    <img src={mainLogo} alt="" className="w-40 xl:w-32" />
+                                    <p className="font-bold text-[15px] xl:text-xl h-5">Became the Member of LXS Universe!</p>
+                                    <p className="text-xs font-medium h-2 leading-[1.1] opacity-60 text-center mt-1">Unlock Personalised Shopping, Exclusive Rewards & a Seamless Experience</p>
+                                </div>
+                                <div className="flex flex-col gap-1 mt-2">
+                                    <div className="flex gap-1">
+                                        <span className="text-sm lg:text-lg text-slate-700 font-semibold tracking-tight">CREATE ACCOUNT</span>
+                                        <img src={createAccount} alt="" className="h-4 lg:h-6" />
+                                    </div>
+                                    <form className="space-y-3 lg:space-y-4 flex flex-col text-xs lg:text-sm" onSubmit={handleSignUpSubmit}>
+                                        <div className="flex space-x-2 lg:space-x-3 text-[rgb(8,43,61)]">
+                                            <input name="name" type="text" value={formData.name} onChange={handleChange} className="h-8 w-[55%] rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " autoComplete="off" placeholder="Full Name" />
+                                            <input name="phone" type="number" value={formData.phone} onChange={handlePhoneNoChange} className="h-8 w-[45%] rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " autoComplete="off" placeholder="Phone Number" />
+                                        </div>
+                                        <div className="flex space-x-2 lg:space-x-3">
+                                            <input name="email" type="text" value={formData.email} onChange={handleChange} className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " placeholder="Email" autoComplete="off" />
+                                        </div>
+                                        <div className="relative h-8">
+                                            <input
+                                                name="password"
+                                                value={formData.password}
+                                                onChange={handleChange}
+                                                type={showPassword ? "text" : "password"}
+                                                placeholder="Password"
+                                                autoComplete="off"
+                                                className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
+                                            />
+                                            <button
+                                                type="button"
+                                                className="absolute right-2 top-1 "
+                                                onClick={() => setShowPassword(!showPassword)}
+                                            >
+                                                <img src={!showPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
+                                            </button>
+                                        </div>
+                                        <div className="relative h-8">
+                                            <input
+                                                name="confirmPassword"
+                                                value={formData.confirmPassword}
+                                                onChange={handleChange}
+                                                type={showConfirmPassword ? "text" : "password"}
+                                                placeholder="Confirm Password"
+                                                autoComplete="off"
+                                                className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
+                                            />
+                                            <button
+                                                type="button"
+                                                className="absolute right-2 top-1"
+                                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            >
+                                                <img src={!showConfirmPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
+                                            </button>
+                                        </div>
+                                        <button type="submit" className="h-8 lg:h-9 w-20 lg:w-32 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]">Create</button>
+                                    </form>
+                                    <p className="text-xs text-center mt-2 font-medium">Already have an Account? <button className="text-blue-500 lg:hover:underline font-bold" onClick={() => {
+                                        setUserState("login")
+                                        setFormData(userData)
+                                    }}>Log In</button></p>
+                                    <p className="text-xs text-center mt-[32px] lg:mt-[68px]">By Creating an account you agree to LXS Store's <br /><Link onClick={() => setIsOpen(false)} to="/terms-and-conditions" className="font-bold lg:hover:underline active:underline">Terms and Conditions</Link> and <Link onClick={() => setIsOpen(false)} to="/privacy-policy" className="font-bold lg:hover:underline active:underline">Privacy Policy</Link></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </DialogBox> :
+                    <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="h-[550px] lg:h-[600px] w-[320px] xl:w-[950px] p-6 bg-[rgb(210,224,232)] rounded-[30px] flex flex-col gap-5" parentDivClassName="flex justify-center items-center" >
+                        {/* <div className="flex justify-between gap-1 text-base font-medium w-full h-[8%]">
+                            <button name="user-account" onClick={() => setLoginState("user-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "user-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>User Account</button>
+                            <button name="seller-account" onClick={() => setLoginState("seller-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "seller-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Seller Account</button>
+                            <button name="creator-collab" onClick={() => setLoginState("creator-collab")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "creator-collab" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Creator Collab Account</button>
+                            <button name="job-account" onClick={() => setLoginState("job-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "job-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Job Account</button>
+                            <button name="artist-account" onClick={() => setLoginState("artist-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "artist-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Artist Account</button>
+                        </div> */}
+                        <div className="flex flex-col lg:flex-row items-center gap-8 w-full h-full">
+                            <div className="w-1/2 h-full hidden lg:block bg-white font-bold rounded-3xl shadow-[0_0_10px_-3px_rgb(8,34,61)] p-5"></div>
+
+                            <div className="w-full xl:w-1/2 h-full flex flex-col gap-8">
+                                <div className="flex flex-col justify-center items-center gap-1">
+                                    <img src={mainLogo} alt="" className="w-40 xl:w-32" />
+                                    <p className="font-bold text-base xl:text-xl h-5">Welcome Back to our LXS Family!</p>
+                                    <p className="text-xs font-medium h-2 leading-[1.1] opacity-60 mt-1 text-center">Continue to Explore, Experience and Express...</p>
+                                </div>
+                                <div className="flex flex-col gap-2 mt-5 lg:mt-0">
+                                    <div className="flex gap-1">
+                                        <span className="text-sm lg:text-lg text-slate-700 font-semibold tracking-tight">LOG IN</span>
+                                        <img src={createAccount} alt="" className="h-4 lg:h-6" />
+                                    </div>
+                                    <form className="space-y-3 lg:space-y-4 flex flex-col text-xs lg:text-sm" onSubmit={handleLoginSubmit}>
+                                        <input name="email" type="text" value={formData.email} onChange={handleChange} className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " placeholder="Email" autoComplete="off" />
+                                        <div className="relative h-8">
+                                            <input
+                                                name="password"
+                                                value={formData.password}
+                                                onChange={handleChange}
+                                                type={showPassword ? "text" : "password"}
+                                                placeholder="Password"
+                                                autoComplete="off"
+                                                className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
+                                            />
+                                            <button
+                                                type="button"
+                                                className="absolute right-2 top-1"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                            >
+                                                <img src={!showPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
+                                            </button>
+                                        </div>
+                                        <button className="h-8 lg:h-9 w-20 lg:w-32 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" type="submit">Log In</button>
+                                    </form>
+                                    <p className="text-xs text-center font-medium mt-2">Already have an Account? <button className="text-blue-500 font-bold lg:hover:underline" onClick={() => {
+                                        setUserState("signup")
+                                        setFormData(userData)
+                                    }}>Sign Up</button></p>
+                                    <p className="text-xs text-center mt-24 lg:mt-40">By Creating an account you agree to LXS Store's <br /><Link onClick={() => setIsOpen(false)} to="/terms-and-conditions" className="font-bold lg:hover:underline active:underline">Terms and Conditions</Link> and <Link onClick={() => setIsOpen(false)} to="/privacy-policy" className="font-bold lg:hover:underline active:underline">Privacy Policy</Link></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </DialogBox>
+            }
+        </>
+    )
+}
+
+export default LoginButtonAndDialogBox
