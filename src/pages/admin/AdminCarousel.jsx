@@ -16,7 +16,7 @@ function AdminCarousel() {
         e.preventDefault();
 
         deleteCarouselImg(item).then((res) => {
-            dispatch(deleteCarouselImage(res.imgPublicId));
+            dispatch(deleteEventGalleryImage(res.imgPublicId));
             toast.success("Image Deleted Successfully ...");
         })
     }

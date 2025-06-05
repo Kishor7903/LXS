@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 let initialState = {
     products: [],
-    carouselImg: []
+    carouselImg: [],
+    eventGalleryImg: []
 }
 
 
@@ -27,9 +28,18 @@ const adminSlice = createSlice({
         },
         deleteCarouselImage: (state, actions) => {
             state.carouselImg = state.carouselImg.filter((img) => img.imgPublicId !== actions.payload)
-        }
+        },
+        addNewEventGalleryImg: (state, actions) => {
+            state.eventGalleryImg = [...state.eventGalleryImg, actions.payload]
+        },
+        getEventGalleryImgs: (state, actions) => {
+            state.eventGalleryImg = actions.payload
+        },
+        deleteEventGalleryImage: (state, actions) => {
+            state.eventGalleryImg = state.eventGalleryImg.filter((img) => img.imgPublicId !== actions.payload)
+        },
     }
 })
 
-export const { addNewProduct, getProducts, addNewCarouselImg, getCarouselImgs, editCarouselImage, deleteCarouselImage } = adminSlice.actions;
+export const { addNewProduct, getProducts, addNewCarouselImg, getCarouselImgs, editCarouselImage, deleteCarouselImage, addNewEventGalleryImg, getEventGalleryImgs, deleteEventGalleryImage } = adminSlice.actions;
 export default adminSlice.reducer;

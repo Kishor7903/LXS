@@ -72,6 +72,7 @@ import AdminTicketAndReports from "./pages/admin/AdminTicketAndReports"
 import AdminRequestCall from "./pages/admin/AdminRequestCall"
 import PaymentsPage from "./pages/shop/PaymentsPage"
 import ProductsContainer from "./pages/products/ProductsContainer"
+import EventGallery from "./pages/admin/EventGallery"
 
 function App() {
 	let {isAuthenticated, user} = useSelector(state => state.auth);
@@ -186,6 +187,7 @@ function App() {
 					<Route path="products" element={<AdminProducts/>} />
 					<Route path="orders" element={<AdminOrders/>} />
 					<Route path="reviews" element={<AdminReviews/>} />
+					<Route path="event-gallery" element={<EventGallery />} />
 					<Route path="sellers" element={<AdminSellers/>} />
 					<Route path="newsletter" element={<AdminNewsletter />} />
 					<Route path="work-with-us" element={<AdminWorkWithUs />} />

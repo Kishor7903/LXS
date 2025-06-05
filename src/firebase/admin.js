@@ -170,3 +170,48 @@ export const deleteCarouselImg = async (item) => {
         console.log("Delete Carousel Image Error: ", error.message);
     }
 }
+
+export const addEventGalleryImg = async (item) => {
+    try {
+        const eventGalleryImg = {
+            imgUrl: item.img_url,
+            imgPublicId: item.publicId,
+            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric"})
+        }
+        
+        const carouselImgReference = collection(fireDB, "Event Gallery");
+        console.log(eventGalleryImg);
+        
+        await addDoc(carouselImgReference, eventGalleryImg);
+
+        return eventGalleryImg
+    } catch (error) {
+        console.log("Adding New Event Gallery Image Error:", error.message);
+    }
+}
+
+export const getAllEventGaleryImages = async () => {
+    try {
+        const eventGalleryRef = collection(fireDB, "Event Gallery");
+        const q = query(eventGalleryRef, orderBy("timestamp", "asc"));
+        const querySnapshot = await getDocs(q);
+        
+        const images = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        return images;
+    } catch (error) {
+        console.log("Event Gallery Image Get Error: ", error.message);
+    }
+}
+
+export const deleteEventGalleryImg = async (item) => {
+    try {
+        deleteFromCloudinary(item.imgPublicId);
+    
+        await deleteDoc(doc(fireDB, "Event Gallery", item.id));
+    } catch (error) {
+        console.log("Delete Carousel Image Error: ", error.message);
+    }
+}
