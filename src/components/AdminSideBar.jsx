@@ -36,6 +36,11 @@ function AdminSideBar() {
             icon: "fi fi-ss-seller"
         },
         {
+            name: "Event Gallery",
+            slug: "/admin/event-gallery",
+            icon: "fi fi-sr-gallery"
+        },
+        {
             name: "Work With Us",
             slug: "/admin/work-with-us",
             icon: "fi fi-sr-briefcase"
