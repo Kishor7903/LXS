@@ -73,8 +73,8 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
         }
 
         registerUser(formData).then(() => {
-            setFormData(userData);
-            setUserState("login");
+            // setFormData(userData);
+            // setUserState("login");
         })
     }
 
@@ -130,6 +130,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                         <span className="text-sm lg:text-lg text-slate-700 font-semibold tracking-tight">CREATE ACCOUNT</span>
                                         <img src={createAccount} alt="" className="h-4 lg:h-6" />
                                     </div>
+                                    <div id="recaptcha-container"></div>
                                     <form className="space-y-3 lg:space-y-4 flex flex-col text-xs lg:text-sm" onSubmit={handleSignUpSubmit}>
                                         <div className="flex space-x-2 lg:space-x-3 text-[rgb(8,43,61)]">
                                             <input name="name" type="text" value={formData.name} onChange={handleChange} className="h-8 w-[55%] rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " autoComplete="off" placeholder="Full Name" />

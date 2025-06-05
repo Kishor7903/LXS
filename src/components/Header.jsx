@@ -348,7 +348,7 @@ function Header({ className }) {
 
 				<div className="flex justify-between items-center text-xl lg:text-3xl ">
 
-					<div className="flex gap-2 lg:gap-4 mr-3 lg:mr-5">
+					<div className="flex gap-2 lg:gap-4 mr-3 lg:mr-8">
 						<img src={heartIcon} alt="" className="h-6 lg:h-7 cursor-pointer " onClick={() => navigate("/setting/wishlist")} />
 						<div className="relative">
 							{
@@ -367,9 +367,9 @@ function Header({ className }) {
 							(
 								window.innerWidth >= 1280 ?
 									(
-										<div className="rounded-full bg-slate-300 flex gap-2 items-center p-[5px] cursor-pointer">
+										<div className="rounded-full shadow-[0px_0px_10px_-2px_rgb(8,43,61)] flex gap-2 items-center p-[5px] select-none">
 											<img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-8 rounded-full" />
-											<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center max-w-16 leading-4">{`${user.name.split(" ")[0].slice(0,6)}${user.name.split(" ")[0].length > 5 ? "..." : ""}`} </span><i className="fi fi-br-angle-small-down text-xl relative top-1 ml-1"></i>
+											<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center max-w-16 leading-4 mr-2 px-2">{`${user.name.split(" ")[0].slice(0,6)}${user.name.split(" ")[0].length > 5 ? "..." : ""}`} </span>
 										</div>
 									)
 									:

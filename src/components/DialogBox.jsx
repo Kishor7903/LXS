@@ -34,7 +34,7 @@ function DialogBox({ isOpen, setIsOpen, className, children, parentDivClassName 
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.8, opacity: 0 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className={`min-h-60 min-w-60 shadow-md z-50 ${className}`}
+                        className={`min-h-40 min-w-60 shadow-md z-50 ${className}`}
                     >
                         {children}
                     </motion.div>

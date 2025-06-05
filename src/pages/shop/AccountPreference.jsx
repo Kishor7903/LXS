@@ -1,38 +1,85 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function AccountPreference() {
+    let { user } = useSelector(state => state.auth);
 
-    const [account, setAccount] = useState({
-        "Account Type & Status": {
-            "account Type:": "User Account",
-            "membership status:": "Free (Upgrade)",
-            "subscription plan & renewal data:": "Basic (Free) 25.10.2024",
-            "account creation date": "25.10.2024",
+    const accountData = [
+        {
+            name: "Account Type & Status",
+            content: [
+                {
+                    key: "account Type:",
+                    value: "User Account",
+                    slug: ""
+                },
+                {
+                    key: "membership status:",
+                    value: "Free (Upgrade)",
+                    slug: ""
+                },
+                {
+                    key: "subscription plan & renewal data:",
+                    value: "Basic (Free)",
+                    slug: ""
+                },
+                {
+                    key: "account creation date:",
+                    value: `${user.timestamp.split(",")[0]}, ${user.timestamp.split(",")[1]}`,
+                    slug: ""
+                },
+            ],
         },
-        "Linked Accounts & Third Parties Login": {
-            "google:": "Link",
-            "Instagram": "Link",
-            "facebook:": "Link",
-            "Twitter/X": "Link",
-            "Linkedin": "Link"
+        {
+            name: "Linked Accounts & Third Parties Login",
+            content: [
+                {
+                    key: "google:",
+                    value: "view",
+                    slug: ""
+                },
+                {
+                    key: "Instagram:",
+                    value: "view",
+                    slug: ""
+                },
+                {
+                    key: "facebook:",
+                    value: "view",
+                    slug: ""
+                },
+                {
+                    key: "Twitter/X:",
+                    value: "view",
+                    slug: ""
+                },
+                {
+                    key: "Linkedin:",
+                    value: "view",
+                    slug: ""
+                }
+            ],
         },
-    });
+    ];
 
     return (
         <div className="w-full space-y-4">
-            {Object.entries(account).map(([category, options]) => (
-                <div key={category} className="border border-[rgb(8,43,61)] px-4 py-2 rounded-xl">
-                    <h3 className="font-bold tracking-wide text-lg capitalize">{category.replace('_', ' ')}</h3>
-                    <div className="space-y-1 text-xs leading-3 mt-2 flex flex-col gap-1 font-medium">
-                        {Object.entries(options).map(([key, value]) => (
-                            <div className="">
-                                <span className="capitalize mr-3 ">{key.replace('_', ' ')}</span>
-                                <span className="capitalize text-orange-500">{value.replace('_', ' ')}</span>
-                            </div>
-                        ))}
+            {
+                accountData.map((items,index) => (
+                    <div key={index} className="border border-[rgb(8,43,61)] p-3 shadow-[0px_5px_10px_-6px_rgb(8,43,61)] rounded-xl">
+                        <h3 className="font-bold tracking-wide text-lg capitalize">{items.name}</h3>
+                        <div className="space-y-1 text-xs leading-3 mt-2 flex flex-col gap-1 font-medium ml-3">
+                            {items.content.map((item,idx) => (
+                                <div className="">
+                                    <span key={idx} className="capitalize mr-3 ">{item.key}</span>
+                                    <span to={item.slug} className="capitalize text-orange-500 ">{item.value}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))
+        }
         </div>
     )
 }

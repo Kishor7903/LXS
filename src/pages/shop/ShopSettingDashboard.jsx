@@ -7,16 +7,6 @@ import tile3Image from "../../assets/commonIcons/Personalized Recommondation IMG
 import tile3Icon from "../../assets/commonIcons/Artwork.png"
 import tile4Image from "../../assets/commonIcons/Refund Status IMG.png"
 import tile4Icon from "../../assets/commonIcons/Returned Order IMG.png"
-import tile5Image from "../../assets/commonIcons/Wishlist 2 IMG.png"
-import tile5Icon from "../../assets/commonIcons/Estimate IMG.png"
-import tile6Image from "../../assets/commonIcons/Happyness IMG.png"
-import tile6Icon from "../../assets/commonIcons/Savings IMG.png"
-import tile7Image from "../../assets/commonIcons/Pending Order.png"
-import tile7Icon from "../../assets/commonIcons/Pending Orders IMG.png"
-import tile8Image from "../../assets/commonIcons/Category IMG.png"
-import tile8Icon from "../../assets/commonIcons/Category.png"
-import tile9Image from "../../assets/commonIcons/Monthly IMG.png"
-import tile9Icon from "../../assets/commonIcons/Monthly Report IMG.png"
 import tile10Image from "../../assets/commonIcons/Histort IMG.png"
 import tile10Icon from "../../assets/commonIcons/Payment History IMG.png"
 import tile11Image from "../../assets/commonIcons/Order Placed IMG.png"
@@ -25,12 +15,11 @@ import tile12Image from "../../assets/commonIcons/Average IMG.png"
 import tile12Icon from "../../assets/commonIcons/Average Order Value 2 IMG.png"
 import tile13Image from "../../assets/commonIcons/First IMG.png"
 import tile13Icon from "../../assets/commonIcons/First Purchase IMG.png"
-import tile14Image from "../../assets/commonIcons/Total Spent 2 IMG.png"
-import tile14Icon from "../../assets/commonIcons/Total Spent IMG.png"
+
 
 function ShopSettingDashboard() {  
   return (
-    <div className="grid grid-cols-5 grid-rows-4 gap-8 h-full w-full">
+    <div className="grid grid-cols-5 grid-rows-4 gap-8 h-full w-full pl-5">
       <ShopDashboardTile className="bg-[rgb(8,43,61)]" bgImage={tile1Image} icon={tile1Icon} title1="Recently" title2="Viewed Products" />
       <ShopDashboardTile className="bg-[rgb(111,54,123)]" bgImage={tile2Image} icon={tile2Icon} title1="Exclusive" title2="Membership Perks" />
       <ShopDashboardTile className="bg-[rgb(74,116,179)]" bgImage={tile3Image} icon={tile3Icon} title1="Personalized" title2="Recommendations" />

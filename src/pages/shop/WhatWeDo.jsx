@@ -41,13 +41,13 @@ function WhatWeDo() {
     return (
         <div className="pt-5 lg:pt-10 space-y-2 lg:space-y-5 lg:px-12 xl:px-32 border-t flex flex-col items-center">
 
-            <h2 className='text-xl md:text-3xl font-bold relative after:h-1 after:absolute after:w-2/3 after:left-6 after:bottom-0 after:bg-[rgb(8,43,61)] after:rounded-full'>What We Do!</h2>
+            <h2 className='text-xl md:text-3xl font-bold relative after:h-1 after:absolute after:w-2/3 after:flex after:mx-[16%] after:bottom-0 after:bg-[rgb(8,43,61)] after:rounded-full'>What We Do!</h2>
 
-            <div className="h-auto w-full flex flex-wrap gap-x-5 xl:gap-x-32 gap-y-0 md:gap-y-3 xl:gap-y-6 justify-center items-center flex-1 py-2 md:py-5">
+            <div className="h-auto w-full flex flex-wrap gap-x-5 xl:gap-x-32 gap-y-0 md:gap-y-5 xl:gap-y-9 justify-center items-center flex-1 py-2 md:py-5">
                 {
                     items.map((item, index) => {
                         return (
-                            <div key={index} className="w-[29%] h-32 lg:h-52 lg:w-[25%] flex flex-col items-center gap-2 md:gap-1 lg:gap-0 text-sm">
+                            <div key={index} className="w-[24%] lg:w-[25%] h-56 flex flex-col items-center gap-2 md:gap-1 lg:gap-0 text-sm border rounded-3xl p-5 shadow-[0px_0px_10px_1px_rgb(8,43,61)]">
                                 <img src={item.image} alt="" className='h-8 md:h-12 lg:h-20' />
                                 <span className='font-extrabold text-[10px] md:text-[13px] lg:text-[18px] lg:mt-1 text-center leading-[1] flex gap-1 flex-col'>{item.text1} <br /><span className="text-red-500 font-semibold">{item.text3 ? `(${item.text3})` : null}</span></span>
                                 <p className='relative -top-3 -md:top-2 sm:top-0 text-[7px] md:text-[9px] lg:text-[13px] text-center leading-[1.1] tracking-tight md:tracking-normal mt-1 font-medium lg:mt-2'>{item.text2}</p>

@@ -101,13 +101,14 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId, setCurrentEditI
     }
 
     const handlePincodeChange = async (e) => {
-        setFormData({...formData, pincode: e.target.value})
+        if (e.target.value.length <= 6) {
+            setFormData({ ...formData, [e.target.name]: e.target.value });
+        }
 
         if (e.target.value.length === 6) {
             try {
                 const res = await axios.get(`https://api.postalpincode.in/pincode/${e.target.value}`);
                 const data = res.data[0];
-                console.log(data.PostOffice[0]);
 
                 if (data.Status === "Success") {
                     setFormData({...formData, city: data.PostOffice[0].District, pincode: data.PostOffice[0].Pincode, state: data.PostOffice[0].State})

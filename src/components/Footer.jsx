@@ -133,7 +133,7 @@ function Footer() {
                     <img src={LxsLogo} alt="" className="h-40" />
                 </div>
                 <div className="w-4/12">
-                    <span className="text-xl font-bold ">LXS (OPC) PRIVATE LIMITED</span>
+                    <span className="text-xl font-bold ">Lifestyle Store LXS (OPC) PRIVATE LIMITED</span>
                     <p className="font-medium text-sm">Director: Sachin Kumar</p>
                     <p className="font-medium text-sm">GSTIN: JBDU3YY8887</p>
                     <h5 className='text-[rgb(8,43,61)] font-semibold text-center lg:text-left text-xs lg:text-xl pl-[2px] mt-5'>Connect With Our Socials!</h5>
