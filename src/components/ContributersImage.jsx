@@ -8,7 +8,7 @@ function ContributersImage({className, contributerName, imgClassName, imgSrc, im
 
       <h5 className="text-center text-base lg:text-xl font-bold">{contributerName}</h5>
 
-      <p className="text-center font-medium text-xs lg:text-base xl:text-lg relative bottom-1 lg:bottom-2">({imgText})</p>
+      <p className="text-center font-medium text-xs lg:text-base xl:text-sm relative bottom-1">({imgText})</p>
 
     </div>
   )

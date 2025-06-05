@@ -1,7 +1,6 @@
 // import ShiftingNavbar from "@/pages/shop/ShiftingNavbar"
 import Header from "../components/Header"
 // import AnimatingMan from "@/pages/shop/AnimatingMan"
-import InfoIconsContainer from "@/pages/shop/InfoIconsContainer"
 import WhatWeDo from "@/pages/shop/WhatWeDo"
 import WorkWithUsAndNewsletter from "@/pages/shop/WorkWithUsAndNewsletter"
 import Footer from "@/components/Footer"
@@ -15,11 +14,10 @@ function ShopLayout() {
     <>
       <Header className="h-16" />  
       <main>
-        <ShiftingNavbar />
+        {/* <ShiftingNavbar /> */}
         {/* <AnimatingMan className="h-20 md:h-36 lg:h-56" /> */}
         <Outlet />
         <WhatWeDo />
-        <InfoIconsContainer />
         <WorkWithUsAndNewsletter />
       </main>
       <footer className="bg-[rgb(8,43,61)]">

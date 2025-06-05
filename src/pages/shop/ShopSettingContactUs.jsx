@@ -207,9 +207,9 @@ function ShopSettingContactUs() {
                 <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
                     {
                         contactUsContent.map((content, index) => (
-                            <div key={index} className="border border-[rgb(8,43,61)] px-4 py-2 rounded-xl">
+                            <div key={index} className="border border-[rgb(8,43,61)] px-4 py-2 rounded-xl shadow-[0px_5px_10px_-6px_rgb(8,43,61)]">
                                 <h3 className="font-bold tracking-wide text-lg">{content.title}</h3>
-                                <div className="space-y-1 text-xs leading-3 mt-2 flex flex-col gap-1 font-medium">
+                                <div className="space-y-1 text-xs leading-3 mt-2 flex flex-col gap-1 font-medium ml-3">
                                     {
                                         content.menus.map((item, idx) => (
                                             <div className="" key={idx}>

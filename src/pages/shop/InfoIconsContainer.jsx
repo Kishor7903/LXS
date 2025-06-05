@@ -34,12 +34,12 @@ function InfoIconsContainer() {
   ];
 
   return (
-    <div className="h-20 md:h-28 lg:h-32 w-full flex justify-around items-center flex-1 border-t pt-1">
+    <div className="h-20 md:h-28 lg:h-28 w-full flex justify-around items-center flex-1 border-b pt-1">
       {
         items.map((item, index) => {
           return (
             <div key={index} className="w-1/5 flex flex-col items-center text-sm h-[80%]">
-              <img src={item.image} alt="" className='h-8 md:h-12 lg:h-14' />
+              <img src={item.image} alt="" className='h-8 md:h-12 lg:h-12' />
               <span className='font-extrabold text-[0.6em] md:text-xs lg:text-sm'>{item.text1}</span>
               <p className='relative -top-3 -md:top-2 sm:-top-1 text-[6px] md:text-xs lg:text-sm'>{item.text2}</p>
             </div>

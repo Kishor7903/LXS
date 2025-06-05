@@ -42,7 +42,7 @@ function Blogs() {
         <div className="py-5 lg:py-10 space-y-2 lg:space-y-5 ">
 
             <div className="flex flex-col xl:flex-row gap-3 xl:items-center">
-                <h3 className={`bg-gradient-to-b from-[rgb(248,181,42)] to-[rgb(240,84,120)] flex items-center rounded-r-full text-lg xl:text-3xl font-semibold pl-5 md:pl-8 lg:pl-12 xl:pl-16 py-1 text-white shadow-[0_5px_5px_-2px_rgb(8,43,61,0.6)] w-[195px] xl:w-[380px]`}>Intergalactic Intel!</h3>
+                <h3 className={`bg-gradient-to-r from-[rgb(248,181,42)] to-[rgb(240,84,120)] flex items-center rounded-r-full text-lg xl:text-3xl font-semibold pl-5 md:pl-8 lg:pl-12 xl:pl-16 py-1 text-white shadow-[0_5px_5px_-2px_rgb(8,43,61,0.6)] w-[195px] xl:w-[380px]`}>Intergalactic Intel!</h3>
                 <p className="text-xs xl:text-lg font-medium ml-1 relative bottom-2 xl:bottom-0">The most classified and stylish reports from deep space! 📜</p>
             </div>
 

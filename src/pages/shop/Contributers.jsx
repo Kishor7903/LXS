@@ -5,7 +5,7 @@ function Contributers() {
     return (
         <div className="p-5 lg:pt-10 space-y-2 lg:space-y-5 px-10 md:px-20 lg:px-24 xl:px-48 flex flex-col items-center">
 
-            <h2 className='text-xl md:text-3xl font-bold relative after:h-1 after:absolute after:w-2/3 after:left-3 after:bottom-0 after:bg-[rgb(8,43,61)] after:rounded-full'>LEADS!</h2>
+            <h2 className='text-xl md:text-3xl font-bold relative after:h-1 after:absolute after:w-2/3 after:left-[16%] after:bottom-0 after:bg-[rgb(8,43,61)] after:rounded-full'>Core Commanders!</h2>
 
             <div className="flex flex-col md:flex-row md:items-end justify-center md:justify-between pt-5 lg:pb-5 lg:gap-44">
 

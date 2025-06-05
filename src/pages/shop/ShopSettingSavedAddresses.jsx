@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import HoverButton from "@/components/HoverButton";
 import editIcon from "../../assets/commonIcons/Edit (Fill).png"
 import editIconActive from "../../assets/commonIcons/Edit White (Fill).png"
+import ConfirmationPopp from "@/components/ConfirmationPopp";
 
 let addressDetails = {
 	name: "",
@@ -22,6 +23,8 @@ let addressDetails = {
 
 function ShopSettingSavedAddresses() {
 	let [isOpen, setIsOpen] = useState(false);
+	let [confirmPopupOpen, setConfirmPopupOpen] = useState(false);
+	let [deleteItemId, setDeleteItemId] = useState(null);
 	let [formData, setFormData] = useState(addressDetails);
 	let { address } = useSelector(state => state.cart);
 	let [currentEditId, setCurrentEditId] = useState(null);
@@ -93,7 +96,13 @@ function ShopSettingSavedAddresses() {
 									<p className="text-[11px] leading-[1]">State <br /> <span className="text-[14px] font-semibold">{item.state}</span></p>
 									<div className="absolute bottom-3 right-2 flex flex-col gap-1 justify-center items-center">
 										<HoverButton className="px-3 text-sm font-medium" onClick={(e) => handleAddressEditButton(e, item)} icon={editIcon} iconActive={editIconActive} iconClassName="h-4">Edit</HoverButton>
-										<span className="cursor-pointer lg:hover:underline text-xs text-blue-500 font-semibold right-[22px]" onClick={(e) => handleDeleteAddress(e, item.id)}>Delete</span>
+										{
+											item.isDefault !== true ? (
+												<span className="cursor-pointer lg:hover:underline text-xs text-blue-500 font-semibold right-[22px]" onClick={() => { setConfirmPopupOpen(true), setDeleteItemId(item.id) }}>Delete</span>
+											)
+												:
+												null
+										}
 									</div>
 								</div>
 								{
@@ -110,6 +119,9 @@ function ShopSettingSavedAddresses() {
 				<hr className="border-[rgb(8,43,61)] border" />
 			</div>
 			<div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
+			<ConfirmationPopp isOpen={confirmPopupOpen} setIsOpen={setConfirmPopupOpen} heading="Wait, You're Deleting This Address! 😲" description="Whoa whoa whoaaa! It’s your boy Lupin here.
+			You’re about to delete this address — are you sure? Like, really sure?
+			If you’re 100% sure, hit confirm. If not, I’ll pretend this never happened 😅" onClick={(e) => {handleDeleteAddress(e, deleteItemId), setConfirmPopupOpen(false)}} />
 		</div>
 	)
 }
