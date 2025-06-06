@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AddNewAddressButton from "@/components/AddNewAddressButton";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAddress, setAsDefaultNewAddress } from "@/firebase/auth";
-import { updateAddress } from "@/store/features/cartSlice";
+import { deleteAddress, getAllAddress, setAsDefaultNewAddress } from "@/firebase/auth";
+import { deleteAnAddress, updateAddress, updateSetDefault } from "@/store/features/cartSlice";
 import { toast } from "react-toastify";
 import HoverButton from "@/components/HoverButton";
 import editIcon from "../../assets/commonIcons/Edit (Fill).png"
@@ -54,8 +54,8 @@ function ShopSettingSavedAddresses() {
 	const handleDeleteAddress = (e, item_id) => {
 		e.preventDefault();
 
-		deleteAddress(user?.uid, item_id).then((res) => {
-			dispatch(updateAddress(res));
+		deleteAddress(user.id, item_id).then(() => {
+			dispatch(deleteAnAddress(item_id));
 			toast.success("Address Deleted Successfully...");
 		})
 	}
@@ -63,10 +63,16 @@ function ShopSettingSavedAddresses() {
 	const handleSetDefault = (e, item_id) => {
 		e.preventDefault();
 
-		setAsDefaultNewAddress(user.uid, item_id).then((res) => {
-			dispatch(updateAddress(res));
+		setAsDefaultNewAddress(user.id, item_id).then(() => {
+			dispatch(updateSetDefault(item_id));
 		})
 	}
+
+	useEffect(() => {
+		getAllAddress(user?.id).then((res) => {
+			dispatch(updateAddress(res));
+		})
+	})
 
 	return (
 		<div className="w-full h-full px-5 flex gap-5 ">

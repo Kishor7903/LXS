@@ -166,7 +166,7 @@ function Footer() {
                 </div>
             </div>
             <div className="bg-[rgb(8,43,61)] text-white flex flex-col px-3 py-5 gap-2 lg:gap-5 w-full overflow-hidden text-xs lg:text-sm">
-                <div className="flex flex-col items-center justify-between lg:w-full lg:flex-row gap-2 lg:gap-20 mx-auto lg:px-40">
+                <div className="flex flex-col items-center justify-between lg:w-full lg:flex-row gap-2 lg:gap-20 mx-auto lg:px-10">
                     <div className="text-gray-400 text-center w-[35%]">Copyright &copy; 2025 LXS Lifestyle Store - All Rights Reserved</div>
                     <button className="text-white px-3 flex justify-center items-center gap-1 h-10 rounded-full border border-white lg:hover:bg-white lg:hover:text-[rgb(8,43,61)] font-medium" onClick={(e) => { e.preventDefault(), setIsOpen(true) }} onMouseEnter={() => setIsHovered(true)} onMouseOut={() => setIsHovered(false)}><i className={`${isHovered ? "fi fi-sr-file-edit" : "fi fi-rr-file-edit"} relative top-[1px]`}></i> Write Website Review</button>
                     <div className="text-gray-400 text-center w-[35%]">Powered by LXS Lifestyle Store, India.</div>

@@ -10,10 +10,9 @@ function ShopSettingWishlist() {
 	let [wishlistItems, setWishlistItems] = useState([]);
 	let { wishlist, cart } = useSelector(state => state.cart);
 	let { products } = useSelector(state => state.admin);
+	let { user } = useSelector(state => state.auth);
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
-
-	let user = JSON.parse(localStorage.getItem("user"));
 
 	const moveToCart = (e, item_id) => {
 		e.preventDefault();
@@ -27,7 +26,7 @@ function ShopSettingWishlist() {
 		}
 
 		if (user) {
-			addCartItem(user?.id, itemDetails).then(() => {
+			addCartItem(user.id, itemDetails).then(() => {
 				dispatch(addToCart(itemDetails));
 				toast.success("Product Moved To Cart ...");
 			})
@@ -39,15 +38,14 @@ function ShopSettingWishlist() {
 	const deleteItemFromWishlist = (e, item_id) => {
 		e.preventDefault();
 
-		deleteWishlistItem(user.uid, item_id).then((res) => {
-			dispatch(deleteFromWishlist(res));
-			toast.success("Product Removed From Cart ...")
+		deleteWishlistItem(user.id, item_id).then(() => {
+			dispatch(deleteFromWishlist(item_id));
 		})
 	}
 
 	useEffect(() => {
 		let items = wishlist.map(item => {
-			let product = products.find(p => p.id === item);
+			let product = products.find(p => p.id === item.item_id);
 			return product ? { ...product } : null;
 		}).filter(item => item !== null);
 		setWishlistItems(items)

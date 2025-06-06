@@ -4,7 +4,6 @@ import {
 } from "firebase/auth";
 import {
   addDoc,
-  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -12,13 +11,11 @@ import {
   getDocs,
   orderBy,
   query,
-  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { auth, fireDB } from "./FirebaseConfig.js";
-import { v4 as uuidv4 } from "uuid";
 
 export const registerUser = async (formData) => {
   try {
@@ -186,7 +183,7 @@ export const addWishlistItem = async (user_id, item) => {
     const wishlistRef = collection(fireDB, "user", user_id, "wishlist");
     const docRef = await addDoc(wishlistRef, { item_id: item });
 
-    return {id: docRef.id, item_id: item}
+    return { id: docRef.id, item_id: item };
   } catch (error) {
     console.log("Add to Wishlist Error: ", error.message);
   }
@@ -222,21 +219,24 @@ export const deleteWishlistItem = async (user_id, item_id) => {
   }
 };
 
+export const deleteAllCartItems = async (user_id) => {
+  try {
+    const cartRef = collection(fireDB, "user", user_id, "cart");
+    const snapshot = await getDocs(cartRef);
+
+    const deletePromises = snapshot.docs.map((docSnap) => deleteDoc(docSnap.ref));
+    await Promise.all(deletePromises);
+  } catch (error) {
+    console.error("Error deleting cart items:", error.message);
+  }
+};
+
 export const addNewAddress = async (user_id, formData) => {
   try {
-    const addressRef = doc(fireDB, "address", user_id);
+    const addressRef = collection(fireDB, "user", user_id, "address");
+    const docRef = await addDoc(addressRef, formData);
 
-    let newFormData = { ...formData, id: uuidv4() };
-
-    await setDoc(
-      addressRef,
-      {
-        items: arrayUnion(newFormData),
-      },
-      { merge: true }
-    );
-
-    return arrayUnion(newFormData).Hu[0];
+    return { id: docRef.id, ...formData };
   } catch (error) {
     console.log("Add New Address Error: ", error.message);
   }
@@ -244,15 +244,14 @@ export const addNewAddress = async (user_id, formData) => {
 
 export const getAllAddress = async (user_id) => {
   try {
-    const addressRef = doc(fireDB, "address", user_id);
-    const addressSnap = await getDoc(addressRef);
+    const addressRef = collection(fireDB, "user", user_id, "address");
+    const addressSnap = await getDocs(addressRef);
 
-    if (addressSnap.exists()) {
-      const data = addressSnap.data();
-      return data || []; // items is the array of cart objects
-    } else {
-      return [];
-    }
+    let address = [];
+    addressSnap.forEach((doc) => {
+      address.push({ id: doc.id, ...doc.data() });
+    });
+    return address;
   } catch (error) {
     console.log("Getting All Address Error: ", error.message);
   }
@@ -260,25 +259,8 @@ export const getAllAddress = async (user_id) => {
 
 export const editAnAddress = async (user_id, formData, item_id) => {
   try {
-    const addressRef = doc(fireDB, "address", user_id);
-
-    const docSnap = await getDoc(addressRef);
-
-    if (docSnap.exists()) {
-      let address = docSnap.data().items || [];
-
-      const updatedAddress = address.map((add) => {
-        if (add.id === item_id) {
-          return formData;
-        }
-        return add;
-      });
-
-      await updateDoc(addressRef, {
-        items: updatedAddress,
-      });
-      return formData;
-    }
+    const addressRef = doc(fireDB, "user", user_id, "address", item_id);
+    await updateDoc(addressRef, formData);
   } catch (error) {
     console.log("Edit Address Error: ", error.message);
   }
@@ -286,38 +268,24 @@ export const editAnAddress = async (user_id, formData, item_id) => {
 
 export const deleteAddress = async (user_id, item_id) => {
   try {
-    const addressRef = doc(fireDB, "address", user_id);
-    const addressSnap = await getDoc(addressRef);
-
-    if (addressSnap.exists()) {
-      const address = addressSnap.data().items || [];
-      const updatedaddress = address.filter((item) => item.id !== item_id);
-
-      await updateDoc(addressRef, { items: updatedaddress });
-
-      return updatedaddress;
-    }
+    const addressRef = doc(fireDB, "user", user_id, "address", item_id);
+    await deleteDoc(addressRef);
   } catch (error) {
     console.log("Delete Address Error: ", error.message);
   }
 };
 
 export const setAsDefaultNewAddress = async (user_id, item_id) => {
-  const addressRef = doc(fireDB, "address", user_id);
-  const addressSnap = await getDoc(addressRef);
+  const addressRef = collection(fireDB, "user", user_id, "address");
+  const snapshot = await getDocs(addressRef);
+  const batchUpdates = [];
 
-  if (addressSnap.exists()) {
-    const address = addressSnap.data().items;
+  snapshot.forEach((docSnap) => {
+    const isSelected = docSnap.id === item_id;
+    batchUpdates.push(updateDoc(docSnap.ref, { isDefault: isSelected }));
+  });
 
-    const updatedAddress = address.map((item) => ({
-      ...item,
-      isDefault: item.id === item_id,
-    }));
-
-    await updateDoc(addressRef, { items: updatedAddress });
-
-    return updatedAddress;
-  }
+  await Promise.all(batchUpdates);
 };
 
 export const sortedProductItems = async (sortBy) => {
@@ -366,14 +334,10 @@ export const filteredProductItem = async (filterBy) => {
 
 export const createOrderInfo = async (orderDetails) => {
   try {
-    const orderRef = doc(fireDB, "orders", orderDetails.userId);
+    const orderRef = collection(fireDB, "user", orderDetails.userId, "orders");
+    const docData = await addDoc(orderRef, orderDetails);
 
-    await setDoc(
-      orderRef,
-      { items: arrayUnion({ ...orderDetails, id: uuidv4() }) },
-      { merge: true }
-    );
-    return arrayUnion(orderDetails).Hu[0];
+    return {id: docData.id, ...orderDetails};
   } catch (error) {
     console.log("Error at Order Creation: ", error.message);
   }
@@ -381,15 +345,14 @@ export const createOrderInfo = async (orderDetails) => {
 
 export const getAllOrders = async (user_id) => {
   try {
-    const orderRef = doc(fireDB, "orders", user_id);
-    const orderSnap = await getDoc(orderRef);
+    const orderRef = collection(fireDB, "user", user_id, "orders");
+    const orderSnap = await getDocs(orderRef);
 
-    if (orderSnap.exists()) {
-      const data = orderSnap.data();
-      return data;
-    } else {
-      return [];
-    }
+    let orderItems = [];
+    orderSnap.forEach((doc) => {
+      orderItems.push({ id: doc.id, ...doc.data() });
+    });
+    return orderItems;
   } catch (error) {
     console.log("Getting All Orders Error: ", error.message);
   }
@@ -397,12 +360,10 @@ export const getAllOrders = async (user_id) => {
 
 export const getSingleOrderDetails = async (user_id, order_id) => {
   try {
-    let ordersRef = doc(fireDB, "orders", user_id);
-    let orderSnap = await getDocs(ordersRef);
+    let ordersRef = doc(fireDB, "user", user_id, "orders", order_id);
+    let orderSnap = await getDoc(ordersRef);
 
-    if (orderSnap.exists()) {
-      console.log(orderSnap.data());
-    }
+    return {id: orderSnap.id, ...orderSnap.data()};
   } catch (error) {
     console.log("Getting Single Order Error: ", error.message);
   }

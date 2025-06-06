@@ -20,8 +20,8 @@ function ShopSettingMyOrders() {
     }).filter(item => item !== null);
 
     useEffect(() => {
-        getAllOrders(user.uid).then((res) => {
-            dispatch(getAllOrdersItems(res.items));
+        getAllOrders(user.id).then((res) => {
+            dispatch(getAllOrdersItems(res));
         })
     }, [])
 

@@ -7,13 +7,17 @@ import { useNavigate, useParams } from "react-router-dom"
 
 function OrderDetailsPage() {
     let navigate = useNavigate();
+    let { products } = useSelector(state => state.admin);
     let [orderDetails, setOrderDetails] = useState([]);
     let { user } = useSelector(state => state.auth);
     let { id } = useParams();
 
+    let productInfo = products.filter(item => item.id === orderDetails?.productInfo?.product_id);
+    let deliveryPrice = 50;
+    
     useEffect(() => {
-        getSingleOrderDetails(user?.uid, id).then((res) => {
-            setOrderDetails(res.items);
+        getSingleOrderDetails(user.id, id).then((res) => {
+            setOrderDetails(res);
         })
     }, [])
 
@@ -35,26 +39,26 @@ function OrderDetailsPage() {
                     <h6 className="font-bold tracking-wider">ORDER DETAILS</h6>
                     <div className="flex text-xs font-medium relative">
                         {/* <p className="mr-7">Ordered On {orderDetails.}</p> | */}
-                        <p className="ml-7">Order ID: LXS-2025-29890</p>
+                        <p className="ml-7">Order ID: {orderDetails.orderId}</p>
                         <p className="absolute right-32 lg:hover:underline text-blue-500 cursor-pointer">Hide Order</p>
                         <p className="lg:hover:underline text-blue-500 absolute right-0 cursor-pointer">Download Invoice</p>
                     </div>
                     <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-44 mt-5 px-8 py-5 flex">
                         <div className="w-[35%]">
                             <span className="font-semibold text-base">Shipping Address</span>
-                            <p className="leading-4 text-sm">Sachin Kumar <br />House No: 34/C <br />Village: Choura Road Chas <br />P.O: Narayanpur P.S: Pindrajora <br />Bokaro Steel City, Jharkhand <br />827013 <br />India</p>
+                            <p className="leading-4 text-sm">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
                         </div>
                         <div className="w-[30%]">
                             <span className="font-semibold text-base">Payments Method</span>
-                            <p className="text-sm">Cash On Delivery</p>
+                            <p className="text-sm capitalize">{orderDetails.paymentMethod}</p>
                         </div>
                         <div className="w-[35%] leading-5 text-sm">
                             <span className="font-semibold text-base">Order Summary</span>
-                            <span className=" flex justify-between">item(s) Subtotal : <p className="text-right">₹ 999.00</p></span>
-                            <span className=" flex justify-between">Shipping : <p className="text-right">₹ 49.00</p></span> 
-                            <span className=" flex justify-between">Total : <p className="text-right">₹ 1048.00</p></span> 
-                            <span className=" flex justify-between">Offer Applied : <p className="text-right">₹ 49.00</p></span> 
-                            <span className="font-semibold flex justify-between">Grand Total : <p className="text-right">₹ 999.00</p></span> 
+                            <span className=" flex justify-between">item(s) Subtotal : <p className="text-right">₹ {productInfo[0]?.price}</p></span>
+                            <span className=" flex justify-between">Shipping : <p className="text-right">₹ {deliveryPrice}</p></span> 
+                            <span className=" flex justify-between">Total : <p className="text-right">₹ {productInfo[0]?.price + deliveryPrice}</p></span> 
+                            <span className=" flex justify-between">Offer Applied : <p className="text-right">₹ {productInfo[0]?.price - productInfo[0]?.salePrice + deliveryPrice}</p></span> 
+                            <span className="font-semibold flex justify-between">Grand Total : <p className="text-right">₹ {productInfo[0]?.salePrice}</p></span> 
                         </div>
                     </div>
                     <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-52 mt-5 px-8 py-5 flex">
@@ -64,12 +68,12 @@ function OrderDetailsPage() {
                                 <p className="text-xs tracking-tight">Package was handed to nearest Hub</p>
                             </div>
                             <div className="h-[80%] flex gap-5">
-                                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/smartwatch/n/v/1/-original-imah6s6pq7wxa4u6.jpeg?q=70" alt=""className="border w-[25%] rounded-2xl" />
+                                <img src={productInfo[0]?.images[0]} alt=""className="border w-[25%] rounded-2xl object-fit" />
                                 <div className="w-[65%] text-xs leading-4">
-                                    <h3 className="font-bold text-xl text-blue-500">LXS Signature Tee</h3>
+                                    <h3 className="font-bold text-xl text-blue-500 line-clamp-1">{productInfo[0]?.name}</h3>
                                     <p >Sold By : <span className="text-blue-500">LXS Store</span></p>
-                                    <p>Size : M</p>
-                                    <p className="text-sm font-bold">₹ 1048.00</p>
+                                    <p>Size : {orderDetails?.productInfo?.size}</p>
+                                    <p className="text-sm font-bold">₹ {orderDetails?.amount}</p>
                                     <p>Return & Exchange window closes on 18 Jan</p>
                                     <div className="flex space-x-5 text-white font-semibold mt-1">
                                         <button className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] h-9 px-3 rounded-full border" onClick={() => navigate("/orders/product-exchange")}>Request Return/Exchange</button>

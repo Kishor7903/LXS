@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import tickIcon from "../assets/commonIcons/Submit.png"
 import DialogBox from "./DialogBox"
 
-function RequestSuccessfullPopup({popupData, showSuccessfullPopup, setShowSuccessfullPopup, state }) {
+function RequestSuccessfullPopup({popupData = "", showSuccessfullPopup, setShowSuccessfullPopup, state }) {
 
     let headerContent = () => {
         if (state === "Exchange"){

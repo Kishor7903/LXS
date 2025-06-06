@@ -4,7 +4,7 @@ import KnowMorePopup from '@/components/KnowMorePopup';
 import RequestSuccessfullPopup from '@/components/RequestSuccessfullPopup';
 import { displayRazorpay } from '@/firebase/RazorpayPayment';
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 
 let offers = [
@@ -70,6 +70,7 @@ function PaymentsPage() {
     let [popupData, setPopupData] = useState({ orderId: "" });
     let [showOrderedSuccessfull, setShowOrderedSuccessfull] = useState(false);
     let navigate = useNavigate();
+    let dispatch = useDispatch();
     let cartItems = JSON.parse(localStorage.getItem("cart"))
     let address = JSON.parse(localStorage.getItem("address"))
     let { user } = useSelector(state => state.auth)
@@ -88,7 +89,7 @@ function PaymentsPage() {
             amount: (totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee)
         }
 
-        displayRazorpay(order, cartItems, address, user, setShowOrderedSuccessfull, setPopupData);
+        displayRazorpay(order, cartItems, address, user, setShowOrderedSuccessfull, setPopupData, dispatch);
     }
 
     const handleGiftCardNumberChange = (e) => {
@@ -199,7 +200,7 @@ function PaymentsPage() {
                                     <h5 className='font-semibold'>Delivery Address</h5>
                                     <div className="border border-[rgb(8,43,61)] rounded-xl p-3 text-xs space-y-[6px] font-medium">
                                         <span className='text-[15px]'>{address.name}</span>
-                                        <p className='tracking-tight leading-[1.3]'>{address.landmark + ", " + address.houseNo + ", " + address.area + ", " + address.city + ", " + address.state + ", India (" + address.pincode + ")"}</p>
+                                        <p className='tracking-tight leading-[1.3]'>{address.landmark === "" ? "" : address.landmark + ", "}{address.houseNo + ", " + address.area + ", " + address.city + ", " + address.state + ", India (" + address.pincode + ")"}</p>
                                         <p className=''>{address.phone}</p>
                                     </div>
                                 </div>

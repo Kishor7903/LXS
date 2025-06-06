@@ -45,11 +45,17 @@ const cartSlice = createSlice({
         editAddress: (state, actions) => {
             state.address = state.address.map((add) => add.id === actions.payload.id ? actions.payload : add)
         },
+        deleteAnAddress: (state, actions) => {
+            state.address = state.address.filter(item => item.id !== actions.payload)
+        },
+        updateSetDefault: (state, actions) => {
+            state.address = state.address.map(item => ({...item, isDefault: item.id === actions.payload}))
+        },
         getAllOrdersItems: (state, actions) => {
             state.orders = actions.payload
         }
     }
 })
 
-export const { addToCart, deleteFromCart, updateCartProductQuantity, updateCartProductSize, updateCart, addToWishlist, updateWishlist, deleteFromWishlist, addAddress, updateAddress, editAddress, getAllOrdersItems } = cartSlice.actions;
+export const { addToCart, deleteFromCart, updateCartProductQuantity, updateCartProductSize, updateCart, addToWishlist, updateWishlist, deleteFromWishlist, addAddress, updateAddress, editAddress, deleteAnAddress, updateSetDefault, getAllOrdersItems } = cartSlice.actions;
 export default cartSlice.reducer;

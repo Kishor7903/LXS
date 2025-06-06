@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import ShopLayout from "./layouts/ShopLayout"
 import HomePageLayout from "./layouts/HomePageLayout"
 import AdminLayout from "./layouts/AdminLayout"
@@ -75,17 +75,27 @@ import ProductsContainer from "./pages/products/ProductsContainer"
 import EventGallery from "./pages/admin/EventGallery"
 
 function App() {
-	let {isAuthenticated, user} = useSelector(state => state.auth);
+	let { isAuthenticated, user } = useSelector(state => state.auth);
 	let dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
+	const location = useLocation();
+  const [currentPath, setCurrentPath] = useState(location.pathname);
 
 	useEffect(() => {
 		let user = JSON.parse(localStorage.getItem("user"));
-		if(user){
+		if (user) {
 			dispatch(login(user))
 		}
 		setLoading(false);
 	}, [dispatch])
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			setCurrentPath(location.pathname);
+		}, 300);
+
+		return () => clearTimeout(timeout);
+	}, [location.pathname]);
 
 	if (loading) {
 		return <div>Loading...</div>; // or a spinner/skeleton
@@ -94,7 +104,7 @@ function App() {
 	return (
 		<div className="h-screen w-full overflow-y-scroll scrollable-content">
 			<ScrollToTop />
-			<Routes>
+			<Routes location={{ pathname: currentPath }}>
 				<Route path="/" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
 						<ShopLayout />
@@ -182,18 +192,18 @@ function App() {
 						<AdminLayout />
 					</CheckAuth>
 				}>
-					<Route path="dashboard" element={<AdminDashboard/>} />
-					<Route path="carousel" element={<AdminCarousel/>} />
-					<Route path="products" element={<AdminProducts/>} />
-					<Route path="orders" element={<AdminOrders/>} />
-					<Route path="reviews" element={<AdminReviews/>} />
+					<Route path="dashboard" element={<AdminDashboard />} />
+					<Route path="carousel" element={<AdminCarousel />} />
+					<Route path="products" element={<AdminProducts />} />
+					<Route path="orders" element={<AdminOrders />} />
+					<Route path="reviews" element={<AdminReviews />} />
 					<Route path="event-gallery" element={<EventGallery />} />
-					<Route path="sellers" element={<AdminSellers/>} />
+					<Route path="sellers" element={<AdminSellers />} />
 					<Route path="newsletter" element={<AdminNewsletter />} />
 					<Route path="work-with-us" element={<AdminWorkWithUs />} />
 					<Route path="ticket-and-reports" element={<AdminTicketAndReports />} />
 					<Route path="request-call" element={<AdminRequestCall />} />
-					<Route path="settings" element={<AdminSettings/>} />
+					<Route path="settings" element={<AdminSettings />} />
 				</Route>
 			</Routes>
 		</div>
