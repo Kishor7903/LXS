@@ -92,7 +92,7 @@ function CartPage() {
     useEffect(() => {
         let items = cart?.map(item => {
             let product = products.find(p => p.id === item.item_id);
-            return product ? { ...product, quantity: item.quantity, size: item.size, id: item.id } : null;
+            return product ? { ...product, quantity: item.quantity, size: item.size, id: item.id, productId: item.item_id } : null;
         }).filter(item => item !== null);
 
         setCartItems(items);
@@ -101,7 +101,7 @@ function CartPage() {
     useEffect(() => {
         let items = cartItems.map(item => {
             let product = selectedItems.find(p => p.id === item.id); 
-            return product ? {...product, size: item.size, quantity: item.quantity} : null;
+            return product ? {...product, size: item.size, quantity: item.quantity, productId: item.productId} : null;
         }).filter(item => item !== null);
         setSelectedItems(items)
     }, [cartItems])
@@ -226,7 +226,7 @@ function CartPage() {
 
                             (
                                 <div className="text-xl opacity-70 flex justify-center items-center h-[40vh] flex-col font-semibold"><i className="fi fi-sr-shopping-cart-add text-[50px]"></i><span className="mt-2">Cart is Empty...</span><span className="text-xs">Oops! No items have landed in your cart yet.</span>
-                                <span className="text-sm mt-5">No Worries: <Link className="text-blue-500 lg:hover:underline active:underline">Browse Products</Link></span>
+                                <span className="text-sm mt-5">No Worries: <Link to="/products" className="text-blue-500 lg:hover:underline active:underline">Browse Products</Link></span>
                                 </div>
                             )
                     }

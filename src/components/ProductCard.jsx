@@ -77,14 +77,14 @@ function ProductCard({item}) {
                     <div className="flex justify-between items-center gap-2">
                         {
                             cart?.some((p) => p.item_id === item.id) ? (
-                                <button onClick={() => navigate("/checkout/cart")} className='rounded-3xl text-center px-2 lg:px-3 py-[5px] md:px-[8px] md:py-[7px] text-[9px] md:text-xs lg:text-[13px] xl:text-xs bg-[rgb(8,43,61)] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] text-white font-semibold active:bg-[rgb(227,226,226)] tracking-tighter'>Go to Cart</button>
+                                <button onClick={() => navigate("/checkout/cart")} className='rounded-3xl text-center px-2 lg:px-2 py-[5px] md:py-[7px] text-[9px] md:text-xs lg:text-[13px] xl:text-xs bg-[rgb(8,43,61)] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] text-white font-semibold active:bg-[rgb(227,226,226)] tracking-tighter'>Go to Cart</button>
                             )
 
                                 :
 
                                 (
 
-                                    <button onClick={(e) => addCart(e, item.id)} className='bg-white rounded-3xl text-center px-2 lg:px-3 py-[5px] md:px-[8px] md:py-[7px] text-[9px] md:text-xs lg:text-[13px] xl:text-xs text-[rgb(8,43,61)] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white font-semibold active:bg-[rgb(227,226,226)] tracking-tighter'>Add to Cart</button>
+                                    <button onClick={(e) => addCart(e, item.id)} className='bg-white rounded-3xl text-center px-2 lg:px-2 py-[5px] md:py-[7px] text-[9px] md:text-xs lg:text-[13px] xl:text-xs text-[rgb(8,43,61)] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white font-semibold active:bg-[rgb(227,226,226)] tracking-tighter'>Add to Cart</button>
                                 )
                         }
                     </div>

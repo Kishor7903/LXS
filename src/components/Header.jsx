@@ -8,14 +8,7 @@ import popupMenuIcon from "../assets/commonIcons/Popup Menu (Fill).png";
 import LoginButtonAndDialogBox from "./LoginButtonAndDialogBox";
 import customOrderIcon from "../assets/More (Title Bar)/Custom (Fill).png";
 import bulkOrderIcon from "../assets/More (Title Bar)/Bulk Order (Stroke).png";
-import sellOnLxsIcon from "../assets/commonIcons/Sell (Stroke).png"
-import settingIcon from "../assets/commonIcons/Setting (Stroke).png"
 import notificationIcon from "../assets/commonIcons/Notification (Stroke).png"
-import helpIcon from "../assets/commonIcons/Help (Stroke).png"
-import sellOnLxsIconActive from "../assets/commonIcons/Sell (Fill).png"
-import jobsIcon from "../assets/commonIcons/Job (Stroke).png"
-import jobsIconActive from "../assets/commonIcons/Job (Fill).png"
-import giftCardIcon from "../assets/More (Title Bar)/Gift Cards (Stroke).png";
 import vouchersAndCouponsIcon from "../assets/More (Title Bar)/Coupons (Stroke).png";
 import homeIcon from "../assets/commonIcons/Home (Stroke).png";
 import homeIconActive from "../assets/commonIcons/Home (Fill).png";
@@ -35,9 +28,9 @@ import { motion } from "framer-motion";
 import LxsLogo from "./LxsLogo";
 import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAddress, getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
+import { getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
 import { logout } from "@/store/features/authSlice";
-import { updateAddress, updateCart, updateWishlist } from "@/store/features/cartSlice";
+import { updateCart, updateWishlist } from "@/store/features/cartSlice";
 import { getAllProducts } from "@/firebase/admin";
 
 
@@ -94,10 +87,6 @@ function Header({ className }) {
 
 			getUserWishlist(user?.id).then((res) => {
 				dispatch(updateWishlist(res));
-			})
-
-			getAllAddress(user?.uid).then((res) => {
-				dispatch(updateAddress(res.items ? res.items : []));
 			})
 		}
 	}, [user])

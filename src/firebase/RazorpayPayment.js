@@ -1,7 +1,8 @@
 import axios from "axios";
 import lxsLogo from "../assets/commonIcons/LXS Logo.png";
-import { createOrderInfo } from "./auth";
+import { createOrderInfo, deleteAllCartItems } from "./auth";
 import { toast } from "react-toastify";
+import { updateCart } from "@/store/features/cartSlice";
 
 const loadScript = (src) => {
   return new Promise((resolve) => {
@@ -30,7 +31,8 @@ export const displayRazorpay = async (
   address,
   user,
   setShowOrderedSuccessfull,
-  setPopupData
+  setPopupData,
+  dispatch
 ) => {
   try {
     await loadScript("https://checkout.razorpay.com/v1/checkout.js");
@@ -67,7 +69,7 @@ export const displayRazorpay = async (
             cart.map((item) => {
                 let orderDetails = {
                   productInfo: {
-                    product_id: item.id,
+                    product_id: item.productId,
                     quantity: item.quantity,
                     size: item.size,
                     price: item.salePrice,
@@ -80,8 +82,8 @@ export const displayRazorpay = async (
                     hour: "numeric",
                     minute: "numeric",
                   }),
-                  userId: user?.uid,
-                  email: user?.email,
+                  userId: user.id,
+                  email: user.email,
                   paymentId: verifyRes.data.paymentDetails.id,
                   paymentMethod:verifyRes.data.paymentDetails.method,
                   amount: parseInt(item.quantity) * parseInt(item.salePrice),
@@ -90,6 +92,9 @@ export const displayRazorpay = async (
       
                 createOrderInfo(orderDetails);
               });
+              deleteAllCartItems(user.id).then(() => {
+                dispatch(updateCart([]))
+              })
               setPopupData({ orderId: orderId });
       
               setShowOrderedSuccessfull(true);

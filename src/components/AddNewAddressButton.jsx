@@ -58,7 +58,7 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId, setCurrentEditI
             formData.isDefault = true;
         }
 
-        addNewAddress(user?.uid, formData).then((res) => {
+        addNewAddress(user.id, formData).then((res) => {
             dispatch(addAddress(res));
             toast.success("New Address Added Successfully ...");
         })
@@ -84,8 +84,8 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId, setCurrentEditI
             return
         }
 
-        editAnAddress(user?.uid, formData, currentEditId).then((res) => {
-            dispatch(editAddress(res));
+        editAnAddress(user.id, formData, currentEditId).then(() => {
+            dispatch(editAddress(formData));
             toast.success("Address Edited Successfully...")
         })
 

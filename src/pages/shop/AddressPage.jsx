@@ -1,15 +1,19 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import KnowMorePopup from "@/components/KnowMorePopup"
 import CheckoutNavigator from "@/components/CheckoutNavigator"
+import { getAllAddress } from "@/firebase/auth"
+import { updateAddress } from "@/store/features/cartSlice"
 
 
 function AddressPage() {
     let [selectedAddress, setSelectedAddress] = useState("")
     let [isOpen, setIsOpen] = useState(false);
     let { address } = useSelector(state => state.cart);
+    let { user } = useSelector(state => state.auth);
     let navigate = useNavigate();
+    let dispatch = useDispatch();
     let cartItems = JSON.parse(localStorage.getItem("cart"));
 
     let totalPrice = cartItems.reduce((sum, cart) => sum + Number(cart.price * cart.quantity), 0);
@@ -19,7 +23,10 @@ function AddressPage() {
     let platformFee = 9;
 
     useEffect(() => {
-        setSelectedAddress(address.find(add => add.isDefault === true))
+        getAllAddress(user.id).then((res) => {
+            dispatch(updateAddress(res))
+            setSelectedAddress(res.find(add => add.isDefault === true))
+        })
     }, [])
 
     useEffect(() => {
