@@ -43,12 +43,12 @@ function ShopSettingsLayout() {
 
     const handleDropdown = (idx) => {
         if (!openDropdown) {
-            if (idx === 7) {
+            if (idx === 6) {
                 setOpenDropdown(true)
             }
         }
         else {
-            if (idx !== 7) {
+            if (idx !== 6) {
                 setOpenDropdown(false)
             }
         }
@@ -95,12 +95,12 @@ function ShopSettingsLayout() {
             icon: savedAddressIconStroke,
             activeIcon: savedAddressIconFill,
         },
-        {
-            name: "Payment Options",
-            slug: "/setting/payment-options",
-            icon: paymentOptionIconStroke,
-            activeIcon: paymentOptionIconFill,
-        },
+        // {
+        //     name: "Payment Options",
+        //     slug: "/setting/payment-options",
+        //     icon: paymentOptionIconStroke,
+        //     activeIcon: paymentOptionIconFill,
+        // },
         // {
         //     name: "Subscription",
         //     slug: "/setting/subscriptions",
@@ -166,7 +166,7 @@ function ShopSettingsLayout() {
                                 <NavLink to={item.slug} key={index} className={({ isActive }) => `${item.childrens && openDropdown ? "h-[105px] justify-start font-bold text-base" : "h-8 justify-center"} w-full flex flex-col items-end  ${isActive ? "font-bold text-base" : ""}`}>
                                     <span onClick={() => handleDropdown(index)} className="flex justify-end lg:hover:bg-slate-200 w-5/6 px-2 py-1 rounded-l-[20px] rounded-r">{item.name} <img src={`${location.includes(item.slug) || (item.childrens && openDropdown) ? item.activeIcon : item.icon}`} alt="" className="h-5 ml-2" /></span>
                                     {
-                                        index === 7 && openDropdown ? (
+                                        index === 6 && openDropdown ? (
                                             <div className="mr-5">
                                                 {
                                                     item.childrens.map((i, idx) => (

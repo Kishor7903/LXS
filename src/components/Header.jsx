@@ -6,8 +6,10 @@ import AnimatedInput from "./AnimatedInput";
 import accountIcon from "../assets/commonIcons/Account.png";
 import popupMenuIcon from "../assets/commonIcons/Popup Menu (Fill).png";
 import LoginButtonAndDialogBox from "./LoginButtonAndDialogBox";
-import customOrderIcon from "../assets/More (Title Bar)/Custom (Fill).png";
+import customOrderIcon from "../assets/More (Title Bar)/Custom (Stroke).png";
+import customOrderIconActive from "../assets/More (Title Bar)/Custom (Fill).png";
 import bulkOrderIcon from "../assets/More (Title Bar)/Bulk Order (Stroke).png";
+import bulkOrderIconActive from "../assets/More (Title Bar)/Bulk Order (Fill).png";
 import notificationIcon from "../assets/commonIcons/Notification (Stroke).png"
 import vouchersAndCouponsIcon from "../assets/More (Title Bar)/Coupons (Stroke).png";
 import homeIcon from "../assets/commonIcons/Home (Stroke).png";
@@ -155,11 +157,13 @@ function Header({ className }) {
 		{
 			name: "Personalized Order",
 			icon: customOrderIcon,
-			slug: ""
+			activeIcon: customOrderIconActive,
+			slug: "/personalized-order"
 		},
 		{
 			name: "Bulk Order",
 			icon: bulkOrderIcon,
+			activeIcon: bulkOrderIconActive,
 			slug: "/bulk-order"
 		},
 		// {
@@ -167,11 +171,11 @@ function Header({ className }) {
 		// 	icon: giftCardIcon,
 		// 	slug: ""
 		// },
-		{
-			name: "Voucher & Coupons",
-			icon: vouchersAndCouponsIcon,
-			slug: ""
-		},
+		// {
+		// 	name: "Voucher & Coupons",
+		// 	icon: vouchersAndCouponsIcon,
+		// 	slug: ""
+		// },
 		// {
 		// 	name: "About Us",
 		// 	icon: aboutUsIcon,
@@ -204,8 +208,7 @@ function Header({ className }) {
 										{
 											user && (
 												<>
-													<p className="text-[10px] xl:text-xs relative bottom-[3px]">{user?.email}</p>
-													<p className="text-[9px] xl:text-[10px] relative bottom-[5px]">+91 {user?.phone}</p>
+													<p className="text-[10px] xl:text-sm relative bottom-[3px] text-[rgb(240,85,120)]">User Account</p>
 												</>
 											)
 										}
@@ -317,9 +320,9 @@ function Header({ className }) {
 								<ul className="text-xs font-medium flex-flex-col gap-2">
 									{
 										menuItems.map((items, index) => (
-											<Link to={items.slug} key={index} onClick={() => setIsHovered(false)} className="text-left flex gap-1 items-center hover:bg-slate-200 p-1 cursor-pointer hover:text-[rgb(8,43,61)]">
-												<img src={items.icon} alt="" className="h-3" /> {items.name}
-											</Link>
+											<NavLink to={items.slug} key={index} onClick={() => setIsHovered(false)} className={({isActive}) => `text-left flex gap-1 items-center hover:bg-slate-200 rounded p-1 cursor-pointer hover:text-[rgb(8,43,61)] ${isActive ? "font-bold" : ""}`}>
+												<img src={location.includes(items.slug) ? items.activeIcon : items.icon} alt="" className="h-3" /> {items.name}
+											</NavLink>
 										))
 									}
 								</ul>

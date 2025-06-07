@@ -73,6 +73,7 @@ import AdminRequestCall from "./pages/admin/AdminRequestCall"
 import PaymentsPage from "./pages/shop/PaymentsPage"
 import ProductsContainer from "./pages/products/ProductsContainer"
 import EventGallery from "./pages/admin/EventGallery"
+import PersonalizedOrder from "./pages/shop/PersonalizedOrder"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -117,6 +118,7 @@ function App() {
 					<Route path="about-us" element={<AboutUs />} />
 					<Route path="all-blogs" element={<AllBlogs />} />
 					<Route path="bulk-order" element={<BulkOrder />} />
+					<Route path="personalized-order" element={<PersonalizedOrder />} />
 				</Route>
 				<Route path="/policy" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
@@ -162,7 +164,7 @@ function App() {
 					<Route path="my-orders" element={<ShopSettingMyOrders />} />
 					<Route path="wishlist" element={<ShopSettingWishlist />} />
 					<Route path="saved-addresses" element={<ShopSettingSavedAddresses />} />
-					<Route path="payment-options" element={<ShopSettingPaymentOptions />} />
+					{/* <Route path="payment-options" element={<ShopSettingPaymentOptions />} /> */}
 					<Route path="subscriptions" element={<ShopSettingSubscriptions />} />
 					<Route path="my-ratings-reviews" element={<ShopSettingMyRatingsAndReviews />} />
 					<Route path="settings" element={<ShopSettingSettings />} >
@@ -180,12 +182,12 @@ function App() {
 				} >
 					<Route path="notifications" element={<Notifications />} />
 					<Route path="order-details/:id" element={<OrderDetailsPage />} />
-					<Route path="track-package" element={<TrackPackage />} />
-					<Route path="product-reviews" element={<ProductReviewPage />} />
-					<Route path="seller-profile" element={<SellerProfile />} />
-					<Route path="product-exchange" element={<ProductExchange />} />
-					<Route path="product-return" element={<ProductReturn />} />
-					<Route path="track-return" element={<TrackReturnAndRefund />} />
+					<Route path="track-package/:id" element={<TrackPackage />} />
+					<Route path="product-reviews/:id" element={<ProductReviewPage />} />
+					<Route path="seller-profile/:id" element={<SellerProfile />} />
+					<Route path="product-exchange/:id" element={<ProductExchange />} />
+					<Route path="product-return/:id" element={<ProductReturn />} />
+					<Route path="track-return/:id" element={<TrackReturnAndRefund />} />
 				</Route>
 				<Route path="/admin" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

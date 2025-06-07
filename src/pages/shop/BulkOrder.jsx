@@ -34,7 +34,7 @@ function BulkOrder() {
                 <div className="flex flex-wrap gap-5">
                     {
                         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((_, idx) => (
-                            <div className="h-60 w-[18.8%] rounded-2xl border border-[rgb(8,43,61,0.5)]"></div>
+                            <div key={idx} className="h-60 w-[18.8%] rounded-2xl border border-[rgb(8,43,61,0.5)]"></div>
                         ))
                     }
                 </div>

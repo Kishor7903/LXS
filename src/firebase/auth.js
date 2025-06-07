@@ -181,7 +181,13 @@ export const productSizeChange = async (user_id, item) => {
 export const addWishlistItem = async (user_id, item) => {
   try {
     const wishlistRef = collection(fireDB, "user", user_id, "wishlist");
-    const docRef = await addDoc(wishlistRef, { item_id: item });
+    const docRef = await addDoc(wishlistRef, { item_id: item, timestamp: new Date().toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    }) });
 
     return { id: docRef.id, item_id: item };
   } catch (error) {
@@ -192,13 +198,13 @@ export const addWishlistItem = async (user_id, item) => {
 export const getUserWishlist = async (user_id) => {
   try {
     const wishlistRef = collection(fireDB, "user", user_id, "wishlist");
-    const wishlistSnapshot = await getDocs(wishlistRef);
+    const wishlistQuery = query(wishlistRef, orderBy("timestamp", "desc"));
+    const wishlistSnapshot = await getDocs(wishlistQuery);
 
-    const wishlistItems = [];
-    wishlistSnapshot.forEach((doc) => {
-      wishlistItems.push({ id: doc.id, ...doc.data() });
-    });
-
+    const wishlistItems = wishlistSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     return wishlistItems;
   } catch (error) {
     console.log("Get Wishlist Items Error: ", error.message);

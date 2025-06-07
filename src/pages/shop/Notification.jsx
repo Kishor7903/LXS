@@ -4,22 +4,25 @@ import { useState } from "react";
 
 function Notification() {
     const [settings, setSettings] = useState({
-        "Email Notification": {
+        "Push Notification": {
             "order updates": false,
             "promotions & offers": false,
             "security Alerts": false,
         },
-        "Push Notification": {
-            "mobile App alerts": false,
-            "browser notification": false,
+        "SMS Notification": {
+            "order updates": false,
+            "promotions & offers": false,
+            "security Alerts": false,
         },
-        "SMS & Whatsapp Notification": {
-            "mobile App alerts": false,
-            "browser notification": false,
+        "Whatsapp Notification": {
+            "order updates": false,
+            "promotions & offers": false,
+            "security Alerts": false,
         },
-        "Newsletter Subscription": {
-            "enable/disable marketing Emails": false,
-            "select topic of interest(new arrival, trending, discount)": false,
+        "Email Notification": {
+            "order updates": false,
+            "promotions & offers": false,
+            "security Alerts": false,
         },
     });
 

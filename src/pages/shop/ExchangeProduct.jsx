@@ -1,6 +1,7 @@
 import Breadcrum from "@/components/Breadcrum"
 import RequestSuccessfullPopup from "@/components/RequestSuccessfullPopup"
 import { useRef, useState } from "react"
+import { useParams } from "react-router-dom"
 
 function ProductExchange() {
     const inputRef = useRef(null)
@@ -16,6 +17,7 @@ function ProductExchange() {
     let [selectedImage3, setSelectedImage3] = useState("");
     let [selectedImage4, setSelectedImage4] = useState("");
     let [showExchangeSuccessfullPopup, setShowExchangeSuccessfullPopup] = useState(false);
+    let { id } = useParams();
 
     const handleimgFileChange = (e, id) => {
         let selectedFile = e.target.files[0];
@@ -90,7 +92,7 @@ function ProductExchange() {
         },
         {
             label: "Order Details",
-            path: "/orders/order-details"
+            path: `/orders/order-details/${id}`
         },
         {
             label: "Request Product Exchange"
