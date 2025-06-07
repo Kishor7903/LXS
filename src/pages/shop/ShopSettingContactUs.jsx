@@ -152,7 +152,7 @@ function ShopSettingContactUs() {
             title: "Having any Trouble?",
             menus: [
                 {
-                    titleText: "Report Issues:",
+                    titleText: "Having an Issues:",
                     linkText: "Report",
                     onClick: handleReportAndIsuue
                 }
@@ -163,12 +163,12 @@ function ShopSettingContactUs() {
             title: "Contact Support",
             menus: [
                 {
-                    titleText: "Email Support:",
+                    titleText: "Email:",
                     linkText: "Write",
                     onClick: handleSendGmail
                 },
                 {
-                    titleText: "Whatsapp Support",
+                    titleText: "Whatsapp:",
                     linkText: "Write",
                     onClick: handleSendWhatsApp
                 },

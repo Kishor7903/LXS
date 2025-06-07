@@ -19,10 +19,24 @@ const loadScript = (src) => {
 };
 
 function generateOrderId() {
-  const prefix = "LXS";
-  const timestamp = Date.now().toString();
+  const prefix = "LXS-";
+  const timestamp = Date.now().toString().slice(3, 14);
   const random = Math.floor(1000 + Math.random() * 9000).toString();
-  return prefix + timestamp + random; // 20-digit string
+  let newTimestamp = timestamp + random;
+  const last4 = newTimestamp.slice(-4);
+
+  const remaining = newTimestamp.slice(0, -4);
+
+  const reversedChunks = remaining
+    .split("")
+    .reverse()
+    .join("")
+    .match(/.{1,5}/g) // chunks of 5
+    .map((chunk) => chunk.split("").reverse().join(""))
+    .reverse();
+
+  const formatted = [...reversedChunks, last4].join("-");
+   return prefix + formatted;
 }
 
 export const displayRazorpay = async (
@@ -55,51 +69,50 @@ export const displayRazorpay = async (
       image: lxsLogo,
       description: "For Payment Testing Purpose",
       handler: async function (response) {
-
         let verifyRes = await axios.post(
-            "/sachin-kumar-24/us-central1/verifyPayment",
-            {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }
+          "/sachin-kumar-24/us-central1/verifyPayment",
+          {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          }
         );
 
         if (verifyRes.data.success) {
-            cart.map((item) => {
-                let orderDetails = {
-                  productInfo: {
-                    product_id: item.productId,
-                    quantity: item.quantity,
-                    size: item.size,
-                    price: item.salePrice,
-                  },
-                  address,
-                  timestamp: new Date().toLocaleString("en-US", {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                  }),
-                  userId: user.id,
-                  email: user.email,
-                  paymentId: verifyRes.data.paymentDetails.id,
-                  paymentMethod:verifyRes.data.paymentDetails.method,
-                  amount: parseInt(item.quantity) * parseInt(item.salePrice),
-                  orderId,
-                };
-      
-                createOrderInfo(orderDetails);
-              });
-              deleteAllCartItems(user.id).then(() => {
-                dispatch(updateCart([]))
-              })
-              setPopupData({ orderId: orderId });
-      
-              setShowOrderedSuccessfull(true);
+          cart.map((item) => {
+            let orderDetails = {
+              productInfo: {
+                product_id: item.productId,
+                quantity: item.quantity,
+                size: item.size,
+                price: item.salePrice,
+              },
+              address,
+              timestamp: new Date().toLocaleString("en-US", {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              }),
+              userId: user.id,
+              email: user.email,
+              paymentId: verifyRes.data.paymentDetails.id,
+              paymentMethod: verifyRes.data.paymentDetails.method,
+              amount: parseInt(item.quantity) * parseInt(item.salePrice),
+              orderId,
+            };
+
+            createOrderInfo(orderDetails);
+          });
+          deleteAllCartItems(user.id).then(() => {
+            dispatch(updateCart([]));
+          });
+          setPopupData({ orderId: orderId });
+
+          setShowOrderedSuccessfull(true);
         } else {
-            toast.error("Payment Verification Failed...")
+          toast.error("Payment Verification Failed...");
         }
       },
       prefill: {

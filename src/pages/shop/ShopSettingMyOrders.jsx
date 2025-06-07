@@ -16,7 +16,7 @@ function ShopSettingMyOrders() {
 
     let orderItems = orders?.map(item => {
         let product = products.find(p => p.id === item.productInfo.product_id);
-        return product ? { ...product, quantity: item.productInfo.quantity, size: item.productInfo.size, orderId: item.orderId, amount: item.amount, timestamp: item.timestamp, id:item.id } : null;
+        return product ? { ...product, quantity: item.productInfo.quantity, size: item.productInfo.size, orderId: item.orderId, amount: item.amount, timestamp: item.timestamp, order_id:item.id } : null;
     }).filter(item => item !== null);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function ShopSettingMyOrders() {
                 <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
                     {
                         orderItems.map((item, index) => (
-                            <div key={index} className="flex items-center p-[6px] border border-[rgb(8,43,61)] rounded-xl shadow-[0px_5px_10px_-6px_rgb(8,43,61)] w-full" >
+                            <div key={index} className="flex items-center p-[6px] border border-[rgb(8,43,61)] scale-[0.98] duration-100 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] rounded-xl lg:hover:scale-100 w-full cursor-pointer" onClick={() => navigate(`/orders/order-details/${item.order_id}`)} >
                                 <div className="h-20 w-20 rounded-[6px] overflow-hidden mr-1">
                                     <img
                                         src={item.images[0]}
@@ -49,7 +49,7 @@ function ShopSettingMyOrders() {
                                 </div>
                                 <div className="flex flex-col justify-between h-16 items-end w-[40%]">
                                     <p className="text-[11px] mb-1 text-gray-400 tracking-tighter">Order ID: {item.orderId}</p>
-                                    <HoverButton onClick={() => navigate(`/orders/order-details/${item.id}`)} className="px-2 text-[11px] font-medium">View Details</HoverButton>
+                                    <HoverButton onClick={(e) => {e.stopPropagation() ,navigate(`/product-details/${item.id}`)}} className="px-2 text-[11px] font-medium">View Product Details</HoverButton>
                                 </div>
                             </div>
                         ))

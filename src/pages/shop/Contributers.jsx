@@ -9,11 +9,11 @@ function Contributers() {
 
             <div className="flex flex-col md:flex-row md:items-end justify-center md:justify-between pt-5 lg:pb-5 lg:gap-44">
 
-                <ContributersImage imgClassName="p-10 md:p-16 lg:p-22 xl:p-28" className="hidden md:block" imgText="COO, SCM" contributerName="Aditya Kumar" />
+                <ContributersImage imgClassName="p-10 md:p-16 lg:p-22 xl:p-28" className="hidden md:block" imgText="Co-Founder, COO" contributerName="Aditya Kumar" />
 
                 <ContributersImage imgClassName="p-16 md:p-22 lg:p-30 xl:p-36" imgText="Founder, CEO" contributerName="Sachin Kumar" />
 
-                <ContributersImage imgClassName="p-10 md:p-16 lg:p-22 xl:p-28" className="hidden md:block" imgText="Web & App Dev" contributerName="Kishore Kumar" />
+                <ContributersImage imgClassName="p-10 md:p-16 lg:p-22 xl:p-28" className="hidden md:block" imgText="Co-Founder, CTO" contributerName="Kishore Kumar" />
 
                 <div className="flex md:hidden gap-20 w-[100vw] justify-center">
 

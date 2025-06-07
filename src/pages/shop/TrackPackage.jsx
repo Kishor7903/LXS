@@ -1,7 +1,10 @@
 import Breadcrum from "@/components/Breadcrum"
+import { useParams } from "react-router-dom"
 
 
 function TrackPackage() {
+    let { id } = useParams();
+    
     let items = [
         {
             label: "Your Orders",
@@ -9,7 +12,7 @@ function TrackPackage() {
         },
         {
             label: "Orders Details",
-            path: "/orders/order-details"
+            path: `/orders/order-details/${id}`
         },
         {
             label: "Your Orders",

@@ -1,7 +1,7 @@
 import Breadcrum from "@/components/Breadcrum"
 import RequestSuccessfullPopup from "@/components/RequestSuccessfullPopup"
 import { useRef, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 
 function ProductReturn() {
@@ -18,6 +18,7 @@ function ProductReturn() {
     let [selectedImage3, setSelectedImage3] = useState("");
     let [selectedImage4, setSelectedImage4] = useState("");
     let [showReturnAndRefundPopup, setShowReturnAndRefundPopup] = useState(false);
+    let { id } = useParams();
 
     const handleimgFileChange = (e, id) => {
         let selectedFile = e.target.files[0];
@@ -92,7 +93,7 @@ function ProductReturn() {
         },
         {
             label: "Order Details",
-            path: "/orders/order-details"
+            path: `/orders/order-details/${id}`
         },
         {
             label: "Request Product Return"

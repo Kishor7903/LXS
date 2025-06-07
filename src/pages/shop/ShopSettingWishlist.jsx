@@ -13,6 +13,7 @@ function ShopSettingWishlist() {
 	let { user } = useSelector(state => state.auth);
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
+	console.log(wishlistItems);
 
 	const moveToCart = (e, item_id) => {
 		e.preventDefault();
@@ -61,7 +62,7 @@ function ShopSettingWishlist() {
 					{
 						wishlist && wishlist.length > 0 ? (
 							wishlistItems?.map((item, index) => (
-								<div key={index} className="flex gap-2 items-center p-[6px] border border-[rgb(8,43,61)] rounded-xl shadow-[0px_5px_10px_-6px_rgb(8,43,61)] w-full h-24">
+								<div key={index} className="flex gap-2 items-center p-[6px] border border-[rgb(8,43,61)] rounded-xl w-full h-24 scale-[0.98] lg:hover:scale-100 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] duration-100 cursor-pointer">
 									<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1" onClick={() => navigate(`/product-details/${item.id}`)}>
 										<img
 											src={item.images[0]}

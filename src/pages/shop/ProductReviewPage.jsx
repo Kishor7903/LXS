@@ -2,6 +2,7 @@ import Breadcrum from "@/components/Breadcrum";
 import starIconStroke from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import starIconFill from "../../assets/commonIcons/Rewards 2 (Fill).png"
 import { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 
 
 function ProductReviewPage() {
@@ -20,6 +21,7 @@ function ProductReviewPage() {
     let [productRating, setProductRating] = useState(0);
     let [deliveryRating, setDeliveryRating] = useState(0);
     let [sellerRating, setSellerRating] = useState(0);
+    let { id } = useParams();
 
     let items = [
         {
@@ -28,7 +30,7 @@ function ProductReviewPage() {
         },
         {
             label: "Orders Details",
-            path: "/orders/order-details"
+            path: `/orders/order-details/${id}`
         },
         {
             label: "Product Reviews",

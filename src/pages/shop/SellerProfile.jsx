@@ -1,5 +1,5 @@
 import Breadcrum from "@/components/Breadcrum"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import starIconStroke from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import starIconFill from "../../assets/commonIcons/Rewards 2 (Fill).png"
 import { useState } from "react"
@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress"
 function SellerProfile() {
     let [sellerOverallRating, setSellerOverallRating] = useState(0);
     let [sellerRating, setSellerRating] = useState(0);
+    let { id } = useParams();
 
     let items = [
         {
@@ -17,7 +18,7 @@ function SellerProfile() {
         },
         {
             label: "Order Details",
-            path: "/orders/seller-profile"
+            path: `/orders/order-details/${id}`
         },
         {
             label: "Seller Profile"

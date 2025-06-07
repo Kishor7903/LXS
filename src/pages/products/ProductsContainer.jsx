@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '@/firebase/admin';
-import {filteredProductItem, sortedProductItems } from '@/firebase/auth';
+import { filteredProductItem, sortedProductItems } from '@/firebase/auth';
 import ProductCard from '@/components/ProductCard';
+import DualRangeSlider from '@/components/DualRangeSlider';
 
 function ProductsContainer() {
     let dispatch = useDispatch();
-    let [rangeValue, setRangeValue] = useState("")
     let [sortByValue, setSortByValue] = useState("");
     let [filterByGender, setFilterByGender] = useState("");
     let [filterByBrand, setFilterByBrand] = useState("");
     let { products } = useSelector(state => state.admin)
     const [product, setProduct] = useState(products);
+    const [minValue, setMinValue] = useState(400);
+    const [maxValue, setMaxValue] = useState(4000);
 
     const handleSortOnChange = (e) => {
         e.preventDefault();
@@ -26,7 +28,7 @@ function ProductsContainer() {
     const handleRangeApply = (e) => {
         e.preventDefault();
 
-        filteredProductItem(`salePrice_400_${rangeValue}`).then((res) => {
+        filteredProductItem(`salePrice_${minValue}_${maxValue}`).then((res) => {
             setProduct(res);
         })
     }
@@ -36,10 +38,13 @@ function ProductsContainer() {
 
         setFilterByGender(e.target.value);
 
-
-        filteredProductItem(e.target.value).then((res) => {
-            setProduct(res);
-        })
+        if (e.target.value === "all") {
+            setProduct(products)
+        } else {
+            filteredProductItem(e.target.value).then((res) => {
+                setProduct(res);
+            })
+        }
     }
 
     const handleBrandApply = (e) => {
@@ -53,7 +58,6 @@ function ProductsContainer() {
     }
 
     useEffect(() => {
-        setRangeValue("500");
         getAllProducts(dispatch)
     }, []);
 
@@ -65,7 +69,7 @@ function ProductsContainer() {
         <div className='w-full min-h-96 flex flex-col pt-5 pb-1'>
             <div className="h-14 flex justify-end gap-5 items-center px-5 md:px-8 lg:px-12 xl:px-16">
 
-                <div className="border px-1 lg:px-2 text-xs lg:text-base py-1 border-[rgb(8,43,61)] rounded-full tracking-tight">
+                <div className="px-1 lg:pl-4 lg:pr-2 text-xs lg:text-base py-[6px] border-[rgb(8,43,61)] rounded-full tracking-tight shadow-[0px_0px_10px_-1px_rgb(8,43,61)]">
                     <label htmlFor="sort-by">Brand :</label>
                     <select name='sort-by' value={filterByBrand} onChange={handleBrandApply} className='rounded-full focus:outline-none font-semibold bg-white'>
                         <option value="brand_Lxs">LXS</option>
@@ -74,7 +78,7 @@ function ProductsContainer() {
                         <option value="brand_Hrx">HRX</option>
                     </select>
                 </div>
-                <div className="border px-1 lg:px-2 text-xs lg:text-base py-1 border-[rgb(8,43,61)] rounded-full tracking-tight">
+                {/* <div className="border px-1 lg:px-2 text-xs lg:text-base py-1 border-[rgb(8,43,61)] rounded-full tracking-tight shadow-[0px_0px_10px_-2px_rgb(8,43,61)]">
                     <label htmlFor="sort-by">Size :</label>
                     <select name='sort-by' value={sortByValue} onChange={handleSortOnChange} className='rounded-full focus:outline-none font-semibold bg-white'>
                         <option value="">S</option>
@@ -82,25 +86,25 @@ function ProductsContainer() {
                         <option value="">L</option>
                         <option value="">XL</option>
                     </select>
-                </div>
-                <div className="border px-1 lg:px-2 text-xs lg:text-base py-1 border-[rgb(8,43,61)] rounded-full tracking-tight">
+                </div> */}
+                <div className="px-1 lg:pl-4 lg:pr-2 text-xs lg:text-base py-[6px] border-[rgb(8,43,61)] rounded-full tracking-tight shadow-[0px_0px_10px_-1px_rgb(8,43,61)]">
                     <label htmlFor="sort-by">Category :</label>
                     <select name='sort-by' value={filterByGender} onChange={handleGenderApply} className='rounded-full focus:outline-none font-semibold bg-white'>
-                        <option value="" disabled>Default</option>
+                        <option value="all">Default</option>
                         <option value="category_Mens">Male</option>
                         <option value="category_Womens">Female</option>
-                        <option value="category_Womens">Unisex</option>
                     </select>
                 </div>
-                <div className="flex items-center gap-2 border px-1 lg:px-2 text-xs lg:text-base py-1 border-[rgb(8,43,61)] rounded-full tracking-tight">
+                <div className="flex items-center gap-2 px-1 lg:pl-4 lg:pr-2 text-xs lg:text-base py-[6px] border-[rgb(8,43,61)] rounded-full tracking-tight shadow-[0px_0px_10px_-1px_rgb(8,43,61)]">
                     <label htmlFor="sort-by">Price :</label>
-                    <input type="range" className='text-[rgb(8,43,61)] h-[2px] custom-slider-range z-10' min="500" max="3000" value={rangeValue} onChange={(e) => { e.preventDefault(), setRangeValue(e.target.value) }} />
+                    <DualRangeSlider min={300} max={4000} minValue={minValue} setMinValue={setMinValue} maxValue={maxValue} setMaxValue={setMaxValue} />
+                    {/* <input type="range" className='text-[rgb(8,43,61)] h-[2px] custom-slider-range z-10' min="500" max="3000" value={rangeValue} onChange={(e) => { e.preventDefault(), setRangeValue(e.target.value) }} /> */}
                     {
-                        <p className='font-medium w-[120px]'>(₹400 - ₹{rangeValue})</p>
+                        <p className='font-medium text-sm w-[168px] py-[2px] text-center border rounded-full bg-slate-200 shadow-[inset_0px_0px_10px_-4px_rgb(8,43,61)]'>Min: {minValue} - Max: {maxValue}</p>
                     }
                     <button className='h-7 px-3 text-sm bg-[rgb(8,43,61)] text-white font-medium rounded-full' onClick={handleRangeApply}>Apply</button>
                 </div>
-                <div className="border px-1 lg:px-2 text-xs lg:text-base py-1 border-[rgb(8,43,61)] rounded-full tracking-tight">
+                <div className="px-1 lg:pl-4 lg:pr-2 text-xs lg:text-base py-[6px] border-[rgb(8,43,61)] rounded-full tracking-tight shadow-[0px_0px_10px_-1px_rgb(8,43,61)]">
                     <label htmlFor="sort-by">Sort By :</label>
                     <select name='sort-by' value={sortByValue} onChange={handleSortOnChange} className='rounded-full focus:outline-none font-semibold bg-white'>
                         <option value="timestamp_asc">Popularity</option>
@@ -115,7 +119,7 @@ function ProductsContainer() {
                     {
                         product.map((item) => {
                             return (
-                                <ProductCard item={item}  />
+                                <ProductCard item={item} />
                             )
                         })
                     }

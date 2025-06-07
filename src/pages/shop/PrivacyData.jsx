@@ -4,16 +4,16 @@ import { Link } from "react-router-dom";
 function PrivacyData() {
 
     const privacyData = [
-        {
-            name: "Promotional Offers",
-            content: [
-                {
-                    key: "newsletter:",
-                    value: "Request email withdrawal",
-                    slug: ""
-                },
-            ],
-        },
+        // {
+        //     name: "Promotional Offers",
+        //     content: [
+        //         {
+        //             key: "newsletter:",
+        //             value: "Request email withdrawal",
+        //             slug: ""
+        //         },
+        //     ],
+        // },
         {
             name: "Legal & compliances",
             content: [
@@ -109,16 +109,16 @@ function PrivacyData() {
                 },
             ],
         },
-        {
-            name: "Account Management",
-            content: [
-                {
-                    key: "delete account:",
-                    value: "Request account deletion",
-                    slug: ""
-                },
-            ],
-        },
+        // {
+        //     name: "Account Management",
+        //     content: [
+        //         {
+        //             key: "delete account:",
+        //             value: "Request account deletion",
+        //             slug: ""
+        //         },
+        //     ],
+        // },
     ];
 
 
