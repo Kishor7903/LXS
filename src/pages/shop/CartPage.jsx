@@ -1,8 +1,8 @@
 import CheckoutNavigator from "@/components/CheckoutNavigator";
 import HoverButton from "@/components/HoverButton";
 import KnowMorePopup from "@/components/KnowMorePopup";
-import { addWishlistItem, deleteCartItem, productQuantityChange, productSizeChange } from "@/firebase/auth";
-import { addToWishlist, deleteFromCart, updateCartProductQuantity, updateCartProductSize } from "@/store/features/cartSlice";
+import { addWishlistItem, deleteCartItem, handleToggleAll, handletoggleSelect, productQuantityChange, productSizeChange } from "@/firebase/auth";
+import { addToWishlist, cartToggleSelect, deleteFromCart, toggleAllItems, updateCartProductQuantity, updateCartProductSize } from "@/store/features/cartSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom"
@@ -82,39 +82,44 @@ function CartPage() {
     const handleSelectAll = (e) => {
         setIsSelectedAll(e.target.checked)
 
+        handleToggleAll(user.id, e.target.checked).then(() => {
+            dispatch(toggleAllItems(e.target.checked))
+        })
+
         if(e.target.checked){
             setSelectedItems(cartItems)
         } else{
             setSelectedItems([])
         }
+        
+    }
+
+    const handletoggleCartSelect = (e, item_id, value) => {
+        e.preventDefault();
+
+        handletoggleSelect(user.id, item_id, value).then(() => {
+            dispatch(cartToggleSelect({item_id, value}))
+        })
+    }
+
+    const handleProceedToAddress = () => {
+        localStorage.setItem("cart", JSON.stringify(selectedItems));
+        navigate("/checkout/address");
     }
 
     useEffect(() => {
         let items = cart?.map(item => {
             let product = products.find(p => p.id === item.item_id);
-            return product ? { ...product, quantity: item.quantity, size: item.size, id: item.id, productId: item.item_id } : null;
+            return product ? { ...product, quantity: item.quantity, size: item.size, id: item.id, productId: item.item_id, isSelected: item.isSelected } : null;
         }).filter(item => item !== null);
 
         setCartItems(items);
     }, [cart])
 
     useEffect(() => {
-        let items = cartItems.map(item => {
-            let product = selectedItems.find(p => p.id === item.id); 
-            return product ? {...product, size: item.size, quantity: item.quantity, productId: item.productId} : null;
-        }).filter(item => item !== null);
+        let items = cartItems.filter(item => item.isSelected === true);
         setSelectedItems(items)
     }, [cartItems])
-
-    useEffect(() => {
-        let items = JSON.parse(localStorage.getItem("cart"))
-        if (items == []){
-            setSelectedItems(cartItems);
-        }
-        else{
-            setSelectedItems(items)
-        }
-    }, [])
 
     useEffect(() => {
         if(selectedItems.length === cartItems.length){
@@ -123,10 +128,6 @@ function CartPage() {
             setIsSelectedAll(false)
         }
     }, [handleSelectAll])
-
-    useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(selectedItems))
-    }, [setSelectedItems, selectedItems])
 
     return (
         <div className="w-full h-full py-3 lg:py-8 px-3 lg:px-16 flex gap-10">
@@ -145,7 +146,7 @@ function CartPage() {
                                     <div className="flex justify-between px-5 text-sm font-medium">Items Selected ({selectedItems.length}/{cartItems.length}) <span className="flex items-center"><label htmlFor="check" className="lg:hover:underline cursor-pointer">{isSelectedAll ? "Deselect All" : "Select All"}</label> <input checked={isSelectedAll} onChange={handleSelectAll} id="check" type="checkbox" className="ml-2 relative bottom-[1px]" /></span></div>
                                     {
                                         cartItems.map((item, index) => (
-                                            <div key={index} className={` border-[rgb(8,43,61)] rounded-xl p-[6px] lg:p-2 flex gap-2 lg:gap-4 relative overflow-hidden cursor-pointer ${selectedItems.some(p => p.id === item.id) ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "border scale-95"}`} onClick={() => selectedItems.find(p => p.id === item.id) ? setSelectedItems(selectedItems.filter(i => i.id !== item.id)) : setSelectedItems([...selectedItems, item])}>
+                                            <div key={index} className={` border-[rgb(8,43,61)] rounded-xl p-[6px] lg:p-2 flex gap-2 lg:gap-4 relative overflow-hidden cursor-pointer ${item.isSelected ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "border scale-95"}`} onClick={(e) => handletoggleCartSelect(e, item.id, !item.isSelected)}>
                                                 <img onClick={(e) => { e.stopPropagation(), navigate(`/product-details/${item.id}`) }} src={item.images[0]} alt="" className="w-24 rounded border lg:border-2" />
                                                 <div className="leading-[0.7] lg:leading-3">
                                                     <h4 className="text-sm lg:text-base font-bold w-full line-clamp-1">{item.name}</h4>
@@ -185,7 +186,7 @@ function CartPage() {
                                                     }
                                                 </div>
                                                 {
-                                                    selectedItems.some(p => p.id === item.id) && (
+                                                    item.isSelected && (
                                                         <div className="h-10 w-24 bg-[rgb(8,43,61)] absolute -top-3 -right-10 rotate-45 flex justify-center items-end">
                                                             <i className="fi fi-br-check text-white relative left-[2px] top-[2px] -rotate-45"></i>
                                                         </div>
@@ -213,7 +214,7 @@ function CartPage() {
                                     </div>
                                     {
                                         selectedItems.length > 0 && (
-                                            <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={() => navigate("/checkout/address")}>Proceed To Address</button>
+                                            <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToAddress}>Proceed To Address</button>
                                         )
                                     }
                                     

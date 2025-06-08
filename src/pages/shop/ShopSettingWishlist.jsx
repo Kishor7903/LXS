@@ -13,7 +13,6 @@ function ShopSettingWishlist() {
 	let { user } = useSelector(state => state.auth);
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
-	console.log(wishlistItems);
 
 	const moveToCart = (e, item_id) => {
 		e.preventDefault();
