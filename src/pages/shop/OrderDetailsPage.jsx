@@ -57,7 +57,7 @@ function OrderDetailsPage() {
                             <span className="font-semibold text-base">Order Summary</span>
                             <span className=" flex justify-between">item(s) Subtotal : <p className="text-right">₹{productInfo[0]?.price}</p></span>
                             <span className=" flex justify-between">Shipping : <p className="text-right">₹{deliveryPrice}</p></span>
-                            <span className=" flex justify-between">Total : <p className="text-right">₹{productInfo[0]?.price + deliveryPrice}</p></span>
+                            <span className=" flex justify-between">Total : <p className="text-right">₹{parseInt(productInfo[0]?.price) + deliveryPrice}</p></span>
                             <span className=" flex justify-between text-red-500">Offer Applied : <p className="text-right">-₹{productInfo[0]?.price - productInfo[0]?.salePrice + deliveryPrice}</p></span>
                             <span className="text-lg mt-1 font-bold flex justify-between text-green-500">Grand Total : <p className="text-right">₹{productInfo[0]?.salePrice}</p></span>
                         </div>
@@ -68,7 +68,7 @@ function OrderDetailsPage() {
                                 <h6 className="font-semibold"> Expectde Delivery: 8 January, 2025</h6>
                             </div>
                             <div className="h-[88%] flex gap-5">
-                                <img src={productInfo[0]?.images[0]} alt="" className="border w-[25%] rounded-2xl object-fit" />
+                                <img src={productInfo[0]?.images[0]} alt="" className="border w-[25%] rounded-2xl object-fit" onClick={() => navigate(`/product-details/${productInfo[0]?.id}`)} />
                                 <div className="w-[65%] text-xs leading-4 relative">
                                     <div className="flex gap-2 items-center">
                                     <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[10px] text-white font-medium">LXS Certified</span>
@@ -89,7 +89,7 @@ function OrderDetailsPage() {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-1/4 h-full flex flex-col justify-between text-sm font-semibold">
+                        <div className="w-1/4 h-full flex flex-col justify-end gap-3 text-sm font-semibold">
                             <button className="h-8 w-full bg-gray-200 lg:hover:bg-gray-300 rounded-full border border-[rgb(8,43,61)]" onClick={() => navigate(`/orders/track-package/${id}`)}>Track Package</button>
                             <button className="h-8 w-full bg-gray-200 lg:hover:bg-gray-300 rounded-full border border-[rgb(8,43,61)]" onClick={() => navigate(`/orders/product-reviews/${id}`)}>Product Review</button>
                             <button className="h-8 w-full bg-gray-200 lg:hover:bg-gray-300 rounded-full border border-[rgb(8,43,61)]" onClick={() => navigate(`/orders/product-reviews/${id}`)}>Delivery Feedback</button>

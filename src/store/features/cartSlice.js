@@ -18,6 +18,12 @@ const cartSlice = createSlice({
         deleteFromCart: (state, actions) => {
             state.cart = state.cart.filter(item => item.id !== actions.payload)
         },
+        cartToggleSelect: (state, actions) => {
+            state.cart = state.cart.map(item => item.id === actions.payload.item_id ? {...item, isSelected: actions.payload.value} : item)
+        },
+        toggleAllItems: (state, actions) => {
+            state.cart = state.cart.map(item => ({...item, isSelected: actions.payload}))
+        },
         updateCartProductQuantity: (state, actions) => {
             state.cart = state.cart.map(item => item.id === actions.payload.id ? {...item, quantity: actions.payload.quantity} : item)
         },
@@ -26,6 +32,9 @@ const cartSlice = createSlice({
         },
         updateCart: (state, actions) => {
             state.cart = actions.payload
+        },
+        removeAllSelectedCartItems: (state) => {
+            state.cart = state.cart.filter(item => item.isSelected !== true)
         },
         addToWishlist: (state, actions) => {
             state.wishlist = state.wishlist.length > 0 ? [...state.wishlist, actions.payload] : [actions.payload]
@@ -57,5 +66,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { addToCart, deleteFromCart, updateCartProductQuantity, updateCartProductSize, updateCart, addToWishlist, updateWishlist, deleteFromWishlist, addAddress, updateAddress, editAddress, deleteAnAddress, updateSetDefault, getAllOrdersItems } = cartSlice.actions;
+export const { addToCart, deleteFromCart, cartToggleSelect, toggleAllItems, updateCartProductQuantity, updateCartProductSize, updateCart, removeAllSelectedCartItems, addToWishlist, updateWishlist, deleteFromWishlist, addAddress, updateAddress, editAddress, deleteAnAddress, updateSetDefault, getAllOrdersItems } = cartSlice.actions;
 export default cartSlice.reducer;

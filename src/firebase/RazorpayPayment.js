@@ -1,8 +1,8 @@
 import axios from "axios";
 import lxsLogo from "../assets/commonIcons/LXS Logo.png";
-import { createOrderInfo, deleteAllCartItems } from "./auth";
+import { createOrderInfo, deleteSelectedCartItems } from "./auth";
 import { toast } from "react-toastify";
-import { updateCart } from "@/store/features/cartSlice";
+import { removeAllSelectedCartItems } from "@/store/features/cartSlice";
 
 const loadScript = (src) => {
   return new Promise((resolve) => {
@@ -105,8 +105,8 @@ export const displayRazorpay = async (
 
             createOrderInfo(orderDetails);
           });
-          deleteAllCartItems(user.id).then(() => {
-            dispatch(updateCart([]));
+          deleteSelectedCartItems(user.id).then(() => {
+            dispatch(removeAllSelectedCartItems([]));
           });
           setPopupData({ orderId: orderId });
 

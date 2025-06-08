@@ -129,7 +129,7 @@ export const editUserDetails = async (formData) => {
 export const addCartItem = async (user_id, item) => {
   try {
     const cartRef = collection(fireDB, "user", user_id, "cart");
-    await addDoc(cartRef, item);
+    await addDoc(cartRef, {...item, isSelected: true});
   } catch (error) {
     console.log("Add to Cart Error: ", error.message);
   }
@@ -159,6 +159,27 @@ export const deleteCartItem = async (user_id, item_id) => {
     console.log("Delete Cart Item Error: ", error.message);
   }
 };
+
+export const handletoggleSelect = async (user_id, item_id, value) => {
+  try {
+    const cartRef = doc(fireDB, "user", user_id, "cart", item_id)
+    await updateDoc(cartRef, {isSelected: value})
+  } catch (error) {
+    console.log("Toogling Cart Item Error: ", error.message);
+  }
+}
+
+export const handleToggleAll = async (user_id, value) => {
+  try {
+    const cartRef = collection(fireDB, "user", user_id, "cart")
+    const docSnap = await getDocs(cartRef);
+
+    const togglePromise = docSnap.docs.map(async (doc) => await updateDoc(doc.ref, {isSelected: value}))
+    await Promise.all(togglePromise)
+  } catch (error) {
+    console.log("Toggling All Cart item Error: ", error.message);
+  }
+}
 
 export const productQuantityChange = async (user_id, item) => {
   try {
@@ -225,10 +246,11 @@ export const deleteWishlistItem = async (user_id, item_id) => {
   }
 };
 
-export const deleteAllCartItems = async (user_id) => {
+export const deleteSelectedCartItems = async (user_id) => {
   try {
     const cartRef = collection(fireDB, "user", user_id, "cart");
-    const snapshot = await getDocs(cartRef);
+    const q = query(cartRef, where("isSelected", "==", true));
+    const snapshot = await getDocs(q);
 
     const deletePromises = snapshot.docs.map((docSnap) => deleteDoc(docSnap.ref));
     await Promise.all(deletePromises);
@@ -352,7 +374,8 @@ export const createOrderInfo = async (orderDetails) => {
 export const getAllOrders = async (user_id) => {
   try {
     const orderRef = collection(fireDB, "user", user_id, "orders");
-    const orderSnap = await getDocs(orderRef);
+    const orderQuery = query(orderRef, orderBy("timestamp", "desc"));
+    const orderSnap = await getDocs(orderQuery);
 
     let orderItems = [];
     orderSnap.forEach((doc) => {
