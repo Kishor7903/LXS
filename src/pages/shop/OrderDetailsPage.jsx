@@ -47,18 +47,18 @@ function OrderDetailsPage() {
                     <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-44 mt-3 px-8 py-5 flex">
                         <div className="w-[35%]">
                             <span className="font-semibold text-base">Shipping Address</span>
-                            <p className="leading-4 text-sm">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
+                            <p className="leading-[1] text-sm mt-1 font-medium">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
                         </div>
                         <div className="w-[30%]">
                             <span className="font-semibold text-base">Payments Method</span>
-                            <p className="text-sm capitalize">{orderDetails.paymentMethod}</p>
+                            <p className="text-sm font-medium capitalize mt-1">{orderDetails.paymentMethod}</p>
                         </div>
                         <div className="w-[35%] leading-5 text-sm font-medium">
                             <span className="font-semibold text-base">Order Summary</span>
-                            <span className=" flex justify-between">item(s) Subtotal : <p className="text-right">₹{productInfo[0]?.price}</p></span>
-                            <span className=" flex justify-between">Shipping : <p className="text-right">₹{deliveryPrice}</p></span>
+                            <span className=" flex justify-between mt-1">item(s) Subtotal : <p className="text-right">₹{productInfo[0]?.price}</p></span>
+                            <span className=" flex justify-between leading-3">Shipping : <p className="text-right">₹{deliveryPrice}</p></span>
                             <span className=" flex justify-between">Total : <p className="text-right">₹{parseInt(productInfo[0]?.price) + deliveryPrice}</p></span>
-                            <span className=" flex justify-between text-red-500">Offer Applied : <p className="text-right">-₹{productInfo[0]?.price - productInfo[0]?.salePrice + deliveryPrice}</p></span>
+                            <span className=" flex justify-between text-red-500 leading-3">Offer Applied : <p className="text-right">-₹{productInfo[0]?.price - productInfo[0]?.salePrice + deliveryPrice}</p></span>
                             <span className="text-lg mt-1 font-bold flex justify-between text-green-500">Grand Total : <p className="text-right">₹{productInfo[0]?.salePrice}</p></span>
                         </div>
                     </div>

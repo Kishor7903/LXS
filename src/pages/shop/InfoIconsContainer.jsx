@@ -34,7 +34,7 @@ function InfoIconsContainer() {
   ];
 
   return (
-    <div className="h-20 md:h-28 lg:h-28 w-full flex justify-around items-center flex-1 border-b pt-1">
+    <div className="h-20 md:h-28 lg:h-28 w-full flex justify-around items-center flex-1 border-y pt-1">
       {
         items.map((item, index) => {
           return (

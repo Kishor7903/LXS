@@ -7,6 +7,8 @@ import EventGallery from "@/pages/shop/EventGallery"
 import FeaturedProducts from "@/pages/shop/FeaturedProducts"
 import InfoIconsContainer from "@/pages/shop/InfoIconsContainer"
 import OfferBannerSection from "@/pages/shop/OfferBannerSection"
+import WhatWeDo from "@/pages/shop/WhatWeDo"
+import WorkWithUsAndNewsletter from "@/pages/shop/WorkWithUsAndNewsletter"
 // import Reviews from "@/pages/shop/Reviews"
 import { getCarouselImgs } from "@/store/features/adminSlice"
 import { useEffect } from "react"
@@ -31,9 +33,11 @@ function HomePageLayout() {
             <InfoIconsContainer />
             <Blogs />
             <EventGallery />
+            <Contributers />
+            <WhatWeDo />
+            <WorkWithUsAndNewsletter />
             {/* <Reviews /> */}
             {/* <AnimatingMan className="h-40 md:h-72 lg:h-96" /> */}
-            <Contributers />
         </>
     )
 }

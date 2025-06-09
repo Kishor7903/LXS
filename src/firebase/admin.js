@@ -15,7 +15,7 @@ export const addProduct = (item) => {
             images: item.imageData.urls,
             imagesId: item.imageData.ids,
             totalStock : parseInt(item.formData.totalStock),
-            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric"})
+            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric",})
         }
         
         const userReference = collection(fireDB, "products");
@@ -64,7 +64,7 @@ export const editProduct = async (item) => {
             images: item.imageData.urls,
             imagesId: item.imageData.ids,
             totalStock : item.formData.totalStock,
-            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric"})
+            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric",})
         }
     
         await setDoc(doc(fireDB, "products", item.currentEditId), editedProduct);
@@ -111,7 +111,7 @@ export const addCarouselImg = async (item) => {
         const carouselImg = {
             imgUrl: item.img_url,
             imgPublicId: item.publicId,
-            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric"})
+            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric",})
         }
         
         const carouselImgReference = collection(fireDB, "carousel");
@@ -176,7 +176,7 @@ export const addEventGalleryImg = async (item) => {
         const eventGalleryImg = {
             imgUrl: item.img_url,
             imgPublicId: item.publicId,
-            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric"})
+            timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric",})
         }
         
         const carouselImgReference = collection(fireDB, "Event Gallery");

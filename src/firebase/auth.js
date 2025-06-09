@@ -42,6 +42,7 @@ export const registerUser = async (formData) => {
           year: "numeric",
           hour: "numeric",
           minute: "numeric",
+          second: "numeric",
         }),
       };
 
@@ -129,7 +130,14 @@ export const editUserDetails = async (formData) => {
 export const addCartItem = async (user_id, item) => {
   try {
     const cartRef = collection(fireDB, "user", user_id, "cart");
-    await addDoc(cartRef, {...item, isSelected: true});
+    await addDoc(cartRef, {...item, isSelected: true, timestamp: new Date().toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    })});
   } catch (error) {
     console.log("Add to Cart Error: ", error.message);
   }
@@ -138,12 +146,13 @@ export const addCartItem = async (user_id, item) => {
 export const getUserCart = async (user_id) => {
   try {
     const cartRef = collection(fireDB, "user", user_id, "cart");
-    const cartSnapshot = await getDocs(cartRef);
+    const cartQuery = query(cartRef, orderBy("timestamp", "desc"));
+    const cartSnapshot = await getDocs(cartQuery);
 
-    const cartItems = [];
-    cartSnapshot.forEach((doc) => {
-      cartItems.push({ id: doc.id, ...doc.data() });
-    });
+    const cartItems = cartSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     return cartItems;
   } catch (error) {
@@ -208,6 +217,7 @@ export const addWishlistItem = async (user_id, item) => {
       year: "numeric",
       hour: "numeric",
       minute: "numeric",
+      second: "numeric",
     }) });
 
     return { id: docRef.id, item_id: item };
@@ -410,6 +420,7 @@ export const saveWorkWithUsInfo = async (formData) => {
         year: "numeric",
         hour: "numeric",
         minute: "numeric",
+        second: "numeric",
       }),
     });
   } catch (error) {
@@ -444,6 +455,7 @@ export const saveNewsletterInfo = async (email) => {
         year: "numeric",
         hour: "numeric",
         minute: "numeric",
+        second: "numeric",
       }),
     });
   } catch (error) {
@@ -521,6 +533,7 @@ export const addNewReportAndIssue = async (formData, imageData, user) => {
         year: "numeric",
         hour: "numeric",
         minute: "numeric",
+        second: "numeric",
       }),
     };
 

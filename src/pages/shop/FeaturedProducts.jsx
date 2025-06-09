@@ -12,7 +12,7 @@ function FeaturedProducts() {
     
 
     return (
-        <div className='space-y-2 lg:space-y-1 px-5 md:px-8 lg:px-12 xl:px-16 border-y py-5 flex flex-col gap-0 lg:gap-2 pb-10'>
+        <div className='space-y-2 lg:space-y-1 px-5 md:px-8 lg:px-12 xl:px-16 border-t py-5 flex flex-col gap-0 lg:gap-2 pb-10'>
 
             <HeadingText name="Featured Products" />
 

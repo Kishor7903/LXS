@@ -94,6 +94,7 @@ export const displayRazorpay = async (
                 year: "numeric",
                 hour: "numeric",
                 minute: "numeric",
+                second: "numeric",
               }),
               userId: user.id,
               email: user.email,

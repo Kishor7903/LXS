@@ -16,7 +16,6 @@ import ShopSettingMyAccount from "./pages/shop/ShopSettingMyAccount"
 import ShopSettingMyOrders from "./pages/shop/ShopSettingMyOrders"
 import ShopSettingWishlist from "./pages/shop/ShopSettingWishlist"
 import ShopSettingSavedAddresses from "./pages/shop/ShopSettingSavedAddresses"
-import ShopSettingPaymentOptions from "./pages/shop/ShopSettingPaymentOptions"
 import ShopSettingSubscriptions from "./pages/shop/ShopSettingSubscriptions"
 import ShopSettingSettings from "./pages/shop/ShopSettingSettings"
 import ShopSettingContactUs from "./pages/shop/ShopSettingContactUs"
@@ -36,11 +35,8 @@ import ProductExchange from "./pages/shop/ExchangeProduct"
 import ProductReturn from "./pages/shop/ProductReturn"
 import Notifications from "./pages/shop/Notifications"
 import ShopSettingMyRatingsAndReviews from "./pages/shop/ShopSettingMyRatingsAndReviews"
-import Blog from "./pages/shop/Blog"
 import TrackReturnAndRefund from "./pages/shop/TrackReturnAndRefund"
-import AboutUs from "./pages/shop/AboutUs"
 import AllBlogs from "./pages/shop/AllBlogs"
-import BulkOrder from "./pages/shop/BulkOrder"
 import PrivacyPolicy from "./pages/shop/PrivacyPolicy"
 import TermsAndCondition from "./pages/shop/TermsAndCondition"
 import LegalCompliancePolicy from "./pages/shop/LegalCompliancePolicy"
@@ -71,9 +67,12 @@ import AdminWorkWithUs from "./pages/admin/AdminWorkWithUs"
 import AdminTicketAndReports from "./pages/admin/AdminTicketAndReports"
 import AdminRequestCall from "./pages/admin/AdminRequestCall"
 import PaymentsPage from "./pages/shop/PaymentsPage"
-import ProductsContainer from "./pages/products/ProductsContainer"
 import EventGallery from "./pages/admin/EventGallery"
-import PersonalizedOrder from "./pages/shop/PersonalizedOrder"
+import ProductsPageLayout from "./layouts/ProductsPageLayout"
+import BlogPageLayout from "./layouts/BlogPageLayout"
+import AboutUsPageLayout from "./layouts/AboutUsPageLayout"
+import PersonalizedOrderPageLayout from "./layouts/PersonalizedOrderPageLayout"
+import BulkOrderPageLayout from "./layouts/BulkOrderPageLayout"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -112,13 +111,13 @@ function App() {
 					</CheckAuth>
 				} >
 					<Route path="shop" element={<HomePageLayout />} />
-					<Route path="products" element={<ProductsContainer />} />
+					<Route path="products" element={<ProductsPageLayout />} />
 					<Route path="product-details/:id" element={<ProductDetailsPageLayout />} />
-					<Route path="blog" element={<Blog />} />
-					<Route path="about-us" element={<AboutUs />} />
+					<Route path="blog" element={<BlogPageLayout />} />
+					<Route path="about-us" element={<AboutUsPageLayout />} />
 					<Route path="all-blogs" element={<AllBlogs />} />
-					<Route path="bulk-order" element={<BulkOrder />} />
-					<Route path="personalized-order" element={<PersonalizedOrder />} />
+					<Route path="bulk-order" element={<BulkOrderPageLayout />} />
+					<Route path="personalized-order" element={<PersonalizedOrderPageLayout />} />
 				</Route>
 				<Route path="/policy" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
