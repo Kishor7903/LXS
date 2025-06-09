@@ -11,7 +11,6 @@ import customOrderIconActive from "../assets/More (Title Bar)/Custom (Fill).png"
 import bulkOrderIcon from "../assets/More (Title Bar)/Bulk Order (Stroke).png";
 import bulkOrderIconActive from "../assets/More (Title Bar)/Bulk Order (Fill).png";
 import notificationIcon from "../assets/commonIcons/Notification (Stroke).png"
-import vouchersAndCouponsIcon from "../assets/More (Title Bar)/Coupons (Stroke).png";
 import homeIcon from "../assets/commonIcons/Home (Stroke).png";
 import homeIconActive from "../assets/commonIcons/Home (Fill).png";
 import myAccountIcon from "../assets/commonIcons/Account Management (Stroke).png";
@@ -34,6 +33,7 @@ import { getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
 import { logout } from "@/store/features/authSlice";
 import { updateCart, updateWishlist } from "@/store/features/cartSlice";
 import { getAllProducts } from "@/firebase/admin";
+import PhoneLogin from "./PhoneLogin";
 
 
 function Header({ className }) {
@@ -354,6 +354,7 @@ function Header({ className }) {
 					{
 						!isAuthenticated ? (
 							<LoginButtonAndDialogBox userState={userState} setUserState={setUserState} isOpen={isOpen} setIsOpen={setIsOpen} />
+							// <PhoneLogin />
 						)
 							:
 							(

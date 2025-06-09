@@ -26,6 +26,7 @@ function ShopSettingSavedAddresses() {
 	let [confirmPopupOpen, setConfirmPopupOpen] = useState(false);
 	let [deleteItemId, setDeleteItemId] = useState(null);
 	let [formData, setFormData] = useState(addressDetails);
+	let [loading, setLoading] = useState(false);
 	let { address } = useSelector(state => state.cart);
 	let [currentEditId, setCurrentEditId] = useState(null);
 	let { user } = useSelector(state => state.auth)
@@ -69,10 +70,14 @@ function ShopSettingSavedAddresses() {
 	}
 
 	useEffect(() => {
+		setLoading(true);
 		getAllAddress(user?.id).then((res) => {
 			dispatch(updateAddress(res));
 		})
-	})
+		setTimeout(() => {
+			setLoading(false);
+		}, 1000);
+	}, [])
 
 	return (
 		<div className="w-full h-full px-5 flex gap-5 ">
@@ -86,39 +91,99 @@ function ShopSettingSavedAddresses() {
 				<div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
 					{
 						address?.map((item, index) => (
-							<div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-5 overflow-hidden ${item.isDefault ? "bg-slate-200 shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border-2 scale-100" : "scale-95"}`}>
-								<div className="font-semibold flex gap-1 items-center">
-									<label htmlFor={`address${index}`} className={`rounded-full px-4 ${item.isDefault ? "bg-[rgb(8,43,61)] text-white" : "border border-[rgb(8,43,61)]"}`}>ADDRESS {index + 1} </label>
-									<span onClick={(e) => item.isDefault ? null : handleSetDefault(e, item.id)} className={`ml-2 ${item.isDefault ? "text-[rgb(240,85,120)]" : "text-blue-500 lg:hover:underline cursor-pointer"} text-xs `}>{`${item.isDefault ? "(Default)" : "Set as Default"}`}</span>
-								</div>
-								<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%]" >
-									<p className="text-[11px] leading-[1]">Name <br /> <span className="text-[14px] font-semibold">{item.name}</span></p>
-									<p className="text-[11px] leading-[1]">Phone No. <br /> <span className="text-[14px] font-semibold">{item.phone}</span></p>
-									<p className="text-[11px] leading-[1]">House No., Building No. <br /> <span className="text-[14px] font-semibold">{item.houseNo}</span></p>
-									<p className="text-[11px] leading-[1]">Village/Area Name <br /> <span className="text-[14px] font-semibold line-clamp-1">{item.area}</span></p>
-									<p className="text-[11px] leading-[1]">Landmark <br /> <span className="text-[14px] font-semibold">{item.landmark ? item.landmark : "_"}</span></p>
-									<p className="text-[11px] leading-[1]">Pincode <br /> <span className="text-[14px] font-semibold">{item.pincode}</span></p>
-									<p className="text-[11px] leading-[1]">City <br /> <span className="text-[14px] font-semibold">{item.city}</span></p>
-									<p className="text-[11px] leading-[1]">State <br /> <span className="text-[14px] font-semibold">{item.state}</span></p>
-									<div className="absolute bottom-3 right-2 flex flex-col gap-1 justify-center items-center">
-										<HoverButton className="px-3 text-sm font-medium" onClick={(e) => handleAddressEditButton(e, item)} icon={editIcon} iconActive={editIconActive} iconClassName="h-4">Edit</HoverButton>
-										{
-											item.isDefault !== true ? (
-												<span className="cursor-pointer lg:hover:underline text-xs text-blue-500 font-semibold right-[22px]" onClick={() => { setConfirmPopupOpen(true), setDeleteItemId(item.id) }}>Delete</span>
-											)
-												:
-												null
-										}
+							!loading ? (
+								<div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-5 overflow-hidden ${item.isDefault ? "bg-slate-200 shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border-2 scale-100" : "scale-95"}`}>
+									<div className="font-semibold flex gap-1 items-center">
+										<label htmlFor={`address${index}`} className={`rounded-full px-4 ${item.isDefault ? "bg-[rgb(8,43,61)] text-white" : "border border-[rgb(8,43,61)]"}`}>ADDRESS {index + 1} </label>
+										<span onClick={(e) => item.isDefault ? null : handleSetDefault(e, item.id)} className={`ml-2 ${item.isDefault ? "text-[rgb(240,85,120)]" : "text-blue-500 lg:hover:underline cursor-pointer"} text-xs `}>{`${item.isDefault ? "(Default)" : "Set as Default"}`}</span>
+									</div>
+									<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%]" >
+										<p className="text-[11px] leading-[1]">Name <br /> <span className="text-[14px] font-semibold">{item.name}</span></p>
+										<p className="text-[11px] leading-[1]">Phone No. <br /> <span className="text-[14px] font-semibold">{item.phone}</span></p>
+										<p className="text-[11px] leading-[1]">House No., Building No. <br /> <span className="text-[14px] font-semibold">{item.houseNo}</span></p>
+										<p className="text-[11px] leading-[1]">Village/Area Name <br /> <span className="text-[14px] font-semibold line-clamp-1">{item.area}</span></p>
+										<p className="text-[11px] leading-[1]">Landmark <br /> <span className="text-[14px] font-semibold">{item.landmark ? item.landmark : "_"}</span></p>
+										<p className="text-[11px] leading-[1]">Pincode <br /> <span className="text-[14px] font-semibold">{item.pincode}</span></p>
+										<p className="text-[11px] leading-[1]">City <br /> <span className="text-[14px] font-semibold">{item.city}</span></p>
+										<p className="text-[11px] leading-[1]">State <br /> <span className="text-[14px] font-semibold">{item.state}</span></p>
+										<div className="absolute bottom-3 right-2 flex flex-col gap-1 justify-center items-center">
+											<HoverButton className="px-3 text-sm font-medium" onClick={(e) => handleAddressEditButton(e, item)} icon={editIcon} iconActive={editIconActive} iconClassName="h-4">Edit</HoverButton>
+											{
+												item.isDefault !== true ? (
+													<span className="cursor-pointer lg:hover:underline text-xs text-blue-500 font-semibold right-[22px]" onClick={() => { setConfirmPopupOpen(true), setDeleteItemId(item.id) }}>Delete</span>
+												)
+													:
+													null
+											}
+										</div>
+									</div>
+									{
+										item.isDefault && (
+											<div className="h-10 w-24 bg-[rgb(8,43,61)] absolute -top-3 -right-10 rotate-45 flex justify-center items-end">
+												<i className="fi fi-br-check text-white relative left-[2px] top-[2px] -rotate-45"></i>
+											</div>
+										)
+									}
+								</div>)
+								:
+								(<div className="w-full max-w-xl p-4 rounded-xl border border-gray-300 shadow-sm animate-pulse space-y-4 relative">
+									<div className="flex justify-start gap-5 items-center">
+										<div className="h-6 w-28 bg-gray-300 rounded-full"></div>
+										<div className="h-2 w-24 bg-gray-300 rounded"></div>
+									</div>
+
+									<div className="grid grid-cols-2 gap-4">
+										<div className="space-y-3">
+											<div className="space-y-1">
+												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
+												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
+											</div>
+
+											<div className="space-y-1">
+												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
+												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
+											</div>
+
+											<div className="space-y-1">
+												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
+												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
+											</div>
+
+											<div className="space-y-1">
+												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
+												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
+											</div>
+										</div>
+
+										<div className="space-y-2">
+										<div className="space-y-1">
+												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
+												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
+											</div>
+
+											<div className="space-y-1">
+												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
+												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
+											</div>
+
+											<div className="space-y-1">
+												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
+												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
+											</div>
+
+											<div className="space-y-1">
+												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
+												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
+											</div>
+										</div>
+									</div>
+
+									<div className="flex flex-col justify-end items-center gap-2 absolute right-3 bottom-3">
+										<div className="h-7 w-16 bg-gray-300 rounded-full"></div>
+										<div className="h-2 w-10 bg-gray-300 rounded-md"></div>
 									</div>
 								</div>
-								{
-									item.isDefault && (
-										<div className="h-10 w-24 bg-[rgb(8,43,61)] absolute -top-3 -right-10 rotate-45 flex justify-center items-end">
-											<i className="fi fi-br-check text-white relative left-[2px] top-[2px] -rotate-45"></i>
-										</div>
-									)
-								}
-							</div>
+							)
 						))
 					}
 				</div>
@@ -127,7 +192,7 @@ function ShopSettingSavedAddresses() {
 			<div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
 			<ConfirmationPopp isOpen={confirmPopupOpen} setIsOpen={setConfirmPopupOpen} heading="Wait, You're Deleting This Address! 😲" description="Whoa whoa whoaaa! It’s your boy Lupin here.
 			You’re about to delete this address — are you sure? Like, really sure?
-			If you’re 100% sure, hit confirm. If not, I’ll pretend this never happened 😅" onClick={(e) => {handleDeleteAddress(e, deleteItemId), setConfirmPopupOpen(false)}} />
+			If you’re 100% sure, hit confirm. If not, I’ll pretend this never happened 😅" onClick={(e) => { handleDeleteAddress(e, deleteItemId), setConfirmPopupOpen(false) }} />
 		</div>
 	)
 }
