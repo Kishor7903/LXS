@@ -120,7 +120,7 @@ function ShopSettingsLayout() {
             activeIcon: settingIconFill,
             childrens: [
                 {
-                    name: "Notifications & Communication",
+                    name: "Notifications",
                     slug: "/setting/settings/notification"
                 },
                 {

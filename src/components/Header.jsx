@@ -24,6 +24,8 @@ import moreIconFill from "../assets/commonIcons/More (Fill).png";
 import logoutRedIcon from "../assets/commonIcons/Log Out (Fill).png";
 import productsIcon from "../assets/commonIcons/Products (Stroke).png";
 import productsIconActive from "../assets/commonIcons/Products (Fill).png";
+import subscriptionIcon from "../assets/commonIcons/Subscription (Stroke).png";
+import subscriptionIconActive from "../assets/commonIcons/Subscription (Fill).png";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import LxsLogo from "./LxsLogo";
@@ -137,7 +139,7 @@ function Header({ className }) {
 		// },
 		{
 			name: "Blogs",
-			slug: "/blog",
+			slug: "/blogs",
 			icon: blogsIcon,
 			activeIcon: blogsIconActive,
 			active: true,
@@ -166,11 +168,12 @@ function Header({ className }) {
 			activeIcon: bulkOrderIconActive,
 			slug: "/bulk-order"
 		},
-		// {
-		// 	name: "Gift Card",
-		// 	icon: giftCardIcon,
-		// 	slug: ""
-		// },
+		{
+			name: "LXS Subscription",
+			icon: subscriptionIcon,
+			activeIcon: subscriptionIconActive,
+			slug: "/subscription"
+		},
 		// {
 		// 	name: "Voucher & Coupons",
 		// 	icon: vouchersAndCouponsIcon,
@@ -316,11 +319,11 @@ function Header({ className }) {
 							<div
 								onMouseEnter={() => setIsHovered(true)}
 								onMouseLeave={() => setIsHovered(false)}
-								className="bg-white w-44 rounded-xl shadow-lg border border-[rgb(8,43,61,0.4)] px-3 py-3 absolute -left-[60px] mt-1 top-5 z-50">
-								<ul className="text-xs font-medium flex-flex-col gap-2">
+								className="bg-white w-48 rounded-xl shadow-lg border border-[rgb(8,43,61,0.4)] px-3 py-3 absolute -left-[60px] mt-1 top-5 z-50">
+								<ul className="text-xs font-medium flex flex-col">
 									{
 										menuItems.map((items, index) => (
-											<NavLink to={items.slug} key={index} onClick={() => setIsHovered(false)} className={({isActive}) => `text-left flex gap-1 items-center hover:bg-slate-200 rounded p-1 cursor-pointer hover:text-[rgb(8,43,61)] ${isActive ? "font-bold" : ""}`}>
+											<NavLink to={items.slug} key={index} onClick={() => setIsHovered(false)} className={({isActive}) => `text-left flex gap-1 items-center hover:bg-slate-200 rounded p-1 cursor-pointer hover:text-[rgb(8,43,61)] ${isActive ? "font-bold text-[13px]" : ""}`}>
 												<img src={location.includes(items.slug) ? items.activeIcon : items.icon} alt="" className="h-3" /> {items.name}
 											</NavLink>
 										))
@@ -341,14 +344,14 @@ function Header({ className }) {
 				<div className="flex justify-between items-center text-xl lg:text-3xl ">
 
 					<div className="flex gap-2 lg:gap-4 mr-3 lg:mr-8">
-						<img src={heartIcon} alt="" className="h-6 lg:h-7 cursor-pointer " onClick={() => navigate("/setting/wishlist")} />
-						<div className="relative">
+						<img src={heartIcon} alt="" className="h-6 lg:h-7 cursor-pointer active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/setting/wishlist") : null} />
+						<div className="relative active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/checkout/cart") : null}>
 							{
 								user && cart?.length > 0 && (
-									<div className="h-[12px] lg:h-[15px] w-[12px] lg:w-[15px] rounded-full bg-red-500 absolute -top-1 lg:-top-[6px] -right-[6px] lg:-right-2 flex justify-center items-center text-white text-[10px] lg:text-xs cursor-pointer" >{cart.length}</div>
+									<div className="h-[12px] lg:h-[15px] w-[12px] lg:w-[15px] rounded-full bg-red-500 absolute -top-1 lg:-top-[6px] -right-[6px] lg:-right-2 flex justify-center items-center text-white text-[10px] lg:text-xs cursor-pointer " >{cart.length}</div>
 								)
 							}
-							<img src={cartIcon} alt="" className="h-6 lg:h-7 cursor-pointer" onClick={() => navigate("/checkout/cart")} />
+							<img src={cartIcon} alt="" className="h-6 lg:h-7 cursor-pointer"  />
 						</div>
 					</div>
 					{

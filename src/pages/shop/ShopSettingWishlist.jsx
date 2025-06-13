@@ -1,5 +1,6 @@
 import HoverButton from '@/components/HoverButton';
 import { addCartItem, deleteWishlistItem } from '@/firebase/auth';
+import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 import { addToCart, deleteFromWishlist } from '@/store/features/cartSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
@@ -69,19 +70,23 @@ function ShopSettingWishlist() {
 					{
 						wishlist && wishlist.length > 0 ? (
 							wishlistItems?.map((item, index) => (
-								!loading ? 
-									<div key={index} className="flex gap-2 items-center p-[6px] border border-[rgb(8,43,61)] rounded-xl w-full h-24 scale-[0.98] lg:hover:scale-100 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] duration-100 cursor-pointer">
-										<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1" onClick={() => navigate(`/product-details/${item.id}`)}>
+								!loading ?
+									<div key={index} className="flex gap-2 items-center p-[6px] border border-[rgb(8,43,61)] rounded-xl w-full py-2 scale-[0.98] lg:hover:scale-100 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] duration-100 cursor-pointer" onClick={() => navigate(`/product-details/${item.id}`)}>
+										<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1" >
 											<img
 												src={item.images[0]}
-												className="h-full w-full object-fill rounded border"
+												className="h-24 w-full object-fill rounded border"
 											/>
 										</div>
-										<div className="w-[70%]">
-											<p className="text-xs uppercase font-bold text-[rgb(8,43,61,0.5)]">Apparel & Fashion</p>
+										<div className="w-[70%] leading-4 ">
+											<div className="flex gap-2 items-center">
+												<div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[10px] text-white font-medium">LXS Certified</span>
+												</div>
+												<span className="opacity-50 mr-3 font-semibold tracking-tight text-xs">APPAREL & FASHION</span>
+											</div>
 											<h2 className="text-lg font-semibold line-clamp-1">{item.name}</h2>
 											<p className='text-[12px] font-medium'>Brand: {item.brand}</p>
-											<p className="text-base font-semibold">₹ {item.salePrice}</p>
+											<p className="text-sm lg:text-lg font-semibold">₹{item.salePrice}<s className="font-medium text-sm opacity-60 ml-2">₹{item.price}</s> <span className="font-semibold text-xs text-red-500">({`${Math.floor(((item.price - (item.salePrice)) * 100) / item.price)}`}% OFF)</span></p>
 										</div>
 										<div className="flex flex-col items-center w-36">
 											{

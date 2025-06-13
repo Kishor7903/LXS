@@ -123,7 +123,11 @@ function PrivacyData() {
 
 
     return (
-        <div className="w-full space-y-4">
+        <div className="w-full space-y-2">
+            <div className="leading-[1] font-semibold h-10">The Codex 📘<br />
+                <p className="text-xs font-normal">Explore the policies, permissions, and principles behind the galaxy</p>
+            </div>
+            <div className="space-y-4">
             {
                 privacyData.map((items,index) => (
                     <div key={index} className="border border-[rgb(8,43,61)] p-4 rounded-xl shadow-[0px_5px_10px_-6px_rgb(8,43,61)]">
@@ -132,13 +136,14 @@ function PrivacyData() {
                             {items.content.map((item,idx) => (
                                 <div className="">
                                     <span key={idx} className="capitalize mr-3 ">{item.key}</span>
-                                    <Link to={item.slug} className="capitalize text-orange-500 lg:hover:underline">{item.value}</Link>
+                                    <Link to={item.slug} className="capitalize text-[rgb(240,85,120)] font-medium lg:hover:underline">{item.value}</Link>
                                 </div>
                             ))}
                         </div>
                     </div>
                 ))
             }
+            </div>
         </div>
     )
 }

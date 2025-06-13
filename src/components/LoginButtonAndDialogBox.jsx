@@ -73,8 +73,8 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
         }
 
         registerUser(formData).then(() => {
-            // setFormData(userData);
-            // setUserState("login");
+            setFormData(userData);
+            setUserState("login");
         })
     }
 

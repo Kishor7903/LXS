@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DialogBox from "./DialogBox";
 import { toast } from "react-toastify";
 import { editUserDetails } from "@/firebase/auth";
@@ -7,6 +7,7 @@ import { updateUserInfo } from "@/store/features/authSlice";
 
 function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
     let [formData, setFormData] = useState(user);
+    let [isEdited, setIsEdited] = useState(true);
     let dispatch = useDispatch();
 
     const handleChange = (e) => {
@@ -29,13 +30,13 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
         e.preventDefault();
 
         setIsOpen(false);
-        setFormData(userData);
+        setFormData(user);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(!formData.name || !formData.gender  || !formData.DOB ){
+        if(!formData.name || !formData.gender  || !formData.DOB || !formData.email ){
             toast.error("Required All Fields!!")
             return
         }
@@ -54,6 +55,14 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
             toast.success("User Updated Successfully...")
         })
     }
+
+    useEffect(() => {
+        if(user.name !== formData.name || user.email !== formData.email || user.DOB !== formData.DOB || user.altPhone !== formData.altPhone || user.gender !== formData.gender){
+            setIsEdited(true)
+        }else{
+            setIsEdited(false);
+        }
+    }, [formData, setFormData])
 
     return (
         <DialogBox
@@ -123,9 +132,8 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="border-[rgb(196,185,185)] bg-white border px-3 rounded-xl h-10 w-full outline-none text-[rgb(8,43,61,0.5)]"
+                        className="border-[rgb(196,185,185)] bg-white border px-3 rounded-xl h-10 w-full outline-none"
                         autoComplete="off"
-                        disabled
                     />
                 </div>
                 <div className="flex space-x-5">
@@ -164,16 +172,17 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                     </div>
                 </div>
             </form>
-            <div className="flex justify-end gap-6 mt-5">
+            <div className="flex justify-center gap-6 mt-5">
                 <button
-                    className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"
+                    className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
                     onClick={handleCancelButton}
                 >
                     Cancel
                 </button>
                 <button
-                    className="h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]"
-                    onClick={handleSubmit}
+                    className={`h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white ${!isEdited ? "select-none cursor-not-allowed opacity-40": "cursor-pointer lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] active:scale-[0.95]"}`}
+                    onClick={isEdited ? handleSubmit : null}
+                    disabled={isEdited === false}
                 >
                     Apply
                 </button>

@@ -71,6 +71,8 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
                     fileInputs.current.value = null;
                 }
             })
+        } else{
+            toast.error("Select Image First...")
         }
     }
 
@@ -128,12 +130,12 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
                 </div>
                 <div className="flex justify-end gap-6 mt-5">
                 <button
-                    className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"
+                    className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
                 >
                     Cancel
                 </button>
                 <button
-                    className="h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]"
+                    className="h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] active:scale-[0.95]"
                     onClick={handleSubmit}
                 >
                     Apply

@@ -97,15 +97,39 @@ function ShopSettingSavedAddresses() {
 										<label htmlFor={`address${index}`} className={`rounded-full px-4 ${item.isDefault ? "bg-[rgb(8,43,61)] text-white" : "border border-[rgb(8,43,61)]"}`}>ADDRESS {index + 1} </label>
 										<span onClick={(e) => item.isDefault ? null : handleSetDefault(e, item.id)} className={`ml-2 ${item.isDefault ? "text-[rgb(240,85,120)]" : "text-blue-500 lg:hover:underline cursor-pointer"} text-xs `}>{`${item.isDefault ? "(Default)" : "Set as Default"}`}</span>
 									</div>
-									<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%]" >
-										<p className="text-[11px] leading-[1]">Name <br /> <span className="text-[14px] font-semibold">{item.name}</span></p>
-										<p className="text-[11px] leading-[1]">Phone No. <br /> <span className="text-[14px] font-semibold">{item.phone}</span></p>
-										<p className="text-[11px] leading-[1]">House No., Building No. <br /> <span className="text-[14px] font-semibold">{item.houseNo}</span></p>
-										<p className="text-[11px] leading-[1]">Village/Area Name <br /> <span className="text-[14px] font-semibold line-clamp-1">{item.area}</span></p>
-										<p className="text-[11px] leading-[1]">Landmark <br /> <span className="text-[14px] font-semibold">{item.landmark ? item.landmark : "_"}</span></p>
-										<p className="text-[11px] leading-[1]">Pincode <br /> <span className="text-[14px] font-semibold">{item.pincode}</span></p>
-										<p className="text-[11px] leading-[1]">City <br /> <span className="text-[14px] font-semibold">{item.city}</span></p>
-										<p className="text-[11px] leading-[1]">State <br /> <span className="text-[14px] font-semibold">{item.state}</span></p>
+									<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%] text-[11px]" >
+										<div className="flex flex-col leading-3">
+											<p>Name</p>
+											<p className="text-[14px] font-semibold">{item.name}</p>
+										</div>
+										<div className="flex flex-col leading-3">
+											<p>Phone No. </p>
+											<p className="text-[14px] font-semibold">{item.phone}</p>
+										</div>
+										<div className="flex flex-col leading-3">
+											<p>House No./Appartment No. </p>
+											<p className="text-[14px] font-semibold">{item.houseNo}</p>
+										</div>
+										<div className="flex flex-col leading-3">
+											<p>Village/Street/Area/Locality </p>
+											<p className="text-[14px] font-semibold">{item.area}</p>
+										</div>
+										<div className="flex flex-col leading-3">
+											<p>Landmark </p>
+											<p className="text-[14px] font-semibold">{item.landmark ? item.landmark : "_"}</p>
+										</div>
+										<div className="flex flex-col leading-3">
+											<p>Pincode </p>
+											<p className="text-[14px] font-semibold">{item.pincode}</p>
+										</div>
+										<div className="flex flex-col leading-3">
+											<p>City/Town </p>
+											<p className="text-[14px] font-semibold">{item.city}</p>
+										</div>
+										<div className="flex flex-col leading-3">
+											<p>State </p>
+											<p className="text-[14px] font-semibold">{item.state}</p>
+										</div>
 										<div className="absolute bottom-3 right-2 flex flex-col gap-1 justify-center items-center">
 											<HoverButton className="px-3 text-sm font-medium" onClick={(e) => handleAddressEditButton(e, item)} icon={editIcon} iconActive={editIconActive} iconClassName="h-4">Edit</HoverButton>
 											{
@@ -156,7 +180,7 @@ function ShopSettingSavedAddresses() {
 										</div>
 
 										<div className="space-y-2">
-										<div className="space-y-1">
+											<div className="space-y-1">
 												<div className="h-[6px] w-16 bg-gray-300 rounded-md"></div>
 												<div className="h-[10px] w-32 bg-gray-300 rounded-md"></div>
 											</div>
@@ -183,7 +207,7 @@ function ShopSettingSavedAddresses() {
 										<div className="h-2 w-10 bg-gray-300 rounded-md"></div>
 									</div>
 								</div>
-							)
+								)
 						))
 					}
 				</div>

@@ -6,7 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/sachin-kumar-24': 'http://127.0.0.1:5001'
-    }
+    },
+    host: true
   },
   plugins: [react()],
   resolve: {

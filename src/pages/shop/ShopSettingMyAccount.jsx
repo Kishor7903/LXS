@@ -1,17 +1,19 @@
-import { Link } from "react-router-dom"
 import accountIcon from "../../assets/commonIcons/Account.png"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import HoverButton from "@/components/HoverButton";
 import editIcon from "../../assets/commonIcons/Edit (Fill).png"
 import editIconActive from "../../assets/commonIcons/Edit White (Fill).png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditUserInfoPopup from "@/components/EditUserInfoPopup";
 import EditProfilePicPopup from "@/components/EditProfilePicPopup";
+import { getUserInfo } from "@/firebase/auth";
+import { updateUserInfo } from "@/store/features/authSlice";
 
 function ShopSettingMyAccount() {
     let [isOpen, setIsOpen] = useState(false);
     let [open, setOpen] = useState(false);
     let { user } = useSelector(state => state.auth);
+    let dispatch = useDispatch();
 
     const handleEditPersonalInfoButton = (e) => {
         e.preventDefault();
@@ -24,6 +26,12 @@ function ShopSettingMyAccount() {
 
         setOpen(true);
     }
+
+    useEffect(() => {
+        getUserInfo(user.id).then((res) => {
+            dispatch(updateUserInfo(res))
+        })
+    }, [])
 
     return (
         <div className="w-full h-full px-5 flex gap-5 ">

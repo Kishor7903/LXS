@@ -1,11 +1,11 @@
-import Blog from "@/pages/shop/Blog"
+import Blogs from "@/pages/shop/Blogs"
 import WorkWithUsAndNewsletter from "@/pages/shop/WorkWithUsAndNewsletter"
 
 
 function BlogPageLayout() {
   return (
     <>
-        <Blog />
+        <Blogs />
         <WorkWithUsAndNewsletter />
     </>
   )

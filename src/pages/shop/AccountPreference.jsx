@@ -62,7 +62,11 @@ function AccountPreference() {
     ];
 
     return (
-        <div className="w-full space-y-4">
+        <div className="w-full space-y-2">
+            <div className="leading-[1] font-semibold h-10">Identity Deck 🪪<br />
+                <p className="text-xs font-normal">This is your space - Adjust your profile, preferences, and cosmic controls</p>
+            </div>
+            <div className="space-y-4">
             {
                 accountData.map((items,index) => (
                     <div key={index} className="border border-[rgb(8,43,61)] p-3 shadow-[0px_5px_10px_-6px_rgb(8,43,61)] rounded-xl">
@@ -71,13 +75,14 @@ function AccountPreference() {
                             {items.content.map((item,idx) => (
                                 <div className="">
                                     <span key={idx} className="capitalize mr-3 ">{item.key}</span>
-                                    <span to={item.slug} className="capitalize text-orange-500 ">{item.value}</span>
+                                    <span to={item.slug} className="capitalize text-[rgb(240,85,120)] ">{item.value}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
                 ))
-        }
+            }
+            </div>
         </div>
     )
 }

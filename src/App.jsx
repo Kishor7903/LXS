@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import ShopLayout from "./layouts/ShopLayout"
 import HomePageLayout from "./layouts/HomePageLayout"
 import AdminLayout from "./layouts/AdminLayout"
@@ -73,13 +73,16 @@ import BlogPageLayout from "./layouts/BlogPageLayout"
 import AboutUsPageLayout from "./layouts/AboutUsPageLayout"
 import PersonalizedOrderPageLayout from "./layouts/PersonalizedOrderPageLayout"
 import BulkOrderPageLayout from "./layouts/BulkOrderPageLayout"
+import RecentViewedProducts from "./pages/shop/RecentViewedProducts"
+import UserLayout from "./layouts/UserLayout"
+import Blog from "./pages/shop/Blog"
+import Subscription from "./pages/shop/Subscription"
+import PartnerWithUs from "./pages/shop/PartnerWithUs"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
 	let dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
-	const location = useLocation();
-  const [currentPath, setCurrentPath] = useState(location.pathname);
 
 	useEffect(() => {
 		let user = JSON.parse(localStorage.getItem("user"));
@@ -89,14 +92,6 @@ function App() {
 		setLoading(false);
 	}, [dispatch])
 
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			setCurrentPath(location.pathname);
-		}, 300);
-
-		return () => clearTimeout(timeout);
-	}, [location.pathname]);
-
 	if (loading) {
 		return <div>Loading...</div>; // or a spinner/skeleton
 	}
@@ -104,7 +99,7 @@ function App() {
 	return (
 		<div className="h-screen w-full overflow-y-scroll scrollable-content">
 			<ScrollToTop />
-			<Routes location={{ pathname: currentPath }}>
+			<Routes>
 				<Route path="/" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
 						<ShopLayout />
@@ -113,11 +108,14 @@ function App() {
 					<Route path="shop" element={<HomePageLayout />} />
 					<Route path="products" element={<ProductsPageLayout />} />
 					<Route path="product-details/:id" element={<ProductDetailsPageLayout />} />
-					<Route path="blog" element={<BlogPageLayout />} />
+					<Route path="blogs" element={<BlogPageLayout />} />
 					<Route path="about-us" element={<AboutUsPageLayout />} />
 					<Route path="all-blogs" element={<AllBlogs />} />
+					<Route path="blog" element={<Blog />} />
 					<Route path="bulk-order" element={<BulkOrderPageLayout />} />
 					<Route path="personalized-order" element={<PersonalizedOrderPageLayout />} />
+					<Route path="subscription" element={<Subscription />} />
+					<Route path="/partner-with-us" element={<PartnerWithUs />} />
 				</Route>
 				<Route path="/policy" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
@@ -152,6 +150,13 @@ function App() {
 					<Route path="cart" element={<CartPage />} />
 					<Route path="address" element={<AddressPage />} />
 					<Route path="payment" element={<PaymentsPage />} />
+				</Route>
+				<Route path="/user" element={
+					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
+						<UserLayout />
+					</CheckAuth>
+				} >
+					<Route path="recent-viewed-products" element={<RecentViewedProducts />} />
 				</Route>
 				<Route path="/setting" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

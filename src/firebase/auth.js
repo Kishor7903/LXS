@@ -104,15 +104,10 @@ export const logoutUser = async () => {
 
 export const getUserInfo = async (user_id) => {
   try {
-    const q = query(collection(fireDB, "user"), where("uid", "==", user_id));
-    const querySnapshot = await getDocs(q);
+    const userRef = doc(fireDB, "user", user_id);
+    const userData = await getDoc(userRef);
 
-    let userData = null;
-    querySnapshot.forEach((doc) => {
-      userData = { id: doc.id, ...doc.data() };
-    });
-
-    return userData;
+    return {id:userData.id, ...userData.data()};
   } catch (error) {
     console.log("Getting User Info Error: ", error.message);
   }
@@ -559,3 +554,36 @@ export const getAllReportAndIssue = async () => {
     console.log("Get All Report and Issue Error:", error.message);
   }
 };
+
+export const addNewRecentProduct = async (user_id, item_id) => {
+  try {
+    const recentRef = collection(fireDB, "user", user_id, "Recent Viewed Products");
+    await addDoc(recentRef, {item_id, timestamp: new Date().toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    }),})
+  } catch (error) {
+    console.log("Adding New Recent Product Error: ", error.message);
+  }
+}
+
+export const getAllRecentPoducts = async (user_id) => {
+  try {
+    const productsRef = collection(fireDB, "user", user_id, "Recent Viewed Products");
+    const productsQuery = query(productsRef, orderBy("timestamp", "desc"));
+    const docSnap = await getDocs(productsQuery);
+
+    let products = docSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data()
+    }))
+
+    return products;
+  } catch (error) {
+    console.log("Getting All Recent Viewed Prodycts Error: ", error.message);
+  }
+}

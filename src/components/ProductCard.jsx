@@ -55,7 +55,7 @@ function ProductCard({item}) {
     }
 
     return (
-        <div className="w-[100%] rounded-xl md:rounded-[10px] overflow-hidden p-[6px] md:p-2 xl:p-3 cursor-pointer duration-500 border-gray-300 border-[1px] bg-white lg:hover:shadow-[0px_0px_15px_-3px_rgb(8,43,61)] relative shadow-md">
+        <div className="w-[100%] rounded-xl md:rounded-[10px] overflow-hidden p-[6px] md:p-2 xl:p-3 cursor-pointer duration-200 border-gray-300 border-[1px] bg-white lg:hover:shadow-[0px_0px_15px_-3px_rgb(8,43,61)] hover:scale-[1.02] relative shadow-md">
             <div onClick={() => navigate(`/product-details/${item.id}`)} className='w-full h-[70%] md:h-[72%] rounded-[6px] md:rounded overflow-hidden border relative'>
                 <img src={item.images[0]} alt="" className='h-full w-full object-fill' />
                 <div className="absolute top-1 right-1 xl:top-2 xl:right-2 z-40" onClick={(e) => { e.stopPropagation(), wishlist.some(p => p.item_id === item.id) ? deleteItemFromWishlist(e, item.id) : addWishlist(e, item.id) }}>
