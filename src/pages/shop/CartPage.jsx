@@ -9,7 +9,6 @@ import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
 import secureIcon from "../../assets/commonIcons/Secure.png"
 
-
 function CartPage() {
     let [isOpen, setIsOpen] = useState(false);
     let [selectedItems, setSelectedItems] = useState([]);
@@ -20,6 +19,7 @@ function CartPage() {
     let { user } = useSelector(state => state.auth)
     const navigate = useNavigate();
     let dispatch = useDispatch();
+
 
     let totalPrice;
     let discountOnMRP;
@@ -80,18 +80,16 @@ function CartPage() {
     }
 
     const handleSelectAll = (e) => {
-        setIsSelectedAll(e.target.checked)
-
+        // setIsSelectedAll(e.target.checked)
+        
         handleToggleAll(user.id, e.target.checked).then(() => {
             dispatch(toggleAllItems(e.target.checked))
         })
-
         if(e.target.checked){
             setSelectedItems(cartItems)
         } else{
             setSelectedItems([])
         }
-        
     }
 
     const handletoggleCartSelect = (e, item_id, value) => {
@@ -127,7 +125,7 @@ function CartPage() {
         } else{
             setIsSelectedAll(false)
         }
-    }, [handleSelectAll])
+    }, [selectedItems])
 
     return (
         <div className="w-full h-full py-3 lg:py-8 px-3 lg:px-16 flex gap-10">
@@ -206,8 +204,8 @@ function CartPage() {
                                         <span className="font-bold">Price Details ({cart.length} Items)</span>
                                         <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{ selectedItems.length > 0 ? totalPrice : 0}</p></span>
                                         <span className="flex justify-between text-xs">Delivery <p className="">₹{selectedItems.length > 0 ? deliveryPrice : 0}</p></span>
-                                        <span className="flex justify-between text-xs">Discount on MRP <p className=" text-red-500">- ₹{discountOnMRP}</p></span>
-                                        <span className="flex justify-between text-xs">Discount on Delivery <p className=" text-red-500">- ₹{selectedItems.length > 0 ? deliveryDiscount : 0}</p></span>
+                                        <span className="flex justify-between text-xs text-red-500">Discount on MRP <p className="">- ₹{discountOnMRP}</p></span>
+                                        <span className="flex justify-between text-xs text-red-500">Discount on Delivery <p className="">- ₹{selectedItems.length > 0 ? deliveryDiscount : 0}</p></span>
                                         <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{selectedItems.length > 0 ? platformFee : 0}</p></span>
                                         <hr className="pb-1 mt-1" />
                                         <span className="flex justify-between mt-1 font-bold text-green-500">Grand Total <p>₹{ selectedItems.length > 0 ? (totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee) : 0}</p></span>

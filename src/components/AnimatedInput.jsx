@@ -18,7 +18,6 @@ export default function AnimatedInput() {
 
 	const handleBlur = () => {
 		setIsFocused(false);
-		setSearchText("");
 	};
 
 	useEffect(() => {
@@ -59,10 +58,10 @@ export default function AnimatedInput() {
 					setSearchText(e.target.value);
 				}}
 				type="text"
-				className={`w-full px-4 h-[34px] border-slate-400 focus:outline-none ${searchText && searchedProducts.length > 0 ? "rounded-t-[17px] border-x border-t" : "rounded-full border"}`}
+				className={`w-full px-4 h-[34px] focus:outline-none ${searchText && searchedProducts.length > 0 ? "rounded-t-[17px] border-x border-t" : "rounded-full border"} shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]`}
 			/>
 			{
-				!isFocused && (
+				!searchText && (
 					<div className="absolute left-5 top-[6px] text-gray-400 pointer-events-none w-5/6">
 						<span
 							key={index}
@@ -87,11 +86,15 @@ export default function AnimatedInput() {
 									key={index}
 									tabIndex={0}
 									className="cursor-pointer hover:bg-gray-100 py-2 line-clamp-1 flex gap-2 items-center px-4"
-									onClick={() => {(location.includes("/setting") || location.includes("/orders") || location.includes("/checkout")) ? navigate(`../product-details/${item.id}`) : navigate(`product-details/${item.id}`)
-										setSearchText("");
+									onClick={() => {
+										(location.includes("/setting") || location.includes("/orders") || location.includes("/checkout"))
+										  ? navigate(`../product-details/${item.id}`)
+										  : navigate(`product-details/${item.id}`);
+									  
+										setSearchText("");      // ✅ clear only on selection
 										setIsFocused(false);
 										setTimeout(() => setIsFocused(false), 0);
-									}}
+									  }}
 								>
 									<img src={item.images[0]} alt="" className="h-8" />
 									<span className="line-clamp-1">{item.name}</span>

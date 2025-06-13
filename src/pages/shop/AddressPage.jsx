@@ -77,8 +77,8 @@ function AddressPage() {
                                     <span className="">Price BreakDown ({cartItems.length} Items)</span>
                                     <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
                                     <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
-                                    <span className="flex justify-between text-xs">Discount on MRP <p className="text-red-500">- ₹{discountOnMRP}</p></span>
-                                    <span className="flex justify-between text-xs">Discount on Delivery <p className="text-red-500">- ₹{deliveryDiscount}</p></span>
+                                    <span className="flex justify-between text-xs text-red-500">Discount on MRP <p className="text-red-500">- ₹{discountOnMRP}</p></span>
+                                    <span className="flex justify-between text-xs text-red-500">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
                                     <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>

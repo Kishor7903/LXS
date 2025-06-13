@@ -17,7 +17,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
         }
     }
 
-    if ( !isAuthenticated && (location.includes("/checkout") || location.includes("/setting") || location.includes("/orders"))) {
+    if ( !isAuthenticated && (location.includes("/checkout") || location.includes("/setting") || location.includes("/orders") || location.includes("/policy"))) {
         return <Navigate to="/shop" />;
     } else if( !isAuthenticated && location.includes("/admin") ){
         return <Navigate to="/shop" />;

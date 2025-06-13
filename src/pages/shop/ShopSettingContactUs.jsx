@@ -214,7 +214,7 @@ function ShopSettingContactUs() {
                                         content.menus.map((item, idx) => (
                                             <div className="" key={idx}>
                                                 <span className=" mr-3 ">{item.titleText}</span>
-                                                <Link onClick={item.onClick} className="capitalize text-orange-500 lg:hover:underline">{item.linkText}</Link>
+                                                <Link onClick={item.onClick} className="capitalize text-[rgb(240,85,120)] lg:hover:underline">{item.linkText}</Link>
                                             </div>
                                         ))
                                     }

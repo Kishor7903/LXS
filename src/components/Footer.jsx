@@ -10,10 +10,11 @@ import { useState } from "react"
 import DialogBox from "./DialogBox"
 import starIconStroke from "../assets/commonIcons/Rewards 2 (Stroke).png"
 import starIconFill from "../assets/commonIcons/Rewards 2 (Fill).png"
+import { editUserDetails } from "@/firebase/auth"
 
 let menu = [
     {
-        "title": "Useful Links",
+        "title": "Explore the Universe",
         "menus": [
             {
                 "name": "LUPIN (Story)",
@@ -24,16 +25,41 @@ let menu = [
                 "slug": "#"
             },
             {
+                "name": "All Blogs",
+                "slug": "/all-blogs"
+            },
+            {
+                "name": "LXS PrimeVerse",
+                "slug": "/subscription"
+            },
+            {
+                "name": "Customers Review",
+                "slug": "#"
+            },
+        ]
+    },
+    {
+        "title": "Info & Support",
+        "menus": [
+            {
                 "name": "FAQs",
                 "slug": "/policy/FAQs"
+            },
+            {
+                "name": "Size Guide",
+                "slug": "#"
             },
             {
                 "name": "About Us",
                 "slug": "/about-us"
             },
             {
-                "name": "LXS Subscription",
-                "slug": "#"
+                "name": "Contact Us",
+                "slug": "/setting/contact-us"
+            },
+            {
+                "name": "Partner with Us",
+                "slug": "/partner-with-us"
             },
         ]
     },
@@ -117,12 +143,12 @@ function Footer() {
             }
         }
 
-        editUserDetails(formData).then(() => {
-            dispatch(updateUserInfo(formData));
-            setFormData(formData);
-            setIsOpen(false);
-            toast.success("User Updated Successfully...")
-        })
+        // editUserDetails(formData).then(() => {
+        //     dispatch(updateUserInfo(formData));
+        //     setFormData(formData);
+        //     setIsOpen(false);
+        //     toast.success("User Updated Successfully...")
+        // })
     }
 
 

@@ -16,6 +16,9 @@ function OrderDetailsPage() {
 
     let productInfo = products.filter(item => item.id === orderDetails?.productInfo?.product_id);
     let deliveryPrice = 50;
+    let deliveryDiscount = 50;
+    let platformFee = 9;
+    let discountOnMRP = productInfo[0]?.price - productInfo[0]?.salePrice
 
     useEffect(() => {
         setLoading(true);
@@ -46,34 +49,78 @@ function OrderDetailsPage() {
                         !loading ? (
                             <>
                                 <div className="flex justify-between">
-                                    <h6 className="font-bold text-lg">ORDER DETAILS</h6>
+                                    <div className="leading-[1] font-semibold">Shipment LogBook 📦<br />
+                                        <p className="text-xs font-normal">Every purchase, every dispatch — all under your command</p>
+                                    </div>
                                     <div className="flex text-xs gap-5 justify-end relative mr-2 self-end font-semibold">
                                         <p>Order Date: {orderDetails.timestamp}</p> <hr className="border border-[rgb(8,43,61)] h-4" />
                                         <p>Order ID: {orderDetails.orderId}</p>
                                     </div>
                                 </div>
-                                <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-44 mt-3 px-8 py-5 flex">
-                                    <div className="w-[35%]">
+                                <div className="flex gap-10 mt-5">
+                                    <div className="w-[60%] py-4 px-8 rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border " >
                                         <span className="font-semibold text-base">Shipping Address</span>
-                                        <p className="leading-[1] text-sm mt-1 font-medium">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
+                                        <div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 pl-2 mt-2 text-[11px]">
+                                            <div className="flex flex-col leading-3">
+                                                <p>Name</p>
+                                                <p className="text-[14px] font-semibold">{orderDetails?.address?.name}</p>
+                                            </div>
+                                            <div className="flex flex-col leading-3">
+                                                <p>Phone No. </p>
+                                                <p className="text-[14px] font-semibold">{orderDetails?.address?.phone}</p>
+                                            </div>
+                                            <div className="flex flex-col leading-3">
+                                                <p>House No./Appartment No. </p>
+                                                <p className="text-[14px] font-semibold">{orderDetails?.address?.houseNo}</p>
+                                            </div>
+                                            <div className="flex flex-col leading-3">
+                                                <p>Village/Area Name </p>
+                                                <p className="text-[14px] font-semibold">{orderDetails?.address?.area}</p>
+                                            </div>
+                                            <div className="flex flex-col leading-3">
+                                                <p>Landmark </p>
+                                                <p className="text-[14px] font-semibold">{orderDetails?.address?.landmark ? orderDetails?.address?.landmark : "_"}</p>
+                                            </div>
+                                            <div className="flex flex-col leading-3">
+                                                <p>Pincode </p>
+                                                <p className="text-[14px] font-semibold">{orderDetails?.address?.pincode}</p>
+                                            </div>
+                                            <div className="flex flex-col leading-3">
+                                                <p>City/Town </p>
+                                                <p className="text-[14px] font-semibold">{orderDetails?.address?.city}</p>
+                                            </div>
+                                            <div className="flex flex-col leading-3">
+                                                <p>State </p>
+                                                <p className="text-[14px] font-semibold">{orderDetails?.address?.state}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="w-[30%]">
-                                        <span className="font-semibold text-base">Payments Method</span>
-                                        <p className="text-sm font-medium capitalize mt-1">{orderDetails.paymentMethod}</p>
-                                    </div>
-                                    <div className="w-[35%] leading-5 text-sm font-medium">
-                                        <span className="font-semibold text-base">Order Summary</span>
-                                        <span className=" flex justify-between mt-1">item(s) Subtotal : <p className="text-right">₹{productInfo[0]?.price}</p></span>
-                                        <span className=" flex justify-between leading-3">Shipping : <p className="text-right">₹{deliveryPrice}</p></span>
-                                        <span className=" flex justify-between">Total : <p className="text-right">₹{parseInt(productInfo[0]?.price) + deliveryPrice}</p></span>
-                                        <span className=" flex justify-between text-red-500 leading-3">Offer Applied : <p className="text-right">-₹{productInfo[0]?.price - productInfo[0]?.salePrice + deliveryPrice}</p></span>
-                                        <span className="text-lg mt-1 font-bold flex justify-between text-green-500">Grand Total : <p className="text-right">₹{productInfo[0]?.salePrice}</p></span>
+                                    {/* <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-44 px-8 py-3 w-1/2">
+                                        <span className="font-semibold text-base">Shipping Address</span>
+                                        <p className="leading-[1] text-sm mt-1 font-medium pl-2">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
+                                    </div> */}
+                                    <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border py-4 px-8 leading-[1.2] font-medium w-[40%] text-[12px]">
+                                        <span className="font-semibold text-base">Price Details</span>
+                                        <span className="flex justify-between mt-2">Total MRP <p className="">₹{productInfo[0]?.price}</p></span>
+                                        <span className="flex justify-between">Delivery <p className="">₹{productInfo.length > 0 ? deliveryPrice : 0}</p></span>
+                                        <span className="flex justify-between text-red-500">Discount on MRP <p className="">- ₹{discountOnMRP}</p></span>
+                                        <span className="flex justify-between text-red-500">Discount on Delivery <p className="">- ₹ {deliveryDiscount}</p></span>
+                                        <span className="flex justify-between"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline font-semibold">(Know More)</Link></p> <p className="">₹{productInfo.length > 0 ? platformFee : 0}</p></span>
+                                        <hr className="pb-1 mt-1" />
+                                        <span className="flex justify-between mt-[2px] text-base font-bold text-green-500">Grand Total <p>₹{productInfo.length > 0 ? (productInfo[0]?.price - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee) : 0}</p></span>
                                     </div>
                                 </div>
-                                <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-60 mt-5 px-8 py-5 flex">
+                                <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border mt-5 px-8 py-3 flex font-semibold">
+                                    Payment Method: <span className="capitalize ml-2 font-medium">{orderDetails.paymentMethod}</span>
+                                </div>
+                                <div className="flex justify-end gap-5 text-xs mt-4 mr-2 font-medium">
+                                    <p className="lg:hover:underline text-blue-500 cursor-pointer">Hide Order</p>
+                                    <p className="lg:hover:underline text-blue-500 cursor-pointer">Download Invoice</p>
+                                </div>
+                                <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-60 mt-2 px-8 py-5 flex">
                                     <div className="w-3/4 leading-3">
                                         <div className="h-[12%] opacity-80">
-                                            <h6 className="font-semibold"> Expectde Delivery: 8 January, 2025</h6>
+                                            <h6 className="font-semibold"> Expected Delivery: 8 January, 2025</h6>
                                         </div>
                                         <div className="h-[88%] flex gap-5">
                                             <img src={productInfo[0]?.images[0]} alt="" className="border w-[25%] rounded-2xl object-fit" onClick={() => navigate(`/product-details/${productInfo[0]?.id}`)} />
@@ -104,10 +151,6 @@ function OrderDetailsPage() {
                                         <button className="h-8 w-full bg-gray-200 lg:hover:bg-gray-300 rounded-full border border-[rgb(8,43,61)]" onClick={() => navigate(`/orders/seller-profile/${id}`)}>Seller Feedback</button>
                                     </div>
 
-                                </div>
-                                <div className="flex justify-end gap-5 text-xs mt-2 mr-2 font-medium">
-                                    <p className="lg:hover:underline text-blue-500 cursor-pointer">Hide Order</p>
-                                    <p className="lg:hover:underline text-blue-500 cursor-pointer">Download Invoice</p>
                                 </div>
                             </>
                         )
