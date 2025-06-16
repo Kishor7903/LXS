@@ -125,62 +125,62 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                     <p className="font-bold text-[15px] xl:text-xl h-5">Became the Member of LXS Universe!</p>
                                     <p className="text-xs font-medium h-2 leading-[1.1] opacity-60 text-center mt-1">Unlock Personalised Shopping, Exclusive Rewards & a Seamless Experience</p>
                                 </div>
-                                <div className="flex flex-col gap-1 mt-2">
+                                <div className="flex flex-col gap-1 mt-2 relative">
                                     <div className="flex gap-1">
                                         <span className="text-sm lg:text-lg text-slate-700 font-semibold tracking-tight">CREATE ACCOUNT</span>
                                         <img src={createAccount} alt="" className="h-4 lg:h-6" />
                                     </div>
                                     <div id="recaptcha-container"></div>
-                                    <form className="space-y-3 lg:space-y-4 flex flex-col text-xs lg:text-sm" onSubmit={handleSignUpSubmit}>
+                                    <form className="space-y-3 lg:space-y-4 flex flex-col text-xs lg:text-sm " onSubmit={handleSignUpSubmit}>
                                         <div className="flex space-x-2 lg:space-x-3 text-[rgb(8,43,61)]">
                                             <input name="name" type="text" value={formData.name} onChange={handleChange} className="h-8 w-[55%] rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " autoComplete="off" placeholder="Full Name" />
-                                            <input name="phone" type="number" value={formData.phone} onChange={handlePhoneNoChange} className="h-8 w-[45%] rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " autoComplete="off" placeholder="Phone Number" />
+                                            <div className="relative h-8 w-[45%] ">
+                                                <input name="phone" type="number" value={formData.phone} onChange={handlePhoneNoChange} className="h-full w-full rounded-full pl-[42px] pr-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " autoComplete="off" placeholder="Phone Number" />
+                                                <p className="font-semibold absolute top-[6px] left-[8px]">+91</p>
+                                                <hr className="border w-8 absolute left-[20px] opacity-20 top-[15px] rotate-90 border-[rgb(8,43,61)]" />
+                                            </div>
                                         </div>
                                         <div className="flex space-x-2 lg:space-x-3">
                                             <input name="email" type="text" value={formData.email} onChange={handleChange} className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " placeholder="Email" autoComplete="off" />
                                         </div>
-                                        <div className="relative h-8">
-                                            <input
-                                                name="password"
-                                                value={formData.password}
-                                                onChange={handleChange}
-                                                type={showPassword ? "text" : "password"}
-                                                placeholder="Password"
-                                                autoComplete="off"
-                                                className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
-                                            />
-                                            <button
-                                                type="button"
-                                                className="absolute right-2 top-1 "
-                                                onClick={() => setShowPassword(!showPassword)}
-                                            >
-                                                <img src={!showPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
-                                            </button>
-                                        </div>
-                                        <div className="relative h-8">
-                                            <input
-                                                name="confirmPassword"
-                                                value={formData.confirmPassword}
-                                                onChange={handleChange}
-                                                type={showConfirmPassword ? "text" : "password"}
-                                                placeholder="Confirm Password"
-                                                autoComplete="off"
-                                                className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
-                                            />
-                                            <button
-                                                type="button"
-                                                className="absolute right-2 top-1"
-                                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            >
-                                                <img src={!showConfirmPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
-                                            </button>
-                                        </div>
+                                        <input
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="Password"
+                                            autoComplete="off"
+                                            className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
+                                        />
+                                        <input
+                                            name="confirmPassword"
+                                            value={formData.confirmPassword}
+                                            onChange={handleChange}
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            placeholder="Confirm Password"
+                                            autoComplete="off"
+                                            className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
+                                        />
                                         <button type="submit" className="h-8 lg:h-9 w-20 lg:w-32 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]">Create</button>
                                     </form>
                                     <p className="text-xs text-center mt-2 font-medium">Already have an Account? <button className="text-blue-500 lg:hover:underline font-bold" onClick={() => {
                                         setUserState("login")
                                         setFormData(userData)
                                     }}>Log In</button></p>
+                                    <button
+                                        type="button"
+                                        className="absolute right-2 top-[136px] "
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    >
+                                        <img src={!showPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="absolute right-2 top-[184px]"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    >
+                                        <img src={!showConfirmPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
+                                    </button>
                                     <p className="text-xs text-center mt-[32px] lg:mt-[68px]">By Creating an account you agree to LXS Store's <br /><Link onClick={() => setIsOpen(false)} to="/terms-and-conditions" className="font-bold lg:hover:underline active:underline">Terms and Conditions</Link> and <Link onClick={() => setIsOpen(false)} to="/privacy-policy" className="font-bold lg:hover:underline active:underline">Privacy Policy</Link></p>
                                 </div>
 

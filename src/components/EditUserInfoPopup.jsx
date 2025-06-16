@@ -13,7 +13,8 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
     const handleChange = (e) => {
         e.preventDefault();
 
-        setFormData({...formData,
+        setFormData({
+            ...formData,
             [e.target.name]: e.target.value
         });
     }
@@ -21,8 +22,8 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
     const handleMobileNoChange = (e) => {
         e.preventDefault();
 
-        if(e.target.value.length <= 10){
-            setFormData({...formData, [e.target.name]: e.target.value})
+        if (e.target.value.length <= 10) {
+            setFormData({ ...formData, [e.target.name]: e.target.value })
         }
     }
 
@@ -36,13 +37,13 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(!formData.name || !formData.gender  || !formData.DOB || !formData.email ){
+        if (!formData.name || !formData.gender || !formData.DOB || !formData.email) {
             toast.error("Required All Fields!!")
             return
         }
-        
-        if(formData.altPhone){
-            if(formData.altPhone.length > 10 || formData.altPhone.length < 10){
+
+        if (formData.altPhone) {
+            if (formData.altPhone.length > 10 || formData.altPhone.length < 10) {
                 toast.error("Alternate Phone Number is Invalid ...");
                 return
             }
@@ -57,9 +58,9 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
     }
 
     useEffect(() => {
-        if(user.name !== formData.name || user.email !== formData.email || user.DOB !== formData.DOB || user.altPhone !== formData.altPhone || user.gender !== formData.gender){
+        if (user.name !== formData.name || user.email !== formData.email || user.DOB !== formData.DOB || user.altPhone !== formData.altPhone || user.gender !== formData.gender) {
             setIsEdited(true)
-        }else{
+        } else {
             setIsEdited(false);
         }
     }, [formData, setFormData])
@@ -90,7 +91,7 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                         autoComplete="off"
                     />
                 </div>
-                <div className="">
+                <div className="relative">
                     <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">
                         {" "}
                         Phone No.<span className="text-red-600">*</span>
@@ -101,12 +102,14 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                         name="phone"
                         value={formData.phone}
                         onChange={handleMobileNoChange}
-                        className="border-[rgb(196,185,185)] bg-white border px-3 rounded-xl h-10 w-full outline-none text-[rgb(8,43,61,0.5)]"
+                        className="border-[rgb(196,185,185)] bg-white border pr-3 pl-12 rounded-xl h-10 w-full outline-none text-[rgb(8,43,61,0.5)]"
                         autoComplete="off"
                         disabled
                     />
+                    <p className="font-medium absolute top-[32px] opacity-50 left-[8px]">+91</p>
+                    <hr className="border w-7 absolute left-[28px] opacity-30 top-[43px] rotate-90 border-[rgb(8,43,61)]" />
                 </div>
-                <div className="">
+                <div className="relative">
                     <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium pr-1">
                         {" "}
                         Alternate Ph. No.
@@ -117,9 +120,11 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                         name="altPhone"
                         value={formData.altPhone}
                         onChange={handleMobileNoChange}
-                        className="border-[rgb(196,185,185)] bg-white border px-3 rounded-xl h-10 w-full outline-none"
+                        className="border-[rgb(196,185,185)] bg-white border pr-3 pl-12 rounded-xl h-10 w-full outline-none"
                         autoComplete="off"
                     />
+                    <p className="font-medium absolute top-[32px] left-[8px]">+91</p>
+                    <hr className="border w-7 absolute left-[28px] opacity-30 top-[43px] rotate-90 border-[rgb(8,43,61)]" />
                 </div>
                 <div className="">
                     <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">
@@ -180,7 +185,7 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                     Cancel
                 </button>
                 <button
-                    className={`h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white ${!isEdited ? "select-none cursor-not-allowed opacity-40": "cursor-pointer lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] active:scale-[0.95]"}`}
+                    className={`h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white ${!isEdited ? "select-none cursor-not-allowed opacity-40" : "cursor-pointer lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] active:scale-[0.95]"}`}
                     onClick={isEdited ? handleSubmit : null}
                     disabled={isEdited === false}
                 >

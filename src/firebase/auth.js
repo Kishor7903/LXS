@@ -587,3 +587,13 @@ export const getAllRecentPoducts = async (user_id) => {
     console.log("Getting All Recent Viewed Prodycts Error: ", error.message);
   }
 }
+
+export const addWebsiteReview = async (formData) => {
+  try {
+    let docRef = collection(fireDB, "Website Reviews");
+    await addDoc(docRef, formData);
+    
+  } catch (error) {
+    console.log("Adding New Website Review Error: ",error.message);
+  }
+}

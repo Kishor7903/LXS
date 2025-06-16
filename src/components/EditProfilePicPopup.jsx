@@ -131,6 +131,11 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
                 <div className="flex justify-end gap-6 mt-5">
                 <button
                     className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
+                    onClick={(e) => {
+                        e.preventDefault(),
+                        setIsOpen(false),
+                        removeImage()
+                    }}
                 >
                     Cancel
                 </button>
