@@ -245,7 +245,7 @@ function ShopSettingContactUs() {
                 </div>
                 <div className='flex justify-center gap-6 my-5'>
                     <button className='border-2 font-semibold border-[rgb(8,43,61)] h-9 w-24 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white' onClick={(e) => { e.preventDefault(), setIsOpen(false) }} >Cancel</button>
-                    <button className={`h-9 px-4 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white flex justify-center items-center ${isEnabled ? "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" : ""}`} onClick={handleTalkToAgentConfirm} disabled={isEnabled === false}>{!isEnabled ? <i className="fi fi-br-ban relative top-[2px] mr-1 text-red-500"></i> : null}{isEnabled ? "Request Callback" : "Retry on Working Hours"}</button>
+                    <button className={`h-9 px-4 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white flex justify-center items-center ${isEnabled ? "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" : "opacity-60 cursor-not-allowed"}`} onClick={handleTalkToAgentConfirm} disabled={isEnabled === false}>{!isEnabled ? <i className="fi fi-br-ban relative top-[2px] mr-1 text-red-500"></i> : null}{isEnabled ? "Request Callback" : "Retry on Working Hours"}</button>
                 </div>
             </DialogBox>
             <DialogBox isOpen={open} setIsOpen={setOpen} className="min-w-[35vw]  bg-white rounded-xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">

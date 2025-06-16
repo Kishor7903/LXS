@@ -6,11 +6,12 @@ import youtubeLogo from "../assets/Socials/Youtube.png"
 import linkedinLogo from "../assets/Socials/Linkedin.png"
 import whatsappLogo from "../assets/Socials/Whatsapp (Fill).png"
 import LxsLogo from "../assets/commonIcons/Website Logo (TM).png"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import DialogBox from "./DialogBox"
 import starIconStroke from "../assets/commonIcons/Rewards 2 (Stroke).png"
 import starIconFill from "../assets/commonIcons/Rewards 2 (Fill).png"
-import { editUserDetails } from "@/firebase/auth"
+import { addWebsiteReview } from "@/firebase/auth"
+import { toast } from "react-toastify"
 
 let menu = [
     {
@@ -94,7 +95,6 @@ let menu = [
 function Footer() {
     let [isHovered, setIsHovered] = useState(false);
     let [isOpen, setIsOpen] = useState(false);
-    let [rating, setRating] = useState(0);
     let [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -131,35 +131,35 @@ function Footer() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!formData.name || !formData.gender || !formData.DOB) {
-            toast.error("Required All Fields!!")
-            return
-        }
-
-        if (formData.altPhone) {
-            if (formData.altPhone.length > 10 || formData.altPhone.length < 10) {
-                toast.error("Alternate Phone Number is Invalid ...");
-                return
-            }
-        }
-
-        // editUserDetails(formData).then(() => {
-        //     dispatch(updateUserInfo(formData));
-        //     setFormData(formData);
-        //     setIsOpen(false);
-        //     toast.success("User Updated Successfully...")
-        // })
+        addWebsiteReview(formData).then(() => {
+            toast.success("Reviewed Successfully");
+            setIsOpen(false);
+            setFormData({
+                name: "",
+                email: "",
+                description: "",
+                rating: 0
+            })
+        })
     }
 
+    useEffect(() => {
+        setFormData({
+            name: "",
+            email: "",
+            description: "",
+            rating: 0
+        })
+    }, [isOpen, setIsOpen])
 
     return (
         <>
-            <div className="w-full min-h-44 overflow-hidden py-6 lg:px-16 flex flex-col md:flex-row justify-between gap-y-8 border-t bg-white rounded-b-[30px] xl:rounded-b-[50px]">
-                <div className="w-3/12 px-5 relative rounded">
+            <div className="w-full min-h-44 overflow-hidden py-6 lg:pl-16 lg:pr-10 flex flex-col md:flex-row justify-between gap-y-8 border-t bg-white rounded-b-[30px] xl:rounded-b-[50px]">
+                <div className="w-[20%] relative rounded mr-10">
                     <img src={LxsLogo} alt="" className="h-40" />
                 </div>
-                <div className="w-4/12">
-                    <span className="text-xl font-bold ">Lifestyle Store LXS (OPC) PRIVATE LIMITED</span>
+                <div className="w-[28%]">
+                    <span className="text-xl font-bold ">LXSLIFESTYLESTORE (OPC) PVT LTD</span>
                     <p className="font-medium text-sm">Director: Sachin Kumar</p>
                     <p className="font-medium text-sm">GSTIN: JBDU3YY8887</p>
                     <h5 className='text-[rgb(8,43,61)] font-semibold text-center lg:text-left text-xs lg:text-xl pl-[2px] mt-5'>Connect With Our Socials!</h5>
@@ -172,12 +172,12 @@ function Footer() {
                         <Link to="https://www.facebook.com/lxslifestylestore" target="_blank"><img src={facebookLogo} alt="" className='h-6 lg:h-9 cursor-pointer' /></Link>
                     </div>
                 </div>
-                <div className="w-5/12 flex justify-end gap-10 text-xs">
+                <div className="w-[52%] flex justify-between px-8 gap-8 text-xs">
                     {
                         menu.map((item, index) => {
                             return (
-                                <div key={index} className="text-center w-1/2">
-                                    <h3 className='font-bold h-10 mb-1 flex justify-center text-sm md:text-[16px] lg:text-xl leading-[1.1]'>{item.title}</h3>
+                                <div key={index} className="text-center">
+                                    <h3 className='font-bold h-10 mb-1 flex justify-center text-sm md:text-[16px] lg:text-xl leading-[1.1] tracking-tight'>{item.title}</h3>
                                     <div className="flex flex-col items-center text-[10px] md:text-xs lg:text-sm md:gap-1 tracking-tighter">
                                         {
                                             item.menus.map((link, idx) => (
@@ -210,31 +210,31 @@ function Footer() {
                        🌌 Write Your Review of the LXS Universe 🛸
                     </h2>
                     <p className="px-10 text-sm leading-4 pt-5 italic">"Tell us about your journey through the LXS website — what stood out, what felt smooth, and how the experience was overall. Also, rate your visit from 1 to 5 stars to help guide future explorers across the galaxy ⭐"</p>
-                    <form autoComplete="off" className="px-10 space-y-4 py-5 text-sm">
+                    <form autoComplete="off" className="px-10 space-y-4 py-5 text-sm font-semibold">
                         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" className="h-9 rounded-full w-full px-4 border border-[rgb(8,43,61)] outline-none" />
-                        <input type="text" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="h-9 rounded-full w-full px-4 border border-[rgb(8,43,61)] outline-none" />
+                        <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="h-9 rounded-full w-full px-4 border border-[rgb(8,43,61)] outline-none" />
                         <textarea type="text" name="description" value={formData.description} onChange={handleChange} placeholder="Write Website Review" className="h-32 rounded-xl w-full px-4 py-2 border border-[rgb(8,43,61)] outline-none" ></textarea>
                     </form>
-                    <div className="flex justify-between px-10 mb-7">
-                        <div className="flex justify-between gap-3">
+                    <div className="flex justify-between items-center px-10 mb-7">
+                        <div className="flex justify-between gap-1 mr-2">
                             {
                             [1, 2, 3, 4, 5].map((item, index) => (
-                                <img key={index} src={item <= rating ? starIconFill : starIconStroke} alt="" className="h-9 cursor-pointer" onClick={() => setRating(item)} />
+                                <img key={index} src={item <= formData.rating ? starIconFill : starIconStroke} alt="" className="h-9 cursor-pointer" onClick={(e) => {e.preventDefault(), setFormData({...formData, rating: item})}} />
                             ))
                         }
                         </div>
-                        <div className="space-x-4">
+                        <div className="space-x-2">
                             <button
-                            className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"
+                            className="border-2 font-semibold border-[rgb(8,43,61)] h-9 w-[82px] rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"
                             onClick={handleCancelButton}
                         >
                             Cancel
                         </button>
                         <button
-                            className="h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]"
+                            className="h-9 w-[82px] rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]"
                             onClick={handleSubmit}
                         >
-                            Apply
+                            Submit
                         </button>
                         </div>
                     </div>
