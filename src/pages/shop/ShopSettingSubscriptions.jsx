@@ -2,7 +2,7 @@ import React from 'react'
 
 function ShopSettingSubscriptions() {
     return (
-        <div className="w-full h-full px-5 flex gap-5 ">
+        <div className="w-full h-full px-5 flex gap-8 ">
             <div className="w-1/2 space-y-3">
                 <div className="leading-[1] font-semibold">Mission Control 🚀 <br />
                     <p className="text-xs font-normal">Because you are the boss of your Shopping Universe!</p>

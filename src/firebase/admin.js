@@ -100,7 +100,7 @@ export const getSingleProductData = async (id) => {
     try {
         let product = await getDoc(doc(fireDB, "products", id));
 
-        return product.data();
+        return {id, ...product.data()};
     } catch (error) {
         console.log("Get Single Product Error: ", error.message);
     }

@@ -80,7 +80,7 @@ function ShopSettingSavedAddresses() {
 	}, [])
 
 	return (
-		<div className="w-full h-full px-5 flex gap-5 ">
+		<div className="w-full h-full px-5 flex gap-8 ">
 			<div className="w-1/2 flex flex-col justify-between">
 				<div className="leading-[1] font-semibold flex justify-between border-b-2 border-[rgb(8,43,61)] h-10">
 					<span>Headquarters Coordinates 🚁<br />

@@ -23,7 +23,6 @@ import OrdersPageLayout from "./layouts/OrdersPageLayout"
 import OrderDetailsPage from "./pages/shop/OrderDetailsPage"
 import TrackPackage from "./pages/shop/TrackPackage"
 import ProductReviewPage from "./pages/shop/ProductReviewPage"
-import CartPage from "./pages/shop/CartPage"
 import CheckoutLayout from "./layouts/CheckoutLayout"
 import AddressPage from "./pages/shop/AddressPage"
 import Notification from "./pages/shop/Notification"
@@ -78,6 +77,7 @@ import UserLayout from "./layouts/UserLayout"
 import Blog from "./pages/shop/Blog"
 import Subscription from "./pages/shop/Subscription"
 import PartnerWithUs from "./pages/shop/PartnerWithUs"
+import CartPageLayout from "./layouts/CartPageLayout"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -147,7 +147,7 @@ function App() {
 						<CheckoutLayout />
 					</CheckAuth>
 				} >
-					<Route path="cart" element={<CartPage />} />
+					<Route path="cart" element={<CartPageLayout />} />
 					<Route path="address" element={<AddressPage />} />
 					<Route path="payment" element={<PaymentsPage />} />
 				</Route>

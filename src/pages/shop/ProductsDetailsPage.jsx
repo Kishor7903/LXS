@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import heartIcon from "../../assets/commonIcons/Wishlist (Stroke).png";
-import heartIcon2 from "../../assets/commonIcons/Wishlist (Fill).png";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getSingleProductData } from "@/firebase/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -14,7 +12,7 @@ import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 import reviewLogoActive from "../../assets/commonIcons/Rewards 2 (Fill).png"
 import TabSwitcher from "@/components/TabSwitcher";
 
-function ProductDetailsPage() {
+function ProductDetailsPage({id, data}) {
 	const tabs = ["Product Details", "Reviews"];
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	let [hovered, setHovered] = useState(false);
@@ -22,7 +20,6 @@ function ProductDetailsPage() {
 	let [productData, setProductData] = useState(null);
 	let [mainPic, setMainPic] = useState(null);
 	const sizes = ["S", "M", "L", "XL"];
-	const { id } = useParams();
 	let { cart, wishlist } = useSelector(state => state.cart);
 	let dispatch = useDispatch();
 	let { user } = useSelector(state => state.auth);
@@ -66,23 +63,22 @@ function ProductDetailsPage() {
 	const deleteItemFromWishlist = (e, item_id) => {
 		e.preventDefault();
 
-		deleteWishlistItem(user.uid, item_id).then(() => {
+		deleteWishlistItem(user.id, item_id).then(() => {
 			dispatch(deleteFromWishlist(item_id));
 			toast.success("Product Removed From Wishlist ...")
 		})
 	}
 
 	useEffect(() => {
-		getSingleProductData(id).then((res) => {
-			if (res) {
-				setProductData(res);
-				setMainPic(res.images[0]);
-			}
-		})
+		setProductData(data);
+		setMainPic(data?.images[0])
+	}, [data]);
+
+	useEffect(() => {
 		if (user) {
 			addNewRecentProduct(user.id, id);
 		}
-	}, [id]);
+	}, [])
 
 	useEffect(() => {
 		localStorage.setItem("cart", JSON.stringify(cart));
@@ -105,7 +101,6 @@ function ProductDetailsPage() {
 					<div className="w-full border rounded-[18px] object-fill overflow-hidden shadow-[0px_0px_12px_-5px_rgb(8,43,61)] cursor-pointer">
 						<img src={mainPic} alt="" className="w-full" />
 					</div>
-					<img onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} src={wishlist.some(p => p.item_id === id) ? heartIcon2 : heartIcon} alt="" className="h-8 absolute top-4 right-4 cursor-pointer z-40" />
 				</div>
 
 				<div className="w-[40%] flex flex-col justify-between">
@@ -162,11 +157,25 @@ function ProductDetailsPage() {
 							</p>
 						</div>
 					</div>
+					<div className="flex flex-col gap-5 ">
+					{
+						wishlist.some(p => p.item_id === id) ? (
+							<button className="flex items-center justify-center bg-gradient-to-r from-orange-400 to-pink-500 text-white xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full shadow-md" onClick={(e) => deleteItemFromWishlist(e, id)}>
+								<i className="fi fi-rs-shopping-cart-add scale-x-[-1] h-6 text-2xl mr-4"></i> ADDED TO WISHLIST
+							</button>
+						)
+						:
+						(
+							<button onClick={(e) => addWishlist(e, id)} className="flex items-center justify-center bg-gradient-to-r from-orange-400 to-pink-500 text-white xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full shadow-md">
+									<i className="fi fi-rs-shopping-cart-add scale-x-[-1] h-6 text-2xl mr-4"></i> ADD TO WISHLIST
+								</button>
+						)
+					}
 
 					{/* Add to Cart */}
 					{
 						cart?.some((p) => p.item_id === id) ? (
-							<button className="xl:mt-3 2xl:mt-5 flex items-center justify-center bg-gradient-to-r from-orange-400 to-pink-500 text-white xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full shadow-md">
+							<button className="flex items-center justify-center bg-gradient-to-r from-orange-400 to-pink-500 text-white xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full shadow-md">
 								<i className="fi fi-rs-shopping-cart-add scale-x-[-1] h-6 text-2xl mr-4"></i> ADDED TO CART
 							</button>
 						)
@@ -175,11 +184,12 @@ function ProductDetailsPage() {
 
 							(
 
-								<button onClick={(e) => addCart(e, id)} className="xl:mt-3 2xl:mt-5 flex items-center justify-center bg-gradient-to-r from-orange-400 to-pink-500 text-white xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full shadow-md">
+								<button onClick={(e) => addCart(e, id)} className="flex items-center justify-center bg-gradient-to-r from-orange-400 to-pink-500 text-white xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full shadow-md">
 									<i className="fi fi-rs-shopping-cart-add scale-x-[-1] h-6 text-2xl mr-4"></i> ADD TO CART
 								</button>
 							)
 					}
+					</div>
 
 
 				</div>
