@@ -93,10 +93,10 @@ function ShopSettingWishlist() {
 												cart.some((p) => p.item_id === item.id) ? (
 													<span className='text-[9px] mt-1 lg:text-[13px] mb-2 font-medium text-center leading-[1] text-green-700 flex gap-1'>Added to Cart <i className="fi fi-rs-check-circle relative text-[13px] "></i></span>
 												) : (
-													<HoverButton onClick={(e) => moveToCart(e, item.id)} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1'>Add to Cart</HoverButton>
+													<HoverButton onClick={(e) => {e.stopPropagation(), moveToCart(e, item.id)}} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1'>Add to Cart</HoverButton>
 												)
 											}
-											<p onClick={(e) => deleteItemFromWishlist(e, item.id)} className="text-xs text-blue-400 tracking-tighter font-medium cursor-pointer lg:hover:underline">Remove</p>
+											<p onClick={(e) => {e.stopPropagation(), deleteItemFromWishlist(e, item.id)}} className="text-xs text-blue-400 tracking-tighter font-medium cursor-pointer lg:hover:underline">Remove</p>
 										</div>
 									</div>
 									:

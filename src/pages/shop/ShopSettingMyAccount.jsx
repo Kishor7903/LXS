@@ -34,7 +34,7 @@ function ShopSettingMyAccount() {
     }, [])
 
     return (
-        <div className="w-full h-full px-5 flex gap-5 ">
+        <div className="w-full h-full px-5 flex gap-8 ">
             <div className="w-1/2 flex flex-col justify-between">
                 <div className="leading-[1] font-semibold h-10">Mission Control 🚀 <br />
                     <p className="text-xs font-normal">Because you are the boss of your Shopping Universe!</p>

@@ -195,7 +195,7 @@ function Footer() {
                 <div className="flex flex-col items-center justify-between lg:w-full lg:flex-row gap-2 lg:gap-20 mx-auto lg:px-[85px]">
                     <div className="text-gray-400 text-left w-[35%]"><p>Don't test me, I'm watching 👁👁</p><p>Copyright &copy; 2025 LXS Lifestyle Store - All Trademark & Rights Reserved</p></div>
                     <button className="text-white px-3 flex justify-center items-center gap-1 h-10 rounded-full border border-white lg:hover:bg-white lg:hover:text-[rgb(8,43,61)] font-medium" onClick={(e) => { e.preventDefault(), setIsOpen(true) }} onMouseEnter={() => setIsHovered(true)} onMouseOut={() => setIsHovered(false)}><i className={`${isHovered ? "fi fi-sr-file-edit" : "fi fi-rr-file-edit"} relative top-[1px]`}></i> Write Website Review</button>
-                    <div className="text-gray-400 text-right w-[35%]"><p>Attention, Earthlings! This starship—uhh, I mean</p><p>This website - is officially Operated by Lifestyle Store LXS (OPC) Private Limited</p></div>
+                    <div className="text-gray-400 text-right w-[35%]"><p>Attention, Earthlings! This starship—uhh, I mean</p><p>This website - is officially Operated by LXSLIFESTYLESTORE (OPC) PRIVATE LIMITED</p></div>
                 </div>
                 <div className="tracking-tight md:tracking-normal text-center mt-3 lg:mt-0">Company's Registered Address : Choura Road, Chas, P.O- Narayanpur, P.S-Pindrajora, City - Bokaro Steel City, 827013, Jharkhand, INDIA.</div>
             </div>

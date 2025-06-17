@@ -87,16 +87,18 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
         }
 
         loginUser(formData).then((res) => {
-            dispatch(login(res))
+            if (res !== null) {
+                dispatch(login(res))
 
-            if (res?.role === "admin") {
-                navigate("/admin/dashboard");
-            } else {
-                navigate("/shop")
+                if (res?.role === "admin") {
+                    navigate("/admin/dashboard");
+                } else {
+                    navigate("/shop")
+                }
+
+                setIsOpen(false);
+                setFormData(userData);
             }
-
-            setIsOpen(false);
-            setFormData(userData);
         })
     }
 

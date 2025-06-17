@@ -90,6 +90,7 @@ export const loginUser = async (formData) => {
       toast.error("Email or Password is Incorrect ...");
     }
     console.log("Login Error: ", error.message);
+    return null;
   }
 };
 

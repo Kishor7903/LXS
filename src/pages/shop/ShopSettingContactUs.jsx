@@ -199,7 +199,7 @@ function ShopSettingContactUs() {
 
 
     return (
-        <div className="w-full h-full px-5 flex gap-5 ">
+        <div className="w-full h-full px-5 flex gap-8 ">
             <div className="w-1/2 flex flex-col justify-between">
                 <div className="leading-[1] font-semibold h-10">Mayday Mayday 🛸 <br />
                     <p className="text-xs font-normal">Lost in Space? We'll guide you home because we won't let you collapse!</p>
