@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addAddress, editAddress } from '@/store/features/cartSlice';
 import { toast } from 'react-toastify';
 import addAddressIcon from "../assets/commonIcons/Address House (Fill).png"
+import flagIcon from "../assets/commonIcons/Indian Flag (Fill).png"
 import axios from 'axios';
 
 const indianStates = [
@@ -149,7 +150,7 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId, setCurrentEditI
                     </div>
                     <div className="flex space-x-5">
                         <div className="w-1/2 relative">
-                            <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Phone<span className="text-red-600">*</span></label>
+                            <label className="relative top-2 left-3 pl-1 pr-5 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Phone<span className="text-red-600">*</span> <img src={flagIcon} alt="" className="h-2 absolute top-1 right-0 pr-1" /></label>
                             <br />
                             <input type="number" name='phone' value={formData.phone} onChange={handlePhoneNoChange} className="border-[rgb(196,185,185)] border pr-3 pl-12 rounded-xl h-10 w-full outline-none" autoComplete='off' />
                             <p className="font-semibold absolute top-[29.5px] left-[8px]">+91</p>

@@ -99,7 +99,7 @@ function ShopSettingSavedAddresses() {
 									</div>
 									<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%] text-[11px]" >
 										<div className="flex flex-col leading-3">
-											<p>Name</p>
+											<p>Full Name</p>
 											<p className="text-[14px] font-semibold">{item.name}</p>
 										</div>
 										<div className="flex flex-col leading-3">

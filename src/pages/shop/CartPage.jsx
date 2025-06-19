@@ -133,7 +133,7 @@ function CartPage() {
                 <div className="leading-[1] font-semibold flex justify-between items-center">
                     <span>Cosmic Hub 🚀 <br />
                         <p className="text-xs font-normal">Where all your Goodies floats before you checkout!</p></span>
-                    <span className="text-sm font-semibold flex items-center gap-1 opacity-50"><img src={secureIcon} alt="" className="h-7" /> 100% Secure</span>
+                    <span className="text-sm font-semibold flex items-center gap-1"><img src={secureIcon} alt="" className="h-7" /> 100% Secure</span>
                 </div>
                 <div className="flex lg:min-h-[80vh] flex-col gap-5 rounded-3xl relative py-5 px-4 lg:p-8 shadow-[0px_0px_10px_-2px_rgb(8,43,61)]">
                     <CheckoutNavigator />
@@ -141,7 +141,7 @@ function CartPage() {
                         cart && cart.length > 0 ? (
                             <div className="w-full flex flex-col lg:flex-row gap-16 lg:gap-8 ">
                                 <div className="w-full lg:w-[60%] space-y-4 relative pb-[34px]">
-                                    <div className="flex justify-between px-5 text-sm font-medium">Items Selected ({selectedItems.length}/{cartItems.length}) <span className="flex items-center"><label htmlFor="check" className="lg:hover:underline cursor-pointer">{isSelectedAll ? "Deselect All" : "Select All"}</label> <input checked={isSelectedAll} onChange={handleSelectAll} id="check" type="checkbox" className="ml-2 relative bottom-[1px]" /></span></div>
+                                    <div className="flex justify-between px-5 text-sm font-medium">Items Selected ({selectedItems.length}/{cartItems.length}) <span className="flex items-center"><label htmlFor="check" className="lg:hover:underline cursor-pointer">{isSelectedAll ? "Deselect All" : "Select All"}</label> <input checked={isSelectedAll} onChange={handleSelectAll} id="check" type="checkbox" className="ml-2 relative bottom-[1px] cursor-pointer" /></span></div>
                                     {
                                         cartItems.map((item, index) => (
                                             <div key={index} className={` border-[rgb(8,43,61)] rounded-xl p-[6px] lg:p-2 flex gap-2 lg:gap-4 relative overflow-hidden cursor-pointer ${item.isSelected ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "border scale-95"}`} onClick={(e) => handletoggleCartSelect(e, item.id, !item.isSelected)}>
@@ -173,13 +173,13 @@ function CartPage() {
                                                     <div className="flex gap-1 lg:gap-2 items-center text-[10px] lg:text-base mt-[2px]"><p className="text-sm lg:text-lg font-semibold">₹{item.salePrice * item.quantity}<s className="font-medium text-sm opacity-60 ml-2">₹{item.price * item.quantity}</s></p><p className="font-semibold text-sm text-red-500">({`${Math.floor(((item.price - (item.salePrice)) * 100) / item.price)}`}% OFF)</p></div>
                                                     <p className="text-[9px] lg:text-[11px] font-medium">Delivered by 25 May, 2025</p>
                                                 </div>
-                                                <div className="absolute bottom-2 lg:bottom-5 right-5 flex flex-col gap-1 items-center lg:items-end w-12 lg:w-28">
+                                                <div className="absolute bottom-2 lg:bottom-5 right-5 flex flex-col gap-1 items-center lg:items-end w-12 lg:w-32">
                                                     <HoverButton onClick={(e) => {e.stopPropagation(), deleteItemFromCart(e, item.id)}} className="px-2 py-1 text-[10px] font-semibold">Remove</HoverButton>
                                                     {
                                                         wishlist.some((p) => p === item.id) ? (
-                                                            <span className='text-[9px] mt-1 lg:text-[11px] font-medium text-center leading-[1] text-gray-500'>Added to Wishlist <i className="fi fi-rs-check-circle relative top-[1px] text-[9px]"></i></span>
+                                                            <span className='text-[9px] mt-1 lg:text-[11px] font-medium text-center leading-[1] text-gray-500 flex gap-1'>Added to Favourites <i className="fi fi-rs-check-circle relative top-[1px] text-[9px]"></i></span>
                                                         ) : (
-                                                            <span onClick={(e) => {e.stopPropagation(), wishlist.includes(item.id) ? null : moveToWishlist(e, item.id)}} className='text-[9px] mt-1 lg:text-[11px] font-medium text-center leading-[1] lg:hover:underline cursor-pointer text-blue-500'>Add to Wishlist</span>
+                                                            <span onClick={(e) => {e.stopPropagation(), wishlist.includes(item.id) ? null : moveToWishlist(e, item.id)}} className='text-[9px] mt-1 lg:text-[11px] font-medium text-center leading-[1] lg:hover:underline cursor-pointer text-blue-500'>Add to Favourites</span>
                                                         )
                                                     }
                                                 </div>
@@ -196,10 +196,7 @@ function CartPage() {
                                     <HoverButton onClick={() => navigate("/products")} className="absolute -bottom-2 px-3 py-[2px] right-0 text-sm">+ Add More...</HoverButton>
                                 </div>
                                 <div className="w-full lg:w-[40%]">
-                                    {/* <div className="w-full flex gap-2 text-sm">
-                                        <input type="text" className="h-7 text-xs text:base focus:outline-none w-[80%] rounded-full border border-[rgb(8,43,61,0.8)] px-3 font-semibold" placeholder="Apply Coupons" />
-                                        <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-full ">Apply</button>
-                                    </div> */}
+                                    
                                     <div className="leading-3 font-semibold">
                                         <span className="font-bold">Price Details ({cart.length} Items)</span>
                                         <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{ selectedItems.length > 0 ? totalPrice : 0}</p></span>
@@ -212,7 +209,7 @@ function CartPage() {
                                     </div>
                                     {
                                         selectedItems.length > 0 && (
-                                            <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToAddress}>Proceed To Address</button>
+                                            <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={handleProceedToAddress}>Proceed To Checkout<i class="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
                                         )
                                     }
                                     

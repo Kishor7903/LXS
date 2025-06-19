@@ -58,7 +58,7 @@ export default function AnimatedInput() {
 					setSearchText(e.target.value);
 				}}
 				type="text"
-				className={`w-full px-4 h-[34px] focus:outline-none ${searchText && searchedProducts.length > 0 ? "rounded-t-[17px] border-x border-t" : "rounded-full border"} shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]`}
+				className={`w-full px-4 h-[34px] focus:outline-none ${searchText && searchedProducts.length > 0 ? "rounded-t-[17px] border-x border-t" : "rounded-full border"} shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]`}
 			/>
 			{
 				!searchText && (

@@ -63,7 +63,7 @@ function ShopBlogs() {
                 {
                     blogs.map((item, index) => {
                         return (
-                            <div key={index} className="h-[200px] md:h-[240px] lg:h-[300px] xl:h-[390px] w-[100%] rounded md:rounded-[10px] overflow-hidden cursor-pointer duration-500 border-gray-300 border-[1px]">
+                            <div key={index} className="h-[200px] md:h-[240px] lg:h-[300px] xl:h-[390px] w-[100%] rounded md:rounded-[10px] overflow-hidden cursor-pointer duration-200 border-gray-300 border-[1px] lg:hover:shadow-[0px_0px_15px_-3px_rgb(8,43,61)] hover:scale-[1.03] lg:active:scale-[0.96]">
                                 <div className='w-full h-[50%] md:h-[55%] rounded-sm md:rounded overflow-hidden border-b'>
                                     <img src={item.image} alt="" className='h-full w-full object-fill' />
                                 </div>
