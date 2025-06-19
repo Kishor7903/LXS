@@ -37,6 +37,7 @@ import { updateCart, updateWishlist } from "@/store/features/cartSlice";
 import { getAllProducts } from "@/firebase/admin";
 import PhoneLogin from "./PhoneLogin";
 import DialogBox from "./DialogBox";
+import HoverButton from "./HoverButton";
 
 
 function Header({ className }) {
@@ -189,7 +190,7 @@ function Header({ className }) {
 	]
 
 	return (
-		<header className={`flex items-center justify-between px-3 md:px-5 xl:px-10 py-2 shadow-md sticky top-0 bg-white z-50 ${className}`}>
+		<header className={`flex items-center justify-between px-3 md:px-5 xl:px-10 py-2 shadow-[0px_0px_10px_-5px_rgb(8,43,61)] sticky top-0 bg-white z-50 ${className}`}>
 
 			<div className="flex gap-2 md:gap-3 items-center">
 
@@ -204,9 +205,9 @@ function Header({ className }) {
 								animate={{ translateX: "0px" }}
 								exit={{ scale: 0.8, opacity: 0 }}
 								transition={{ duration: 0.2, ease: "easeOut", type: "spring", stiffness: 300, damping: 25 }}
-								className={`min-h-80 min-w-60 shadow-md z-50 h-[600px] xl:h-[700px] w-[300px] xl:w-[350px] overflow-hidden bg-white rounded-[30px] gap-3 xl:gap-5 flex flex-col relative`}
+								className={`min-h-80 min-w-60 shadow-md z-50 h-[600px] xl:h-[700px] w-[300px] xl:w-[350px] overflow-hidden bg-white rounded-[35px] gap-3 xl:gap-5 flex flex-col relative`}
 							>
-								<div className="h-[10%] bg-slate-200 w-full border flex items-center px-3 gap-1 rounded-[30px] shadow-[0px_0px_10px_-3px_rgb(8,43,61)]">
+								<div className="h-[10%] bg-slate-200 w-full flex items-center px-3 gap-1  shadow-[inset_0px_-10px_5px_-10px_rgb(8,43,61)]">
 									<div className="w-1/6"><img src={user?.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="w-full rounded-full" /></div>
 									<div className="font-medium w-4/6">
 										<h4 className="text-base xl:text-xl font-bold relative top-[2px]">{!user ? "Sign Up/Log In" : user?.name}</h4>
@@ -238,7 +239,7 @@ function Header({ className }) {
 										}
 										<div className="border-b last:border-none">
 											<button
-												className={`w-full h- flex justify-between items-center px-2 text-left lg:hover:bg-slate-200 py-2 cursor-pointer transition font-medium ${openIndex ? "rounded-t-xl bg-[rgb(210,224,232)]" : " rounded-xl bg-white"}`}
+												className={`w-full h- flex justify-between items-center px-2 text-left lg:hover:bg-slate-200 py-2 cursor-pointer transition font-medium ${openIndex ? "rounded-t-xl bg-slate-200" : " rounded-xl bg-white"}`}
 												onClick={() => setOpenIndex(!openIndex)}
 											>
 												<span className={`flex items-center gap-2 text-sm xl:text-base`}><img src={openIndex ? moreIconFill : moreIcon} alt="" className="h-4 xl:h-5" />More</span>
@@ -251,7 +252,7 @@ function Header({ className }) {
 											</button>
 											{openIndex === true ? (
 												<ul
-													className="pb-2 px-4 bg-[rgb(210,224,232)] rounded-b-xl text-center text-[11px] xl:text-xs font-medium"
+													className="pb-2 px-4 bg-slate-200 rounded-b-xl text-center text-[11px] xl:text-xs font-medium"
 												>
 													{
 														menuItems.map((item, index) => (
@@ -366,11 +367,21 @@ function Header({ className }) {
 								window.innerWidth >= 1280 ?
 									(
 										<>
-										<div className="rounded-full shadow-[0px_0px_10px_-2px_rgb(8,43,61)] flex gap-2 items-center p-[5px] select-none">
+										<div className="rounded-full shadow-[0px_0px_10px_-2px_rgb(8,43,61)] flex items-center p-[5px] cursor-pointer active:scale-[0.90] duration-300" onClick={(e) => {e.preventDefault(), setUserPopup(true)}}>
 											<img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-8 rounded-full" />
-											<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center max-w-16 leading-4 mr-2 px-2">{`${user.name.split(" ")[0].slice(0,6)}${user.name.split(" ")[0].length > 5 ? "..." : ""}`} </span>
+											<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center max-w-16 leading-4 mr-2 px-3">{`${user.name.split(" ")[0].slice(0,6)}${user.name.split(" ")[0].length > 5 ? "..." : ""}`} </span>
+											<i class={`fi fi-br-angle-small-down text-lg relative duration-200 ${userPopup ? "top-1 right-[2px]" : "-rotate-90"}`}></i>
 										</div>
-										<DialogBox isOpen={userPopup} setIsOpen={setUserPopup}></DialogBox>
+										<DialogBox isOpen={userPopup} setIsOpen={setUserPopup} className="w-[300px] p-6 bg-white rounded-xl flex flex-col gap-4" parentDivClassName="flex justify-center items-center">
+											<div className="h-14 w-full bg-slate-200 rounded-2xl flex items-center px-2 gap-3 shadow-[0px_0px_10px_-2px_rgb(8,43,61)]">
+												<img src={accountIcon} alt="" className="h-12" />
+												<div className="flex flex-col relative top-[2px]">
+													<p className="text-base font-semibold leading-4">{user?.name}</p>
+													<p className="text-sm font-medium">Type: User Account</p>
+												</div>
+											</div>
+											<HoverButton className="h-8 w-full text-lg flex justify-center items-center border-" >Add +</HoverButton>
+										</DialogBox>
 										</>
 										
 									)

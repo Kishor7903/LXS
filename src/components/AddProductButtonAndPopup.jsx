@@ -184,7 +184,7 @@ function AddProductButtonAndPopup({isOpen, setIsOpen, productData, formData, set
                             <br />
                             <select name='brand' value={formData.brand} onChange={handleChange} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
                                 <option value="" className="hidden"></option>
-                                <option value="LXS">LXS</option>
+                                <option value="LXS Originals">LXS Originals</option>
                             </select>
                         </div>
                     </div>

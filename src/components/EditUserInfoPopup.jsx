@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { editUserDetails } from "@/firebase/auth";
 import { useDispatch } from "react-redux";
 import { updateUserInfo } from "@/store/features/authSlice";
+import flagIcon from "../assets/commonIcons/Indian Flag (Fill).png"
 
 function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
     let [formData, setFormData] = useState(user);
@@ -92,9 +93,9 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                     />
                 </div>
                 <div className="relative">
-                    <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">
+                    <label className="relative top-2 left-3 pl-1 pr-5 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">
                         {" "}
-                        Phone No.<span className="text-red-600">*</span>
+                        Phone No.<span className="text-red-600">* </span> <img src={flagIcon} alt="" className="h-2 absolute top-1 right-0 pr-1" />
                     </label>
                     <br />
                     <input
@@ -110,9 +111,9 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                     <hr className="border w-7 absolute left-[28px] opacity-30 top-[43px] rotate-90 border-[rgb(8,43,61)]" />
                 </div>
                 <div className="relative">
-                    <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium pr-1">
+                    <label className="relative gap-2 top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium pr-5">
                         {" "}
-                        Alternate Ph. No.
+                        Alternate Ph. No. <img src={flagIcon} alt="" className="h-2 absolute top-1 right-0 pr-1" />
                     </label>
                     <br />
                     <input
