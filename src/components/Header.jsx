@@ -36,6 +36,7 @@ import { logout } from "@/store/features/authSlice";
 import { updateCart, updateWishlist } from "@/store/features/cartSlice";
 import { getAllProducts } from "@/firebase/admin";
 import PhoneLogin from "./PhoneLogin";
+import DialogBox from "./DialogBox";
 
 
 function Header({ className }) {
@@ -44,6 +45,7 @@ function Header({ className }) {
 	const [isSheetOpen, setIsSheetOpen] = useState(false);
 	const [openIndex, setOpenIndex] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
+	const [userPopup, setUserPopup] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const dialogRef = useRef(null);
@@ -204,14 +206,14 @@ function Header({ className }) {
 								transition={{ duration: 0.2, ease: "easeOut", type: "spring", stiffness: 300, damping: 25 }}
 								className={`min-h-80 min-w-60 shadow-md z-50 h-[600px] xl:h-[700px] w-[300px] xl:w-[350px] overflow-hidden bg-white rounded-[30px] gap-3 xl:gap-5 flex flex-col relative`}
 							>
-								<div className="h-[12%] bg-[rgb(210,224,232)] w-full border flex items-center px-3 gap-1">
+								<div className="h-[10%] bg-slate-200 w-full border flex items-center px-3 gap-1 rounded-[30px] shadow-[0px_0px_10px_-3px_rgb(8,43,61)]">
 									<div className="w-1/6"><img src={user?.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="w-full rounded-full" /></div>
 									<div className="font-medium w-4/6">
 										<h4 className="text-base xl:text-xl font-bold relative top-[2px]">{!user ? "Sign Up/Log In" : user?.name}</h4>
 										{
 											user && (
 												<>
-													<p className="text-[10px] xl:text-sm relative bottom-[3px] text-[rgb(240,85,120)]">User Account</p>
+													<p className="text-[10px] xl:text-xs tracking-tighter relative bottom-[3px] ">Type: <span className="text-[rgb(240,85,120)]">User Account</span></p>
 												</>
 											)
 										}
@@ -223,7 +225,7 @@ function Header({ className }) {
 										{
 											navItems.map((item, index) => (
 												item.active === true ? (
-													<li key={index} className="text-left px-2 active:bg-slate-100 hover:bg-[rgb(210,224,232)] rounded-xl cursor-pointer">
+													<li key={index} className="text-left px-2 active:bg-slate-200 hover:bg-slate-200 rounded-xl cursor-pointer">
 														<NavLink
 															to={item.slug}
 															onClick={() => setIsSheetOpen(false)}
@@ -236,7 +238,7 @@ function Header({ className }) {
 										}
 										<div className="border-b last:border-none">
 											<button
-												className={`w-full h- flex justify-between items-center px-2 text-left lg:hover:bg-[rgb(210,224,232)] py-2 cursor-pointer transition font-medium ${openIndex ? "rounded-t-xl bg-[rgb(210,224,232)]" : " rounded-xl bg-white"}`}
+												className={`w-full h- flex justify-between items-center px-2 text-left lg:hover:bg-slate-200 py-2 cursor-pointer transition font-medium ${openIndex ? "rounded-t-xl bg-[rgb(210,224,232)]" : " rounded-xl bg-white"}`}
 												onClick={() => setOpenIndex(!openIndex)}
 											>
 												<span className={`flex items-center gap-2 text-sm xl:text-base`}><img src={openIndex ? moreIconFill : moreIcon} alt="" className="h-4 xl:h-5" />More</span>
@@ -363,10 +365,14 @@ function Header({ className }) {
 							(
 								window.innerWidth >= 1280 ?
 									(
+										<>
 										<div className="rounded-full shadow-[0px_0px_10px_-2px_rgb(8,43,61)] flex gap-2 items-center p-[5px] select-none">
 											<img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-8 rounded-full" />
 											<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center max-w-16 leading-4 mr-2 px-2">{`${user.name.split(" ")[0].slice(0,6)}${user.name.split(" ")[0].length > 5 ? "..." : ""}`} </span>
 										</div>
+										<DialogBox isOpen={userPopup} setIsOpen={setUserPopup}></DialogBox>
+										</>
+										
 									)
 									:
 									(

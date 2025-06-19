@@ -74,10 +74,14 @@ import PersonalizedOrderPageLayout from "./layouts/PersonalizedOrderPageLayout"
 import BulkOrderPageLayout from "./layouts/BulkOrderPageLayout"
 import RecentViewedProducts from "./pages/shop/RecentViewedProducts"
 import UserLayout from "./layouts/UserLayout"
-import Blog from "./pages/shop/Blog"
+import Blog1 from "./pages/shop/Blog1"
 import Subscription from "./pages/shop/Subscription"
 import PartnerWithUs from "./pages/shop/PartnerWithUs"
 import CartPageLayout from "./layouts/CartPageLayout"
+import Blog2 from "./pages/shop/Blog2"
+import Blog3 from "./pages/shop/Blog3"
+import Blog4 from "./pages/shop/Blog4"
+import Blog5 from "./pages/shop/Blog5"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -111,7 +115,11 @@ function App() {
 					<Route path="blogs" element={<BlogPageLayout />} />
 					<Route path="about-us" element={<AboutUsPageLayout />} />
 					<Route path="all-blogs" element={<AllBlogs />} />
-					<Route path="blog" element={<Blog />} />
+					<Route path="blog1" element={<Blog1 />} />
+					<Route path="blog2" element={<Blog2 />} />
+					<Route path="blog3" element={<Blog3 />} />
+					<Route path="blog4" element={<Blog4 />} />
+					<Route path="blog5" element={<Blog5 />} />
 					<Route path="bulk-order" element={<BulkOrderPageLayout />} />
 					<Route path="personalized-order" element={<PersonalizedOrderPageLayout />} />
 					<Route path="subscription" element={<Subscription />} />

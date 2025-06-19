@@ -56,7 +56,7 @@ function ShopBlogs() {
                     <h4 className={`h-7 xl:h-8 px-3 border border-[rgb(8,43,61)] flex justify-center items-center rounded-full lg:hover:bg-[rgb(8,43,61)] font-medium text-sm xl:text-base lg:hover:text-white cursor-pointer ${show ? "bg-[rgb(8,43,61)] text-white" : ""}`} onClick={() => setShow(true)}>Latest</h4>
                     <h4 className={`h-7 xl:h-8 px-3 border border-[rgb(8,43,61)] flex justify-center items-center rounded-full lg:hover:bg-[rgb(8,43,61)] font-medium text-xs xl:text-base lg:hover:text-white cursor-pointer ${!show ? "bg-[rgb(8,43,61)] text-white" : ""}`} onClick={() => setShow(false)}>Popular</h4>
                 </div>
-                <ViewAllIcon navigate="/blog" className="hidden md:flex" />
+                <ViewAllIcon navigate="/all-blogs" className="hidden md:flex" />
             </div>
 
             <div className="h-auto w-full grid grid-cols-2 md:grid-cols-5 gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 px-5 md:px-8 lg:px-12 xl:px-16">

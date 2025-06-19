@@ -10,17 +10,17 @@ function TopBlogPosts() {
         {
             name: "Welcome to LXS Store",
             date: "February 10, 2025",
-            slug: "/blog"
+            slug: "/blog1"
         },
         {
             name: "The Future of Fashion",
             date: "February 10, 2025",
-            slug: "#"
+            slug: "/blog2"
         },
         {
             name: "Bringing AR & VR",
             date: "February 10, 2025",
-            slug: "#"
+            slug: "/blog3"
         },
         {
             name: "Meet The Creators",
