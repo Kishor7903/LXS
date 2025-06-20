@@ -63,15 +63,15 @@ function ShopBlogs() {
                 {
                     blogs.map((item, index) => {
                         return (
-                            <div key={index} className="h-[200px] md:h-[240px] lg:h-[300px] xl:h-[390px] w-[100%] rounded md:rounded-[10px] overflow-hidden cursor-pointer duration-200 border-gray-300 border-[1px] lg:hover:shadow-[0px_0px_15px_-3px_rgb(8,43,61)] hover:scale-[1.03] lg:active:scale-[0.96]">
+                            <div key={index} className="h-[200px] md:h-[240px] lg:h-[300px] xl:h-[390px] w-[100%] rounded md:rounded-[10px] overflow-hidden cursor-pointer duration-200 border-slate-300 border-[1px] shadow-lg">
                                 <div className='w-full h-[50%] md:h-[55%] rounded-sm md:rounded overflow-hidden border-b'>
                                     <img src={item.image} alt="" className='h-full w-full object-fill' />
                                 </div>
                                 <div className="relative h-[50%] md:h-[45%] px-2 lg:px-5 py-[2px]">
                                     <p className='text-[7px] md:text-[8px] lg:text-[10px] xl:text-[11px] text-slate-500 font-semibold'>{item.date}</p>
                                     <h4 className="text-[10px] md:text-[11px] lg:text-[13px] xl:text-[16px] font-semibold leading-[1] mt-[2px] line-clamp-2">{item.title}</h4>
-                                    <p className='text-[8px] lg:text-[9px] xl:text-[11px] text-slate-500 tracking-tight leading-[1] mt-1 line-clamp-4 lg:line-clamp-5 xl:line-clamp-6'>{item.content}</p>
-                                    <button className="text-[8px] md:text-[10px] lg:text-[12px] md:mt-[4px] h-auto w-full border border-slate-400 rounded-2xl py-[3px] md:py-[4px] lg:py-[5px] xl:py-[6px] active:bg-slate-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white font-medium">Read More <i className="fi fi-br-arrow-circle-right relative top-[1px]"></i></button>
+                                    <p className='text-[8px] lg:text-[9px] xl:text-[11px] text-slate-500 tracking-tight leading-[1] mt-1 line-clamp-4 lg:line-clamp-5 xl:line-clamp-5 mb-1'>{item.content}</p>
+                                    <button className="text-[8px] md:text-[10px] lg:text-[14px] md:mt-[4px] h-auto w-full rounded-full py-[3px] md:py-[4px] lg:py-[5px] xl:py-[8px] bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white font-medium lg:hover:scale-[1.05] duration-150 lg:hover:shadow-[0px_0px_10px_-2px_rgb(8,43,61)] ">Read More <i class="fi fi-br-angle-double-small-right relative top-[3px] "></i></button>
                                 </div>
                             </div>
                         )

@@ -49,7 +49,7 @@ function AddressPage() {
                             <div className="w-full lg:w-[60%] space-y-4">
                                 {
                                     address.map((item, index) => (
-                                        <div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-5 overflow-hidden cursor-pointer ${selectedAddress === item ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "scale-95"}`} onClick={() => setSelectedAddress(item)}>
+                                        <div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-5 overflow-hidden cursor-pointer ${selectedAddress === item ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "scale-95 lg:hover:scale-[0.97] duration-150 shadow-md border border-slate-300"}`} onClick={() => setSelectedAddress(item)}>
                                             <div className="font-bold text-sm lg:text-base flex gap-3">
                                                 <label htmlFor="address1">ADDRESS {index + 1} <span className="text-blue-500 text-[10px] lg:text-xs">{`${item.isDefault ? "(Default)" : ""}`}</span></label>
                                             </div>
@@ -58,7 +58,7 @@ function AddressPage() {
                                                 <p className="text-[9px] lg:text-[11px] leading-[1]">Phone No.<br /> <span className="text-[12px] lg:text-[14px] font-semibold">+91 {item.phone}</span></p>
                                                 <p className="text-[9px] lg:text-[11px] leading-[1]">House/Appartment No. <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.houseNo}</span></p>
                                                 <p className="text-[9px] lg:text-[11px] leading-[1]">Village/Area Name <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.area}</span></p>
-                                                <p className="text-[9px] lg:text-[11px] leading-[1]">Landmark <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.landmark}</span></p>
+                                                <p className="text-[9px] lg:text-[11px] leading-[1]">Landmark <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.landmark ? item.landmark : "_"}</span></p>
                                                 <p className="text-[9px] lg:text-[11px] leading-[1]">Pincode <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.pincode}</span></p>
                                                 <p className="text-[9px] lg:text-[11px] leading-[1]">City <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.city}</span></p>
                                                 <p className="text-[9px] lg:text-[11px] leading-[1]">State <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.state}</span></p>
@@ -73,7 +73,7 @@ function AddressPage() {
                                         </div>
                                     ))
                                 }
-                                <button onClick={() => navigate("/setting/saved-addresses")} className="w-full h-8 border border-[rgb(8,43,61)] rounded-full font-semibold">+ Add New Address</button>
+                                <button onClick={() => navigate("/setting/saved-addresses")} className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-150 h-10 shadow-md border border-slate-300 rounded-xl font-semibold">+ Add New Address</button>
                             </div>
                             <div className="w-full lg:w-[40%]">
                                 <div className="mt-5 leading-3 font-semibold">

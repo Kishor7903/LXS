@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getSingleProductData } from "@/firebase/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addCartItem, addNewRecentProduct, addWishlistItem, deleteCartItem, deleteWishlistItem } from "@/firebase/auth";
-import { addToCart, addToWishlist, deleteFromCart, deleteFromWishlist } from "@/store/features/cartSlice";
+import { addToCart, addToWishlist, deleteFromWishlist } from "@/store/features/cartSlice";
 import shareIcon from "../../assets/commonIcons/Share (Stroke).png"
 import shareIconActive from "../../assets/commonIcons/Share (Fill).png"
 import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 // import reviewLogo from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import reviewLogoActive from "../../assets/commonIcons/Rewards 2 (Fill).png"
 import ViewAllIcon from "@/components/ViewAllIcon";
-import Breadcrum from "@/components/Breadcrum";
+import starIcon from "../../assets/commonIcons/Rewards 2 (Fill).png"
 
 function ProductDetailsPage({ id, data }) {
 	let [hovered, setHovered] = useState(false);
@@ -85,22 +84,22 @@ function ProductDetailsPage({ id, data }) {
 	}, [cart]);
 
 	let items = [
-        {
-            label: "Home",
-            path: "/"
-        },
-        {
-            label: "Clothing",
-            path: "/products"
-        },
-        {
-            label: "Tshirt",
-            path: "#"
-        },
-        {
-            label: "LXS-M-TS-0001"
-        }
-    ]
+		{
+			label: "Home",
+			path: "/"
+		},
+		{
+			label: "Clothing",
+			path: "/products"
+		},
+		{
+			label: "Tshirt",
+			path: "#"
+		},
+		{
+			label: "LXS-M-TS-0001"
+		}
+	]
 
 
 	return (
@@ -109,8 +108,8 @@ function ProductDetailsPage({ id, data }) {
 				<span>Gear Blueprint📘<br />
 					<p className="text-xs font-normal">Explore every detail, dimension, and feature — decoded for you</p>
 				</span>
-				<Breadcrum items={items} />
-            </div>
+				<p className="font-medium text-sm">Home {">"} Clothing {">"} T-Shirt {">"} <span className="text-[rgb(240,85,120)] font-semibold">LXS-M-TS-0001</span></p>
+			</div>
 			<div className="w-full flex gap-14 h-full">
 				<div className="flex gap-8 relative w-[60%]">
 					<div className="flex flex-col xl:w-[18%] 2xl:w-[19%] gap-3 ">
@@ -122,7 +121,7 @@ function ProductDetailsPage({ id, data }) {
 							))
 						}
 					</div>
-					<div className="w-full border rounded-[18px] object-fill overflow-hidden shadow-[0px_0px_12px_-5px_rgb(8,43,61)] cursor-pointer">
+					<div className="w-full rounded-[18px] object-fill overflow-hidden shadow-[0px_0px_12px_-5px_rgb(8,43,61)] cursor-pointer">
 						<img src={mainPic} alt="" className="w-full" />
 					</div>
 				</div>
@@ -136,20 +135,23 @@ function ProductDetailsPage({ id, data }) {
 							</div>
 							<img className="h-7 cursor-pointer" src={hovered ? shareIconActive : shareIcon} onMouseOver={() => setHovered(true)} onMouseOut={() => setHovered(false)} alt="" />
 						</div>
-						<div className="flex justify-between items-center"><h2 className="xl:text-2xl 2xl:text-4xl font-semibold text-gray-800 leading-3">{productData?.name}</h2></div>
-						<p className="text-sm text-gray-500 flex self-end 2xl:text-sm relative bottom-1">
+						<div className="flex justify-between"><h2 className="xl:text-2xl opacity-70 font-semibold text-gray-800 leading-3">{productData?.name}</h2></div>
+						<div className="flex gap-2 justify-between border-[rgb(8,43,61)]">
+							<div className="flex gap-2 items-center pt-1">
+								<p className="xl:text-3xl 2xl:text-4xl font-semibold">₹{productData?.salePrice}.00</p>
+								<p className="text-xl text-gray-600 font-semibold opacity-60">MRP  ₹<span className="line-through ">{productData?.price}.00</span></p>
+								<p className="text-red-500 font-semibold">({`${Math.floor(((productData?.price - productData?.salePrice) * 100) / productData?.price)}`}% OFF)</p>
+							</div>
+							<p className="text-sm text-gray-500 flex h-3 items-center 2xl:text-sm relative bottom-1 space-x-0.5">
 
-							{
-								[1, 2, 3, 4, 5].map((_, index) => (
-									<i key={index} className="fi fi-ss-star text-[rgb(8,43,61)] relative top-[1px] "></i>
-								))
-							}
-							<span className="ml-1 font-medium ">74 Reviews</span>
-						</p>
-						<div className="flex gap-2 items-center xl:pt-3 2xl:pt-5 border-t-2 border-[rgb(8,43,61)]">
-							<p className="xl:text-3xl 2xl:text-4xl font-semibold">₹{productData?.salePrice}.00</p>
-							<p className="text-xl text-gray-600 font-semibold opacity-60">MRP  ₹<span className="line-through ">{productData?.price}.00</span></p>
-							<p className="text-red-500 font-semibold">({`${Math.floor(((productData?.price - productData?.salePrice) * 100) / productData?.price)}`}% OFF)</p>
+								{
+									[1, 2, 3, 4, 5].map((_, index) => (
+										<img key={index} src={starIcon} alt="" className="h-3 relative bottom-[1px]" />
+									))
+								}
+								<span className="ml-2 font-medium ">74 Reviews</span>
+							</p>
+
 						</div>
 						<p className="text-sm 2xl:text-base text-green-600">Inclusive of all taxes, 100% Original Product</p>
 
@@ -182,16 +184,16 @@ function ProductDetailsPage({ id, data }) {
 						</div>
 					</div>
 					<div className="flex flex-col gap-5 ">
-						<button onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] ${wishlist.some(p => p.item_id === id) ? "bg-[rgb(8,43,61)] text-white" : "bg-slate-200"}`}><i className="fi fi-ss-heart scale-x-[-1] h-6 text-2xl mr-4"></i>{wishlist.some(p => p.item_id === id) ? "Remove from": "Save to"} Favourites</button>
+						<button onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] ${wishlist.some(p => p.item_id === id) ? "bg-[rgb(8,43,61)] text-white" : "bg-slate-200"}`}><i className="fi fi-ss-heart scale-x-[-1] h-6 text-2xl mr-4"></i>{wishlist.some(p => p.item_id === id) ? "Remove from" : "Save to"} Favourites</button>
 
-						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(240,85,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket</button>
+						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(240,85,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i class="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
 					</div>
 
 
 				</div>
 			</div>
 			<div className="w-full flex gap-14 mb-10 mt-5">
-				<div className="flex flex-col gap-5 w-[60%] p-10 shadow-[0px_0px_10px_-2px_rgb(8,43,61)] rounded-xl">
+				<div className="flex flex-col gap-5 w-[60%] p-10 shadow-lg border border-slate-300 rounded-xl">
 					<h4 className="text-xl font-semibold">PRODUCT DESCRIPTION</h4>
 					<p className="text-sm tracking-tight leading-[1.2] ml-2">{productData?.description}</p>
 				</div>
