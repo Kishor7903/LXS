@@ -32,7 +32,7 @@ function OrderDetailsPage() {
 
     let items = [
         {
-            label: "Your Orders",
+            label: "My Orders",
             path: "../../setting/my-orders"
         },
         {
@@ -111,7 +111,7 @@ function OrderDetailsPage() {
                                     </div>
                                 </div>
                                 <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border mt-5 px-8 py-3 flex font-semibold">
-                                    Payment Method: <span className="capitalize ml-2 font-medium">{orderDetails.paymentMethod}</span>
+                                    Payment Method: <span className="uppercase ml-2 font-medium">{orderDetails.paymentMethod}</span>
                                 </div>
                                 <div className="flex justify-end gap-5 text-xs mt-4 mr-2 font-medium">
                                     <p className="lg:hover:underline text-blue-500 cursor-pointer">Hide Order</p>

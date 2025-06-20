@@ -92,12 +92,12 @@ function ShopSettingSavedAddresses() {
 					{
 						address?.map((item, index) => (
 							!loading ? (
-								<div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-5 overflow-hidden ${item.isDefault ? "bg-slate-200 shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border-2 scale-100" : "scale-95"}`}>
+								<div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-3 overflow-hidden ${item.isDefault ? "bg-slate-200 shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border-2 scale-100" : "scale-95"}`}>
 									<div className="font-semibold flex gap-1 items-center">
 										<label htmlFor={`address${index}`} className={`rounded-full px-4 ${item.isDefault ? "bg-[rgb(8,43,61)] text-white" : "border border-[rgb(8,43,61)]"}`}>ADDRESS {index + 1} </label>
 										<span onClick={(e) => item.isDefault ? null : handleSetDefault(e, item.id)} className={`ml-2 ${item.isDefault ? "text-[rgb(240,85,120)]" : "text-blue-500 lg:hover:underline cursor-pointer"} text-xs `}>{`${item.isDefault ? "(Default)" : "Set as Default"}`}</span>
 									</div>
-									<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%] text-[11px]" >
+									<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%] text-[11px] ml-2" >
 										<div className="flex flex-col leading-3">
 											<p>Full Name</p>
 											<p className="text-[14px] font-semibold">{item.name}</p>

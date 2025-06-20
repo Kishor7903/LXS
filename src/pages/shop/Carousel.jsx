@@ -85,12 +85,12 @@ const Carousel = ({ carouselImg }) => {
       </div>
 
       {/* Arrows */}
-      <button onClick={goToPrev} className="absolute hidden lg:block left-2 top-1/2 transform -translate-y-1/2 bg-black/40 h-10 w-10 rounded-full text-white z-10">
+      {/* <button onClick={goToPrev} className="absolute hidden lg:block left-2 top-1/2 transform -translate-y-1/2 bg-black/40 h-10 w-10 rounded-full text-white z-10">
         <i className="fi fi-br-angle-left text-lg"></i>
       </button>
       <button onClick={goToNext} className="absolute hidden lg:block right-2 top-1/2 transform -translate-y-1/2 bg-black/40 h-10 w-10 rounded-full text-white z-10">
         <i className="fi fi-br-angle-right text-lg"></i>
-      </button>
+      </button> */}
 
       {/* Dots */}
       <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 hidden lg:flex space-x-2 bg-black/25 py-1 px-2 rounded-2xl z-10">
