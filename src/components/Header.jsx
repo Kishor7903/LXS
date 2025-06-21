@@ -38,6 +38,7 @@ import { getAllProducts } from "@/firebase/admin";
 import PhoneLogin from "./PhoneLogin";
 import DialogBox from "./DialogBox";
 import HoverButton from "./HoverButton";
+import { getProducts } from "@/store/features/adminSlice";
 
 
 function Header({ className }) {
@@ -86,7 +87,9 @@ function Header({ className }) {
 	}, [isSheetOpen]);
 
 	useEffect(() => {
-		getAllProducts(dispatch);
+		getAllProducts().then((res) => {
+			dispatch(getProducts(res));
+		});
 		if (user) {
 			getUserCart(user?.id).then((res) => {
 				dispatch(updateCart(res));

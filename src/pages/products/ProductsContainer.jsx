@@ -1,64 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '@/firebase/admin';
-import { filteredProductItem, sortedProductItems } from '@/firebase/auth';
 import ProductCard from '@/components/ProductCard';
 import DualRangeSlider from '@/components/DualRangeSlider';
+import { getProducts } from '@/store/features/adminSlice';
+
+let filter = {
+    brand: "",
+    category: "",
+    subCategory: "",
+    price: "",
+    sortBy: ""
+}
 
 function ProductsContainer() {
     let dispatch = useDispatch();
-    let [sortByValue, setSortByValue] = useState("");
-    let [filterByGender, setFilterByGender] = useState("");
-    let [filterByBrand, setFilterByBrand] = useState("");
+    let [filters, setFilters] = useState(filter);
     let { products } = useSelector(state => state.admin)
     const [product, setProduct] = useState(products);
     const [minValue, setMinValue] = useState(400);
     const [maxValue, setMaxValue] = useState(4000);
 
-    const handleSortOnChange = (e) => {
+
+    const handleFilterChange = (e) => {
         e.preventDefault();
 
-        setSortByValue(e.target.value);
-
-        sortedProductItems(e.target.value).then((res) => {
-            setProduct(res)
-        })
-    }
-
-    const handleRangeApply = (e) => {
-        e.preventDefault();
-
-        filteredProductItem(`salePrice_${minValue}_${maxValue}`).then((res) => {
-            setProduct(res);
-        })
-    }
-
-    const handleGenderApply = (e) => {
-        e.preventDefault();
-
-        setFilterByGender(e.target.value);
-
-        if (e.target.value === "all") {
-            setProduct(products)
-        } else {
-            filteredProductItem(e.target.value).then((res) => {
-                setProduct(res);
-            })
+        if(e.target.name === "brand" || e.target.name === "category" || e.target.name === "subCategory" || e.target.name === "price"){
+            setFilters(prev => ({...prev, [e.target.name]: e.target.value}));
+        } else{
+            setFilters(prev => ({...prev, price: `${minValue}-${maxValue}`}))
         }
     }
 
-    const handleBrandApply = (e) => {
-        e.preventDefault();
-
-        setFilterByBrand(e.target.value);
-
-        filteredProductItem(e.target.value).then((res) => {
-            setProduct(res);
-        })
-    }
-
     useEffect(() => {
-        getAllProducts(dispatch)
+        getAllProducts().then((res) => {
+			dispatch(getProducts(res));
+		});
     }, []);
 
     useEffect(() => {
@@ -78,19 +55,19 @@ function ProductsContainer() {
                         {
                             <p className='font-medium text-sm w-[160px] py-[2px] text-center'>Min: {minValue} - Max: {maxValue}</p>
                         }
-                        <button className='h-7 px-3 text-sm bg-[rgb(8,43,61)] text-white font-medium rounded-full' onClick={handleRangeApply}>Apply</button>
+                        <button className='h-7 px-3 text-sm bg-[rgb(8,43,61)] text-white font-medium rounded-full' onClick={handleFilterChange}>Apply</button>
                     </div>
                 </div>
 
 
                 <div className="flex justify-end gap-3">
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
-                        <label htmlFor="sort-by">Brand :</label>
-                        <select name='sort-by' value={filterByBrand} onChange={handleBrandApply} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
-                            <option value="brand_Lxs">LXS Originals</option>
-                            <option value="brand_Nike">Nike</option>
-                            <option value="brand_Puma">Puma</option>
-                            <option value="brand_Hrx">HRX</option>
+                        <label htmlFor="brand">Brand :</label>
+                        <select name='brand' value={filters.brand} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
+                            <option value="Lxs">LXS Originals</option>
+                            <option value="Nike">Nike</option>
+                            <option value="Puma">Puma</option>
+                            <option value="Hrx">HRX</option>
                         </select>
                     </div>
                     {/* <div className="border px-1 lg:px-2 text-xs lg:text-base py-1 border-[rgb(8,43,61)] rounded-full tracking-tight shadow-[0px_0px_10px_-2px_rgb(8,43,61)]">
@@ -103,32 +80,32 @@ function ProductsContainer() {
                     </select>
                 </div> */}
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
-                        <label htmlFor="sort-by">Category :</label>
-                        <select name='sort-by' value={filterByGender} onChange={handleGenderApply} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
+                        <label htmlFor="category">Category :</label>
+                        <select name='category' value={filters.category} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
                             <option value="all">Default</option>
-                            <option value="category_Mens">Mens</option>
-                            <option value="category_Womens">Womens</option>
-                            <option value="category_kids">Kids</option>
+                            <option value="Mens">Mens</option>
+                            <option value="Womens">Womens</option>
+                            <option value="kids">Kids</option>
                         </select>
                     </div>
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
-                        <label htmlFor="sort-by">Sub Category :</label>
-                        <select name='sort-by' value={filterByGender} onChange={handleGenderApply} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
+                        <label htmlFor="subCategory">Sub Category :</label>
+                        <select name='subCategory' value={filters.subCategory} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
                             <option value="all">Default</option>
-                            <option value="">T-Shirts</option>
-                            <option value="">Shirts</option>
-                            <option value="">Jeans</option>
-                            <option value="">Sweatshirts</option>
-                            <option value="">Hoodies</option>
-                            <option value="">Shoes</option>
-                            <option value="">Watches</option>
-                            <option value="">Shorts</option>
+                            <option value="T-Shirts">T-Shirts</option>
+                            <option value="Shirts">Shirts</option>
+                            <option value="Jeans">Jeans</option>
+                            <option value="Sweatshirts">Sweatshirts</option>
+                            <option value="Hoodies">Hoodies</option>
+                            <option value="Shoes">Shoes</option>
+                            <option value="Watches">Watches</option>
+                            <option value="Shorts">Shorts</option>
                         </select>
                     </div>
                     
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
-                        <label htmlFor="sort-by">Sort By :</label>
-                        <select name='sort-by' value={sortByValue} onChange={handleSortOnChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
+                        <label htmlFor="sortBy">Sort By :</label>
+                        <select name='sortBy' value={filters.sortBy} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
                             <option value="timestamp_asc">Popularity</option>
                             <option value="timestamp_desc">New Arrival</option>
                             <option value="salePrice_asc">Low-to-High</option>
