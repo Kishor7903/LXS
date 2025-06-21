@@ -322,49 +322,49 @@ export const setAsDefaultNewAddress = async (user_id, item_id) => {
   await Promise.all(batchUpdates);
 };
 
-export const sortedProductItems = async (sortBy) => {
-  try {
-    let sort = sortBy.split("_");
-    const productsRef = collection(fireDB, "products");
-    const q = query(productsRef, orderBy(sort[0], sort[1]));
+// export const sortedProductItems = async (sortBy) => {
+//   try {
+//     let sort = sortBy.split("_");
+//     const productsRef = collection(fireDB, "products");
+//     const q = query(productsRef, orderBy(sort[0], sort[1]));
 
-    const querySnapshot = await getDocs(q);
-    let sortedProducts = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    return sortedProducts;
-  } catch (error) {
-    console.log("Getting Sorted Products Items Error: ", error.message);
-  }
-};
+//     const querySnapshot = await getDocs(q);
+//     let sortedProducts = querySnapshot.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     }));
+//     return sortedProducts;
+//   } catch (error) {
+//     console.log("Getting Sorted Products Items Error: ", error.message);
+//   }
+// };
 
-export const filteredProductItem = async (filterBy) => {
-  try {
-    let filter = filterBy.split("_");
-    const productsRef = collection(fireDB, "products");
-    let q;
+// export const filteredProductItem = async (filterBy) => {
+//   try {
+//     let filter = filterBy.split("_");
+//     const productsRef = collection(fireDB, "products");
+//     let q;
 
-    if (filter.length === 2) {
-      q = query(productsRef, where(filter[0], "==", filter[1]));
-    } else {
-      q = query(
-        productsRef,
-        where(filter[0], ">=", parseInt(filter[1])),
-        where(filter[0], "<=", parseInt(filter[2]))
-      );
-    }
+//     if (filter.length === 2) {
+//       q = query(productsRef, where(filter[0], "==", filter[1]));
+//     } else {
+//       q = query(
+//         productsRef,
+//         where(filter[0], ">=", parseInt(filter[1])),
+//         where(filter[0], "<=", parseInt(filter[2]))
+//       );
+//     }
 
-    const querySnapshot = await getDocs(q);
-    let filteredProducts = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    return filteredProducts;
-  } catch (error) {
-    console.log("Getting Filtered Product Items Error:  ", error.message);
-  }
-};
+//     const querySnapshot = await getDocs(q);
+//     let filteredProducts = querySnapshot.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     }));
+//     return filteredProducts;
+//   } catch (error) {
+//     console.log("Getting Filtered Product Items Error:  ", error.message);
+//   }
+// };
 
 export const createOrderInfo = async (orderDetails) => {
   try {

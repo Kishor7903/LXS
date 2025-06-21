@@ -6,8 +6,23 @@ import { addProduct, editProduct } from '@/firebase/admin';
 import { useDispatch } from 'react-redux';
 import { addNewProduct } from '@/store/features/adminSlice';
 
+let category = ['Select', 'Mens', 'Womens', 'Kids'];
+let subCategory = ['Select', 'T-Shirts', 'Shirts', 'Jeans', 'Sweatshirts', 'Hoddies', 'Shoes', 'Watches', 'Shorts', 'Joggers'];
+let brand = ['Select', 'LXS Originals', 'HRX', 'Nike', 'Roadster', 'Peter England', 'Fastrack', 'Allen Solley', 'Addidas'];
+let lxsCertified = ['Select', 'Yes', 'No'];
+let codAvailability = ['Select', 'Yes', 'No'];
+let returnAvailability = ['Select', 'No', '1 Days', '2 Days', '3 Days', '4 Days', '5 Days', '6 Days', '7 Days'];
+let sizeFit = ['Select', 'Slim Fit', 'Regular Fit', 'Oversized Fit'];
+let color = ['Select', 'Black', 'White', 'Jet Black', 'Maroon', 'Bright Mint', 'Cedar Brown', 'Celestial Sand', 'Lavender Mist', 'Desert Gold', 'Light Olive',];
+let material = ['Select', '100% Cotton', 'Polyster'];
+let washCare = ['Select', 'Hand Wash', 'Machine Wash', 'Do not Bleach', 'Do not Iron on Prints', 'Iron Inside Out', 'Wash at Max Tempertaure 30°C'];
+let sleevLength = ['Select', 'Sleevless', 'Half Length', 'Elbow Length', '3/4 Length', 'Full Length'];
+let neck = ['Select', 'V-Neck', 'Round Neck', 'Polo Neck', 'Hooded Neck'];
+let occasion = ['Select', 'Casual Wear', 'Street Wear', 'Ethnic/Party Wear', 'Work/Office Wear', 'Gym/Active Wear', 'Travle/Vacation Wear', 'Date/Outing Wear', 'Festival/Cultural Wear', 'Outdoor/Trekking Wear'];
+let modelWearingSize = ["Select", "XS", "S", "M", "L", "XL", "XXL"];
 
-function AddProductButtonAndPopup({isOpen, setIsOpen, productData, formData, setFormData, currentEditId, setCurrentEditId}) {
+
+function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, setFormData, currentEditId, setCurrentEditId }) {
     const [previews, setPreviews] = useState([null, null, null, null, null, null]);
     const [files, setFiles] = useState([null, null, null, null, null, null]);
     const [uploadedUrls, setUploadedUrls] = useState([null, null, null, null, null, null]);
@@ -15,12 +30,30 @@ function AddProductButtonAndPopup({isOpen, setIsOpen, productData, formData, set
     const fileInputs = useRef([]);
     let dispatch = useDispatch();
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+    const handleChange = (field, value) => {
+        const keys = field.split(".");
+      
+        if (keys.length === 1) {
+          setFormData(prev => ({
+            ...prev,
+            [keys[0]]: value,
+          }));
+        } else {
+          setFormData(prev => {
+            let updated = { ...prev };
+            let nested = updated;
+      
+            for (let i = 0; i < keys.length - 1; i++) {
+              nested[keys[i]] = { ...nested[keys[i]] };
+              nested = nested[keys[i]];
+            }
+      
+            nested[keys[keys.length - 1]] = value;
+      
+            return updated;
+          });
+        }
+      };
 
     const handleImageChange = (e, index) => {
         const file = e.target.files[0];
@@ -69,6 +102,12 @@ function AddProductButtonAndPopup({isOpen, setIsOpen, productData, formData, set
     };
 
     const handleAddProductSubmit = async () => {
+
+        if(formData.name === "" || formData.category === "Select" || formData.subCategory === "Select" || formData.brand === "Select" || formData.isLxsCertified === "Select" || formData.price === "" || formData.salePrice === "" || formData.codAvailability === "Select" || formData.returnAvailability === "Select" || formData.description.text === "" || formData.description.sizeFit === "Select" || formData.description.color === "Select" || formData.description.material === "Select" || formData.description.washCare === "Select" || formData.description.sleevLength === "Select" || formData.description.neck === "Select" || formData.description.occasion === "Select" || formData.description.modelHeight === "" ||formData.description.modelWearingSize === "Select" || files.length === 0){
+            toast.error("Requires all the fields!!");
+            return
+        }
+
         const urls = [...uploadedUrls];
         const ids = [...publicIds];
 
@@ -85,15 +124,14 @@ function AddProductButtonAndPopup({isOpen, setIsOpen, productData, formData, set
             ids
         }
 
-        let product = addProduct({formData, imageData})
-        
-        dispatch(addNewProduct(product))
+        let product = addProduct({ formData, imageData })
+        dispatch(addNewProduct(product));
 
         setFiles([null, null, null, null, null, null]);
         setPreviews([null, null, null, null, null, null]);
         setUploadedUrls([null, null, null, null, null, null]);
         setPublicIds([null, null, null, null, null, null]);
-        
+
         toast.success("Product Added Successfully ...")
         setIsOpen(false);
         setFormData(productData);
@@ -104,17 +142,7 @@ function AddProductButtonAndPopup({isOpen, setIsOpen, productData, formData, set
 
         setCurrentEditId(null)
 
-        setFormData({
-            name: "",
-            price: "",
-            description: "",
-            category: "",
-            brand: "",
-            salePrice: "",
-            totalStock: "",
-            images: [],
-            imagesId: []
-        })
+        setFormData(productData)
 
         setIsOpen(true);
     }
@@ -138,12 +166,12 @@ function AddProductButtonAndPopup({isOpen, setIsOpen, productData, formData, set
             ids
         }
 
-        editProduct({currentEditId, formData, imageData}).then((res) => {
-            if(res){
+        editProduct({ currentEditId, formData, imageData }).then((res) => {
+            if (res) {
                 toast.success("Product Edited Successfully ...")
                 setIsOpen(false);
             }
-            else{
+            else {
                 console.log("Product Edit Error ...");
             }
         })
@@ -159,106 +187,261 @@ function AddProductButtonAndPopup({isOpen, setIsOpen, productData, formData, set
         <div className='h-12'>
             <button className="bg-blue-600 text-white font-medium px-4 py-2 rounded-[6px] border items-end" onClick={handleAddProductButton}>+ Create New</button>
 
-            <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="w-[550px] p-6 bg-white rounded-[30px] flex flex-col" parentDivClassName="flex justify-center items-center">
-                <h2 className='text-center text-xl font-semibold'>{currentEditId === null ? "Add Product" : "Edit Product"}</h2>
+            <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="w-[80vw] p-6 bg-white rounded-[30px] flex flex-col" parentDivClassName="flex justify-center items-center">
+                <h2 className='text-center text-2xl font-semibold'>{currentEditId === null ? "Add Product" : "Edit Product"}</h2>
                 <hr className='border-[rgb(8,43,61)]' />
-                <form>
-                    <div className="">
-                        <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Name<span className="text-red-600">*</span></label>
-                        <br />
-                        <input type="text" name='name' value={formData.name} onChange={handleChange} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" autoComplete='off' />
-                    </div>
-                    <div className="space-x-5 flex">
-                        <div className="w-1/2">
-                            <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Category<span className="text-red-600">*</span></label>
+                <form className='flex gap-10 py-2'>
+                    <div className="w-1/2">
+                        <div className="">
+                            <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Product Name<span className="text-red-600">*</span></label>
                             <br />
-                            <select name='category' value={formData.category} onChange={handleChange} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
-                                <option value="" className="hidden"></option>
-                                <option value="Mens">Mens</option>
-                                <option value="Womens">Womens</option>
-                                <option value="Kids">Kids</option>
-                            </select>
+                            <input type="text" name='name' value={formData.name} onChange={(e) => handleChange("name", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" autoComplete='off' />
                         </div>
-                        <div className="w-1/2">
-                            <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Brand<span className="text-red-600">*</span></label>
-                            <br />
-                            <select name='brand' value={formData.brand} onChange={handleChange} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
-                                <option value="" className="hidden"></option>
-                                <option value="LXS Originals">LXS Originals</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="flex space-x-5">
-                        <div className="w-1/2">
-                            <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> M.R.P<span className="text-red-600">*</span></label>
-                            <br />
-                            <input type="number" name='price' value={formData.price} onChange={handleChange} onWheel={(e) => e.target.blur()} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" autoComplete='off' />
-                        </div>
-                        <div className="w-1/2">
-                            <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Selling Price<span className="text-red-600">*</span></label>
-                            <br />
-                            <input type="number" name='salePrice' value={formData.salePrice} onChange={handleChange} onWheel={(e) => e.target.blur()} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" autoComplete='off' />
-                        </div>
-                    </div>
-
-                    <div className="">
-                        <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Total Stock<span className="text-red-600">*</span></label>
-                        <br />
-                        <input type="number" name='totalStock' value={formData.totalStock} onChange={handleChange} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" autoComplete='off' />
-                    </div>
-                    <div className="">
-                        <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Description<span className="text-red-600">*</span></label>
-                        <br />
-                        <textarea name='description' value={formData.description} onChange={handleChange} className='border-[rgb(196,185,185)] border px-3 rounded-xl h-16 w-full outline-none py-[6px]' autoComplete='off'></textarea>
-                    </div>
-
-                    <div className="flex gap-4 mt-4">
-                        {previews.map((image, index) => (
-                            <div
-                                key={index}
-                                className="w-[72px] h-[72px]  rounded-2xl flex items-center justify-center text-sm text-gray-400 cursor-pointer relative"
-                                onClick={() => handleBoxClick(index)}
-                                onDrop={(e) => handleDrop(e, index)}
-                                onDragOver={handleDragOver}
-                            >
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    className="hidden"
-                                    ref={(el) => (fileInputs.current[index] = el)}
-                                    onChange={(e) => handleImageChange(e, index)}
-                                />
-                                {image ? (
-                                    <>
-                                        <img
-                                            src={image}
-                                            alt={`Preview ${index + 1}`}
-                                            className="w-full h-full object-fill rounded-2xl border border-[rgb(196,185,185)]"
-                                        />
-                                        <button
-                                            className="absolute -top-2 -right-2 bg-black text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                removeImage(index);
-                                            }}
-                                        >
-                                            ×
-                                        </button>
-                                    </>
-                                ) : (
-                                    <div className="h-full w-full rounded-2xl flex flex-col justify-center items-center border-[2px] border-dashed border-[rgb(196,185,185)]">
-                                        <i className="fi fi-rs-cloud-upload text-2xl"></i>
-                                        <span>Image{index + 1}</span>
-                                    </div>
-                                )}
+                        <div className="space-x-5 flex">
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Category<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='category' value={formData.category} onChange={(e) => handleChange("category", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        category.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
-                        ))}
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Sub Category<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='subCategory' value={formData.subCategory} onChange={(e) => handleChange("subCategory", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        subCategory.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="space-x-5 flex">
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Brand<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='brand' value={formData.brand} onChange={(e) => handleChange("brand", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        brand.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> LXS Certified<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='isLxsCertified' value={formData.isLxsCertified} onChange={(e) => handleChange("isLxsCertified", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        lxsCertified.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="flex space-x-5">
+                            <div className="w-1/2 relative">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> M.R.P<span className="text-red-600">*</span></label>
+                                <br />
+                                <input type="number" name='price' value={formData.price} onChange={(e) => handleChange("price", e.target.value)} onWheel={(e) => e.target.blur()} className="border-[rgb(196,185,185)] border pr-3 pl-10 rounded-xl h-10 w-full outline-none" autoComplete='off' />
+                                <p className="font-medium absolute top-[30px] left-3 text-lg opacity-50">₹</p>
+                                <hr className="border w-7 absolute left-5 opacity-30 top-[44px] rotate-90 border-[rgb(8,43,61)]" />
+                            </div>
+                            <div className="w-1/2 relative">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Selling Price<span className="text-red-600">*</span></label>
+                                <br />
+                                <input type="number" name='salePrice' value={formData.salePrice} onChange={(e) => handleChange("salePrice", e.target.value)} onWheel={(e) => e.target.blur()} className="border-[rgb(196,185,185)] border pr-3 pl-10 rounded-xl h-10 w-full outline-none" autoComplete='off' />
+                                <p className="font-medium absolute top-[30px] left-3 text-lg opacity-50">₹</p>
+                                <hr className="border w-7 absolute left-5 opacity-30 top-[44px] rotate-90 border-[rgb(8,43,61)]" />
+                            </div>
+                        </div>
+
+                        <div className="space-x-5 flex">
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> COD Availability<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='codAvailability' value={formData.codAvailability} onChange={(e) => handleChange("codAvailability", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        codAvailability.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Return Availability<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='returnAvailability' value={formData.returnAvailability} onChange={(e) => handleChange("returnAvailability", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        returnAvailability.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-4 mt-4">
+                            {previews.map((image, index) => (
+                                <div
+                                    key={index}
+                                    className="w-[72px] h-[72px]  rounded-2xl flex items-center justify-center text-sm text-gray-400 cursor-pointer relative"
+                                    onClick={() => handleBoxClick(index)}
+                                    onDrop={(e) => handleDrop(e, index)}
+                                    onDragOver={handleDragOver}
+                                >
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="hidden"
+                                        ref={(el) => (fileInputs.current[index] = el)}
+                                        onChange={(e) => handleImageChange(e, index)}
+                                    />
+                                    {image ? (
+                                        <>
+                                            <img
+                                                src={image}
+                                                alt={`Preview ${index + 1}`}
+                                                className="w-full h-full object-fill rounded-2xl border border-[rgb(196,185,185)]"
+                                            />
+                                            <button
+                                                className="absolute -top-2 -right-2 bg-black text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    removeImage(index);
+                                                }}
+                                            >
+                                                ×
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <div className="h-full w-full rounded-2xl flex flex-col justify-center items-center border-[2px] border-dashed border-[rgb(196,185,185)]">
+                                            <i className="fi fi-rs-cloud-upload text-2xl"></i>
+                                            <span>Image{index + 1}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="w-1/2">
+                        <div className="">
+                            <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Description<span className="text-red-600">*</span></label>
+                            <br />
+                            <textarea name='description' value={formData.description.text} onChange={(e) => handleChange("description.text", e.target.value)} className='border-[rgb(196,185,185)] border px-3 h-[180px] rounded-xl w-full outline-none py-[6px]' autoComplete='off'></textarea>
+                        </div>
+                        <div className="space-x-5 flex">
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Size & Fit<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='codAvailability' value={formData.description.sizeFit} onChange={(e) => handleChange("description.sizeFit", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        sizeFit.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Colour<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='returnAvailability' value={formData.description.color} onChange={(e) => handleChange("description.color", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        color.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Material<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='returnAvailability' value={formData.description.material} onChange={(e) => handleChange("description.material", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        material.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div className="space-x-5 flex">
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Wash Care<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='codAvailability' value={formData.description.washCare} onChange={(e) => handleChange("description.washCare", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        washCare.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Sleeve Length<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='returnAvailability' value={formData.description.sleeveLength} onChange={(e) => handleChange("description.sleeveLength", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        sleevLength.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Neck<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='returnAvailability' value={formData.description.neck} onChange={(e) => handleChange("description.neck", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        neck.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div className="space-x-5 flex">
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Occasion<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='codAvailability' value={formData.description.occasion} onChange={(e) => handleChange("description.occasion", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        occasion.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Model Height<span className="text-red-600">*</span></label>
+                                <br />
+                                <input type="text" name='modalHeight' value={formData.description.modalHeight} onChange={(e) => handleChange("description.modalHeight", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" autoComplete='off' />
+                            </div>
+                            <div className="w-1/2">
+                                <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Model Wearing Size<span className="text-red-600">*</span></label>
+                                <br />
+                                <select name='returnAvailability' value={formData.description.modalWearingSize} onChange={(e) => handleChange("description.modalWearingSize", e.target.value)} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                                    {
+                                        modelWearingSize.map((item, idx) => (
+                                            <option key={idx} value={item} disabled={idx === 0}>{item}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </form>
-                <div className='flex justify-between px-36 mt-5'>
-                    <button onClick={() => setIsOpen(false)} className='bg-slate-800 text-white rounded h-10 w-20' >Cancel</button>
-                    <button onClick={currentEditId === null ? handleAddProductSubmit : handleEditProductSubmit} className='bg-blue-600 text-white rounded h-10 w-20' >{currentEditId === null ? "Upload" : "Edit"}</button>
+                <div className='flex justify-center gap-10 mt-7'>
+                    <button onClick={() => setIsOpen(false)} className='bg-slate-800 text-white rounded h-12 px-10' >Cancel</button>
+                    <button onClick={currentEditId === null ? handleAddProductSubmit : handleEditProductSubmit} className='bg-blue-600 text-white rounded h-12 px-10' >{currentEditId === null ? "Upload" : "Edit"}</button>
                 </div>
             </DialogBox>
 

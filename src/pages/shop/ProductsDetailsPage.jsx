@@ -83,24 +83,6 @@ function ProductDetailsPage({ id, data }) {
 		localStorage.setItem("cart", JSON.stringify(cart));
 	}, [cart]);
 
-	let items = [
-		{
-			label: "Home",
-			path: "/"
-		},
-		{
-			label: "Clothing",
-			path: "/products"
-		},
-		{
-			label: "Tshirt",
-			path: "#"
-		},
-		{
-			label: "LXS-M-TS-0001"
-		}
-	]
-
 
 	return (
 		<div className="px-20 pt-5 w-full flex flex-col gap-5">
@@ -111,22 +93,22 @@ function ProductDetailsPage({ id, data }) {
 				<p className="font-medium text-sm">Home {">"} Clothing {">"} T-Shirt {">"} <span className="text-[rgb(240,85,120)] font-semibold">LXS-M-TS-0001</span></p>
 			</div>
 			<div className="w-full flex gap-14 h-full">
-				<div className="flex gap-8 relative w-[60%]">
-					<div className="flex flex-col xl:w-[18%] 2xl:w-[19%] gap-3 ">
+				<div className="flex gap-5 relative w-[40%]">
+					<div className="flex flex-col items-start h-[80vh] w-[5vw] gap-3 ">
 						{
 							productData?.images.slice(0, 6).map((item, index) => (
-								<div key={index} onClick={() => setMainPic(item)} className={`rounded-[10px] object-fill overflow-hidden shadow-[0px_0px_8px_-3px_rgb(8,43,61)] cursor-pointer ${mainPic === item ? "ring-[3px] ring-blue-500" : ""}`}>
-									<img src={item} alt="" className="h-full w-full" />
+								<div key={index} onClick={() => setMainPic(item)} className={`rounded-[10px] object-fill overflow-hidden cursor-pointer border  ${mainPic === item ? "border-[rgb(8,43,61)] shadow-[0px_0px_5px_0px_rgb(8,43,61)]" : "shadow-md lg:hover:shadow-[0px_0px_5px_0px_rgb(8,43,61)]"}`}>
+									<img src={item} alt="" className="h-full" />
 								</div>
 							))
 						}
 					</div>
-					<div className="w-full rounded-[18px] object-fill overflow-hidden shadow-[0px_0px_12px_-5px_rgb(8,43,61)] cursor-pointer">
-						<img src={mainPic} alt="" className="w-full" />
+					<div className="h-[80vh] rounded-[18px] object-fill overflow-hidden border shadow-lg border-slate-300 cursor-pointer">
+						<img src={mainPic} alt="" className="h-full" />
 					</div>
 				</div>
 
-				<div className="w-[40%] flex flex-col justify-between">
+				<div className="w-[60%] flex flex-col justify-between">
 					<div className="flex flex-col justify-between">
 						<div className="flex gap-3 items-center justify-between mb-1">
 							<div className="flex gap-3 items-center">
@@ -183,7 +165,7 @@ function ProductDetailsPage({ id, data }) {
 							</p>
 						</div>
 					</div>
-					<div className="flex flex-col gap-5 ">
+					<div className="flex gap-5 ">
 						<button onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] ${wishlist.some(p => p.item_id === id) ? "bg-[rgb(8,43,61)] text-white" : "bg-slate-200"}`}><i className="fi fi-ss-heart scale-x-[-1] h-6 text-2xl mr-4"></i>{wishlist.some(p => p.item_id === id) ? "Remove from" : "Save to"} Favourites</button>
 
 						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(240,85,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i class="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
@@ -195,7 +177,7 @@ function ProductDetailsPage({ id, data }) {
 			<div className="w-full flex gap-14 mb-10 mt-5">
 				<div className="flex flex-col gap-5 w-[60%] p-10 shadow-lg border border-slate-300 rounded-xl">
 					<h4 className="text-xl font-semibold">PRODUCT DESCRIPTION</h4>
-					<p className="text-sm tracking-tight leading-[1.2] ml-2">{productData?.description}</p>
+					{/* <p className="text-sm tracking-tight leading-[1.2] ml-2">{productData?.description}</p> */}
 				</div>
 
 				<div className="p-10 w-[40%] rounded-xl">

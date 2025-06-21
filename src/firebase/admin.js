@@ -7,21 +7,23 @@ export const addProduct = (item) => {
     try {
         const product = {
             name: item.formData.name,
-            description: item.formData.description,
             category: item.formData.category,
+            subCategory: item.formData.subCategory,
             brand: item.formData.brand,
+            isLxsCertified: item.formData.isLxsCertified,
             price: parseInt(item.formData.price),
             salePrice: parseInt(item.formData.salePrice),
+            codAvailability: item.formData.codAvailability,
+            returnAvailability: item.formData.returnAvailability,
             images: item.imageData.urls,
             imagesId: item.imageData.ids,
-            totalStock : parseInt(item.formData.totalStock),
+            description: item.formData.description,
             timestamp: new Date().toLocaleString("en-US",{month:"short", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric",})
         }
         
-        const userReference = collection(fireDB, "products");
+        const productRef = collection(fireDB, "products");
+        addDoc(productRef, product);
         
-        addDoc(userReference, product);
-    
         return product
 
     } catch (error) {
@@ -29,17 +31,19 @@ export const addProduct = (item) => {
     }
 }
 
-export const getAllProducts = (dispatch) => {
-    const q = query(
-        collection(fireDB, "products")
-    );
-    
-    onSnapshot(q, (QuerySnapshot) => {
-        let products = [];
-        QuerySnapshot.forEach((doc) => products.push({...doc.data(), id: doc.id}));
 
-        dispatch(getProducts(products));
-    })
+
+export const getAllProducts = async () => {
+    const productRef = collection(fireDB, "products");
+    const productQuery = query(productRef, orderBy("timestamp", "desc"));
+    const productSnapshot = await getDocs(productQuery);
+
+    const products = productSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return products;
 }
 
 export const editProduct = async (item) => {

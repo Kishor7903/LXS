@@ -1,6 +1,7 @@
 import AddProductButtonAndPopup from "@/components/AddProductButtonAndPopup"
 import AdminHeadings from "@/components/AdminHeadings"
 import { deleteProduct, getAllProducts } from "@/firebase/admin";
+import { getProducts } from "@/store/features/adminSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify";
@@ -8,14 +9,28 @@ import { toast } from "react-toastify";
 
 let productData = {
     name: "",
+    category: "Select",
+    subCategory: "Select",
+    brand: "Select",
+    isLxsCertified: "Select",
     price: "",
-    description: "",
-    category: "",
-    brand: "",
     salePrice: "",
-    totalStock: "",
+    codAvailability: "Select",
+    returnAvailability: "Select",
     images: [],
-    imagesId: []
+    imagesId: [],
+    description: {
+        text: "",
+        sizeFit: "Select",
+        color: "Select",
+        material: "Select",
+        washCare: "Select",
+        sleeveLength: "Select",
+        neck: "Select",
+        occasion: "Select",
+        modalHeight: "",
+        modalWearingSize: "Select",
+    },
 }
 
 
@@ -46,21 +61,26 @@ function AdminProducts() {
 
         setFormData({
             name: product.name,
-            price: product.price,
-            description: product.description,
             category: product.category,
+            subCategory: product.subCategory,
             brand: product.brand,
+            isLxsCertified: product.isLxsCertified,
+            price: product.price,
             salePrice: product.salePrice,
-            totalStock: product.totalStock,
+            codAvailability: product.codAvailability,
+            returnAvailability: product.returnAvailability,
             images: [],
-            imagesId: []
+            imagesId: [],
+            description: product.description,
         })
 
         setIsOpen(true);
     }
 
     useEffect(() => {
-        getAllProducts(dispatch)
+        getAllProducts().then((res) => {
+			dispatch(getProducts(res));
+		});
     }, []);
 
     return (
