@@ -122,7 +122,7 @@ function CartPage() {
     };
 
     const handleProceedToAddress = () => {
-        localStorage.setItem("cart", JSON.stringify(selectedItems));
+        sessionStorage.setItem("cart", JSON.stringify(selectedItems));
         navigate("/checkout/address");
     };
 
@@ -136,6 +136,7 @@ function CartPage() {
                           quantity: item.quantity,
                           size: item.size,
                           id: item.id,
+                          item_id: item.item_id,
                           productId: item.item_id,
                           isSelected: item.isSelected,
                       }
@@ -227,7 +228,7 @@ function CartPage() {
                                             alt=""
                                             className="w-24 rounded border lg:border-2"
                                         />
-                                        <div className="leading-[0.7] lg:leading-3">
+                                        <div className="leading-[0.7] lg:leading-3 w-[70%]">
                                             <h4 className="text-sm lg:text-base font-bold w-full line-clamp-1">
                                                 {item.name}
                                             </h4>
@@ -464,16 +465,16 @@ function CartPage() {
                                         onClick={handleProceedToAddress}
                                     >
                                         Proceed To Checkout
-                                        <i class="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i>
+                                        <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i>
                                     </button>
                                 )}
                             </div>
                         </div>
                     ) : (
-                        <div className="text-xl opacity-70 flex justify-center items-center h-[40vh] flex-col font-semibold">
-                            <i className="fi fi-sr-shopping-cart-add text-[50px]"></i>
-                            <span className="mt-2">Cart is Empty...</span>
-                            <span className="text-xs">
+                        <div className="text-xl flex justify-center items-center h-[40vh] flex-col font-semibold">
+                            <i className="fi fi-sr-shopping-cart-add text-[50px]  opacity-70"></i>
+                            <span className="mt-2  opacity-70">Cart is Empty...</span>
+                            <span className="text-xs  opacity-70">
                                 Oops! No items have landed in your cart yet.
                             </span>
                             <span className="text-sm mt-5">

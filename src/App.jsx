@@ -82,6 +82,8 @@ import Blog2 from "./pages/shop/Blog2"
 import Blog3 from "./pages/shop/Blog3"
 import Blog4 from "./pages/shop/Blog4"
 import Blog5 from "./pages/shop/Blog5"
+import AdminPromotionalBanners from "./pages/admin/AdminPromotionalBanners"
+import AdminPickupWarehouse from "./pages/admin/AdminPickupWarehouse"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -89,7 +91,7 @@ function App() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		let user = JSON.parse(localStorage.getItem("user"));
+		let user = JSON.parse(sessionStorage.getItem("user"));
 		if (user) {
 			dispatch(login(user))
 		}
@@ -208,7 +210,9 @@ function App() {
 				}>
 					<Route path="dashboard" element={<AdminDashboard />} />
 					<Route path="carousel" element={<AdminCarousel />} />
+					<Route path="promotional-banners" element={<AdminPromotionalBanners />} />
 					<Route path="products" element={<AdminProducts />} />
+					<Route path="pickup-warehouse" element={<AdminPickupWarehouse />} />
 					<Route path="orders" element={<AdminOrders />} />
 					<Route path="reviews" element={<AdminReviews />} />
 					<Route path="event-gallery" element={<EventGallery />} />

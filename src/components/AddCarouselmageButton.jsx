@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DialogBox from './DialogBox';
 import { addCarouselImg, editCarouselImg } from '@/firebase/admin';
 import { addNewCarouselImg, editCarouselImage } from '@/store/features/adminSlice';
@@ -96,6 +96,14 @@ function AddCarouselmageButton({ isOpen, setIsOpen, currentEditId, setCurrentEdi
         setPreviews(null);
         setIsOpen(false);
     }
+
+    useEffect(() => {
+        if(currentEditId){
+            setPreviews(currentEditId.imgUrl)
+        }else{
+            setPreviews(null)
+        }
+    })
 
     return (
         <div className='h-12'>

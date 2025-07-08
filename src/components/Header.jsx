@@ -197,7 +197,7 @@ function Header({ className }) {
 
 			<div className="flex gap-2 md:gap-3 items-center">
 
-				<div className="" onClick={() => setIsSheetOpen(true)}><img src={menuIcon} alt="" className="h-4 md:h-5 cursor-pointer mt-1" /></div>
+				<div className="" onClick={() => setIsSheetOpen(true)}><img src={menuIcon} alt="" className="h-4 md:h-5 cursor-pointer mt-1 inline-block lg:hidden" /></div>
 
 				<div className="flex flex-col items-center justify-center">
 
@@ -490,7 +490,7 @@ function Header({ className }) {
 											<div className="rounded-full shadow-[0px_0px_10px_-2px_rgb(8,43,61)] flex items-center p-[5px] cursor-pointer active:scale-[0.90] duration-300" onClick={(e) => { e.preventDefault(), setUserPopup(true) }}>
 												<img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-8 rounded-full" />
 												<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center max-w-16 leading-4 mr-2 px-3">{`${user.name.split(" ")[0].slice(0, 6)}${user.name.split(" ")[0].length > 5 ? "..." : ""}`} </span>
-												<i class={`fi fi-br-angle-small-down text-lg relative duration-200 ${userPopup ? "top-1 right-[2px]" : "-rotate-90"}`}></i>
+												<i className={`fi fi-br-angle-small-down text-lg relative duration-200 ${userPopup ? "top-1 right-[2px]" : "-rotate-90"}`}></i>
 											</div>
 											<DialogBox isOpen={userPopup} setIsOpen={setUserPopup} className="w-[300px] p-6 bg-white rounded-xl flex flex-col gap-4" parentDivClassName="flex justify-center items-center">
 												<div className="h-14 w-full bg-slate-200 rounded-2xl flex items-center px-2 gap-3 shadow-[0px_0px_10px_-2px_rgb(8,43,61)]">

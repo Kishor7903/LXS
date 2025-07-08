@@ -6,12 +6,16 @@ import DualRangeSlider from '@/components/DualRangeSlider';
 import { getProducts } from '@/store/features/adminSlice';
 
 let filter = {
-    brand: "",
-    category: "",
-    subCategory: "",
+    brand: "All",
+    category: "All",
+    subCategory: "All",
     price: "",
-    sortBy: ""
+    sortBy: "New Arrival"
 }
+
+let category = ['All', 'Mens', 'Womens', 'Kids'];
+let subCategory = ['All', 'T-Shirts', 'Shirts', 'Jeans', 'Sweatshirts', 'Hoddies', 'Shoes', 'Watches', 'Shorts', 'Joggers'];
+let brand = ['All', 'LXS Originals', 'HRX', 'Nike', 'Roadster', 'Peter England', 'Fastrack', 'Allen Solley', 'Addidas'];
 
 function ProductsContainer() {
     let dispatch = useDispatch();
@@ -25,12 +29,32 @@ function ProductsContainer() {
     const handleFilterChange = (e) => {
         e.preventDefault();
 
-        if(e.target.name === "brand" || e.target.name === "category" || e.target.name === "subCategory" || e.target.name === "price"){
-            setFilters(prev => ({...prev, [e.target.name]: e.target.value}));
-        } else{
-            setFilters(prev => ({...prev, price: `${minValue}-${maxValue}`}))
-        }
+        setFilters(prev => ({...prev, [e.target.name]: e.target.value}));
     }
+
+    const handleRangeChange = (e) => {
+        e.preventDefault();
+
+        setFilters(prev => ({...prev, price: `${minValue}-${maxValue}`}));
+    }
+
+    useEffect(() => {
+        let filteredProducts = products.filter(item => {
+            const matchesBrand = filters.brand !== "All" ? item.brand === filters.brand : true;
+            const matchesCategory = filters.category !== "All" ? item.category === filters.category : true;
+            const matchesSubCategory = filters.subCategory !== "All" ? item.subCategory === filters.subCategory : true;
+            const matchesPrice = filters.price ? item.salePrice <= Number(filters.price.split("-")[1]) && item.salePrice >= Number(filters.price.split("-")[0]) : true;
+
+            return matchesBrand && matchesCategory && matchesSubCategory && matchesPrice;
+        }).sort((a, b) => {
+            if (filters.sortBy === "all") return;
+            if (filters.sortBy === 'low-to-high') return a.salePrice - b.salePrice;
+            if (filters.sortBy === 'high-to-low') return b.salePrice - a.salePrice;
+            if (filters.sortBy === 'newest') return new Date(b.timestamp) - new Date(a.timestamp);
+            return;
+        });
+        setProduct(filteredProducts);
+    }, [filters, setFilters])
 
     useEffect(() => {
         getAllProducts().then((res) => {
@@ -55,7 +79,7 @@ function ProductsContainer() {
                         {
                             <p className='font-medium text-sm w-[160px] py-[2px] text-center'>Min: {minValue} - Max: {maxValue}</p>
                         }
-                        <button className='h-7 px-3 text-sm bg-[rgb(8,43,61)] text-white font-medium rounded-full' onClick={handleFilterChange}>Apply</button>
+                        <button className='h-7 px-3 text-sm bg-[rgb(8,43,61)] text-white font-medium rounded-full' onClick={handleRangeChange}>Apply</button>
                     </div>
                 </div>
 
@@ -64,10 +88,11 @@ function ProductsContainer() {
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="brand">Brand :</label>
                         <select name='brand' value={filters.brand} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
-                            <option value="Lxs">LXS Originals</option>
-                            <option value="Nike">Nike</option>
-                            <option value="Puma">Puma</option>
-                            <option value="Hrx">HRX</option>
+                            {
+                                brand.map((item, idx) => (
+                                    <option key={idx} value={item}>{item}</option>
+                                ))
+                            }
                         </select>
                     </div>
                     {/* <div className="border px-1 lg:px-2 text-xs lg:text-base py-1 border-[rgb(8,43,61)] rounded-full tracking-tight shadow-[0px_0px_10px_-2px_rgb(8,43,61)]">
@@ -82,44 +107,41 @@ function ProductsContainer() {
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="category">Category :</label>
                         <select name='category' value={filters.category} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
-                            <option value="all">Default</option>
-                            <option value="Mens">Mens</option>
-                            <option value="Womens">Womens</option>
-                            <option value="kids">Kids</option>
+                        {
+                                category.map((item, idx) => (
+                                    <option key={idx} value={item}>{item}</option>
+                                ))
+                            }
                         </select>
                     </div>
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="subCategory">Sub Category :</label>
                         <select name='subCategory' value={filters.subCategory} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
-                            <option value="all">Default</option>
-                            <option value="T-Shirts">T-Shirts</option>
-                            <option value="Shirts">Shirts</option>
-                            <option value="Jeans">Jeans</option>
-                            <option value="Sweatshirts">Sweatshirts</option>
-                            <option value="Hoodies">Hoodies</option>
-                            <option value="Shoes">Shoes</option>
-                            <option value="Watches">Watches</option>
-                            <option value="Shorts">Shorts</option>
+                        {
+                                subCategory.map((item, idx) => (
+                                    <option key={idx} value={item}>{item}</option>
+                                ))
+                            }
                         </select>
                     </div>
                     
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="sortBy">Sort By :</label>
                         <select name='sortBy' value={filters.sortBy} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
-                            <option value="timestamp_asc">Popularity</option>
-                            <option value="timestamp_desc">New Arrival</option>
-                            <option value="salePrice_asc">Low-to-High</option>
-                            <option value="salePrice_desc">High-To-Low</option>
+                            <option value="all">Popularity</option>
+                            <option value="newest">New Arrival</option>
+                            <option value="low-to-high">Low-to-High</option>
+                            <option value="high-to-low">High-To-Low</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div className="h-full flex my-1 lg:my-3 px-5 md:px-8 lg:px-12 xl:px-16">
-                <div className="h-auto w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-4 md:gap-x-5 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 xl:gap-x-7 xl:gap-y-8 py-2 lg:py-1">
+                <div className="h-auto w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-4 md:gap-x-5 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 xl:gap-x-7 xl:gap-y-8 py-2 lg:py-1">
                     {
                         product.map((item) => {
                             return (
-                                <ProductCard item={item} />
+                                <ProductCard key={item.id} item={item} />
                             )
                         })
                     }

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 let initialState = {
     products: [],
     carouselImg: [],
-    eventGalleryImg: []
+    eventGalleryImg: [],
+    warehouses: []
 }
 
 
@@ -16,6 +17,9 @@ const adminSlice = createSlice({
         },
         getProducts: (state, actions) => {
             state.products = actions.payload
+        },
+        updateProduct: (state, actions) => {
+            state.products = state.products.map(product => product.id === actions.payload.id ? actions.payload : product)
         },
         addNewCarouselImg: (state, actions) => {
             state.carouselImg = [...state.carouselImg, actions.payload]
@@ -38,8 +42,18 @@ const adminSlice = createSlice({
         deleteEventGalleryImage: (state, actions) => {
             state.eventGalleryImg = state.eventGalleryImg.filter((img) => img.imgPublicId !== actions.payload)
         },
+        addNewWarehouse: (state, actions) => {
+            state.warehouses = [...state.warehouses, actions.payload]
+        },
+        getWarehouses: (state, actions) => {
+            state.warehouses = actions.payload
+        },
+        updateWarehouse: (state, actions) => {
+            state.warehouses = state.warehouses.map(product => product.id === actions.payload.id ? actions.payload : product)
+        },
+
     }
 })
 
-export const { addNewProduct, getProducts, addNewCarouselImg, getCarouselImgs, editCarouselImage, deleteCarouselImage, addNewEventGalleryImg, getEventGalleryImgs, deleteEventGalleryImage } = adminSlice.actions;
+export const { addNewProduct, getProducts, updateProduct, addNewCarouselImg, getCarouselImgs, editCarouselImage, deleteCarouselImage, addNewEventGalleryImg, getEventGalleryImgs, deleteEventGalleryImage, addNewWarehouse, getWarehouses, updateWarehouse } = adminSlice.actions;
 export default adminSlice.reducer;

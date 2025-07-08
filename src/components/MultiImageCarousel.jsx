@@ -64,7 +64,7 @@ const MultiImageCarousel = ({images}) => {
                     let scaleClass = `h-[210px] w-[210px] opacity-40`;
 
                     if (!isTransitioning) {
-                        if (isCenter) scaleClass = "h-[280px] w-[280px]";
+                        if (isCenter) scaleClass = "h-[300px] w-[300px]";
                         else if (isNeighbor) scaleClass = `h-[250px] w-[250px] opacity-40`;
                     }
 

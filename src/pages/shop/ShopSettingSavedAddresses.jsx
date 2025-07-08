@@ -18,7 +18,8 @@ let addressDetails = {
 	city: "",
 	state: "",
 	pincode: "",
-	isDefault: false
+	isDefault: false,
+	address_type: ""
 }
 
 function ShopSettingSavedAddresses() {
@@ -44,6 +45,7 @@ function ShopSettingSavedAddresses() {
 			pincode: address.pincode,
 			city: address.city,
 			state: address.state,
+			address_type: address.address_type,
 			id: address.id,
 			isDefault: address.isDefault
 		})
@@ -69,6 +71,14 @@ function ShopSettingSavedAddresses() {
 		})
 	}
 
+	const handleAddAddressButton = (e) => {
+        e.preventDefault();
+
+        setCurrentEditId(null);
+        setFormData(addressDetails);
+        setIsOpen(true);
+    }
+
 	useEffect(() => {
 		setLoading(true);
 		getAllAddress(user?.id).then((res) => {
@@ -86,6 +96,7 @@ function ShopSettingSavedAddresses() {
 					<span>Headquarters Coordinates 🚁<br />
 						<p className="text-xs font-normal">Your Secret Location where your supplies get deliver!</p>
 					</span>
+					<button className="border border-[rgb(8,43,61)] h-8 text-sm px-2 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white font-medium" onClick={(e) => handleAddAddressButton(e)}>+ Add New Address</button>
 					<AddNewAddressButton isOpen={isOpen} setIsOpen={setIsOpen} currentEditId={currentEditId} setCurrentEditId={setCurrentEditId} formData={formData} setFormData={setFormData} addressDetails={addressDetails} />
 				</div>
 				<div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
@@ -95,6 +106,7 @@ function ShopSettingSavedAddresses() {
 								<div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-3 overflow-hidden ${item.isDefault ? "bg-slate-200 shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border-2 scale-100" : "scale-95"}`}>
 									<div className="font-semibold flex gap-1 items-center">
 										<label htmlFor={`address${index}`} className={`rounded-full px-4 ${item.isDefault ? "bg-[rgb(8,43,61)] text-white" : "border border-[rgb(8,43,61)]"}`}>ADDRESS {index + 1} </label>
+										<span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] flex justify-center items-center select-none px-1 text-[9px] font-medium ">{item.address_type}</span>
 										<span onClick={(e) => item.isDefault ? null : handleSetDefault(e, item.id)} className={`ml-2 ${item.isDefault ? "text-[rgb(240,85,120)]" : "text-blue-500 lg:hover:underline cursor-pointer"} text-xs `}>{`${item.isDefault ? "(Default)" : "Set as Default"}`}</span>
 									</div>
 									<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%] text-[11px] ml-2" >

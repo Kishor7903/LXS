@@ -69,12 +69,12 @@ function PaymentsPage() {
     let [pinNumber, setPinNumber] = useState("");
     let [paymentMode, setPaymentMode] = useState(-1);
     let [isOpen, setIsOpen] = useState(false);
-    let [popupData, setPopupData] = useState({ orderId: "" });
+    let [popupData, setPopupData] = useState({ orderId: "", id: "" });
     let [showOrderedSuccessfull, setShowOrderedSuccessfull] = useState(false);
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    let cartItems = JSON.parse(localStorage.getItem("cart"))
-    let address = JSON.parse(localStorage.getItem("address"))
+    let cartItems = JSON.parse(sessionStorage.getItem("cart"))
+    let address = JSON.parse(sessionStorage.getItem("address"))
     let { user } = useSelector(state => state.auth)
 
     let totalPrice = cartItems.reduce((sum, cart) => sum + Number(cart.price * cart.quantity), 0);
@@ -91,7 +91,18 @@ function PaymentsPage() {
             amount: (totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee)
         }
 
-        displayRazorpay(order, cartItems, address, user, setShowOrderedSuccessfull, setPopupData, dispatch);
+        let cart = cartItems.map(item => ({
+            id: item.item_id,
+            productName: item.name,
+            unitPrice: item.salePrice,
+            price: item.price,
+            size: item.size,
+            brand: item.brand,
+            quantity: item.quantity,
+            image: item.images[0]
+        }))
+
+        displayRazorpay(order, cart, address, user, setShowOrderedSuccessfull, setPopupData, dispatch);
     }
 
     const handleGiftCardNumberChange = (e) => {

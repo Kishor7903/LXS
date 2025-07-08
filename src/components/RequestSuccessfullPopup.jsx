@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import tickIcon from "../assets/commonIcons/Submit.png"
 import DialogBox from "./DialogBox"
 
 function RequestSuccessfullPopup({popupData = "", showSuccessfullPopup, setShowSuccessfullPopup, state }) {
-
+    let navigate = useNavigate();
+    
     let headerContent = () => {
         if (state === "Exchange"){
             return "Exchange Request Submitted Successfully";
@@ -58,7 +59,7 @@ function RequestSuccessfullPopup({popupData = "", showSuccessfullPopup, setShowS
                 <h5 className="text-lg font-bold">{headerContent()}</h5>
                 <p className="text-sm">{secoundLineContent()} ID: <span className="font-semibold text-orange-400">{popupData.orderId}</span></p>
                 <p className="text-sm">Estimate {thirdLineContent()} Processing Time: <span className="font-semibold text-orange-400">4-6 Business Days</span></p>
-                <button className="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full h-10 w-1/4 mt-5 font-semibold border border-[rgb(8,43,61,0.2)]">Track Status</button>
+                <button className="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full h-10 w-1/4 mt-5 font-semibold border border-[rgb(8,43,61,0.2)]" onClick={() => navigate(`/setting/my-orders`)}>Track Status</button>
             </div>
             <div className="flex justify-center gap-32 px-20">
                 <Link to="/policy/return-and-refund-policy" className="text-blue-400 font-medium text-sm lg:hover:underline">{linkContent()} Policy</Link>

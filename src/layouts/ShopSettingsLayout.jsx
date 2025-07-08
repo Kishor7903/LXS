@@ -23,7 +23,12 @@ import myReviewsAndRatingIconStroke from "../assets/commonIcons/Ratings & Review
 import myReviewsAndRatingIconFill from "../assets/commonIcons/Ratings & Reviews (Fill).png"
 // import helpIcon from "../assets/commonIcons/Help (Stroke).png";
 import logoutRedIcon from "../assets/commonIcons/Log Out (Fill).png";
+import notificationIcon from "../assets/commonIcons/Notification (Stroke).png";
 import { useEffect, useState } from "react"
+import { logoutUser } from "@/firebase/auth"
+import { logout } from "@/store/features/authSlice"
+import { toast } from "react-toastify"
+import { useDispatch } from "react-redux"
 // import { useDispatch, useSelector } from "react-redux"
 // import { logoutUser } from "@/firebase/auth"
 // import { toast } from "react-toastify"
@@ -33,6 +38,7 @@ import { useEffect, useState } from "react"
 function ShopSettingsLayout() {
     let location = useLocation().pathname;
     let navigate = useNavigate();
+    let dispatch = useDispatch();
     let [openDropdown, setOpenDropdown] = useState(false);
 
     useEffect(() => {
@@ -54,15 +60,14 @@ function ShopSettingsLayout() {
         }
     }
 
-    // const handleLogout = (e) => {
-    //     e.preventDefault();
+    const handleLogout = (e) => {
+        e.preventDefault();
 
-    //     logoutUser().then(() => {
-    //         dispatch(logout());
-    //         toast.success("User Logged Out Successfully ...")
-    //         navigate("/shop")
-    //     })
-    // }
+        logoutUser().then(() => {
+            dispatch(logout());
+            navigate("/shop")
+        })
+    }
 
     let settingItems = [
         {
@@ -84,7 +89,7 @@ function ShopSettingsLayout() {
             activeIcon: orderIconFill,
         },
         {
-            name: "Wishlist",
+            name: "Favourites",
             slug: "/setting/wishlist",
             icon: wishlistIconStroke,
             activeIcon: wishlistIconFill,
@@ -181,11 +186,14 @@ function ShopSettingsLayout() {
                             ))
                         }
                     </div>
-                    {/* <div className="flex justify-end items-center w-full cursor-pointer h-[12%]">
-                        <Link onClick={handleLogout} className="flex gap-1 items-center text-[rgb(240,85,120)] hover:underline">
+                    <div className="flex justify-between items-center w-full h-[12%]">
+                        <Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-slate-200 w-[60%]  xl:px-3 pt-1 xl:py-1 rounded-l rounded-r-[20px]">
+                            <img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Notification
+                        </Link>
+                        <Link onClick={handleLogout} className="flex gap-1 items-center text-[rgb(240,85,120)] hover:underline font-medium">
                             <img src={logoutRedIcon} alt="" className="h-5" /> Logout
                         </Link>
-                    </div> */}
+                    </div>
                 </div>
                 <div className="w-[81%] m-5 rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-hidden"><Outlet /></div>
             </div>
