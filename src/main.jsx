@@ -5,12 +5,15 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store/store.js'
 import { ToastContainer } from 'react-toastify'
+import ToastProvider from './components/ToastProvider'
 
 createRoot(document.getElementById('root')).render(
-    <BrowserRouter>
-      <Provider store={store}>
+  <BrowserRouter>
+    <Provider store={store}>
+      <ToastProvider>
         <App />
         <ToastContainer />
-      </Provider>
-    </BrowserRouter>
+      </ToastProvider>
+    </Provider>
+  </BrowserRouter>
 )

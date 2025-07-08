@@ -82,7 +82,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
         e.preventDefault();
 
         if (!formData.email || !formData.password) {
-            alert("All Fields Required..");
+            toast.error("Required all fields!")
             return
         }
 
@@ -110,7 +110,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
             </button>
             {
                 userState === "signup" ?
-                    <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="h-[550px] lg:h-[600px] w-[320px] xl:w-[950px] p-6 bg-[rgb(210,224,232)] rounded-[30px] flex flex-col gap-5" parentDivClassName="flex justify-center items-center" >
+                    <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="h-[550px] lg:h-[600px] w-[320px] xl:w-[950px] p-6 bg-white rounded-[30px] flex flex-col gap-5" parentDivClassName="flex justify-center items-center" >
                         {/* <div className="flex justify-between gap-1 text-base font-medium w-full h-[8%]">
                             <button name="user-account" onClick={() => setLoginState("user-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "user-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>User Account</button>
                             <button name="seller-account" onClick={() => setLoginState("seller-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "seller-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Seller Account</button>
@@ -135,15 +135,15 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                     <div id="recaptcha-container"></div>
                                     <form className="space-y-3 lg:space-y-4 flex flex-col text-xs lg:text-sm " onSubmit={handleSignUpSubmit}>
                                         <div className="flex space-x-2 lg:space-x-3 text-[rgb(8,43,61)]">
-                                            <input name="name" type="text" value={formData.name} onChange={handleChange} className="h-8 w-[55%] rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " autoComplete="off" placeholder="Full Name" />
+                                            <input name="name" type="text" value={formData.name} onChange={handleChange} className="h-8 w-[55%] rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none bg-slate-200 shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)] placeholder:opacity-70" autoComplete="off" placeholder="Full Name" />
                                             <div className="relative h-8 w-[45%] ">
-                                                <input name="phone" type="number" value={formData.phone} onChange={handlePhoneNoChange} className="h-full w-full rounded-full pl-[42px] pr-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " autoComplete="off" placeholder="Phone Number" />
-                                                <p className="font-semibold absolute top-[6px] left-[8px]">+91</p>
+                                                <input name="phone" type="number" value={formData.phone} onChange={handlePhoneNoChange} className="h-full w-full rounded-full pl-[42px] pr-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none bg-slate-200 shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)] placeholder:opacity-70" autoComplete="off" placeholder="Phone Number" />
+                                                <p className="font-semibold absolute top-[6px] left-[8px] opacity-50">+91</p>
                                                 <hr className="border w-8 absolute left-[20px] opacity-20 top-[15px] rotate-90 border-[rgb(8,43,61)]" />
                                             </div>
                                         </div>
                                         <div className="flex space-x-2 lg:space-x-3">
-                                            <input name="email" type="text" value={formData.email} onChange={handleChange} className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " placeholder="Email" autoComplete="off" />
+                                            <input name="email" type="text" value={formData.email} onChange={handleChange} className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none bg-slate-200 shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)] placeholder:opacity-70" placeholder="Email" autoComplete="off" />
                                         </div>
                                         <input
                                             name="password"
@@ -152,7 +152,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                             type={showPassword ? "text" : "password"}
                                             placeholder="Password"
                                             autoComplete="off"
-                                            className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
+                                            className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none bg-slate-200 shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)] placeholder:opacity-70"
                                         />
                                         <input
                                             name="confirmPassword"
@@ -161,9 +161,9 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                             type={showConfirmPassword ? "text" : "password"}
                                             placeholder="Confirm Password"
                                             autoComplete="off"
-                                            className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
+                                            className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none bg-slate-200 shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)] placeholder:opacity-70"
                                         />
-                                        <button type="submit" className="h-8 lg:h-9 w-20 lg:w-32 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]">Create</button>
+                                        <button type="submit" className="h-8 lg:h-9 w-20 lg:w-28 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.9] duration-150">Create</button>
                                     </form>
                                     <p className="text-xs text-center mt-2 font-medium">Already have an Account? <button className="text-blue-500 lg:hover:underline font-bold" onClick={() => {
                                         setUserState("login")
@@ -189,7 +189,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                             </div>
                         </div>
                     </DialogBox> :
-                    <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="h-[550px] lg:h-[600px] w-[320px] xl:w-[950px] p-6 bg-[rgb(210,224,232)] rounded-[30px] flex flex-col gap-5" parentDivClassName="flex justify-center items-center" >
+                    <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="h-[550px] lg:h-[600px] w-[320px] xl:w-[950px] p-6 bg-white rounded-[30px] flex flex-col gap-5" parentDivClassName="flex justify-center items-center" >
                         {/* <div className="flex justify-between gap-1 text-base font-medium w-full h-[8%]">
                             <button name="user-account" onClick={() => setLoginState("user-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "user-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>User Account</button>
                             <button name="seller-account" onClick={() => setLoginState("seller-account")} className={`h-10 px-5 border border-[rgb(8,43,61)] hover:bg-[rgb(8,43,61)] hover:text-white rounded-full ${loginState === "seller-account" ? "bg-[rgb(8,43,61)] text-white" : ""}`}>Seller Account</button>
@@ -211,9 +211,9 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                         <span className="text-sm lg:text-lg text-slate-700 font-semibold tracking-tight">LOG IN</span>
                                         <img src={createAccount} alt="" className="h-4 lg:h-6" />
                                     </div>
-                                    <form className="space-y-3 lg:space-y-4 flex flex-col text-xs lg:text-sm" onSubmit={handleLoginSubmit}>
-                                        <input name="email" type="text" value={formData.email} onChange={handleChange} className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none " placeholder="Email" autoComplete="off" />
-                                        <div className="relative h-8">
+                                    <form className="space-y-3 lg:space-y-4 flex flex-col items-center text-xs lg:text-sm" onSubmit={handleLoginSubmit}>
+                                        <input name="email" type="text" value={formData.email} onChange={handleChange} className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none bg-slate-200 shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)] placeholder:opacity-70" placeholder="Email" autoComplete="off" />
+                                        <div className="relative h-8 w-full">
                                             <input
                                                 name="password"
                                                 value={formData.password}
@@ -221,7 +221,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                                 type={showPassword ? "text" : "password"}
                                                 placeholder="Password"
                                                 autoComplete="off"
-                                                className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none "
+                                                className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none bg-slate-200 shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)] placeholder:opacity-70"
                                             />
                                             <button
                                                 type="button"
@@ -231,7 +231,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                                 <img src={!showPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
                                             </button>
                                         </div>
-                                        <button className="h-8 lg:h-9 w-20 lg:w-32 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" type="submit">Log In</button>
+                                        <button className="h-8 lg:h-9 w-16 lg:w-28 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.9] duration-150" type="submit">Log In</button>
                                     </form>
                                     <p className="text-xs text-center font-medium mt-2">Already have an Account? <button className="text-blue-500 font-bold lg:hover:underline" onClick={() => {
                                         setUserState("signup")

@@ -6,22 +6,46 @@ import CheckoutNavigator from "@/components/CheckoutNavigator"
 import { getAllAddress } from "@/firebase/auth"
 import { updateAddress } from "@/store/features/cartSlice"
 import secureIcon from "../../assets/commonIcons/Secure.png"
+import AddNewAddressButton from "@/components/AddNewAddressButton"
+
+let addressDetails = {
+	name: "",
+	phone: "",
+	houseNo: "",
+	area: "",
+	landmark: "",
+	city: "",
+	state: "",
+	pincode: "",
+	isDefault: false,
+    address_type: ""
+}
+
 
 
 function AddressPage() {
     let [selectedAddress, setSelectedAddress] = useState("")
+    let [formData, setFormData] = useState(addressDetails);
     let [isOpen, setIsOpen] = useState(false);
     let { address } = useSelector(state => state.cart);
     let { user } = useSelector(state => state.auth);
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    let cartItems = JSON.parse(localStorage.getItem("cart"));
+    let cartItems = JSON.parse(sessionStorage.getItem("cart"));
+    let [open, setOpen] = useState(false);
 
     let totalPrice = cartItems.reduce((sum, cart) => sum + Number(cart.price * cart.quantity), 0);
     let discountOnMRP = totalPrice - cartItems.reduce((sum, cart) => sum + Number(cart.salePrice * cart.quantity), 0);
     let deliveryPrice = 49;
     let deliveryDiscount = 49;
     let platformFee = 9;
+
+    const handleAddAddressButton = (e) => {
+        e.preventDefault();
+
+        setFormData(addressDetails);
+        setOpen(true);
+    }
 
     useEffect(() => {
         getAllAddress(user.id).then((res) => {
@@ -31,7 +55,7 @@ function AddressPage() {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem("address", JSON.stringify(selectedAddress))
+        sessionStorage.setItem("address", JSON.stringify(selectedAddress))
     }, [selectedAddress, setSelectedAddress])
 
     return (
@@ -73,7 +97,8 @@ function AddressPage() {
                                         </div>
                                     ))
                                 }
-                                <button onClick={() => navigate("/setting/saved-addresses")} className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-150 h-10 shadow-md border border-slate-300 rounded-xl font-semibold">+ Add New Address</button>
+                                <AddNewAddressButton isOpen={open} setIsOpen={setOpen} formData={formData} setFormData={setFormData} addressDetails={addressDetails} />
+                                <button onClick={(e) => handleAddAddressButton(e)} className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-150 h-10 shadow-md border border-slate-300 rounded-xl font-semibold">+ Add New Address</button>
                             </div>
                             <div className="w-full lg:w-[40%]">
                                 <div className="mt-5 leading-3 font-semibold">
@@ -86,7 +111,7 @@ function AddressPage() {
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                 </div>
-                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={() => navigate("/checkout/payment")}>Continue To Payments<i class="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
+                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={() => navigate("/checkout/payment")}>Continue To Payments<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
                             </div>
                         </div>
                     </div>

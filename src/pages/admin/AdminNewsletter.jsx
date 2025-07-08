@@ -14,7 +14,7 @@ function AdminNewsletter() {
 
     return (
         <div>
-            <AdminHeadings title="Newsletter" >
+            <AdminHeadings title="Response Deck" >
                 <div className="border border-[rgb(8,43,61,0.5)] text-sm rounded-full p-2 bg-white">
                     <label htmlFor="sort">Sort By: </label>
                     <select className="outline-none font-semibold">

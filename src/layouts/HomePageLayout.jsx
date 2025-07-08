@@ -27,14 +27,14 @@ function HomePageLayout() {
     }, []);
     return (
         <>
-            <ShiftingNavbar />
+            {/* <ShiftingNavbar /> */}
             <Carousel carouselImg={carouselImg} />
             <OfferBannerSection />
             <FeaturedProducts />
-            <InfoIconsContainer />
             <ShopBlogs />
             <EventGallery />
-            <WhatWeDo />
+            {/* <WhatWeDo /> */}
+            <InfoIconsContainer />
             <WorkWithUsAndNewsletter />
             {/* <Reviews /> */}
             {/* <AnimatingMan className="h-40 md:h-72 lg:h-96" /> */}

@@ -4,7 +4,7 @@ import { uploadToCloudinary } from '@/firebase/cloudinary';
 import { toast } from 'react-toastify';
 import { addProduct, editProduct } from '@/firebase/admin';
 import { useDispatch } from 'react-redux';
-import { addNewProduct } from '@/store/features/adminSlice';
+import { addNewProduct, updateProduct } from '@/store/features/adminSlice';
 
 let category = ['Select', 'Mens', 'Womens', 'Kids'];
 let subCategory = ['Select', 'T-Shirts', 'Shirts', 'Jeans', 'Sweatshirts', 'Hoddies', 'Shoes', 'Watches', 'Shorts', 'Joggers'];
@@ -150,37 +150,45 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
     const handleEditProductSubmit = async (e) => {
         e.preventDefault();
 
+        if(formData.name === "" || formData.category === "Select" || formData.subCategory === "Select" || formData.brand === "Select" || formData.isLxsCertified === "Select" || formData.price === "" || formData.salePrice === "" || formData.codAvailability === "Select" || formData.returnAvailability === "Select" || formData.description.text === "" || formData.description.sizeFit === "Select" || formData.description.color === "Select" || formData.description.material === "Select" || formData.description.washCare === "Select" || formData.description.sleevLength === "Select" || formData.description.neck === "Select" || formData.description.occasion === "Select" || formData.description.modelHeight === "" ||formData.description.modelWearingSize === "Select" || files.length === 0){
+            toast.error("Requires all the fields!!");
+            return
+        }
+
         const urls = [...uploadedUrls];
         const ids = [...publicIds];
 
         for (let i = 0; i < files.length; i++) {
-            if (files[i]) {
+            if(formData.images[i] && previews[i] && files[i] === null){
+                urls[i] = formData.images[i];
+                ids[i] = formData.imagesId[i]
+            }
+            else if(formData.images[i] && previews[i] === null && files[i] === null){
+                urls[i] = null;
+                ids[i] = null
+            }
+            else if (formData.images[i] && files[i]) {
                 let response = await uploadToCloudinary(files[i]);
                 urls[i] = response?.url;
                 ids[i] = response?.public_id
             }
         }
 
-        let imageData = {
-            urls,
-            ids
-        }
-
-        editProduct({ currentEditId, formData, imageData }).then((res) => {
-            if (res) {
-                toast.success("Product Edited Successfully ...")
-                setIsOpen(false);
-            }
-            else {
-                console.log("Product Edit Error ...");
-            }
+        editProduct(currentEditId, {...formData, imagesId: ids, images: urls}).then(() => {
+            dispatch(updateProduct({id: currentEditId, ...formData, imagesId: ids, images: urls}))
+            toast.success("Product Edited Successfully ...")
+            setIsOpen(false);
         })
     }
 
     useEffect(() => {
-        setFiles([null, null, null, null, null, null]);
-        setPreviews([null, null, null, null, null, null]);
         setUploadedUrls([null, null, null, null, null, null]);
+        setFiles([null, null, null, null, null, null]);
+        if(currentEditId){
+            setPreviews(formData.images)
+        }else{
+            setPreviews([null, null, null, null, null, null]);
+        }
     }, [isOpen, setIsOpen])
 
     return (

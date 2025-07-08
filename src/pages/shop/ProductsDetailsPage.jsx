@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { addCartItem, addNewRecentProduct, addWishlistItem, deleteCartItem, deleteWishlistItem } from "@/firebase/auth";
+import { addCartItem, addNewRecentProduct, addWishlistItem, deleteWishlistItem } from "@/firebase/auth";
 import { addToCart, addToWishlist, deleteFromWishlist } from "@/store/features/cartSlice";
 import shareIcon from "../../assets/commonIcons/Share (Stroke).png"
 import shareIconActive from "../../assets/commonIcons/Share (Fill).png"
@@ -11,16 +11,23 @@ import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 import reviewLogoActive from "../../assets/commonIcons/Rewards 2 (Fill).png"
 import ViewAllIcon from "@/components/ViewAllIcon";
 import starIcon from "../../assets/commonIcons/Rewards 2 (Fill).png"
+import { addShippingLabel, checkPincode, orderCurrentStatus, orderTrackingHistory } from "@/firebase/fship";
+import { useToast } from "@/components/ToastProvider";
+
+const sizes = ["S", "M", "L", "XL"];
+
 
 function ProductDetailsPage({ id, data }) {
 	let [hovered, setHovered] = useState(false);
 	const [selectedSize, setSelectedSize] = useState("");
 	let [productData, setProductData] = useState(null);
 	let [mainPic, setMainPic] = useState(null);
-	const sizes = ["S", "M", "L", "XL"];
+	let [pincode, setPincode] = useState(null);
+	let [pincodeResult, setPincodeResult] = useState({})
 	let { cart, wishlist } = useSelector(state => state.cart);
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
+	let toaster = useToast();
 	let { user } = useSelector(state => state.auth);
 
 	const addCart = (e, item_id) => {
@@ -34,12 +41,11 @@ function ProductDetailsPage({ id, data }) {
 			size
 		}
 
-		let user = JSON.parse(localStorage.getItem("user"));
-
 		if (user) {
 			addCartItem(user?.id, itemDetails).then(() => {
 				dispatch(addToCart(itemDetails));
 				toast.success("Product Added To Cart ...");
+				toaster("Added to cart/..")
 			})
 		} else {
 			toast.error("Please Login First ...")
@@ -53,6 +59,7 @@ function ProductDetailsPage({ id, data }) {
 			addWishlistItem(user?.id, item_id).then((res) => {
 				dispatch(addToWishlist(res));
 				toast.success("Product Added To Wishlist ...");
+				toaster("Products Wislisted..")
 			})
 		} else {
 			toast.error("Please Login First ...")
@@ -65,6 +72,35 @@ function ProductDetailsPage({ id, data }) {
 		deleteWishlistItem(user.id, item_id).then(() => {
 			dispatch(deleteFromWishlist(item_id));
 			toast.success("Product Removed From Wishlist ...")
+			toaster("Products removed Wislisted..hgwegiuegd")
+		})
+	}
+
+	const handlePincodeChange = (e) => {
+		e.preventDefault();
+
+		if (e.target.value.length <= 6) {
+			setPincode(e.target.value);
+			setPincodeResult("");
+		}
+	}
+
+	const handlePincodeCheck = (e) => {
+		e.preventDefault();
+
+		checkPincode(400003, pincode).then((res) => {
+			if (res.status) {
+				const today = new Date('2024-04-28');
+				const sixDaysLater = new Date();
+				sixDaysLater.setDate(today.getDate() + 6);
+				const options = { day: '2-digit', month: 'short', year: 'numeric' };
+				const formattedDate = sixDaysLater.toLocaleDateString('en-GB', options);
+				setPincodeResult({ response: res.destination, date: formattedDate });
+			} else {
+				setPincodeResult({ response: "Pincode is not Serviceable Right Now.", date: "" })
+			}
+		}).catch((err) => {
+			console.log("Error at Pincode Check: ", err.message);
 		})
 	}
 
@@ -77,11 +113,15 @@ function ProductDetailsPage({ id, data }) {
 		if (user) {
 			addNewRecentProduct(user.id, id);
 		}
+		// addShippingLabel("FSPP0004343539").then(res => console.log(res)).catch(err => console.log(err.message));
+		// registerOrderPickup(["FSPP0004343539"]).then(res => console.log(res)).catch(err => console.log(err.message));
+		// orderTrackingHistory("FSPP0004343537").then(res => console.log(res)).catch(err => console.log(err.message));
+		// orderCurrentStatus("FSPP0004343537").then(res => console.log(res)).catch(err => console.log(err.message));
 	}, [])
 
-	useEffect(() => {
-		localStorage.setItem("cart", JSON.stringify(cart));
-	}, [cart]);
+	// useEffect(() => {
+	// 	sessionStorage.setItem("cart", JSON.stringify(cart));
+	// }, [cart]);
 
 
 	return (
@@ -164,11 +204,36 @@ function ProductDetailsPage({ id, data }) {
 								Seller: <Link className="text-[rgb(240,85,120)] lg:hover:underline">LXS Lifestyle Store</Link> <br />
 							</p>
 						</div>
+
+						<div className="flex flex-col mt-6 relative w-60">
+							<p className="text-lg font-semibold mb-1">Check Pincode:</p>
+							<form action="">
+								<input type="number" className="h-9 w-[200px] rounded-l-full border-y border-l border-[rgb(8,43,61,0.7)] pl-4 bg-gray-200 outline-none font-medium" placeholder="Enter Pincode" value={pincode} onChange={handlePincodeChange} />
+								<button onClick={handlePincodeCheck} className="text-white absolute right-0 top-8 h-9 w-10 bg-blue-500 rounded-r-full outline-none"><i class="fi fi-rs-search relative top-[2px]"></i></button>
+							</form>
+							{
+								pincode?.length === 6 ? (
+									<>
+										<p className="text-sm leading-4 mt-1 text-red-600 font-medium capitalize">{pincodeResult.response}</p>
+										{
+											pincodeResult && pincodeResult.response !== "Pincode is not Serviceable Right Now." ? (
+												<p className="text-sm leading-4 text-red-600 font-medium">Expected Delivery by {
+													pincodeResult?.date
+												}</p>
+											)
+												:
+												null
+										}
+									</>
+								) :
+									null
+							}
+						</div>
 					</div>
 					<div className="flex gap-5 ">
 						<button onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] ${wishlist.some(p => p.item_id === id) ? "bg-[rgb(8,43,61)] text-white" : "bg-slate-200"}`}><i className="fi fi-ss-heart scale-x-[-1] h-6 text-2xl mr-4"></i>{wishlist.some(p => p.item_id === id) ? "Remove from" : "Save to"} Favourites</button>
 
-						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(240,85,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i class="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
+						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-4 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(240,85,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
 					</div>
 
 

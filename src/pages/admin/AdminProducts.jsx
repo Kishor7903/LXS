@@ -69,8 +69,8 @@ function AdminProducts() {
             salePrice: product.salePrice,
             codAvailability: product.codAvailability,
             returnAvailability: product.returnAvailability,
-            images: [],
-            imagesId: [],
+            images: product.images,
+            imagesId: product.imagesId,
             description: product.description,
         })
 
@@ -134,7 +134,7 @@ function AdminProducts() {
                                         <p className="">Category: {product.category}</p>
                                     </div>
                                     <div className="py-2 col-span-2 flex flex-col justify-between relative bottom-1">
-                                        <p>Stock Left: {product.totalStock}</p>
+                                        
                                     </div>
                                     <div className="space-x-5 col-span-2 flex items-center justify-center relative bottom-1">
                                         <button onClick={(e) => handleEditProduct(e, product)} className="bg-blue-500 rounded px-4 py-2 text-white hover:bg-blue-600 active:scale-95" >Edit</button>

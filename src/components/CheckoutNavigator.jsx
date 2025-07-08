@@ -11,11 +11,11 @@ function CheckoutNavigator() {
 
             <p className="text-3xl relative bottom-2 left-1 font-normal tracking-tighter lg:tracking-[10px]">.......</p>
 
-            <button disabled={location === "/checkout/cart"} onClick={() => navigate("/checkout/address")} className={`h-7 w-28 text-xs lg:text-sm font-bold flex justify-center items-center rounded-full border border-[rgb(8,43,61)] ${location.includes("/checkout/address") === true ? "bg-[rgb(8,43,61)] text-white cursor-pointer" : ""} ${location.includes("/checkout/cart") ? "opacity-70" : ""} ${location.includes("/checkout/payment") ? "bg-slate-200" : ""}`}>Address<i className="fi fi-sr-land-layer-location text-[13px] ml-1 relative top-[2px]"></i></button>
+            <button disabled={location === "/checkout/cart"} onClick={() => navigate("/checkout/address")} className={`h-7 w-36 text-xs lg:text-sm font-bold flex justify-center items-center rounded-full border border-[rgb(8,43,61)] ${location.includes("/checkout/address") === true ? "bg-[rgb(8,43,61)] text-white cursor-pointer" : ""} ${location.includes("/checkout/cart") ? "opacity-70" : ""} ${location.includes("/checkout/payment") ? "bg-slate-200" : ""}`}>Drop Location<i className="fi fi-sr-land-layer-location text-[13px] ml-1 relative top-[2px]"></i></button>
 
             <p className="text-3xl relative bottom-2 left-1 font-normal tracking-tighter lg:tracking-[10px]">.......</p>
 
-            <button disabled={location !== "/checkout/payment"} className={`h-7 w-28 text-xs lg:text-sm font-bold flex justify-center items-center rounded-full border border-[rgb(8,43,61)] ${location.includes("/checkout/payment") ? "bg-[rgb(8,43,61)] text-white cursor-pointer" : "opacity-70"}`}>Payment<i className="fi fi-sr-credit-card text-[13px] ml-1 relative top-[2px]"></i></button>
+            <button disabled={location !== "/checkout/payment"} className={`h-7 w-28 text-xs lg:text-sm font-bold flex justify-center items-center rounded-full border border-[rgb(8,43,61)] ${location.includes("/checkout/payment") ? "bg-[rgb(8,43,61)] text-white cursor-pointer" : "opacity-70"}`}>Billing<i className="fi fi-sr-credit-card text-[13px] ml-1 relative top-[2px]"></i></button>
         </div>
     )
 }

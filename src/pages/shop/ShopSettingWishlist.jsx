@@ -68,9 +68,9 @@ function ShopSettingWishlist() {
 				</div>
 				<div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
 					{
-						wishlist && wishlist.length > 0 ? (
-							wishlistItems?.map((item, index) => (
-								!loading ?
+						!loading ? (
+							wishlist && wishlist.length > 0 ? (
+								wishlistItems?.map((item, index) => (
 									<div key={index} className="flex gap-2 items-center p-[6px] border border-[rgb(8,43,61)] rounded-xl w-full py-2 scale-[0.98] lg:hover:scale-100 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] duration-100 cursor-pointer" onClick={() => navigate(`/product-details/${item.id}`)}>
 										<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1" >
 											<img
@@ -93,14 +93,22 @@ function ShopSettingWishlist() {
 												cart.some((p) => p.item_id === item.id) ? (
 													<span className='text-[9px] mt-1 lg:text-[13px] mb-2 font-medium text-center leading-[1] text-green-700 flex gap-1'>Added to Cart <i className="fi fi-rs-check-circle relative text-[13px] "></i></span>
 												) : (
-													<HoverButton onClick={(e) => {e.stopPropagation(), moveToCart(e, item.id)}} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1'>Add to Cart</HoverButton>
+													<HoverButton onClick={(e) => { e.stopPropagation(), moveToCart(e, item.id) }} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1'>Add to Cart</HoverButton>
 												)
 											}
-											<p onClick={(e) => {e.stopPropagation(), deleteItemFromWishlist(e, item.id)}} className="text-xs text-blue-400 tracking-tighter font-medium cursor-pointer lg:hover:underline">Remove</p>
+											<p onClick={(e) => { e.stopPropagation(), deleteItemFromWishlist(e, item.id) }} className="text-xs text-blue-400 tracking-tighter font-medium cursor-pointer lg:hover:underline">Remove</p>
 										</div>
 									</div>
-									:
-									<div className="flex gap-4 p-2 border border-slate-300 rounded-2xl shadow-sm animate-pulse bg-white w-full">
+								))
+							)
+								:
+								(
+									<div className="text-lg text-center opacity-70">No Items in Favourites...</div>
+								)
+						) :
+							(
+								[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, idx) => (
+									<div key={idx} className="flex gap-4 p-2 border border-slate-300 rounded-2xl shadow-sm animate-pulse bg-white w-full">
 										<div className="w-[75px] h-[75px] bg-gray-300 rounded-lg"></div>
 										<div className="flex-1 space-y-2">
 											<div className="h-2 w-28 bg-gray-300 rounded"></div>
@@ -113,11 +121,7 @@ function ShopSettingWishlist() {
 											<div className="h-2 w-14 bg-gray-300 rounded"></div>
 										</div>
 									</div>
-							))
-						)
-							:
-							(
-								<div className="text-lg text-center opacity-70">No Items Wishlisted...</div>
+								))
 							)
 					}
 				</div>

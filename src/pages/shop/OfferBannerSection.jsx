@@ -1,7 +1,7 @@
-import banner1 from "../../assets/Banners/Promotional Image 1.png"
+import banner1 from "../../assets/Banners/Promotional Image 1.jpg"
 import banner2 from "../../assets/Banners/Promotional Image 2.png"
-import banner4 from "../../assets/Banners/Promotional Image 3.png"
-import banner3 from "../../assets/Banners/Promotional Image 4.png"
+import banner3 from "../../assets/Banners/Promotional Image 3.png"
+import banner4 from "../../assets/Banners/Promotional Image 4.jpg"
 
 function OfferBannerSection() {
     return (
