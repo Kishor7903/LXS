@@ -382,7 +382,7 @@ function CartPage() {
                                     onClick={() =>
                                         navigate("/setting/wishlist")
                                     }
-                                    className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-150 h-10 shadow-md border border-slate-300 rounded-xl font-semibold"
+                                    className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-200 h-10 shadow-md border border-slate-300 rounded-xl font-semibold"
                                 >
                                     + Add from Favourites
                                 </button>

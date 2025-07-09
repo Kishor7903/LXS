@@ -1,9 +1,8 @@
 import AddProductButtonAndPopup from "@/components/AddProductButtonAndPopup"
 import AdminHeadings from "@/components/AdminHeadings"
-import { deleteProduct, getAllProducts } from "@/firebase/admin";
-import { getProducts } from "@/store/features/adminSlice";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"
+import { deleteProduct } from "@/firebase/admin";
+import { useState } from "react";
+import { useSelector } from "react-redux"
 import { toast } from "react-toastify";
 
 
@@ -39,7 +38,6 @@ function AdminProducts() {
     let [formData, setFormData] = useState(productData);
     const { products } = useSelector(state => state.admin)
     let [currentEditId, setCurrentEditId] = useState(null);
-    let dispatch = useDispatch();
 
     const handleDeleteProduct = (e, id) => {
         e.preventDefault();
@@ -76,12 +74,6 @@ function AdminProducts() {
 
         setIsOpen(true);
     }
-
-    useEffect(() => {
-        getAllProducts().then((res) => {
-			dispatch(getProducts(res));
-		});
-    }, []);
 
     return (
         <div>

@@ -84,6 +84,7 @@ import Blog4 from "./pages/shop/Blog4"
 import Blog5 from "./pages/shop/Blog5"
 import AdminPromotionalBanners from "./pages/admin/AdminPromotionalBanners"
 import AdminPickupWarehouse from "./pages/admin/AdminPickupWarehouse"
+import SuccessfulPopup from "./components/SuccessfulPopup"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -202,6 +203,7 @@ function App() {
 					<Route path="product-exchange/:id" element={<ProductExchange />} />
 					<Route path="product-return/:id" element={<ProductReturn />} />
 					<Route path="track-return/:id" element={<TrackReturnAndRefund />} />
+					<Route path="successfull/:id" element={<SuccessfulPopup />} />
 				</Route>
 				<Route path="/admin" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

@@ -6,7 +6,7 @@ function OrdersPageLayout() {
   return (
     <>
         <Header className="h-16" />
-        <div className="w-full h-[90%] px-16 py-6 relative"><Outlet /></div>
+        <div className="w-full relative"><Outlet /></div>
     </>
   )
 }

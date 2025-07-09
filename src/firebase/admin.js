@@ -49,16 +49,19 @@ export const addProduct = (item) => {
 };
 
 export const getAllProducts = async () => {
-    const productRef = collection(fireDB, "products");
-    const productQuery = query(productRef, orderBy("timestamp", "desc"));
-    const productSnapshot = await getDocs(productQuery);
-
-    const products = productSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }));
-
-    return products;
+    try {
+        const productRef = collection(fireDB, "products");
+        const productSnapshot = await getDocs(productRef);
+    
+        const products = productSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+    
+        return products;
+    } catch (error) {
+        console.log("Getting all products error: ", error.message);
+    }
 };
 
 export const editProduct = async (item_id, item) => {

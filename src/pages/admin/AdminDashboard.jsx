@@ -1,9 +1,30 @@
 import AdminHeadings from "@/components/AdminHeadings"
-import { useSelector } from "react-redux"
+import { getAllOrders, getAllProducts } from "@/firebase/admin";
+import { getAllOrdersAdmin, getProducts } from "@/store/features/adminSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux"
 
 
 function AdminDashboard() {
-	let { products } = useSelector(state => state.admin)
+	let { products } = useSelector(state => state.admin);
+	let { orders } = useSelector(state => state.admin);
+	let dispatch = useDispatch();
+
+	useEffect(() => {
+		getAllProducts().then((res) => {
+            let sortedProducts = res.sort((a, b) => {
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            })
+			dispatch(getProducts(sortedProducts));
+		});
+
+		getAllOrders().then((res) => {
+			let sortedOrders = res.sort((a, b) => {
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            })
+			dispatch(getAllOrdersAdmin(sortedOrders))
+		})
+    }, []);
 
 	return (
 		<div className="z-20">
@@ -15,7 +36,7 @@ function AdminDashboard() {
 					</div>
 					<div className="flex flex-col gap-1">
 						<p className="text-[rgb(8,43,61,0.6)] font-medium">Total Sales</p>
-						<p className="text-2xl">$ 0</p>
+						<p className="text-2xl">₹ {orders.reduce((sum, item) => {return sum + item.amount}, 0)}</p>
 					</div>
 				</div>
 				<div className="h-32 w-[30%] rounded-xl border p-5 flex items-center gap-4 bg-white shadow-sm">
@@ -24,7 +45,7 @@ function AdminDashboard() {
 					</div>
 					<div className="flex flex-col gap-1">
 						<p className="text-[rgb(8,43,61,0.6)] font-medium">Total orders</p>
-						<p className="text-2xl">0</p>
+						<p className="text-2xl">{orders.length}</p>
 					</div>
 				</div>
 				<div className="h-32 w-[30%] rounded-xl border p-5 flex items-center gap-4 bg-white shadow-sm">

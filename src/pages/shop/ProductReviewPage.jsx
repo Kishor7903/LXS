@@ -104,7 +104,7 @@ function ProductReviewPage() {
     }
 
     return (
-        <>
+        <div className="px-16 py-6 h-[91vh]">
             <Breadcrum items={items} />
             <div className="w-full h-[95%] pl-4 mt-4 flex gap-10">
                 <div className="w-7/12">
@@ -233,7 +233,7 @@ function ProductReviewPage() {
                 </div>
                 <div className="w-5/12 h-full rounded-3xl shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border"></div>
             </div>
-        </>
+        </div>
     );
 }
 

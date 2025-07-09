@@ -33,8 +33,8 @@ import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
 import { logout } from "@/store/features/authSlice";
-import { updateCart, updateWishlist } from "@/store/features/cartSlice";
-import { getAllProducts } from "@/firebase/admin";
+import { getAllOrdersItems, updateCart, updateWishlist } from "@/store/features/cartSlice";
+import { getAllOrders, getAllProducts } from "@/firebase/admin";
 import PhoneLogin from "./PhoneLogin";
 import DialogBox from "./DialogBox";
 import HoverButton from "./HoverButton";
@@ -97,6 +97,10 @@ function Header({ className }) {
 
 			getUserWishlist(user?.id).then((res) => {
 				dispatch(updateWishlist(res));
+			})
+
+			getAllOrders(user.id).then((res) => {
+				dispatch(getAllOrdersItems(res));
 			})
 		}
 	}, [user])

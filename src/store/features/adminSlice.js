@@ -4,7 +4,8 @@ let initialState = {
     products: [],
     carouselImg: [],
     eventGalleryImg: [],
-    warehouses: []
+    warehouses: [],
+    orders: []
 }
 
 
@@ -51,9 +52,12 @@ const adminSlice = createSlice({
         updateWarehouse: (state, actions) => {
             state.warehouses = state.warehouses.map(product => product.id === actions.payload.id ? actions.payload : product)
         },
+        getAllOrdersAdmin: (state, actions) => {
+            state.orders = actions.payload;
+        }
 
     }
 })
 
-export const { addNewProduct, getProducts, updateProduct, addNewCarouselImg, getCarouselImgs, editCarouselImage, deleteCarouselImage, addNewEventGalleryImg, getEventGalleryImgs, deleteEventGalleryImage, addNewWarehouse, getWarehouses, updateWarehouse } = adminSlice.actions;
+export const { addNewProduct, getProducts, updateProduct, addNewCarouselImg, getCarouselImgs, editCarouselImage, deleteCarouselImage, addNewEventGalleryImg, getEventGalleryImgs, deleteEventGalleryImage, addNewWarehouse, getWarehouses, updateWarehouse, getAllOrdersAdmin } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -17,7 +17,7 @@ const Carousel = ({ carouselImg }) => {
     stopTimer();
     intervalRef.current = setInterval(() => {
       goToNext();
-    }, 7000);
+    }, 10000);
   };
 
   const stopTimer = () => {

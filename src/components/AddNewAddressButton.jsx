@@ -8,7 +8,7 @@ import flagIcon from "../assets/commonIcons/Indian Flag (Fill).png"
 import axios from 'axios';
 
 const indianStates = [
-    "Select", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
+    "Select", "Andaman & Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
 function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData, setFormData, addressDetails }) {
@@ -144,7 +144,7 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
                         <label className="relative top-2 left-3 pl-1 pr-5 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Phone<span className="text-red-600">*</span> <img src={flagIcon} alt="" className="h-2 absolute top-1 right-0 pr-1" /></label>
                         <br />
                         <input type="number" name='phone' value={formData.phone} onChange={handlePhoneNoChange} className="border-[rgb(196,185,185)] border pr-3 pl-12 rounded-xl h-10 w-full outline-none" autoComplete='off' />
-                        <p className="font-semibold absolute top-[29.5px] left-[8px]">+91</p>
+                        <p className="font-semibold absolute top-[30px] left-[8px]">+91</p>
                         <hr className="border w-7 absolute left-[28px] opacity-30 top-[38px] rotate-90 border-[rgb(8,43,61)]" />
                     </div>
                     <div className="w-1/2">

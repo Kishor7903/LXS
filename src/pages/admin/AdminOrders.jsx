@@ -1,15 +1,14 @@
 import AdminHeadings from "@/components/AdminHeadings"
-import { getAllOrders } from "@/firebase/admin"
 import { getUserInfo } from "@/firebase/auth";
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux";
 
 
 function AdminOrders() {
-    let [orders, setOrders] = useState([]);
     let [isOpen, setIsOpen] = useState(-1);
     let [user, setUser] = useState(null);
     let [orderCurrentState, setOrderCurrentState] = useState(null);
-    console.log(orderCurrentState);
+    let { orders } = useSelector(state => state.admin);
 
     const handleOrderClick = (e, user_id, i) => {
         e.preventDefault();
@@ -21,12 +20,6 @@ function AdminOrders() {
             })
         }
     }
-
-    useEffect(() => {
-        getAllOrders().then((res) => {
-            setOrders(res);
-        })
-    }, [])
 
     return (
         <div>

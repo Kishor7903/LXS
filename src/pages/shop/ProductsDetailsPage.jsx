@@ -90,7 +90,7 @@ function ProductDetailsPage({ id, data }) {
 
 		checkPincode(400003, pincode).then((res) => {
 			if (res.status) {
-				const today = new Date('2024-04-28');
+				const today = new Date();
 				const sixDaysLater = new Date();
 				sixDaysLater.setDate(today.getDate() + 6);
 				const options = { day: '2-digit', month: 'short', year: 'numeric' };
@@ -209,7 +209,7 @@ function ProductDetailsPage({ id, data }) {
 							<p className="text-lg font-semibold mb-1">Check Pincode:</p>
 							<form action="">
 								<input type="number" className="h-9 w-[200px] rounded-l-full border-y border-l border-[rgb(8,43,61,0.7)] pl-4 bg-gray-200 outline-none font-medium" placeholder="Enter Pincode" value={pincode} onChange={handlePincodeChange} />
-								<button onClick={handlePincodeCheck} className="text-white absolute right-0 top-8 h-9 w-10 bg-blue-500 rounded-r-full outline-none"><i class="fi fi-rs-search relative top-[2px]"></i></button>
+								<button onClick={handlePincodeCheck} className="text-white absolute right-0 top-8 h-9 w-10 bg-[rgb(8,43,61)] rounded-r-full outline-none"><i className="fi fi-rs-search relative top-[2px]"></i></button>
 							</form>
 							{
 								pincode?.length === 6 ? (

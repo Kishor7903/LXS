@@ -1,17 +1,14 @@
 import HoverButton from "@/components/HoverButton";
-import { getAllOrders } from "@/firebase/auth"
-import { getAllOrdersItems } from "@/store/features/cartSlice";
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 
 function ShopSettingMyOrders() {
-    let { user } = useSelector(state => state.auth);
     let { orders } = useSelector(state => state.cart);
+    let [order, setOrder] = useState([]);
     // let { products } = useSelector(state => state.admin);
     let [loading, setLoading] = useState(false);
-    let dispatch = useDispatch();
     let navigate = useNavigate();
 
     // let orderItems = orders?.map(item => {
@@ -22,9 +19,8 @@ function ShopSettingMyOrders() {
 
     useEffect(() => {
         setLoading(true);
-        getAllOrders(user.id).then((res) => {
-            dispatch(getAllOrdersItems(res));
-        })
+        let sortedOrders = [...orders].sort((a, b) => {return new Date(b.timestamp) - new Date(a.timestamp);})
+        setOrder(sortedOrders)
         setTimeout(() => {
             setLoading(false)
         }, 1000)
@@ -46,8 +42,8 @@ function ShopSettingMyOrders() {
                 <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
                     {
                         !loading ? (
-                            orders && orders.length > 0 ?
-                                orders.map((item) => (
+                            order && order.length > 0 ?
+                                order.map((item) => (
                                     <div key={item.id} className="flex flex-col items-center p-2 border border-[rgb(8,43,61)] scale-[0.98] duration-200 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] rounded-xl lg:hover:scale-100 w-full cursor-pointer relative" onClick={() => navigate(`/orders/order-details/${item.id}`)} >
                                         {
                                             item.products.map((product, idx) => (

@@ -12,7 +12,6 @@ import WorkWithUsAndNewsletter from "@/pages/shop/WorkWithUsAndNewsletter"
 import { getCarouselImgs } from "@/store/features/adminSlice"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import ShiftingNavbar from "@/pages/shop/ShiftingNavbar"
 
 
 function HomePageLayout() {
