@@ -2,7 +2,6 @@ import Breadcrum from "@/components/Breadcrum"
 import RequestSuccessfullPopup from "@/components/RequestSuccessfullPopup"
 import RgbButton from "@/components/RgbButton"
 import { getSingleOrderDetails } from "@/firebase/auth"
-import { uploadToCloudinary } from "@/firebase/cloudinary"
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
@@ -129,7 +128,7 @@ function ProductExchange() {
 
 
     return (
-        <>
+        <div className="px-16 py-6 h-[91vh]">
             <Breadcrum items={items} />
             <div className="w-full h-[95%] pl-4 mt-4 flex gap-10">
                 <div className="w-7/12">
@@ -229,7 +228,7 @@ function ProductExchange() {
                 <div className="w-5/12 h-full rounded-3xl shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border"></div>
             </div>
             <RequestSuccessfullPopup showSuccessfullPopup={showExchangeSuccessfullPopup} setShowSuccessfullPopup={setShowExchangeSuccessfullPopup} state="Exchange" />
-        </>
+        </div>
     )
 }
 

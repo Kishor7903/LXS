@@ -73,9 +73,16 @@ function PaymentsPage() {
     let [showOrderedSuccessfull, setShowOrderedSuccessfull] = useState(false);
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    let cartItems = JSON.parse(sessionStorage.getItem("cart"))
+    let cartItems = JSON.parse(sessionStorage.getItem("cart"));
+    console.log(cartItems);
     let address = JSON.parse(sessionStorage.getItem("address"))
     let { user } = useSelector(state => state.auth)
+
+    const today = new Date();
+    const sixDaysLater = new Date();
+    sixDaysLater.setDate(today.getDate() + 6);
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    const formattedDate = sixDaysLater.toLocaleDateString('en-GB', options);
 
     let totalPrice = cartItems.reduce((sum, cart) => sum + Number(cart.price * cart.quantity), 0);
     let discountOnMRP = totalPrice - cartItems.reduce((sum, cart) => sum + Number(cart.salePrice * cart.quantity), 0);
@@ -150,67 +157,6 @@ function PaymentsPage() {
                         <CheckoutNavigator />
                         <div className="w-full flex flex-col lg:flex-row gap-8">
                             <div className="w-full lg:w-[55%] space-y-4">
-                                <div className="shadow-md border border-slate-300 rounded-xl px-4 py-3 relative">
-                                    <p className='xl:text-sm 2xl:text-base font-semibold'><i className="fi fi-sr-badge-percent relative top-[2px] mr-1"></i>DISCOUNTS & OFFERS</p>
-                                    <div className="space-y-2 ml-5">
-                                        {
-                                            !showMore ? (
-                                                <p className='xl:text-xs 2xl:text-sm mt-1'>{offers[0].item}<Link className='text-blue-500 lg:hover:underline'>Terms & Conditions </Link>Applied</p>
-                                            )
-
-                                                :
-
-                                                offers.map((item, idx) => (
-                                                    <p key={idx} className='xl:text-xs 2xl:text-sm mt-1'>{item.item}<Link className='text-blue-500 lg:hover:underline'>Terms & Conditions Applied</Link></p>
-                                                ))
-                                        }
-                                    </div>
-                                    <span onClick={(e) => { e.preventDefault(), setShowMore(!showMore) }} className='xl:text-xs 2xl:text-sm cursor-pointer font-medium '>{showMore ? "View Less" : "View More"} {showMore ? <i className="fi fi-br-angle-small-up relative top-[2px]"></i> : <i className="fi fi-br-angle-small-right relative top-[2px]"></i>}</span>
-                                </div>
-                                <div className="shadow-md border border-slate-300 rounded-xl px-4 py-3 relative">
-                                    <p className='xl:text-sm 2xl:text-base font-semibold'><i className="fi fi-sr-gift-card relative top-[2px] mr-1"></i>HAVE A GIFT CARD ?</p>
-                                    <div className="flex gap-4">
-                                        <div className='w-[80%] ml-4'>
-                                            <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]' placeholder='Enter Gift Card Number' />
-                                            <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]' placeholder='Enter Gift Card Pin' />
-                                        </div>
-                                        <HoverButton className="h-8 px-4 text-sm font-semibold self-end">Apply</HoverButton>
-                                    </div>
-                                </div>
-                                <div className="">
-                                    <h5 className='font-semibold mb-2'>CHOOSE PAYMENT OPTION</h5>
-                                    <div className="space-y-3">
-                                        {
-                                            paymentOptions.map((item, index) => (
-                                                <div onClick={(e) => { e.preventDefault(), setPaymentMode(index) }} key={index} className={`border-[rgb(8,43,61)] rounded-xl px-4 py-3 font-medium relative overflow-hidden cursor-pointer ${paymentMode === index ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "shadow-md border border-slate-300 scale-[0.96]"}`}><i className={`${paymentMode === index ? item.iconActive : item.icon} mr-2 relative top-1 text-xl`}></i>{item.type}
-                                                    {
-                                                        paymentMode === index && (
-                                                            <div className="h-10 w-24 bg-[rgb(8,43,61)] absolute -top-5 -right-[48px] rotate-45 flex justify-center items-end">
-                                                                <i className="fi fi-br-check text-white text-xs relative left-[2px] top-[2px] -rotate-45"></i>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </div>
-                                            ))
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <div className="w-full lg:w-[40%]">
-                                <div className="mt-5 leading-3 font-semibold">
-                                    <span className="">Price BreakDown ({cart.length} Items)</span>
-                                    <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
-                                    <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
-                                    <span className="flex justify-between text-xs">Discount on MRP <p className="text-red-500">- ₹{discountOnMRP}</p></span>
-                                    <span className="flex justify-between text-xs">Discount on Delivery <p className="text-red-500">- ₹{deliveryDiscount}</p></span>
-                                    <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
-                                    <hr className="pb-1 mt-1" />
-                                    <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
-                                </div>
-                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToPayment}>Proceed To Payments</button>
-                                <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-2 right-4 lg:right-5">Need Help? <Link className="text-blue-500 lg:hover:underline font-bold">Contact Us</Link></span>
-                            </div> */}
-                            <div className="flex flex-col gap-5 w-[45%]">
                                 <div className="w-full py-4 px-4 rounded-xl shadow-md border border-slate-300 " >
                                     <span className="font-semibold text-base">Delivery Address</span>
                                     <div className="grid grid-cols-2 gap-y-3 gap-x-5 pl-2 mt-2 text-[11px]">
@@ -248,12 +194,95 @@ function PaymentsPage() {
                                         </div>
                                     </div>
                                 </div>
+                                {/* <div className="shadow-md border border-slate-300 rounded-xl px-4 py-3 relative">
+                                    <p className='xl:text-sm 2xl:text-base font-semibold'><i className="fi fi-sr-badge-percent relative top-[2px] mr-1"></i>DISCOUNTS & OFFERS</p>
+                                    <div className="space-y-2 ml-5">
+                                        {
+                                            !showMore ? (
+                                                <p className='xl:text-xs 2xl:text-sm mt-1'>{offers[0].item}<Link className='text-blue-500 lg:hover:underline'>Terms & Conditions </Link>Applied</p>
+                                            )
+
+                                                :
+
+                                                offers.map((item, idx) => (
+                                                    <p key={idx} className='xl:text-xs 2xl:text-sm mt-1'>{item.item}<Link className='text-blue-500 lg:hover:underline'>Terms & Conditions Applied</Link></p>
+                                                ))
+                                        }
+                                    </div>
+                                    <span onClick={(e) => { e.preventDefault(), setShowMore(!showMore) }} className='xl:text-xs 2xl:text-sm cursor-pointer font-medium '>{showMore ? "View Less" : "View More"} {showMore ? <i className="fi fi-br-angle-small-up relative top-[2px]"></i> : <i className="fi fi-br-angle-small-right relative top-[2px]"></i>}</span>
+                                </div> */}
+                                <div className="shadow-md border border-slate-300 rounded-xl px-4 py-3 relative">
+                                    <p className='xl:text-sm 2xl:text-base font-semibold'><i className="fi fi-sr-gift-card relative top-[2px] mr-1"></i>HAVE A GIFT CARD ?</p>
+                                    <div className="flex gap-4">
+                                        <div className='w-[80%] ml-4'>
+                                            <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]' placeholder='Enter Gift Card Number' />
+                                            <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]' placeholder='Enter Gift Card Pin' />
+                                        </div>
+                                        <HoverButton className="h-8 px-4 text-sm font-semibold self-end">Apply</HoverButton>
+                                    </div>
+                                </div>
+                                <div className="">
+                                    <h5 className='font-semibold mb-2'>CHOOSE PAYMENT OPTION</h5>
+                                    <div className="space-y-3">
+                                        {
+                                            paymentOptions.map((item, index) => (
+                                                <div onClick={(e) => { e.preventDefault(), setPaymentMode(index) }} key={index} className={`border-[rgb(8,43,61)] rounded-xl px-4 py-3 font-medium relative overflow-hidden cursor-pointer duration-200 ${paymentMode === index ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "shadow-md border border-slate-300 scale-[0.96] lg:hover:scale-[0.98]"}`}><i className={`${paymentMode === index ? item.iconActive : item.icon} mr-2 relative top-1 text-xl`}></i>{item.type}
+                                                    {
+                                                        paymentMode === index && (
+                                                            <div className="h-10 w-24 bg-[rgb(8,43,61)] absolute -top-5 -right-[48px] rotate-45 flex justify-center items-end">
+                                                                <i className="fi fi-br-check text-white text-xs relative left-[2px] top-[2px] -rotate-45"></i>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className="w-full lg:w-[40%]">
+                                <div className="mt-5 leading-3 font-semibold">
+                                    <span className="">Price BreakDown ({cart.length} Items)</span>
+                                    <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
+                                    <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
+                                    <span className="flex justify-between text-xs">Discount on MRP <p className="text-red-500">- ₹{discountOnMRP}</p></span>
+                                    <span className="flex justify-between text-xs">Discount on Delivery <p className="text-red-500">- ₹{deliveryDiscount}</p></span>
+                                    <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
+                                    <hr className="pb-1 mt-1" />
+                                    <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
+                                </div>
+                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToPayment}>Proceed To Payments</button>
+                                <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-2 right-4 lg:right-5">Need Help? <Link className="text-blue-500 lg:hover:underline font-bold">Contact Us</Link></span>
+                            </div> */}
+                            <div className="flex flex-col gap-5 w-[45%]">
+                                <div className="p-2 shadow-md border border-slate-300 rounded-xl flex flex-col ">
+                                {
+                                    cartItems.map((product, idx) => (
+                                        <>
+                                        <div key={idx} className=" gap-4 flex items-center">
+                                            <img src={product.images[0]} alt="" className='h-16 rounded-[6px]' />
+                                            <div className="flex flex-col">
+                                                <p className='font-semibold opacity-70 line-clamp-1'>{product.name}</p>
+                                                <p className='text-xs'>Estimated Delivery by <span className='font-semibold'>{formattedDate}</span></p>
+                                            </div>
+                                        </div>
+                                        {
+                                            cartItems.length > 1 && idx !== cartItems.length - 1 ?
+                                                <hr className={`border-t-2 opacity-30 border-[rgb(8,43,61)] border-dashed w-full pt-2 mt-2`} />
+                                                :
+                                                null
+                                        }
+                                        </>
+                                    ))
+                                }
+                                </div>
+                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300'><span className='text-[rgb(240,85,120)] font-semibold text-xs'>Please Note:</span> If you order multiple products in a single order and choose to cancel any one item, the entire order will be cancelled, if all items are processed in a single shipment.</p>
                                 <div className="w-full flex gap-2 text-sm">
                                     <input type="text" className="bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full outline-none shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]" placeholder="Apply Coupons" />
                                     <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-full ">Apply</button>
                                 </div>
                                 <div className="w-full">
-                                    <div className="mt-3 leading-3 font-semibold">
+                                    <div className="leading-3 font-semibold">
                                         <span className="">Price BreakDown ({cartItems.length} Items)</span>
                                         <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
                                         <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
@@ -264,16 +293,8 @@ function PaymentsPage() {
                                         <span className="flex justify-between text-xs">Payment Method: <p className="text-blue-500">{paymentOptions[paymentMode]?.type}</p></span>
                                         <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                     </div>
-                                    {
-                                        paymentMode !== -1 ? (
-                                            <>
-                                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150 flex gap-2 justify-center items-center" onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
-                                                <p className='opacity-70 font-medium text-xs mt-1 text-center'>(You can tell your Brothers and Sisters to Pay, bcoz Sharing is Caring 💸😅  #IShopTheyDrop)</p>
-                                            </>
-                                        )
-                                            :
-                                            null
-                                    }
+                                    <button className={`w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 flex gap-2 justify-center items-center ${paymentMode === -1 ? "cursor-not-allowed opacity-50" : "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"}`} onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
+                                    <p className='opacity-70 font-medium text-xs mt-1 text-center'>(You can tell your Brothers and Sisters to Pay, bcoz Sharing is Caring 💸😅  #IShopTheyDrop)</p>
                                 </div>
                             </div>
 

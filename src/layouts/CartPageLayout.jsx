@@ -1,12 +1,13 @@
+import RecentProductsPage from '@/components/RecentProductsPage'
 import YourMayAlsoLikeThesePage from '@/components/YourMayAlsoLikeThesePage'
 import CartPage from '@/pages/shop/CartPage'
-import React from 'react'
 
 function CartPageLayout() {
   return (
     <>
         <CartPage />
         <YourMayAlsoLikeThesePage data={null} />
+        <RecentProductsPage />
     </>
   )
 }

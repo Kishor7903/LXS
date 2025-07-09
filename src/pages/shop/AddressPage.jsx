@@ -98,7 +98,7 @@ function AddressPage() {
                                     ))
                                 }
                                 <AddNewAddressButton isOpen={open} setIsOpen={setOpen} formData={formData} setFormData={setFormData} addressDetails={addressDetails} />
-                                <button onClick={(e) => handleAddAddressButton(e)} className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-150 h-10 shadow-md border border-slate-300 rounded-xl font-semibold">+ Add New Address</button>
+                                <button onClick={(e) => handleAddAddressButton(e)} className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-200 h-10 shadow-md border border-slate-300 rounded-xl font-semibold">+ Add New Address</button>
                             </div>
                             <div className="w-full lg:w-[40%]">
                                 <div className="mt-5 leading-3 font-semibold">
