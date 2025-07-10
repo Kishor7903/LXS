@@ -28,7 +28,7 @@ function ProductDetailsPageLayout() {
 
 	return (
 		<>
-			{
+			{/* {
 				isProductAvailable ? (
 					<>
 						<ProductDetailsPage id={id} data={data} />
@@ -39,9 +39,15 @@ function ProductDetailsPageLayout() {
 						<InfoIconsContainer />
 					</>
 				)
-				:
-				<ProductNotAvailable />
-	}
+					:
+					<ProductNotAvailable />
+			} */}
+			<ProductDetailsPage id={id} data={data} />
+			{
+				data &&
+				<YourMayAlsoLikeThesePage data={data} />
+			}
+			<InfoIconsContainer />
 
 		</>
 	)

@@ -81,9 +81,6 @@ function ShopSettingSavedAddresses() {
 
 	useEffect(() => {
 		setLoading(true);
-		getAllAddress(user?.id).then((res) => {
-			dispatch(updateAddress(res));
-		})
 		setTimeout(() => {
 			setLoading(false);
 		}, 1000);
