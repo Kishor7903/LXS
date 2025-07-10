@@ -31,9 +31,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import LxsLogo from "./LxsLogo";
 import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
+import { getAllAddress, getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
 import { logout } from "@/store/features/authSlice";
-import { getAllOrdersItems, updateCart, updateWishlist } from "@/store/features/cartSlice";
+import { getAllOrdersItems, updateAddress, updateCart, updateWishlist } from "@/store/features/cartSlice";
 import { getAllOrders, getAllProducts } from "@/firebase/admin";
 import PhoneLogin from "./PhoneLogin";
 import DialogBox from "./DialogBox";
@@ -101,6 +101,10 @@ function Header({ className }) {
 
 			getAllOrders(user.id).then((res) => {
 				dispatch(getAllOrdersItems(res));
+			})
+
+			getAllAddress(user?.id).then((res) => {
+				dispatch(updateAddress(res));
 			})
 		}
 	}, [user])

@@ -3,7 +3,7 @@ import DialogBox from './DialogBox'
 import { uploadToCloudinary } from '@/firebase/cloudinary';
 import { toast } from 'react-toastify';
 import { addProduct, editProduct } from '@/firebase/admin';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addNewProduct, updateProduct } from '@/store/features/adminSlice';
 
 let category = ['Select', 'Mens', 'Womens', 'Kids'];
@@ -29,6 +29,7 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
     const [publicIds, setPublicIds] = useState([null, null, null, null, null, null])
     const fileInputs = useRef([]);
     let dispatch = useDispatch();
+    let { products } = useSelector(state => state.admin);
 
     const handleChange = (field, value) => {
         const keys = field.split(".");
@@ -103,38 +104,89 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
 
     const handleAddProductSubmit = async () => {
 
-        if(formData.name === "" || formData.category === "Select" || formData.subCategory === "Select" || formData.brand === "Select" || formData.isLxsCertified === "Select" || formData.price === "" || formData.salePrice === "" || formData.codAvailability === "Select" || formData.returnAvailability === "Select" || formData.description.text === "" || formData.description.sizeFit === "Select" || formData.description.color === "Select" || formData.description.material === "Select" || formData.description.washCare === "Select" || formData.description.sleevLength === "Select" || formData.description.neck === "Select" || formData.description.occasion === "Select" || formData.description.modelHeight === "" ||formData.description.modelWearingSize === "Select" || files.length === 0){
-            toast.error("Requires all the fields!!");
-            return
+        // if(formData.name === "" || formData.category === "Select" || formData.subCategory === "Select" || formData.brand === "Select" || formData.isLxsCertified === "Select" || formData.price === "" || formData.salePrice === "" || formData.codAvailability === "Select" || formData.returnAvailability === "Select" || formData.description.text === "" || formData.description.sizeFit === "Select" || formData.description.color === "Select" || formData.description.material === "Select" || formData.description.washCare === "Select" || formData.description.sleevLength === "Select" || formData.description.neck === "Select" || formData.description.occasion === "Select" || formData.description.modelHeight === "" ||formData.description.modelWearingSize === "Select" || files.length === 0){
+        //     toast.error("Requires all the fields!!");
+        //     return
+        // }
+
+        let prefix = "LXS"
+        
+        let cate = formData.category.split("")[0];
+        let subC = ""
+        if(formData.subCategory === "T-Shirts"){
+            subC = "TS"
+        }
+        else if(formData.subCategory === "Shirts"){
+            subC = "SH"
+        }
+        else if(formData.subCategory === "Jeans"){
+            subC = "JE"
+        }
+        else if(formData.subCategory === "Sweatshirts"){
+            subC = "SW"
+        }
+        else if(formData.subCategory === "Hoodies"){
+            subC = "HO"
+        }
+        else if(formData.subCategory === "Shoes"){
+            subC = "SE"
+        }
+        else if(formData.subCategory === "Watches"){
+            subC = "WA"
+        }
+        else if(formData.subCategory === "Shorts"){
+            subC = "SS"
+        }
+        else if(formData.subCategory === "Joggers"){
+            subC = "JO"
         }
 
-        const urls = [...uploadedUrls];
-        const ids = [...publicIds];
-
-        for (let i = 0; i < files.length; i++) {
-            if (files[i]) {
-                let response = await uploadToCloudinary(files[i]);
-                urls[i] = response?.url;
-                ids[i] = response?.public_id
-            }
+        let uniqueDigit = ""
+        if(products.length+1 < 10){
+            uniqueDigit = "0000" + `${products.length+1}`;
+        }
+        else if(products.length+1 < 100){
+            uniqueDigit = "000" + `${products.length+1}`;
+        }
+        else if(products.length+1 < 1000){
+            uniqueDigit = "00" + `${products.length+1}`;
+        }
+        else if(products.length+1 < 10000){
+            uniqueDigit = "0" + `${products.length+1}`;
+        }
+        else{
+            uniqueDigit = `${products.length+1}`;
         }
 
-        let imageData = {
-            urls,
-            ids
-        }
+        console.log(`${prefix}-${cate}-${subC}-${uniqueDigit}`);
 
-        let product = addProduct({ formData, imageData })
-        dispatch(addNewProduct(product));
+        // const urls = [...uploadedUrls];
+        // const ids = [...publicIds];
 
-        setFiles([null, null, null, null, null, null]);
-        setPreviews([null, null, null, null, null, null]);
-        setUploadedUrls([null, null, null, null, null, null]);
-        setPublicIds([null, null, null, null, null, null]);
+        // for (let i = 0; i < files.length; i++) {
+        //     if (files[i]) {
+        //         let response = await uploadToCloudinary(files[i]);
+        //         urls[i] = response?.url;
+        //         ids[i] = response?.public_id
+        //     }
+        // }
 
-        toast.success("Product Added Successfully ...")
-        setIsOpen(false);
-        setFormData(productData);
+        // let imageData = {
+        //     urls,
+        //     ids
+        // }
+
+        // let product = addProduct({ formData, imageData })
+        // dispatch(addNewProduct(product));
+
+        // setFiles([null, null, null, null, null, null]);
+        // setPreviews([null, null, null, null, null, null]);
+        // setUploadedUrls([null, null, null, null, null, null]);
+        // setPublicIds([null, null, null, null, null, null]);
+
+        // toast.success("Product Added Successfully ...")
+        // setIsOpen(false);
+        // setFormData(productData);
     };
 
     const handleAddProductButton = (e) => {
