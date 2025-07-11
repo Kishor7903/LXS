@@ -6,16 +6,18 @@ import DualRangeSlider from '@/components/DualRangeSlider';
 import { getProducts } from '@/store/features/adminSlice';
 
 let filter = {
-    brand: "All",
-    category: "All",
-    subCategory: "All",
+    brand: "All Brands",
+    category: "All Categories",
+    subCategory: "All Sub Categories",
     price: "",
+    discount: "All Discounts",
     sortBy: "New Arrival"
 }
 
-let category = ['All', 'Mens', 'Womens', 'Kids'];
-let subCategory = ['All', 'T-Shirts', 'Shirts', 'Jeans', 'Sweatshirts', 'Hoddies', 'Shoes', 'Watches', 'Shorts', 'Joggers'];
-let brand = ['All', 'LXS Originals', 'HRX', 'Nike', 'Roadster', 'Peter England', 'Fastrack', 'Allen Solley', 'Addidas'];
+let category = ['All Categories', 'Mens', 'Womens', 'Kids'];
+let subCategory = ['All Sub Categories', 'T-Shirts', 'Shirts', 'Jeans', 'Sweatshirts', 'Hoddies', 'Shoes', 'Watches', 'Shorts', 'Joggers'];
+let brand = ['All Brands', 'LXS Originals', 'HRX', 'Nike', 'Roadster', 'Peter England', 'Fastrack', 'Allen Solley', 'Addidas'];
+let discount = ['All Discounts', '0-25', '26-50', '51-70', '71-90'];
 
 function ProductsContainer() {
     let dispatch = useDispatch();
@@ -40,12 +42,13 @@ function ProductsContainer() {
 
     useEffect(() => {
         let filteredProducts = products.filter(item => {
-            const matchesBrand = filters.brand !== "All" ? item.brand === filters.brand : true;
-            const matchesCategory = filters.category !== "All" ? item.category === filters.category : true;
-            const matchesSubCategory = filters.subCategory !== "All" ? item.subCategory === filters.subCategory : true;
+            const matchesBrand = filters.brand !== "All Brands" ? item.brand === filters.brand : true;
+            const matchesCategory = filters.category !== "All Categories" ? item.category === filters.category : true;
+            const matchesSubCategory = filters.subCategory !== "All Sub Categories" ? item.subCategory === filters.subCategory : true;
             const matchesPrice = filters.price ? item.salePrice <= Number(filters.price.split("-")[1]) && item.salePrice >= Number(filters.price.split("-")[0]) : true;
+            const matchedDiscount = filters.discount !== "All Discounts" ? ((item.price-item.salePrice)/item.price)*100 >= parseInt(filters.discount.split("-")[0]) && ((item.price-item.salePrice)/item.price)*100 <= parseInt(filters.discount.split("-")[1]) : true;
 
-            return matchesBrand && matchesCategory && matchesSubCategory && matchesPrice;
+            return matchesBrand && matchesCategory && matchesSubCategory && matchesPrice && matchedDiscount;
         }).sort((a, b) => {
             if (filters.sortBy === "all") return;
             if (filters.sortBy === 'low-to-high') return a.salePrice - b.salePrice;
@@ -124,7 +127,16 @@ function ProductsContainer() {
                             }
                         </select>
                     </div>
-                    
+                    <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
+                        <label htmlFor="category">Discount % :</label>
+                        <select name='discount' value={filters.discount} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
+                        {
+                                discount.map((item, idx) => (
+                                    <option key={idx} value={item}>{item}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
                     <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="sortBy">Sort By :</label>
                         <select name='sortBy' value={filters.sortBy} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
