@@ -104,10 +104,10 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
 
     const handleAddProductSubmit = async () => {
 
-        // if(formData.name === "" || formData.category === "Select" || formData.subCategory === "Select" || formData.brand === "Select" || formData.isLxsCertified === "Select" || formData.price === "" || formData.salePrice === "" || formData.codAvailability === "Select" || formData.returnAvailability === "Select" || formData.description.text === "" || formData.description.sizeFit === "Select" || formData.description.color === "Select" || formData.description.material === "Select" || formData.description.washCare === "Select" || formData.description.sleevLength === "Select" || formData.description.neck === "Select" || formData.description.occasion === "Select" || formData.description.modelHeight === "" ||formData.description.modelWearingSize === "Select" || files.length === 0){
-        //     toast.error("Requires all the fields!!");
-        //     return
-        // }
+        if(formData.name === "" || formData.category === "Select" || formData.subCategory === "Select" || formData.brand === "Select" || formData.isLxsCertified === "Select" || formData.price === "" || formData.salePrice === "" || formData.codAvailability === "Select" || formData.returnAvailability === "Select" || formData.description.text === "" || formData.description.sizeFit === "Select" || formData.description.color === "Select" || formData.description.material === "Select" || formData.description.washCare === "Select" || formData.description.sleevLength === "Select" || formData.description.neck === "Select" || formData.description.occasion === "Select" || formData.description.modelHeight === "" ||formData.description.modelWearingSize === "Select" || files.length === 0){
+            toast.error("Requires all the fields!!");
+            return
+        }
 
         let prefix = "LXS"
         
@@ -158,35 +158,33 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
             uniqueDigit = `${products.length+1}`;
         }
 
-        console.log(`${prefix}-${cate}-${subC}-${uniqueDigit}`);
+        const urls = [...uploadedUrls];
+        const ids = [...publicIds];
 
-        // const urls = [...uploadedUrls];
-        // const ids = [...publicIds];
+        for (let i = 0; i < files.length; i++) {
+            if (files[i]) {
+                let response = await uploadToCloudinary(files[i]);
+                urls[i] = response?.url;
+                ids[i] = response?.public_id
+            }
+        }
 
-        // for (let i = 0; i < files.length; i++) {
-        //     if (files[i]) {
-        //         let response = await uploadToCloudinary(files[i]);
-        //         urls[i] = response?.url;
-        //         ids[i] = response?.public_id
-        //     }
-        // }
+        let imageData = {
+            urls,
+            ids
+        }
 
-        // let imageData = {
-        //     urls,
-        //     ids
-        // }
+        let product = addProduct({ ...formData, ...imageData, SKU: `${prefix}-${cate}-${subC}-${uniqueDigit}` })
+        dispatch(addNewProduct(product));
 
-        // let product = addProduct({ formData, imageData })
-        // dispatch(addNewProduct(product));
+        setFiles([null, null, null, null, null, null]);
+        setPreviews([null, null, null, null, null, null]);
+        setUploadedUrls([null, null, null, null, null, null]);
+        setPublicIds([null, null, null, null, null, null]);
 
-        // setFiles([null, null, null, null, null, null]);
-        // setPreviews([null, null, null, null, null, null]);
-        // setUploadedUrls([null, null, null, null, null, null]);
-        // setPublicIds([null, null, null, null, null, null]);
-
-        // toast.success("Product Added Successfully ...")
-        // setIsOpen(false);
-        // setFormData(productData);
+        toast.success("Product Added Successfully ...")
+        setIsOpen(false);
+        setFormData(productData);
     };
 
     const handleAddProductButton = (e) => {

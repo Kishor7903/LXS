@@ -31,9 +31,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import LxsLogo from "./LxsLogo";
 import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAddress, getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
+import { getAllAddress, getAllRecentPoducts, getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
 import { logout } from "@/store/features/authSlice";
-import { getAllOrdersItems, updateAddress, updateCart, updateWishlist } from "@/store/features/cartSlice";
+import { getAllOrdersItems, getRecentViewed, updateAddress, updateCart, updateWishlist } from "@/store/features/cartSlice";
 import { getAllOrders, getAllProducts } from "@/firebase/admin";
 import PhoneLogin from "./PhoneLogin";
 import DialogBox from "./DialogBox";
@@ -105,6 +105,10 @@ function Header({ className }) {
 
 			getAllAddress(user?.id).then((res) => {
 				dispatch(updateAddress(res));
+			})
+			
+			getAllRecentPoducts(user.id).then((res) => {
+				dispatch(getRecentViewed(res))
 			})
 		}
 	}, [user])

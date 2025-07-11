@@ -60,11 +60,11 @@ function ShopBlogs() {
                                 </div>
                                 <div className="relative h-[50%] md:h-[45%] px-2 lg:px-5 py-[2px] flex flex-col justify-between">
                                     <div className="">
-                                        <p className='text-[7px] md:text-[8px] lg:text-[10px] xl:text-[11px] text-slate-500 font-semibold'>{item.date}</p>
+                                        <p className='text-[7px] md:text-[8px] lg:text-[10px] xl:text-[11px] text-[rgb(240,85,120)] font-semibold'>{item.date}</p>
                                         <h4 className="text-[10px] md:text-[11px] lg:text-[13px] xl:text-[16px] font-semibold leading-[1] mt-[2px] line-clamp-2">{item.title}</h4>
-                                        <p className='text-[8px] lg:text-[9px] xl:text-[11px] text-slate-500 tracking-tight leading-[1] mt-1 line-clamp-4 lg:line-clamp-5 xl:line-clamp-5 mb-1'>{item.content}</p>
+                                        <p className='text-[8px] lg:text-[9px] xl:text-[11px] text-slate-500 tracking-tight leading-[1.2] font-medium mt-1 line-clamp-4 lg:line-clamp-5 xl:line-clamp-5 mb-1'>{item.content}</p>
                                     </div>
-                                    <button className={`flex items-center justify-center text-base font-semibold py-1 rounded-full w-full h-8 lg:hover:scale-[1.03] duration-200 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] tracking-tight border border-slate-300 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white`}><i className="fi fi-ss-book-alt relative top-0.5 mr-2"></i>Read</button>
+                                    <button className={`flex items-center justify-center text-base font-semibold py-1 rounded-full w-full h-10 lg:hover:scale-[1.03] duration-200 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] tracking-tight border border-slate-300 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white`}><i className="fi fi-ss-book-alt relative top-0.5 mr-2"></i>Read</button>
                                 </div>
                             </div>
                         )

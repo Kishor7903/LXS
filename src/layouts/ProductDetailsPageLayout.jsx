@@ -1,4 +1,5 @@
 import ProductNotAvailable from '@/components/ProductNotAvailable';
+import RecentProductsPage from '@/components/RecentProductsPage';
 import YourMayAlsoLikeThesePage from '@/components/YourMayAlsoLikeThesePage'
 import { getSingleProductData } from '@/firebase/admin';
 import InfoIconsContainer from '@/pages/shop/InfoIconsContainer'
@@ -47,6 +48,7 @@ function ProductDetailsPageLayout() {
 				data &&
 				<YourMayAlsoLikeThesePage data={data} />
 			}
+			<RecentProductsPage />
 			<InfoIconsContainer />
 
 		</>

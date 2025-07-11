@@ -20,7 +20,7 @@ function RecentViewedProducts() {
         })
     }, [])
   return (
-    <div className='space-y-2 lg:space-y-1 px-5 md:px-8 lg:px-12 xl:px-16 border-t py-5 flex flex-col gap-0 lg:gap-2 pb-10'>
+    <div className='space-y-2 lg:space-y-1 px-5 md:px-8 lg:px-12 xl:px-16 border-t py-5 flex flex-col gap-0 lg:gap-2 pb-10 bg-white'>
 
         <h2 className='text-xl md:text-3xl font-bold relative after:h-1 after:absolute after:w-80 after:-bottom-1 after:left-6 after:bg-[rgb(8,43,61)] after:rounded-full self-center'>Recently Viewed Products</h2>
 

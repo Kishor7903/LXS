@@ -4,7 +4,8 @@ let initialState = {
     cart: [],
     wishlist: [],
     address: [],
-    orders: []
+    orders: [],
+    recentViewed: []
 }
 
 
@@ -65,9 +66,15 @@ const cartSlice = createSlice({
         },
         getAllOrdersItems: (state, actions) => {
             state.orders = actions.payload
+        },
+        addToRecentViewed: (state, actions) => {
+            state.recentViewed = state.recentViewed.some(i => i.item_id === actions.payload.item_id) ? [actions.payload, ...(state.recentViewed.filter(i => i.item_id !== actions.payload.item_id))] : [actions.payload, ...state.recentViewed]
+        },
+        getRecentViewed: (state, actions) => {
+            state.recentViewed = actions.payload
         }
     }
 })
 
-export const { addToCart, deleteFromCart, cartToggleSelect, toggleAllItems, updateCartProductQuantity, updateCartProductSize, updateCart, removeAllSelectedCartItems, addToWishlist, updateWishlist, deleteFromWishlist, addAddress, updateAddress, editAddress, deleteAnAddress, updateSetDefault, addNewOrder, getAllOrdersItems } = cartSlice.actions;
+export const { addToCart, deleteFromCart, cartToggleSelect, toggleAllItems, updateCartProductQuantity, updateCartProductSize, updateCart, removeAllSelectedCartItems, addToWishlist, updateWishlist, deleteFromWishlist, addAddress, updateAddress, editAddress, deleteAnAddress, updateSetDefault, addNewOrder, getAllOrdersItems, addToRecentViewed, getRecentViewed } = cartSlice.actions;
 export default cartSlice.reducer;

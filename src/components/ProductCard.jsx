@@ -61,12 +61,12 @@ function ProductCard({ item }) {
             </div>
             <div className="relative h-[100px]">
                 <div className="flex gap-2 items-center justify-between mt-1">
-                    <p className='text-[6px] md:text-[8px] lg:text-[9px] xl:text-[10px] text-blue-500 font-semibold'>Brand: {item.brand}</p>
                     <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] px-3 2xl:pl-2 2xl:pr-3 "><img src={lxsLogo} alt="" className="h-[14px]" /> <span className="text-[10px] text-white font-medium">LXS Certified</span></div>
+                    <p className='text-[6px] md:text-[8px] lg:text-[9px] xl:text-[12px] font-semibold'>Brand: <span className='text-[rgb(240,85,120)]'>{item.brand}</span></p>
                 </div>
-                <p className='text-[15px] font-medium text-[rgb(8,43,61)] mt-[2px] line-clamp-1 opacity-70'>{item.name}</p>
+                <p className='text-[15px] font-medium text-[rgb(8,43,61)] line-clamp-1 opacity-70'>{item.name}</p>
                 <div className="flex justify-between items-center w-full bg-transparent relative bottom-1">
-                    <p className='text-[18px] font-bold'>₹{item.salePrice} <s className='text-slate-400 mr-1 text-[10px] md:text-xs lg:text-[12px] xl:text-[13px] font-semibold'>₹{item.price}</s><span className='text-red-500 text-[10px] md:text-xs lg-text-[14px] xl:text-[12px] hidden lg:inline-block'>(-{`${Math.floor(((item.price - item.salePrice) * 100) / item.price)}`}%)</span></p>
+                    <p className='text-[18px] font-bold'>₹{item.salePrice} <s className='text-slate-400 mr-1 text-[10px] md:text-xs lg:text-[12px] xl:text-[13px] font-semibold'>₹{item.price}</s><span className='text-[rgb(240,85,120)] text-[10px] md:text-xs lg-text-[14px] xl:text-[12px] hidden lg:inline-block'>(-{`${Math.floor(((item.price - item.salePrice) * 100) / item.price)}`}%)</span></p>
                 </div>
                 <div className="flex justify-between items-center w-full">
 

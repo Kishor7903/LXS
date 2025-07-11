@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom"
 
 
-function ViewAllIcon({navigate, className}) {
+function ViewAllIcon({ navigate, className="text-sm" }) {
   return (
-    <div className={`justify-end items-center text-[11px] md:text-[13px] lg:text-[15px] lg:pt-2 ${className}`}>
-      <Link to={navigate} className='active:underline lg:hover:underline font-medium text-[rgb(44,115,182)]'>View All</Link>
-      <i className="fi fi-br-arrow-circle-right ml-1 relative top-[1px] text-[rgb(44,115,182)] text-sm"></i>
-    </div>
+    <Link to={navigate} className={`self-end lg:pt-6 text-blue-500 font-semibold ${className}`}>
+      <span className='active:underline lg:hover:underline'>View More</span>
+      <i className="fi fi-br-angle-circle-right ml-1 relative top-[2px]"></i>
+    </Link>
   )
 }
 

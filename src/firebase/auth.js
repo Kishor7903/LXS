@@ -528,7 +528,7 @@ export const getAllReportAndIssue = async () => {
     }
 };
 
-export const addNewRecentProduct = async (user_id, item_id, maxItems = 50) => {
+export const addNewRecentProduct = async (user_id, item, maxItems = 50) => {
     try {
         const userRef = collection(fireDB, "user", user_id, "Recently Viewed");
 
@@ -538,24 +538,14 @@ export const addNewRecentProduct = async (user_id, item_id, maxItems = 50) => {
 
         let exists = false;
         for (const docSnap of snapshot.docs) {
-            if (docSnap.item_id === item_id) {
+            if (docSnap.item_id === item.item_id) {
                 exists = true;
                 await deleteDoc(docSnap.ref);
             }
         }
 
         // Add to the front
-        await setDoc(doc(userRef, item_id), {
-            item_id,
-            timestamp: new Date().toLocaleString("en-US", {
-                month: "short",
-                day: "2-digit",
-                year: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-            }),
-        });
+        await setDoc(doc(userRef, item.item_id), {...item});
 
         // Limit to maxItems
         const updatedSnapshot = await getDocs(
@@ -582,14 +572,13 @@ export const getAllRecentPoducts = async (user_id) => {
         const docSnap = await getDocs(productsQuery);
 
         let products = docSnap.docs.map((doc) => ({
-            id: doc.id,
             ...doc.data(),
         }));
 
         return products;
     } catch (error) {
         console.log(
-            "Getting All Recent Viewed Prodycts Error: ",
+            "Getting All Recent Viewed Products Error: ",
             error.message
         );
     }
