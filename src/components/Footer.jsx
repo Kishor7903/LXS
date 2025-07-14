@@ -49,10 +49,6 @@ let menu = [
                 "slug": "/policy/FAQs"
             },
             {
-                "name": "Size Guide",
-                "slug": "#"
-            },
-            {
                 "name": "About Us",
                 "slug": "/about-us"
             },

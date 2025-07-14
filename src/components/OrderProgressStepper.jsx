@@ -8,7 +8,7 @@ export default function OrderProgressStepper({ steps, currentStep }) {
                 <motion.div
                     initial={{ height: 0 }}
                     animate={{ height: `${(currentStep / (steps.length - (currentStep === 4 ? 1 : 1.5))) * 100}%` }}
-                    transition={{ duration: 1 }}
+                    transition={{ duration: 2 }}
                     className="w-full bg-[rgb(240,85,120)]"
                 ></motion.div>
             </div>
@@ -22,7 +22,17 @@ export default function OrderProgressStepper({ steps, currentStep }) {
                         <div key={index} className="relative mb-2">
                             {
                                 index === currentStep ? (
-                                    <img src={rocket} alt="" className="h-5 absolute -left-[37px] top-1" />
+                                    <motion.img 
+                                        initial={{scale: 0}}
+                                        animate={{scale: 1}}
+                                        transition={{
+                                            duration: 0.3,
+                                            delay: 1* ((index + 1)/ steps.length),
+                                        }}
+                                        src={rocket} 
+                                        alt="" 
+                                        className="h-5 absolute -left-[37px] top-1" 
+                                    />
                                 )
                                     :
                                     (

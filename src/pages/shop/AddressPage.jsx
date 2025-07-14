@@ -9,15 +9,15 @@ import secureIcon from "../../assets/commonIcons/Secure.png"
 import AddNewAddressButton from "@/components/AddNewAddressButton"
 
 let addressDetails = {
-	name: "",
-	phone: "",
-	houseNo: "",
-	area: "",
-	landmark: "",
-	city: "",
-	state: "",
-	pincode: "",
-	isDefault: false,
+    name: "",
+    phone: "",
+    houseNo: "",
+    area: "",
+    landmark: "",
+    city: "",
+    state: "",
+    pincode: "",
+    isDefault: false,
     address_type: ""
 }
 
@@ -62,11 +62,11 @@ function AddressPage() {
         <>
             <div className="w-full h-full py-3 lg:py-8 px-3 lg:px-16 flex gap-10">
                 <div className="w-full lg:w-[65%] space-y-3 relative">
-                <div className="leading-[1] font-semibold flex justify-between items-center">
-                    <span>Destination Deck📍<br />
-                        <p className="text-xs font-normal">Where should we warp your delivery? Input your Earth-based coordinates</p></span>
-                    <span className="text-sm font-semibold flex items-center gap-1"><img src={secureIcon} alt="" className="h-7" /> 100% Secure</span>
-                </div>
+                    <div className="leading-[1] font-semibold flex justify-between items-center">
+                        <span>Destination Deck📍<br />
+                            <p className="text-xs font-normal">Where should we warp your delivery? Input your Earth-based coordinates</p></span>
+                        <span className="text-sm font-semibold flex items-center gap-1"><img src={secureIcon} alt="" className="h-7" /> 100% Secure</span>
+                    </div>
                     <div className="flex flex-col gap-2 rounded-3xl relative py-5 px-4 lg:p-8 shadow-[0px_0px_10px_-2px_rgb(8,43,61)] lg:min-h-[80vh]">
                         <CheckoutNavigator />
                         <div className="w-full flex flex-col lg:flex-row gap-8">
@@ -74,8 +74,9 @@ function AddressPage() {
                                 {
                                     address.map((item, index) => (
                                         <div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-5 overflow-hidden cursor-pointer ${selectedAddress === item ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "scale-95 lg:hover:scale-[0.97] duration-150 shadow-md border border-slate-300"}`} onClick={() => setSelectedAddress(item)}>
-                                            <div className="font-bold text-sm lg:text-base flex gap-3">
-                                                <label htmlFor="address1">ADDRESS {index + 1} <span className="text-blue-500 text-[10px] lg:text-xs">{`${item.isDefault ? "(Default)" : ""}`}</span></label>
+                                            <div className="font-bold text-sm lg:text-base flex items-center gap-3">
+                                                <span className="bg-[rgb(8,43,61)] h-4 text-white rounded flex justify-center items-center select-none px-2 text-[10px] font-medium ">{item.address_type}</span>
+                                                <label htmlFor="address1">ADDRESS {index + 1} <span className="text-[rgb(240,85,120)] text-[10px] lg:text-xs ml-2">{`${item.isDefault ? "(Default)" : ""}`}</span></label>
                                             </div>
                                             <div className="grid grid-rows-3 grid-cols-2 gap-y-[6px] lg:gap-y-2 gap-x-8 lg:gap-x-10" >
                                                 <p className="text-[9px] lg:text-[11px] leading-[1]">Name <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.name}</span></p>
@@ -102,7 +103,7 @@ function AddressPage() {
                             </div>
                             <div className="w-full lg:w-[40%]">
                                 <div className="mt-5 leading-3 font-semibold">
-                                    <span className="">Price BreakDown ({cartItems.length} Items)</span>
+                                    <span className="">Price Details ({cartItems.length} Items)</span>
                                     <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
                                     <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
                                     <span className="flex justify-between text-xs text-red-500">Discount on MRP <p className="text-red-500">- ₹{discountOnMRP}</p></span>
@@ -111,7 +112,7 @@ function AddressPage() {
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                 </div>
-                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={() => navigate("/checkout/payment")}>Continue To Payments<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
+                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={() => navigate("/checkout/payment")}>Continue To Payment<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
                             </div>
                         </div>
                     </div>

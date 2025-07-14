@@ -3,7 +3,7 @@ import OrderProgressStepper from "@/components/OrderProgressStepper";
 import { getSingleOrderDetails } from "@/firebase/auth";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 const steps = [
     {
@@ -77,28 +77,29 @@ function TrackPackage() {
     return (
         <div className="px-16 py-6 h-[91vh]">
             <Breadcrum items={items} />
-            <div className="w-full h-[95%] pl-4 mt-4 flex gap-10">
-                <div className="w-7/12">
+            <div className="w-full h-[97%] pl-4 mt-4 flex gap-10">
+                <div className="w-7/12 relative">
                     <h6 className="font-semibold tracking-wider">Delivered By LXS Store</h6>
                     <div className="flex text-xs font-medium relative">
                         <p className="mr-7">Ordered On {orderDetails?.timestamp}</p>
-                        <p className=" absolute right-0">Tracking ID: <span className="lg:hover:underline text-blue-500 cursor-pointer">{orderDetails?.waybill}</span></p>
+                        <p className=" absolute right-0 -top-[1.5px] text-sm font-semibold">Tracking ID: <span className="lg:hover:underline text-[rgb(240,85,120)] cursor-pointer">{orderDetails?.waybill}</span></p>
                     </div>
-                    <div className="rounded-3xl shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border h-[89.5%] mt-5 px-8 py-5 flex overflow-y-scroll no-scrollbar">
+                    <div className="rounded-3xl bg-slate-100 shadow-md border border-slate-300 h-[92.2%] mt-5 px-8 py-5 flex overflow-y-scroll no-scrollbar">
                         <div className="flex flex-col gap-2 text-sm w-full">
-                                <OrderProgressStepper steps={steps} currentStep={2} />
-                            {/* <ul className="pl-5 list-disc space-y-3">
-                                <li>
-                                    <span className="flex justify-between w-full">11:52 AM <p className="w-[80%]">Delivered <br />827013, Bokaro Steel City, Jharkhand, India</p></span>
-                                </li>
-                                <li className="list-disc">
-                                    <span className="flex justify-between w-full">9:53 AM <p className="w-[80%]">Out For Delivery <br />827013, Bokaro Steel City, Jharkhand, India</p></span>
-                                </li>
-                            </ul> */}
+                            <OrderProgressStepper steps={steps} currentStep={4} />
                         </div>
                     </div>
+                    <span className="text-[11px] font-medium lg:text-xs absolute bottom-3 lg:bottom-3 lg:right-5">
+                        Need Help?{" "}
+                        <Link
+                            to="/setting/contact-us"
+                            className="text-blue-500 lg:hover:underline font-bold"
+                        >
+                            Contact Us
+                        </Link>
+                    </span>
                 </div>
-                <div className="w-5/12 h-full rounded-3xl shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border"></div>
+                <div className="w-5/12 h-full rounded-3xl shadow-[0px_0px_10px_-1px_rgb(8,43,61)]"></div>
             </div>
         </div>
     )

@@ -40,12 +40,12 @@ function ShopSettingMyAccount() {
                     <p className="text-xs font-normal">Because you are the boss of your Shopping Universe!</p>
                 </div>
                 <div className="space-y-3 mt-2 h-full overflow-y-scroll no-scrollbar">
-                    <div className="h-20 py-2 px-5 border border-[rgb(8,43,61)] flex items-center rounded-xl mx-5 relative shadow-[0px_5px_10px_-6px_rgb(8,43,61)]">
-                        <img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-14 mr-4 rounded-full" />
+                    <div className="bg-slate-100 py-5 px-5 border border-slate-300 flex items-center rounded-xl mx-5 relative shadow-md">
+                        <img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-16 mr-4 rounded" />
                         <p className="text-2xl h-10 leading-[0.7] font-bold relative top-1">{user.name} <br /> <span className="text-base font-medium text-[rgb(240,85,120)]">User Account</span></p>
                         <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium" onClick={handleProfilePicEditButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
                     </div>
-                    <div className="flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl mx-5 relative py-3 px-5 shadow-[0px_5px_10px_-6px_rgb(8,43,61)]">
+                    <div className="bg-slate-100 flex flex-col gap-2 border border-slate-300 rounded-xl mx-5 relative py-3 px-5 shadow-md">
                         <h6 className="font-bold">Personal Information</h6>
                         <div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-10">
                             <p className="text-[12px] leading-[1.1]">Full Name <br /> <span className="text-[15px] font-semibold">{user.name}</span></p>

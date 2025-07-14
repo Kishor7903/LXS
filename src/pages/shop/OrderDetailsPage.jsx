@@ -56,11 +56,11 @@ function OrderDetailsPage() {
                                         <p>{orderDetails?.orderId}</p>
                                     </div>
                                 </div>
-                                <div className="flex gap-10 mt-5">
-                                    <div className="w-[60%] py-4 px-6 rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border " >
-                                        <span className="font-semibold text-base">Shipping Address</span>
+                                <div className="flex gap-5 mt-5">
+                                    <div className="w-[60%] py-4 px-6 rounded-xl shadow-md border border-slate-300 bg-slate-100" >
+                                        <span className="font-semibold text-base">Drop Location</span>
                                         <span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] select-none px-1 text-[9px] font-medium relative bottom-0.5 left-1.5">{orderDetails?.address?.address_type}</span>
-                                        <div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 pl-2 mt-2 text-[11px]">
+                                        <div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 mt-2 text-[11px]">
                                             <div className="flex flex-col leading-3">
                                                 <p>Name</p>
                                                 <p className="text-[14px] font-semibold">{orderDetails?.address?.name}</p>
@@ -99,8 +99,8 @@ function OrderDetailsPage() {
                                         <span className="font-semibold text-base">Shipping Address</span>
                                         <p className="leading-[1] text-sm mt-1 font-medium pl-2">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
                                     </div> */}
-                                    <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border py-4 px-6 leading-[1.6] font-medium w-[40%] text-[12px]">
-                                        <span className="font-semibold text-base">Price Details</span>
+                                    <div className="rounded-xl shadow-md border border-slate-300 bg-slate-100 py-4 px-6 leading-[1.6] font-medium w-[40%] text-[12px]">
+                                        <span className="font-semibold text-base">Price Details ({orderDetails?.products?.length} items)</span>
                                         <span className="flex justify-between mt-2">Total MRP <p className="">₹{totalMRP}</p></span>
                                         <span className="flex justify-between">Delivery <p className="">₹{orderDetails?.products?.length > 0 ? deliveryPrice : 0}</p></span>
                                         <span className="flex justify-between text-red-500">Discount on MRP <p className="">- ₹{discountOnMRP}</p></span>
@@ -110,11 +110,12 @@ function OrderDetailsPage() {
                                         <span className="flex justify-between mt-[2px] text-base font-bold text-green-500">Grand Total <p>₹{orderDetails?.products?.length > 0 ? (totalMRP - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee) : 0}</p></span>
                                     </div>
                                 </div>
-                                <div className="w-full flex mt-5 gap-7">
-                                    <button className="w-[41.3%] text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-[0px_0px_10px_-2px_rgb(8,43,61)]  px-3 py-2 flex justify-between items-center font-semibold" onClick={() => navigate(`/orders/successfull/${id}`)}><p>Payment Method: <span className="uppercase ml-2 font-medium">{orderDetails?.paymentMethod}</span></p> <i className="fi fi-br-angle-double-small-right relative top-[2px]"></i></button>
-                                    <button className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-[0px_0px_10px_-2px_rgb(8,43,61)]  px-3 py-2 flex justify-start items-center font-semibold gap-5" onClick={() => navigate(`/orders/track-package/${id}`)}>Track Shipment <i className="fi fi-br-track relative top-[2px]"></i></button>
-                                    <button className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-[0px_0px_10px_-2px_rgb(8,43,61)]  px-3 py-2 flex justify-start items-center font-semibold gap-5">Hide Order <i className="fi fi-sr-eye-crossed relative top-[2px]"></i></button>
-                                    <button className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-[0px_0px_10px_-2px_rgb(8,43,61)]  px-3 py-2 flex justify-start items-center font-semibold gap-5">Download Invoice <i className="fi fi-sr-down-to-line relative top-[2px]"></i></button>
+                                <button className="w-full my-5 text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md border border-slate-300 bg-slate-100  px-3 py-2 flex justify-between items-center font-semibold" onClick={() => navigate(`/orders/successfull/${id}`)}><p>Payment Method: <span className="uppercase ml-2 font-medium">{orderDetails?.paymentMethod}</span></p> <i className="fi fi-br-angle-double-small-right relative top-[2px]"></i></button>
+                                <div className="flex gap-5">
+                                    <button className="w-1/4 text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md border border-slate-300 bg-slate-100  px-3 py-2 flex justify-between items-center font-semibold gap-5" onClick={() => navigate(`/orders/track-package/${id}`)}>Cancel Order <i className="fi fi-sr-cross-circle relative top-[2px]"></i></button>
+                                    <button className="w-1/4 text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md border border-slate-300 bg-slate-100  px-3 py-2 flex justify-between items-center font-semibold gap-5" onClick={() => navigate(`/orders/track-package/${id}`)}>Track Shipment <i className="fi fi-br-track relative top-[2px]"></i></button>
+                                    <button className="w-1/4 text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md border border-slate-300 bg-slate-100  px-3 py-2 flex justify-between items-center font-semibold gap-5">Hide Order <i className="fi fi-sr-eye-crossed relative top-[2px]"></i></button>
+                                    <button className="w-1/4 text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md border border-slate-300 bg-slate-100  px-3 py-2 flex justify-between items-center font-semibold gap-5">Download Invoice <i className="fi fi-sr-down-to-line relative top-[2px]"></i></button>
                                 </div>
 
                                 {/* <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border mt-5 px-6 py-4 flex justify-between items-center font-semibold">
@@ -126,11 +127,11 @@ function OrderDetailsPage() {
                                         <button className="h-8 w-full bg-gray-200 lg:hover:bg-gray-300 rounded-full border border-[rgb(8,43,61)]" onClick={() => navigate(`/orders/seller-profile/${id}`)}>Seller Feedback</button> 
                                     </div>
                                 </div> */}
-                                <div className="pb-8 mt-5">
+                                <div className="pb-8 mt-5 relative">
                                     {
                                         orderDetails?.products?.map((item, index) => (
-                                            <div key={index} className="rounded-xl shadow-[0px_0px_10px_-3px_rgb(8,43,61)] border mt-2 p-3 flex flex-col gap-y-5 mb-5">
-                                                <div className="w-full">
+                                            <div key={index} className="rounded-xl shadow-md border border-slate-300 bg-slate-100 mt-2 p-3 flex flex-col gap-y-5 mb-5">
+                                                <div className="w-full flex justify-between">
                                                     <div className="flex gap-5">
                                                         <img src={item.image} alt="" className="border h-[119px] rounded-[6px] object-fit" onClick={() => navigate(`/product-details/${item?.id}`)} />
                                                         <div className="text-[11px] leading-[1.3] relative">
@@ -140,23 +141,32 @@ function OrderDetailsPage() {
                                                                 <span className="opacity-50 mr-3 font-semibold tracking-tight">APPAREL & FASHION</span>
                                                             </div>
                                                             <h3 className="font-bold text-base line-clamp-1">{item?.productName}</h3>
-                                                            <div className="flex">
-                                                                <p className="font-semibold">Brand : <Link className="text-blue-500 lg:hover:underline active:underline">{item?.brand}</Link></p>
-                                                                <p className="font-semibold border-x-2 px-3 mx-3 border-[rgb(8,43,61)]">Size : {item?.size}</p>
-                                                                <p className="font-semibold">Qty : {item?.quantity}</p>
+                                                            <div className="flex text-sm leading-4">
+                                                                <p className="font-semibold">Brand : <span className="text-[rgb(240,85,120)] lg:hover:underline active:underline">{item?.brand}</span></p>
+                                                                <p className="font-semibold border-x-2 px-3 mx-3 border-[rgb(8,43,61)]">Size : <span className="text-[rgb(240,85,120)]">{item?.size}</span></p>
+                                                                <p className="font-semibold">Qty : <span className="text-[rgb(240,85,120)]">{item?.quantity}</span></p>
                                                             </div>
-                                                            <p className="text-sm lg:text-lg font-semibold">₹{item.unitPrice}<s className="font-medium text-sm opacity-60 ml-2">₹{item.price}</s> <span className="font-semibold text-xs text-red-500">({`${Math.floor(((item.price - (item.unitPrice)) * 100) / item.price)}`}% OFF)</span></p>
+                                                            <p className="text-sm lg:text-lg font-semibold">₹{item.unitPrice}<s className="font-medium text-sm opacity-60 ml-2">₹{item.price}</s> <span className="font-bold text-xs text-[rgb(240,85,120)]">({`${Math.floor(((item.price - (item.unitPrice)) * 100) / item.price)}`}% OFF)</span></p>
                                                             {/* <p className="text-lg font-bold">₹{item?.unitPrice} <s className="text-gray-600 font-semibold opacity-60 text-base ml-1">₹{productInfo[0]?.price}</s> <span className="text-red-500 text-sm font-semibold">({`${Math.floor(((productInfo[0]?.price - productInfo[0]?.salePrice) * 100) / productInfo[0]?.price)}`}% OFF)</span></p> */}
-                                                            <div className="flex space-x-5 text-white font-semibold mt-1">
-                                                                <button className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] h-[33px] px-3 rounded-full lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200" onClick={() => navigate(`/orders/product-exchange/${id}`)}>Request Exchange</button>
-                                                                <button className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] h-[33px] px-3 rounded-full lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200" onClick={() => navigate(`/orders/product-return/${id}`)}>Request Return & Refund</button>
-                                                            </div>
                                                         </div>
+                                                    </div>
+                                                    <div className="flex space-x-5 text-white font-semibold mt-1 self-end">
+                                                        <button className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] h-[33px] px-3 rounded-full lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200" onClick={() => navigate(`/orders/product-exchange/${id}`)}><i className="fi fi-br-restock relative top-[2px] mr-1"></i> Request Exchange <i className="fi fi-br-angle-double-small-right relative top-[3px]"></i> </button>
+                                                        <button className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] h-[33px] px-3 rounded-full lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200" onClick={() => navigate(`/orders/product-return/${id}`)}><i className="fi fi-sr-truck-arrow-left relative top-[2px] mr-1"></i> Request Return <i className="fi fi-br-angle-double-small-right relative top-[3px]"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
                                         ))
                                     }
+                                    <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-3 lg:right-0">
+                                        Need Help?{" "}
+                                        <Link
+                                            to="/setting/contact-us"
+                                            className="text-blue-500 lg:hover:underline font-bold"
+                                        >
+                                            Contact Us
+                                        </Link>
+                                    </span>
                                 </div>
                             </>
                         )

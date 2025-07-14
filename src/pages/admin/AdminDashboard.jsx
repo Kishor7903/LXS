@@ -1,30 +1,10 @@
 import AdminHeadings from "@/components/AdminHeadings"
-import { getAllOrders, getAllProducts } from "@/firebase/admin";
-import { getAllOrdersAdmin, getProducts } from "@/store/features/adminSlice";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
 
 function AdminDashboard() {
 	let { products } = useSelector(state => state.admin);
 	let { orders } = useSelector(state => state.admin);
-	let dispatch = useDispatch();
-
-	useEffect(() => {
-		getAllProducts().then((res) => {
-            let sortedProducts = res.sort((a, b) => {
-                return new Date(b.timestamp) - new Date(a.timestamp);
-            })
-			dispatch(getProducts(sortedProducts));
-		});
-
-		getAllOrders().then((res) => {
-			let sortedOrders = res.sort((a, b) => {
-                return new Date(b.timestamp) - new Date(a.timestamp);
-            })
-			dispatch(getAllOrdersAdmin(sortedOrders))
-		})
-    }, []);
 
 	return (
 		<div className="z-20">

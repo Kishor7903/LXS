@@ -186,7 +186,7 @@ function ShopSettingsLayout() {
                             ))
                         }
                     </div>
-                    <div className="flex justify-between items-center w-full h-[12%]">
+                    <div className="flex justify-between items-center w-full">
                         <Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-slate-200 w-[60%]  xl:px-3 pt-1 xl:py-1 rounded-l rounded-r-[20px]">
                             <img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Notification
                         </Link>
