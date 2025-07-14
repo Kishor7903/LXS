@@ -158,7 +158,10 @@ function PaymentsPage() {
                         <div className="w-full flex flex-col lg:flex-row gap-8">
                             <div className="w-full lg:w-[55%] space-y-4">
                                 <div className="w-full py-4 px-4 rounded-xl shadow-md border border-slate-300 " >
-                                    <span className="font-semibold text-base">Delivery Address</span>
+                                    <div className="flex gap-3 items-center">
+                                        <span className="bg-[rgb(8,43,61)] h-4 text-white rounded flex justify-center items-center select-none px-2 text-[10px] font-medium ">{address.address_type}</span>
+                                        <span className="font-semibold text-base">Drop Location</span>
+                                    </div>
                                     <div className="grid grid-cols-2 gap-y-3 gap-x-5 pl-2 mt-2 text-[11px]">
                                         <div className="flex flex-col leading-3">
                                             <p>Name</p>
@@ -215,8 +218,8 @@ function PaymentsPage() {
                                     <p className='xl:text-sm 2xl:text-base font-semibold'><i className="fi fi-sr-gift-card relative top-[2px] mr-1"></i>HAVE A GIFT CARD ?</p>
                                     <div className="flex gap-4">
                                         <div className='w-[80%] ml-4'>
-                                            <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]' placeholder='Enter Gift Card Number' />
-                                            <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]' placeholder='Enter Gift Card Pin' />
+                                            <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-slate-100 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]' placeholder='Enter Gift Card Number' />
+                                            <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-slate-100 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]' placeholder='Enter Gift Card Pin' />
                                         </div>
                                         <HoverButton className="h-8 px-4 text-sm font-semibold self-end">Apply</HoverButton>
                                     </div>
@@ -256,29 +259,29 @@ function PaymentsPage() {
                             </div> */}
                             <div className="flex flex-col gap-5 w-[45%]">
                                 <div className="p-2 shadow-md border border-slate-300 rounded-xl flex flex-col ">
-                                {
-                                    cartItems.map((product, idx) => (
-                                        <>
-                                        <div key={idx} className=" gap-4 flex items-center">
-                                            <img src={product.images[0]} alt="" className='h-16 rounded-[6px]' />
-                                            <div className="flex flex-col">
-                                                <p className='font-semibold opacity-70 line-clamp-1'>{product.name}</p>
-                                                <p className='text-xs'>Estimated Delivery by <span className='font-semibold'>{formattedDate}</span></p>
-                                            </div>
-                                        </div>
-                                        {
-                                            cartItems.length > 1 && idx !== cartItems.length - 1 ?
-                                                <hr className={`border-t-2 opacity-30 border-[rgb(8,43,61)] border-dashed w-full pt-2 mt-2`} />
-                                                :
-                                                null
-                                        }
-                                        </>
-                                    ))
-                                }
+                                    {
+                                        cartItems.map((product, idx) => (
+                                            <>
+                                                <div key={idx} className=" gap-4 flex items-center">
+                                                    <img src={product.images[0]} alt="" className='h-16 rounded-[6px]' />
+                                                    <div className="flex flex-col">
+                                                        <p className='font-semibold opacity-70 line-clamp-1'>{product.name}</p>
+                                                        <p className='text-xs'>Estimated Delivery by <span className='font-semibold'>{formattedDate}</span></p>
+                                                    </div>
+                                                </div>
+                                                {
+                                                    cartItems.length > 1 && idx !== cartItems.length - 1 ?
+                                                        <hr className={`border-t-2 opacity-30 border-[rgb(8,43,61)] border-dashed w-full pt-2 mt-2`} />
+                                                        :
+                                                        null
+                                                }
+                                            </>
+                                        ))
+                                    }
                                 </div>
                                 <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300'><span className='text-[rgb(240,85,120)] font-semibold text-xs'>Please Note:</span> If you order multiple products in a single order and choose to cancel any one item, the entire order will be cancelled, if all items are processed in a single shipment.</p>
                                 <div className="w-full flex gap-2 text-sm">
-                                    <input type="text" className="bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full outline-none shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)]" placeholder="Apply Coupons" />
+                                    <input type="text" className="bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]" placeholder="Apply Coupons" />
                                     <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-full ">Apply</button>
                                 </div>
                                 <div className="w-full">

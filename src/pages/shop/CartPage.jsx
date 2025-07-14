@@ -226,7 +226,7 @@ function CartPage() {
                                             }}
                                             src={item.images[0]}
                                             alt=""
-                                            className="w-24 rounded border lg:border-2"
+                                            className="w-20 rounded border lg:border-2"
                                         />
                                         <div className="leading-[0.7] lg:leading-3 w-[70%]">
                                             <h4 className="text-sm lg:text-base font-bold w-full line-clamp-1">
@@ -239,37 +239,6 @@ function CartPage() {
                                                 </span>
                                             </p>
                                             <div className="flex gap-3 lg:gap-4 text-[9px] font-medium lg:text-[12px] lg:mt-[1px]">
-                                                <div className="border border-[rgb(8,43,61)] rounded-full pl-1">
-                                                    <label className="cursor-pointer">
-                                                        Size:
-                                                    </label>
-                                                    <select
-                                                        value={item.size}
-                                                        onClick={(e) =>
-                                                            e.stopPropagation()
-                                                        }
-                                                        onChange={(e) =>
-                                                            handleSizeChange(
-                                                                e,
-                                                                item.id
-                                                            )
-                                                        }
-                                                        className="focus:outline-none font-bold rounded-full bg-transparent cursor-pointer"
-                                                    >
-                                                        <option value="S">
-                                                            S
-                                                        </option>
-                                                        <option value="M">
-                                                            M
-                                                        </option>
-                                                        <option value="L">
-                                                            L
-                                                        </option>
-                                                        <option value="XL">
-                                                            XL
-                                                        </option>
-                                                    </select>
-                                                </div>
                                                 <div className="border border-[rgb(8,43,61)] rounded-full pl-1 cursor-pointer">
                                                     <label className="cursor-pointer">
                                                         Qty :
@@ -301,6 +270,37 @@ function CartPage() {
                                                         </option>
                                                         <option value="5">
                                                             5
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div className="border border-[rgb(8,43,61)] rounded-full pl-1">
+                                                    <label className="cursor-pointer">
+                                                        Size:
+                                                    </label>
+                                                    <select
+                                                        value={item.size}
+                                                        onClick={(e) =>
+                                                            e.stopPropagation()
+                                                        }
+                                                        onChange={(e) =>
+                                                            handleSizeChange(
+                                                                e,
+                                                                item.id
+                                                            )
+                                                        }
+                                                        className="focus:outline-none font-bold rounded-full bg-transparent cursor-pointer"
+                                                    >
+                                                        <option value="S">
+                                                            S
+                                                        </option>
+                                                        <option value="M">
+                                                            M
+                                                        </option>
+                                                        <option value="L">
+                                                            L
+                                                        </option>
+                                                        <option value="XL">
+                                                            XL
                                                         </option>
                                                     </select>
                                                 </div>

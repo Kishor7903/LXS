@@ -99,7 +99,7 @@ function ShopSettingSavedAddresses() {
 					{
 						address?.map((item, index) => (
 							!loading ? (
-								<div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-3 overflow-hidden ${item.isDefault ? "bg-slate-200 shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border-2 scale-100" : "scale-95 shadow-md border-slate-300"}`}>
+								<div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-3 overflow-hidden ${item.isDefault ? "bg-slate-200 shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border-2 scale-100" : "scale-95 shadow-md border-slate-300 bg-slate-100"}`}>
 									<div className="font-semibold flex gap-1 items-center">
 										<span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] flex justify-center items-center select-none px-2 ml-2 text-[10px] font-medium ">{item.address_type}</span>
 										<label htmlFor={`address${index}`} className={`rounded-full px-2`}>ADDRESS {index + 1} </label>

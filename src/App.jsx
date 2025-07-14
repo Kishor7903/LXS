@@ -24,7 +24,6 @@ import OrderDetailsPage from "./pages/shop/OrderDetailsPage"
 import TrackPackage from "./pages/shop/TrackPackage"
 import ProductReviewPage from "./pages/shop/ProductReviewPage"
 import CheckoutLayout from "./layouts/CheckoutLayout"
-import AddressPage from "./pages/shop/AddressPage"
 import Notification from "./pages/shop/Notification"
 import AccountPreference from "./pages/shop/AccountPreference"
 import SecurityLogin from "./pages/shop/SecurityLogin"
@@ -85,6 +84,7 @@ import Blog5 from "./pages/shop/Blog5"
 import AdminPromotionalBanners from "./pages/admin/AdminPromotionalBanners"
 import AdminPickupWarehouse from "./pages/admin/AdminPickupWarehouse"
 import SuccessfulPopup from "./components/SuccessfulPopup"
+import AddressPageLayout from "./layouts/AddressPageLayout"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -159,7 +159,7 @@ function App() {
 					</CheckAuth>
 				} >
 					<Route path="cart" element={<CartPageLayout />} />
-					<Route path="address" element={<AddressPage />} />
+					<Route path="address" element={<AddressPageLayout />} />
 					<Route path="payment" element={<PaymentsPage />} />
 				</Route>
 				<Route path="/user" element={
@@ -180,7 +180,7 @@ function App() {
 					<Route path="wishlist" element={<ShopSettingWishlist />} />
 					<Route path="saved-addresses" element={<ShopSettingSavedAddresses />} />
 					{/* <Route path="payment-options" element={<ShopSettingPaymentOptions />} /> */}
-					<Route path="subscriptions" element={<ShopSettingSubscriptions />} />
+					{/* <Route path="subscriptions" element={<ShopSettingSubscriptions />} /> */}
 					<Route path="my-ratings-reviews" element={<ShopSettingMyRatingsAndReviews />} />
 					<Route path="settings" element={<ShopSettingSettings />} >
 						<Route path="notification" element={<Notification />} />

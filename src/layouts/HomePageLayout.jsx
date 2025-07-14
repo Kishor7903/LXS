@@ -33,7 +33,7 @@ function HomePageLayout() {
             <ShopBlogs />
             <EventGallery />
             {/* <WhatWeDo /> */}
-            <InfoIconsContainer />
+            {/* <InfoIconsContainer /> */}
             <WorkWithUsAndNewsletter />
             {/* <Reviews /> */}
             {/* <AnimatingMan className="h-40 md:h-72 lg:h-96" /> */}

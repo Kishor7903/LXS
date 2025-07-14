@@ -25,7 +25,6 @@ const sizes = ["S", "M", "L", "XL"];
 
 
 function ProductDetailsPage({ id, data }) {
-	let [hovered, setHovered] = useState(false);
 	let [isOpen, setIsOpen] = useState(false);
 	const [selectedSize, setSelectedSize] = useState("");
 	let [productData, setProductData] = useState(null);
@@ -185,7 +184,7 @@ function ProductDetailsPage({ id, data }) {
 			{
 				productData && (
 					<Helmet>
-						<title>{productData?.name} | LXS Lifestyle Store</title>
+						<title>LXS Lifestyle Store</title>
 						<meta property="og:title" content={productData?.name} />
 						<meta property="og:description" content={productData?.description?.text} />
 						<meta property="og:image" content={productData?.images[0]} />

@@ -22,7 +22,7 @@ function ShopSettingMyRatingsAndReviews() {
                 <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
                     {
                         [1, 2, 3, 4, 5].map((_, index) => (
-                            <div key={index} className="border border-[rgb(8,43,61,0.7)] rounded-xl relative p-2 space-y-2 shadow-[0px_5px_10px_-6px_rgb(8,43,61)]">
+                            <div key={index} className="border border-slate-300 shadow-md bg-slate-100 rounded-xl relative p-2 space-y-2 lg:hover:scale-[1.02] lg:active:scale-[0.98] duration-200 cursor-pointer">
                                 <div className="flex gap-2 justify-start">
                                     <img src="https://rukminim2.flixcart.com/image/612/612/l5ld8y80/smartwatch/r/q/t/-original-imagg8dksgct9hxg.jpeg?q=70" alt="" className="w-10 border" />
                                     <div className="">

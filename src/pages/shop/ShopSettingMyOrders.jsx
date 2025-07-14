@@ -2,6 +2,7 @@ import HoverButton from "@/components/HoverButton";
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 
 
 function ShopSettingMyOrders() {
@@ -19,60 +20,67 @@ function ShopSettingMyOrders() {
 
     useEffect(() => {
         setLoading(true);
-        let sortedOrders = [...orders].sort((a, b) => {return new Date(b.timestamp) - new Date(a.timestamp);})
+        let sortedOrders = [...orders].sort((a, b) => { return new Date(b.timestamp) - new Date(a.timestamp); })
         setOrder(sortedOrders)
         setTimeout(() => {
             setLoading(false)
         }, 1000)
-    }, [])
+    }, [orders])
 
     return (
         <div className="w-full h-full px-5 flex gap-8 ">
             <div className="w-1/2 flex flex-col justify-between">
-            <div className="leading-[1] font-semibold flex justify-between border-b-2 border-[rgb(8,43,61)] h-10">
-					<span>The Damage Report 🛠️<br />
-						<p className="text-xs font-normal">Because your wallet just took a hit!</p>
-					</span>
-                    <div className="flex flex-col text-right text-[11px] relative bottom-1 font-medium leading-3">
-                        <p>Total Orders: {orders.length > 9 ? orders.length : `0${orders.length}`}</p>
-                        <p>Total Items: {orders.reduce((sum, product) => {return sum + product.products.length}, 0) > 9 ? orders.reduce((sum, product) => {return sum + product.products.length}, 0) : `0${orders.reduce((sum, product) => {return sum + product.products.length}, 0)}`}</p>
-                        <p>Total Returns: 00</p>
+                <div className="leading-[1] font-semibold flex justify-between border-b-2 border-[rgb(8,43,61)] h-10">
+                    <span>The Damage Report 🛠️<br />
+                        <p className="text-xs font-normal">Because your wallet just took a hit!</p>
+                    </span>
+                    <div className="flex flex-col text-right text-[13px] relative bottom-3 font-semibold leading-4">
+                        <p>Total Orders: <span className="text-[rgb(240,85,120)]">{orders.length > 9 ? orders.length : `0${orders.length}`}</span></p>
+                        <p>Total Items: <span className="text-[rgb(240,85,120)]">{orders.reduce((sum, product) => { return sum + product.products.length }, 0) > 9 ? orders.reduce((sum, product) => { return sum + product.products.length }, 0) : `0${orders.reduce((sum, product) => { return sum + product.products.length }, 0)}`}</span></p>
+                        <p>Total Returns: <span className="text-[rgb(240,85,120)]">00</span></p>
                     </div>
-				</div>
+                </div>
                 <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
                     {
                         !loading ? (
                             order && order.length > 0 ?
                                 order.map((item) => (
-                                    <div key={item.id} className="flex flex-col items-center p-2 border border-[rgb(8,43,61)] scale-[0.98] duration-200 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] rounded-xl lg:hover:scale-100 w-full cursor-pointer relative" onClick={() => navigate(`/orders/order-details/${item.id}`)} >
+                                    <div key={item.id} className="flex flex-col items-center p-3 border border-slate-300 scale-[0.98] duration-200 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] rounded-xl lg:hover:scale-100 w-full cursor-pointer relative bg-slate-100 shadow-md" onClick={() => navigate(`/orders/order-details/${item.id}`)} >
                                         {
                                             item.products.map((product, idx) => (
                                                 <div key={product.id} className="w-full">
-                                                    <div key={idx} className={`flex items-end w-full relative`}>
-                                                        <div className="w-[52px] rounded-[6px] overflow-hidden mr-3">
+                                                    <div key={idx} className={`flex w-full relative`}>
+                                                        <div className="w-16 rounded-[6px] overflow-hidden mr-3">
                                                             <img
                                                                 src={product.image}
                                                                 className="h-full w-full object-fill rounded border"
                                                             />
                                                         </div>
                                                         <div className="w-[62%]">
-                                                            <p className="text-gray-500 text-xs uppercase font-bold line-clamp-1">Apparel & Fashion</p>
+                                                            <div className="flex gap-2">
+                                                                <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[10px] text-white font-medium">LXS Certified</span>
+                                                                </div>
+                                                                <p className="text-gray-500 text-xs uppercase font-bold line-clamp-1">Apparel & Fashion</p>
+                                                            </div>
                                                             <h2 className="font-semibold line-clamp-1">{product.productName}</h2>
-                                                            <p className="text-[10px] text-gray-600 tracking-tighter font-medium">Order Date: {`${item.timestamp.split(" ")[1].slice(0, 2)} ${item.timestamp.split(" ")[0]}, ${item.timestamp.split(" ")[2].slice(0, 4)}`}</p>
-                                                            <p className="text-[10px] text-gray-600 tracking-tighter font-medium">Expected Delivery: 19/05/2025</p>
+                                                            <div className="flex">
+                                                                <p className="text-[14px] text-gray-600 tracking-tight font-semibold pr-2 border-r-2 border-[rgb(8,43,61)] mr-2 leading-4">Order Date: <span className="text-[rgb(240,85,120)]">{`${item.timestamp.split(" ")[1].slice(0, 2)} ${item.timestamp.split(" ")[0]}, ${item.timestamp.split(" ")[2].slice(0, 4)}`}</span></p>
+                                                                <p className="text-[14px] text-gray-600 tracking-tight font-semibold leading-4">Expected Delivery: </p>
+                                                            </div>
+                                                            <p className="text-xs font-medium italic mt-1">(Delivery may vary due to unforeseen reasons)</p>
                                                         </div>
-                                                        <HoverButton onClick={(e) => { e.stopPropagation(), navigate(`/product-details/${product.id}`) }} className="px-2 text-[11px] text-center font-medium absolute bottom-0 right-1">View Product Details</HoverButton>
+                                                        <HoverButton onClick={(e) => { e.stopPropagation(), navigate(`/product-details/${product.id}`) }} className="px-2 py-[4px] text-[14px] text-center font-semibold absolute bottom-0 right-1">View Product Details</HoverButton>
                                                     </div>
                                                     {
                                                         item.products.length > 1 && idx !== item.products.length - 1 ?
-                                                            <hr className={`border-t border-[rgb(8,43,61)] border-dashed w-full pt-3 mt-3`} />
+                                                            <hr className={`border-t-2 border-[rgb(8,43,61,0.5)] border-dashed w-full pt-3 mt-3`} />
                                                             :
                                                             null
                                                     }
                                                 </div>
                                             ))
                                         }
-                                        <p className="text-[12px] mb-1 text-gray-400 tracking-tighter absolute top-2 right-4">{item.orderId}</p>
+                                        <p className="text-[14px] mb-1 font-semibold tracking-tighter absolute top-2 right-4">{item.orderId}</p>
                                     </div>
                                 )) :
                                 <div className="text-xl font-semibold flex justify-center items-center h-40">No Orders Yet!!</div>

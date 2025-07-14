@@ -71,7 +71,7 @@ function ShopSettingWishlist() {
 						!loading ? (
 							wishlist && wishlist.length > 0 ? (
 								wishlistItems?.map((item, index) => (
-									<div key={index} className="flex gap-2 items-center p-[6px] border border-[rgb(8,43,61)] rounded-xl w-full py-2 scale-[0.98] lg:hover:scale-100 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] duration-100 cursor-pointer" onClick={() => navigate(`/product-details/${item.id}`)}>
+									<div key={index} className="bg-slate-100 flex gap-2 items-center p-[6px] border border-slate-300 shadow-md rounded-xl w-full py-2 scale-[0.98] lg:hover:scale-100 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] duration-200 cursor-pointer" onClick={() => navigate(`/product-details/${item.id}`)}>
 										<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1" >
 											<img
 												src={item.images[0]}

@@ -31,138 +31,138 @@ let tiles = [
     bgImage: tile2Icon,
     icon: tile2Icon,
     title1: "Exclusive",
-    title2: "Membership Perks",
+    title2: "Membership",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
   {
     bgImage: tile3Icon,
     icon: tile3Icon,
-    title1: "Personalized",
-    title2: "Recommendation",
+    title1: "Personalised",
+    title2: "Your Order",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
   {
     bgImage: tile4Icon,
     icon: tile4Icon,
-    title1: "Return &",
-    title2: "Refund Status",
+    title1: "Returned &",
+    title2: "Cancelled Orders",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
   {
     bgImage: tile2Icon,
     icon: tile2Icon,
-    title1: "Recently",
-    title2: "Payments History",
+    title1: "Payment",
+    title2: "History",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
   {
     bgImage: tile3Icon,
     icon: tile3Icon,
-    title1: "Job",
-    title2: "Profile",
+    title1: "LXS",
+    title2: "Announcements",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
   {
     bgImage: tile4Icon,
     icon: tile4Icon,
-    title1: "Saved",
-    title2: "Jobs",
+    title1: "Track",
+    title2: "Orders",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "My",
-    title2: "Applied Jobs",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "My",
-    title2: "Posted Jobs",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "Job",
-    title2: "Alerts",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "Resume",
-    title2: "Builder",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "My",
-    title2: "Collaborations",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "Apply",
-    title2: "as Creator",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "Earning",
-    title2: "& Payouts",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "Creators",
-    title2: "Profile",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "My",
-    title2: "Gig",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "My Art",
-    title2: "Gallery",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    bgImage: tile1Icon,
-    icon: tile1Icon,
-    title1: "My",
-    title2: "Portfolio",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "My",
+  //   title2: "Applied Jobs",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "My",
+  //   title2: "Posted Jobs",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "Job",
+  //   title2: "Alerts",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "Resume",
+  //   title2: "Builder",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "My",
+  //   title2: "Collaborations",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "Apply",
+  //   title2: "as Creator",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "Earning",
+  //   title2: "& Payouts",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "Creators",
+  //   title2: "Profile",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "My",
+  //   title2: "Gig",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "My Art",
+  //   title2: "Gallery",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
+  // {
+  //   bgImage: tile1Icon,
+  //   icon: tile1Icon,
+  //   title1: "My",
+  //   title2: "Portfolio",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
 ]
 
 
@@ -184,15 +184,15 @@ function ShopSettingDashboard() {
           <p className="text-xl font-bold">Hello, {user.name.split(" ")[0]}!</p>
           <p className="font-medium text-sm relative bottom-1">Today is {formattedDate[0] + ", " + formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]}</p>
         </div>
-        <div className="flex gap-8 flex-wrap mt-5">
+        <div className="flex gap-5 flex-wrap mt-5">
         {
           tiles.map((item, index) => (
-            <div key={index} className={`w-[22%] h-28 rounded-xl relative overflow-hidden flex flex-col px-4 py-2 text-[18px] shadow-md cursor-pointer hover:scale-[1.05] active:scale-[0.95] lg:hover:shadow-[0px_0px_10px_2px_rgb(8,43,61)] duration-200 z-0 ${item.className}`} onClick={() => navigate(item.navigate)}>
+            <div key={index} className={`w-[23%] h-28 rounded-xl relative overflow-hidden flex flex-col justify-between px-4 py-2 text-[18px] shadow-md cursor-pointer hover:scale-[1.08] active:scale-[0.95] lg:hover:shadow-[0px_0px_10px_-2px_rgb(8,43,61)] duration-200 z-0 bg-slate-100 border border-slate-300 `} onClick={() => navigate(item.navigate)}>
               <img src={item.bgImage} alt="" className='opacity-40 h-[70%] absolute top-6 right-0 -z-10 scale-110' />
               <img src={item.icon} alt="" className='w-14' />
-              <div className="leading-5 z-10">
-                <p className='text-white font-bold text-[16px]'>{item.title1}</p>
-                <p className='text-white text-[16px]'>{item.title2}</p>
+              <div className="text-[15px] leading-[1.3]">
+                <p className=''>{item.title1}</p>
+                <p className='font-bold '>{item.title2}</p>
               </div>
             </div>
           ))

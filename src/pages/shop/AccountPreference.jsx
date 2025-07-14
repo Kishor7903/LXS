@@ -24,41 +24,41 @@ function AccountPreference() {
                 },
                 {
                     key: "account creation date:",
-                    value: `${user.timestamp.split(",")[0]}, ${user.timestamp.split(",")[1]}`,
+                    value: `${user.timestamp.split(",")[0].split(" ")[1]} ${user.timestamp.split(",")[0].split(" ")[0]}, ${user.timestamp.split(",")[1]} -${user.timestamp.split(",")[2]}`,
                     slug: ""
                 },
             ],
         },
-        {
-            name: "Linked Accounts & Third Parties Login",
-            content: [
-                {
-                    key: "google:",
-                    value: "view",
-                    slug: ""
-                },
-                {
-                    key: "Instagram:",
-                    value: "view",
-                    slug: ""
-                },
-                {
-                    key: "facebook:",
-                    value: "view",
-                    slug: ""
-                },
-                {
-                    key: "Twitter/X:",
-                    value: "view",
-                    slug: ""
-                },
-                {
-                    key: "Linkedin:",
-                    value: "view",
-                    slug: ""
-                }
-            ],
-        },
+        // {
+        //     name: "Linked Accounts & Third Parties Login",
+        //     content: [
+        //         {
+        //             key: "google:",
+        //             value: "view",
+        //             slug: ""
+        //         },
+        //         {
+        //             key: "Instagram:",
+        //             value: "view",
+        //             slug: ""
+        //         },
+        //         {
+        //             key: "facebook:",
+        //             value: "view",
+        //             slug: ""
+        //         },
+        //         {
+        //             key: "Twitter/X:",
+        //             value: "view",
+        //             slug: ""
+        //         },
+        //         {
+        //             key: "Linkedin:",
+        //             value: "view",
+        //             slug: ""
+        //         }
+        //     ],
+        // },
     ];
 
     return (
@@ -69,7 +69,7 @@ function AccountPreference() {
             <div className="space-y-4">
             {
                 accountData.map((items,index) => (
-                    <div key={index} className="border border-[rgb(8,43,61)] p-3 shadow-[0px_5px_10px_-6px_rgb(8,43,61)] rounded-xl">
+                    <div key={index} className="border border-slate-300 shadow-md bg-slate-100 p-3 rounded-xl">
                         <h3 className="font-bold tracking-wide text-lg capitalize">{items.name}</h3>
                         <div className="space-y-1 text-xs leading-3 mt-2 flex flex-col gap-1 font-medium ml-3">
                             {items.content.map((item,idx) => (

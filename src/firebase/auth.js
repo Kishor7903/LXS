@@ -372,6 +372,15 @@ export const getSingleOrderDetails = async (user_id, order_id) => {
     }
 };
 
+export const updateOrderInfo = async (user_id, order_id, formData) => {
+    try {
+        const orderRef = doc(fireDB, "user", user_id, "orders", order_id);
+        await updateDoc(orderRef, formData);
+    } catch (error) {
+        console.log("Updating Order Info Error: ", error.message);
+    }
+}
+
 export const saveWorkWithUsInfo = async (formData) => {
     try {
         const dataReference = collection(fireDB, "Work-With-Us");
