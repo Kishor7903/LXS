@@ -88,12 +88,12 @@ function ShopSettingWishlist() {
 											<p className='text-[12px] font-medium'>Brand: {item.brand}</p>
 											<p className="text-sm lg:text-lg font-semibold">₹{item.salePrice}<s className="font-medium text-sm opacity-60 ml-2">₹{item.price}</s> <span className="font-semibold text-xs text-red-500">({`${Math.floor(((item.price - (item.salePrice)) * 100) / item.price)}`}% OFF)</span></p>
 										</div>
-										<div className="flex flex-col items-center w-36">
+										<div className="flex flex-col items-center w-40">
 											{
 												cart.some((p) => p.item_id === item.id) ? (
-													<span className='text-[9px] mt-1 lg:text-[13px] mb-2 font-medium text-center leading-[1] text-green-700 flex gap-1'>Added to Cart <i className="fi fi-rs-check-circle relative text-[13px] "></i></span>
+													<span className='text-[9px] mt-1 lg:text-[13px] mb-2 font-medium text-center leading-[1] text-green-700 flex gap-1'>Added to Basket <i className="fi fi-rs-check-circle relative text-[13px] "></i></span>
 												) : (
-													<HoverButton onClick={(e) => { e.stopPropagation(), moveToCart(e, item.id) }} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1'>Add to Cart</HoverButton>
+													<HoverButton onClick={(e) => { e.stopPropagation(), moveToCart(e, item.id) }} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1'>Add to Basket</HoverButton>
 												)
 											}
 											<p onClick={(e) => { e.stopPropagation(), deleteItemFromWishlist(e, item.id) }} className="text-xs text-blue-400 tracking-tighter font-medium cursor-pointer lg:hover:underline">Remove</p>

@@ -3,7 +3,7 @@ import HoverButton from '@/components/HoverButton';
 import KnowMorePopup from '@/components/KnowMorePopup';
 import RequestSuccessfullPopup from '@/components/RequestSuccessfullPopup';
 import { displayRazorpay } from '@/firebase/RazorpayPayment';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import secureIcon from "../../assets/commonIcons/Secure.png"
@@ -74,7 +74,6 @@ function PaymentsPage() {
     let navigate = useNavigate();
     let dispatch = useDispatch();
     let cartItems = JSON.parse(sessionStorage.getItem("cart"));
-    console.log(cartItems);
     let address = JSON.parse(sessionStorage.getItem("address"))
     let { user } = useSelector(state => state.auth)
 
@@ -142,6 +141,32 @@ function PaymentsPage() {
         }
         setPinNumber(input)
     }
+
+    useEffect(() => {
+        // const result = [];
+
+        // cartItems.forEach((product) => {
+        //     const sizeCount = {};
+
+        //     product.size.forEach((size) => {
+        //         if (sizeCount[size]) {
+        //             sizeCount[size] += 1;
+        //         } else {
+        //             sizeCount[size] = 1;
+        //         }
+        //     });
+
+        //     Object.entries(sizeCount).forEach(([size, qty]) => {
+        //         result.push({
+        //             productId: product.id,
+        //             size: size,
+        //             quantity: qty
+        //         });
+        //     });
+        // });
+
+        // console.log(result);
+    }, []);
 
 
     return (
@@ -267,6 +292,14 @@ function PaymentsPage() {
                                                     <div className="flex flex-col">
                                                         <p className='font-semibold opacity-70 line-clamp-1'>{product.name}</p>
                                                         <p className='text-xs'>Estimated Delivery by <span className='font-semibold'>{formattedDate}</span></p>
+                                                    <div className="flex gap-3 items-center text-xs">
+                                                        {console.log(product.size)}
+                                                        {/* {
+                                                            product?.size.map((size, i) => (
+                                                                <p key={i} className='px-1.5 py-0.5 my-0.5 border border-slate-300 rounded-full font-medium bg-slate-100'>Size{i+1}: <span className="text-[rgb(240,85,120)] font-bold">{size}</span></p>
+                                                            ))
+                                                        } */}
+                                                    </div>
                                                     </div>
                                                 </div>
                                                 {
@@ -281,12 +314,12 @@ function PaymentsPage() {
                                 </div>
                                 <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300'><span className='text-[rgb(240,85,120)] font-semibold text-xs'>Please Note:</span> If you order multiple products in a single order and choose to cancel any one item, the entire order will be cancelled, if all items are processed in a single shipment.</p>
                                 <div className="w-full flex gap-2 text-sm">
-                                    <input type="text" className="bg-slate-200 px-3 h-8 text-[12px] font-medium rounded-full w-full outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]" placeholder="Apply Coupons" />
+                                    <input type="text" className="bg-slate-100 px-3 h-8 text-[12px] font-medium rounded-full w-full outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]" placeholder="Apply Coupons" />
                                     <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-full ">Apply</button>
                                 </div>
                                 <div className="w-full">
                                     <div className="leading-3 font-semibold">
-                                        <span className="">Price BreakDown ({cartItems.length} Items)</span>
+                                        <span className="">Price BreakDown ({cartItems.length > 0 ? cartItems.reduce((sum, i) => {return sum + i.quantity}, 0) : 0} Items)</span>
                                         <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
                                         <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
                                         <span className="flex justify-between text-xs text-red-500">Discount on MRP <p className="">- ₹{discountOnMRP}</p></span>
