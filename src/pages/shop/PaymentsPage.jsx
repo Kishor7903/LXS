@@ -312,7 +312,7 @@ function PaymentsPage() {
                                         ))
                                     }
                                 </div>
-                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300'><span className='text-[rgb(240,85,120)] font-semibold text-xs'>Please Note:</span> If you order multiple products in a single order and choose to cancel any one item, the entire order will be cancelled, if all items are processed in a single shipment.</p>
+                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300 font-medium'><span className='text-[rgb(240,85,120)] font-semibold text-xs'>Please Note:</span> If you cancel any item after pickup but before delivery, all items in the same shipment will be cancelled. However, items in separate shipments will continue to be delivered if already in transit.</p>
                                 <div className="w-full flex gap-2 text-sm">
                                     <input type="text" className="bg-slate-100 px-3 h-8 text-[12px] font-medium rounded-full w-full outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]" placeholder="Apply Coupons" />
                                     <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-full ">Apply</button>
