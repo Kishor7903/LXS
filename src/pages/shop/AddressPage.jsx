@@ -102,12 +102,12 @@ function AddressPage() {
                                 <button onClick={(e) => handleAddAddressButton(e)} className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-200 h-10 shadow-md border border-slate-300 rounded-xl font-semibold">+ Add New Address</button>
                             </div>
                             <div className="w-full lg:w-[40%]">
-                                <div className="mt-5 leading-3 font-semibold">
-                                    <span className="">Price Details ({cartItems.length} Items)</span>
+                                <div className="mt-3 leading-3 font-semibold">
+                                    <span className="font-bold">Price Details ({cartItems.length > 0 ? cartItems.reduce((sum, i) => {return sum + i.quantity}, 0) : 0} Items)</span>
                                     <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
                                     <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
-                                    <span className="flex justify-between text-xs text-red-500">Discount on MRP <p className="text-red-500">- ₹{discountOnMRP}</p></span>
-                                    <span className="flex justify-between text-xs text-red-500">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
+                                    <span className="flex justify-between text-xs text-[rgb(240,85,120)]">Discount on MRP <p className="text-[rgb(240,85,120)]">- ₹{discountOnMRP}</p></span>
+                                    <span className="flex justify-between text-xs text-[rgb(240,85,120)]">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
                                     <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>

@@ -23,6 +23,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import secureIcon from "../../assets/commonIcons/Secure.png";
 
+let options = ["1", "2", "3", "4", "5"];
+let sizes = ["S", "M", "L", "XL"];
+
 function CartPage() {
     let [isOpen, setIsOpen] = useState(false);
     let [selectedItems, setSelectedItems] = useState([]);
@@ -51,32 +54,48 @@ function CartPage() {
                 (sum, cart) => sum + Number(cart.salePrice * cart.quantity),
                 0
             );
-        deliveryPrice = 79;
-        deliveryDiscount = 79;
+        deliveryPrice = 49;
+        deliveryDiscount = 49;
         platformFee = 9;
     }
 
-    const handleQuantityChange = (e, item_id) => {
+    const handleQuantityChange = (e, item) => {
         e.preventDefault();
-        let item = {
-            id: item_id,
+        let i = {
+            id: item.id,
             quantity: parseInt(e.target.value),
         };
 
-        productQuantityChange(user.id, item).then(() => {
-            dispatch(updateCartProductQuantity(item));
+        let updatesSize = [...item.size]
+        if (updatesSize.length > parseInt(e.target.value)) {
+            updatesSize = updatesSize.slice(0, parseInt(e.target.value));
+        }
+        let length = updatesSize.length;
+        while (length < parseInt(e.target.value)) {
+            updatesSize.push("S");
+            length += 1;
+        }
+
+        productSizeChange(user.id, { id: item.id, size: updatesSize }).then(() => {
+            dispatch(updateCartProductSize({ id: item.id, size: updatesSize }));
+        });
+
+        productQuantityChange(user.id, i).then(() => {
+            dispatch(updateCartProductQuantity(i));
         });
     };
 
-    const handleSizeChange = (e, item_id) => {
+    const handleSizeChange = (e, item, idx) => {
         e.preventDefault();
-        let item = {
-            id: item_id,
-            size: e.target.value,
+        let size = [...item.size];
+        size[idx] = e.target.value;
+        let i = {
+            id: item.id,
+            size: size,
         };
 
-        productSizeChange(user.id, item).then(() => {
-            dispatch(updateCartProductSize(item));
+        productSizeChange(user.id, i).then(() => {
+            dispatch(updateCartProductSize(i));
         });
     };
 
@@ -92,8 +111,8 @@ function CartPage() {
         e.preventDefault();
 
         if (user) {
-            addWishlistItem(user?.id, item_id).then(() => {
-                dispatch(addToWishlist(item_id));
+            addWishlistItem(user?.id, item_id).then((res) => {
+                dispatch(addToWishlist(res));
             });
         } else {
             toast.error("Please Login First ...");
@@ -132,14 +151,14 @@ function CartPage() {
                 let product = products.find((p) => p.id === item.item_id);
                 return product
                     ? {
-                          ...product,
-                          quantity: item.quantity,
-                          size: item.size,
-                          id: item.id,
-                          item_id: item.item_id,
-                          productId: item.item_id,
-                          isSelected: item.isSelected,
-                      }
+                        ...product,
+                        quantity: item.quantity,
+                        size: item.size,
+                        id: item.id,
+                        item_id: item.item_id,
+                        productId: item.item_id,
+                        isSelected: item.isSelected,
+                    }
                     : null;
             })
             .filter((item) => item !== null);
@@ -204,11 +223,10 @@ function CartPage() {
                                 {cartItems.map((item, index) => (
                                     <div
                                         key={index}
-                                        className={` border-[rgb(8,43,61)] rounded-xl p-[6px] lg:p-2 flex gap-2 lg:gap-4 relative overflow-hidden cursor-pointer ${
-                                            item.isSelected
-                                                ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200"
-                                                : "border-slate-300 border shadow-md lg:hover:scale-[0.97] duration-150 scale-95"
-                                        }`}
+                                        className={` border-[rgb(8,43,61)] rounded-xl p-[6px] lg:p-2 flex gap-2 lg:gap-4 relative overflow-hidden cursor-pointer ${item.isSelected
+                                            ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200"
+                                            : "border-slate-300 border shadow-md lg:hover:scale-[0.97] duration-150 scale-95"
+                                            }`}
                                         onClick={(e) =>
                                             handletoggleCartSelect(
                                                 e,
@@ -228,82 +246,73 @@ function CartPage() {
                                             alt=""
                                             className="w-20 rounded border lg:border-2"
                                         />
-                                        <div className="leading-[0.7] lg:leading-3 w-[70%]">
+                                        <div className="leading-[0.7] lg:leading-3 w-[83%]">
                                             <h4 className="text-sm lg:text-base font-bold w-full line-clamp-1">
                                                 {item.name}
                                             </h4>
-                                            <p className="text-[9px] font-semibold hidden lg:inline-block lg:text-[11px] relative bottom-1">
+                                            <p className="text-[9px] font-bold mt-1 hidden lg:inline-block lg:text-[11px] relative bottom-1">
                                                 Sold By :{" "}
                                                 <span className="text-[rgb(240,85,120)]">
                                                     LXS Store
                                                 </span>
                                             </p>
-                                            <div className="flex gap-3 lg:gap-4 text-[9px] font-medium lg:text-[12px] lg:mt-[1px]">
-                                                <div className="border border-[rgb(8,43,61)] rounded-full pl-1 cursor-pointer">
+                                            <div className="flex gap-3 lg:gap-2 w-full text-[9px] font-medium lg:text-[11px] lg:mt-[1px] ">
+                                                <div className="bg-[rgb(8,43,61)] text-white rounded-full pl-1 cursor-pointer mr-3" onClick={(e) =>
+                                                    e.stopPropagation()
+                                                }>
                                                     <label className="cursor-pointer">
                                                         Qty :
                                                     </label>
                                                     <select
                                                         value={item.quantity}
-                                                        onClick={(e) =>
-                                                            e.stopPropagation()
-                                                        }
+
                                                         onChange={(e) =>
                                                             handleQuantityChange(
                                                                 e,
-                                                                item.id
+                                                                item
                                                             )
                                                         }
                                                         className="focus:outline-none font-bold rounded-full bg-transparent cursor-pointer"
                                                     >
-                                                        <option value="1">
-                                                            1
-                                                        </option>
-                                                        <option value="2">
-                                                            2
-                                                        </option>
-                                                        <option value="3">
-                                                            3
-                                                        </option>
-                                                        <option value="4">
-                                                            4
-                                                        </option>
-                                                        <option value="5">
-                                                            5
-                                                        </option>
+                                                        {
+                                                            options.map((val, i) => (
+                                                                <option key={i} value={val} className="text-[rgb(8,43,61)] font-bold">
+                                                                    {val}
+                                                                </option>
+                                                            ))
+                                                        }
                                                     </select>
                                                 </div>
-                                                <div className="border border-[rgb(8,43,61)] rounded-full pl-1">
-                                                    <label className="cursor-pointer">
-                                                        Size:
-                                                    </label>
-                                                    <select
-                                                        value={item.size}
-                                                        onClick={(e) =>
+                                                {
+                                                    Array.from({ length: item.quantity }).map((_, idx) => (
+                                                        <div key={idx} className="border border-[rgb(8,43,61)] rounded-full pl-1" onClick={(e) =>
                                                             e.stopPropagation()
+                                                        }>
+                                                            <label className="cursor-pointer">
+                                                                Size{idx + 1}:
+                                                            </label>
+                                                            <select
+                                                                value={item.size[idx]}
+                                                                onChange={(e) =>
+                                                                    handleSizeChange(
+                                                                        e,
+                                                                        item,
+                                                                        idx
+                                                                    )
+                                                                }
+                                                                className="focus:outline-none font-bold rounded-full bg-transparent cursor-pointer text-[rgb(240,85,120)]"
+                                                            >
+                                                                {
+                                                            sizes.map((val, i) => (
+                                                                <option key={i} value={val} className="font-bold">
+                                                                    {val}
+                                                                </option>
+                                                            ))
                                                         }
-                                                        onChange={(e) =>
-                                                            handleSizeChange(
-                                                                e,
-                                                                item.id
-                                                            )
-                                                        }
-                                                        className="focus:outline-none font-bold rounded-full bg-transparent cursor-pointer"
-                                                    >
-                                                        <option value="S">
-                                                            S
-                                                        </option>
-                                                        <option value="M">
-                                                            M
-                                                        </option>
-                                                        <option value="L">
-                                                            L
-                                                        </option>
-                                                        <option value="XL">
-                                                            XL
-                                                        </option>
-                                                    </select>
-                                                </div>
+                                                            </select>
+                                                        </div>
+                                                    ))
+                                                }
                                             </div>
                                             <div className="flex gap-1 lg:gap-2 items-center text-[10px] lg:text-base mt-[2px]">
                                                 <p className="text-sm lg:text-lg font-semibold">
@@ -316,13 +325,13 @@ function CartPage() {
                                                             item.quantity}
                                                     </s>
                                                 </p>
-                                                <p className="font-semibold text-sm text-red-500">
+                                                <p className="font-bold text-sm text-[rgb(240,85,120)]">
                                                     (
                                                     {`${Math.floor(
                                                         ((item.price -
                                                             item.salePrice) *
                                                             100) /
-                                                            item.price
+                                                        item.price
                                                     )}`}
                                                     % OFF)
                                                 </p>
@@ -331,7 +340,32 @@ function CartPage() {
                                                 Delivered by 25 May, 2025
                                             </p>
                                         </div>
-                                        <div className="absolute bottom-2 lg:bottom-5 right-5 flex flex-col gap-1 items-center lg:items-end w-12 lg:w-32">
+                                        <div className="absolute bottom-0 lg:bottom-1 right-3 flex gap-3 items-center">
+                                            {wishlist.some(
+                                                (p) => p.item_id === item.item_id
+                                            ) ? (
+                                                <span className="text-[9px] lg:text-[11px] font-semibold text-center leading-[1] text-green-600 flex gap-1">
+                                                    Added to Favourites{" "}
+                                                    <i className="fi fi-rs-check-circle relative top-[1px] text-[9px]"></i>
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(),
+                                                            wishlist.includes(
+                                                                item.item_id
+                                                            )
+                                                                ? null
+                                                                : moveToWishlist(
+                                                                    e,
+                                                                    item.item_id
+                                                                );
+                                                    }}
+                                                    className="text-[9px] lg:text-[11px] font-semibold text-center leading-[1] lg:hover:underline cursor-pointer text-blue-500"
+                                                >
+                                                    Add to Favourites
+                                                </span>
+                                            )}
                                             <HoverButton
                                                 onClick={(e) => {
                                                     e.stopPropagation(),
@@ -344,31 +378,6 @@ function CartPage() {
                                             >
                                                 Remove
                                             </HoverButton>
-                                            {wishlist.some(
-                                                (p) => p === item.id
-                                            ) ? (
-                                                <span className="text-[9px] mt-1 lg:text-[11px] font-semibold text-center leading-[1] text-gray-500 flex gap-1">
-                                                    Added to Favourites{" "}
-                                                    <i className="fi fi-rs-check-circle relative top-[1px] text-[9px]"></i>
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    onClick={(e) => {
-                                                        e.stopPropagation(),
-                                                            wishlist.includes(
-                                                                item.id
-                                                            )
-                                                                ? null
-                                                                : moveToWishlist(
-                                                                      e,
-                                                                      item.id
-                                                                  );
-                                                    }}
-                                                    className="text-[9px] mt-1 lg:text-[11px] font-semibold text-center leading-[1] lg:hover:underline cursor-pointer text-blue-500"
-                                                >
-                                                    Add to Favourites
-                                                </span>
-                                            )}
                                         </div>
                                         {item.isSelected && (
                                             <div className="h-10 w-24 bg-[rgb(8,43,61)] absolute -top-3 -right-10 rotate-45 flex justify-center items-end">
@@ -390,7 +399,7 @@ function CartPage() {
                             <div className="w-full lg:w-[40%]">
                                 <div className="leading-3 font-semibold">
                                     <span className="font-bold">
-                                        Price Details ({selectedItems.length}{" "}
+                                        Price Details ({selectedItems.length > 0 ? selectedItems.reduce((sum, i) => { return sum + i.quantity }, 0) : 0}{" "}
                                         Items)
                                     </span>
                                     <span className="flex justify-between mt-2 text-xs">
@@ -411,11 +420,11 @@ function CartPage() {
                                                 : 0}
                                         </p>
                                     </span>
-                                    <span className="flex justify-between text-xs text-red-500">
+                                    <span className="flex justify-between text-xs text-[rgb(240,85,120)]">
                                         Discount on MRP{" "}
                                         <p className="">- ₹{discountOnMRP}</p>
                                     </span>
-                                    <span className="flex justify-between text-xs text-red-500">
+                                    <span className="flex justify-between text-xs text-[rgb(240,85,120)]">
                                         Discount on Delivery{" "}
                                         <p className="">
                                             - ₹
@@ -451,10 +460,10 @@ function CartPage() {
                                             ₹
                                             {selectedItems.length > 0
                                                 ? totalPrice -
-                                                  discountOnMRP +
-                                                  deliveryPrice -
-                                                  deliveryDiscount +
-                                                  platformFee
+                                                discountOnMRP +
+                                                deliveryPrice -
+                                                deliveryDiscount +
+                                                platformFee
                                                 : 0}
                                         </p>
                                     </span>

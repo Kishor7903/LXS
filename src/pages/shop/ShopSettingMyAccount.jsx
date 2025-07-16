@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import HoverButton from "@/components/HoverButton";
 import editIcon from "../../assets/commonIcons/Edit (Fill).png"
 import editIconActive from "../../assets/commonIcons/Edit White (Fill).png"
+import flagIcon from "../../assets/commonIcons/Logo - IND Bg.png"
 import { useEffect, useState } from "react";
 import EditUserInfoPopup from "@/components/EditUserInfoPopup";
 import EditProfilePicPopup from "@/components/EditProfilePicPopup";
@@ -40,8 +41,11 @@ function ShopSettingMyAccount() {
                     <p className="text-xs font-normal">Because you are the boss of your Shopping Universe!</p>
                 </div>
                 <div className="space-y-3 mt-2 h-full overflow-y-scroll no-scrollbar">
-                    <div className="bg-slate-100 py-5 px-5 border border-slate-300 flex items-center rounded-xl mx-5 relative shadow-md">
-                        <img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-16 mr-4 rounded" />
+                    <div className="bg-slate-100 py-3 px-5 border border-slate-300 flex items-center rounded-xl mx-5 relative shadow-md">
+                        <div className="relative mr-4">
+                            <img src={flagIcon} alt="" className="h-16 rounded-full" />
+                            <img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-14 absolute top-1 left-1 rounded-full" />
+                        </div>
                         <p className="text-2xl h-10 leading-[0.7] font-bold relative top-1">{user.name} <br /> <span className="text-base font-medium text-[rgb(240,85,120)]">User Account</span></p>
                         <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium" onClick={handleProfilePicEditButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
                     </div>
