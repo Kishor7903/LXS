@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import ShopLayout from "./layouts/ShopLayout"
 import HomePageLayout from "./layouts/HomePageLayout"
 import AdminLayout from "./layouts/AdminLayout"
@@ -56,7 +56,7 @@ import EnviromentalAndEthicalSourcingPolicy from "./pages/shop/EnviromentalAndEt
 import FAQs from "./pages/shop/FAQs"
 import CheckAuth from "./layouts/CheckAuth"
 import { useDispatch, useSelector } from "react-redux"
-import { login } from "./store/features/authSlice"
+import { loadingFalse, loadingTrue, login } from "./store/features/authSlice"
 import AdminCarousel from "./pages/admin/AdminCarousel"
 import ScrollToTop from "./components/ScrollToTop"
 import PolicyLayout from "./layouts/PolicyLayout"
@@ -85,27 +85,42 @@ import AdminPromotionalBanners from "./pages/admin/AdminPromotionalBanners"
 import AdminPickupWarehouse from "./pages/admin/AdminPickupWarehouse"
 import SuccessfulPopup from "./components/SuccessfulPopup"
 import AddressPageLayout from "./layouts/AddressPageLayout"
+import reload from "./assets/GIF/reload.gif"
 
 function App() {
-	let { isAuthenticated, user } = useSelector(state => state.auth);
+	let { isAuthenticated, user, isLoading } = useSelector(state => state.auth);
 	let dispatch = useDispatch();
-	const [loading, setLoading] = useState(true);
+	let location = useLocation().pathname;
 
 	useEffect(() => {
 		let user = JSON.parse(sessionStorage.getItem("user"));
 		if (user) {
 			dispatch(login(user))
 		}
-		setLoading(false);
+		setTimeout(() => {
+			dispatch(loadingFalse())
+		}, 2000)
 	}, [dispatch])
 
-	if (loading) {
-		return <div>Loading...</div>; // or a spinner/skeleton
-	}
+	// useEffect(() => {
+	// 	dispatch(loadingTrue());
+	// 	setTimeout(() => {
+	// 		dispatch(loadingFalse())
+	// 	}, 1000)
+	// }, [location])
 
 	return (
-		<div className="h-screen w-full overflow-y-scroll scrollable-content">
+		<div className="h-screen w-full overflow-y-scroll scrollable-content relative">
 			<ScrollToTop />
+			{
+				isLoading ?
+				<div className="h-screen w-full flex flex-col text-white text-xl font-medium justify-center items-center bg-[rgb(0,0,0,0.3)] z-50 fixed top-0">
+					<img src={reload} alt="" className="h-44 w-44" />
+					<span>Loading...</span>
+				</div>
+				:
+				null
+			}
 			<Routes>
 				<Route path="/" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

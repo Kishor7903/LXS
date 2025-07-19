@@ -9,6 +9,7 @@ import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 function OrderDetailsPage() {
     let navigate = useNavigate();
     let [orderDetails, setOrderDetails] = useState(null);
+    let [products, setProducts] = useState([])
     let [loading, setLoading] = useState(false);
     let { user } = useSelector(state => state.auth);
     let { id } = useParams();
@@ -28,6 +29,37 @@ function OrderDetailsPage() {
             setLoading(false);
         }, 1000);
     }, [])
+
+    useEffect(() => {
+        const result = [];
+
+        orderDetails?.products.forEach((product) => {
+            const sizeCount = {};
+
+            product.size.forEach((size) => {
+                if (sizeCount[size]) {
+                    sizeCount[size] += 1;
+                } else {
+                    sizeCount[size] = 1;
+                }
+            });
+
+            Object.entries(sizeCount).forEach(([size, qty]) => {
+                result.push({
+                    productId: product.id,
+                    image: product.image,
+                    productName: product.productName,
+                    brand: product.brand,
+                    unitPrice: product.unitPrice,
+                    price: product.price,
+                    size: size,
+                    quantity: qty
+                });
+            });
+        });
+
+        setProducts(result);
+    }, [orderDetails])
 
     let items = [
         {
@@ -58,8 +90,10 @@ function OrderDetailsPage() {
                                 </div>
                                 <div className="flex gap-5 mt-5">
                                     <div className="w-[60%] py-4 px-6 rounded-xl shadow-md border border-slate-300 bg-slate-100" >
-                                        <span className="font-semibold text-base">Drop Location</span>
-                                        <span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] select-none px-1 text-[9px] font-medium relative bottom-0.5 left-1.5">{orderDetails?.address?.address_type}</span>
+                                        <div className="font-semibold flex gap-1 items-center">
+                                            <span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] select-none px-1 text-[9px] font-medium">{orderDetails?.address?.address_type}</span>
+                                            <span className="font-semibold text-base">Drop Location</span>
+                                        </div>
                                         <div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 mt-2 text-[11px]">
                                             <div className="flex flex-col leading-3">
                                                 <p>Name</p>
@@ -100,7 +134,7 @@ function OrderDetailsPage() {
                                         <p className="leading-[1] text-sm mt-1 font-medium pl-2">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
                                     </div> */}
                                     <div className="rounded-xl shadow-md border border-slate-300 bg-slate-100 py-4 px-6 leading-[1.6] font-medium w-[40%] text-[12px]">
-                                        <span className="font-semibold text-base">Price Details ({orderDetails?.products?.length} items)</span>
+                                        <span className="font-semibold text-base">Price Details ({products.length} items)</span>
                                         <span className="flex justify-between mt-2">Total MRP <p className="">₹{totalMRP}</p></span>
                                         <span className="flex justify-between">Delivery <p className="">₹{orderDetails?.products?.length > 0 ? deliveryPrice : 0}</p></span>
                                         <span className="flex justify-between text-red-500">Discount on MRP <p className="">- ₹{discountOnMRP}</p></span>
@@ -129,7 +163,7 @@ function OrderDetailsPage() {
                                 </div> */}
                                 <div className="pb-8 mt-5 relative">
                                     {
-                                        orderDetails?.products?.map((item, index) => (
+                                        products?.map((item, index) => (
                                             <div key={index} className="rounded-xl shadow-md border border-slate-300 bg-slate-100 mt-2 p-3 flex flex-col gap-y-5 mb-5">
                                                 <div className="w-full flex justify-between">
                                                     <div className="flex gap-5">

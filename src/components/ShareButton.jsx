@@ -43,7 +43,7 @@ const ShareButton = ({ url = window.location.href, title = "Check this out!" }) 
       </button>
 
       {isOpen && (
-        <div className="absolute right-40 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <div className="absolute right-40 mt-2 w-48 bg-white border rounded-lg shadow-lg z-40">
           <ul className="flex flex-col gap-2 p-2">
             {shareOptions.map((option) => (
               <li key={option.name}>

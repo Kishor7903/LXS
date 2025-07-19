@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom"
 
 const steps = [
     {
-        title: "Order Received",
+        title: "Order Placed",
         date: "Fri, 9th May '25",
         details: [
             { text: "Your order is put on hold", timestamp: "Fri, 9th May '25 - 12:00am" },

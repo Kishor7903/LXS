@@ -17,7 +17,7 @@ function TabSwitcher({activeTab, setActiveTab, tabs, layoutId, className="h-12 m
                   transition={{ type: "spring", stiffness: 400, damping: 35 }}
                 />
               )}
-              <span className="relative z-30">{tab}</span>
+              <span className="relative z-20">{tab}</span>
             </div>
           ))}
         </div>

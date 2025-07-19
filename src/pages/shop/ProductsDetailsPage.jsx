@@ -46,10 +46,11 @@ function ProductDetailsPage({ id, data }) {
 			toaster("Please select any size..");
 			return;
 		}
+
 		let itemDetails = {
 			item_id,
 			quantity,
-			size: selectedSize
+			size: [selectedSize]
 		}
 
 		if (user) {

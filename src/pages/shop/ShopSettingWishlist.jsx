@@ -20,7 +20,7 @@ function ShopSettingWishlist() {
 		e.preventDefault();
 
 		let quantity = 1;
-		let size = "S"
+		let size = ["S"]
 		let itemDetails = {
 			item_id,
 			quantity,
