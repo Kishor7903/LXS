@@ -23,7 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import secureIcon from "../../assets/commonIcons/Secure.png";
 
-let options = ["1", "2", "3", "4", "5"];
+let quantity = ["1", "2", "3", "4", "5"];
 let sizes = ["S", "M", "L", "XL"];
 
 function CartPage() {
@@ -58,6 +58,12 @@ function CartPage() {
         deliveryDiscount = 49;
         platformFee = 9;
     }
+
+    const today = new Date();
+    const sixDaysLater = new Date();
+    sixDaysLater.setDate(today.getDate() + 7);
+    const options = { weekday: "long", day: '2-digit', month: 'short', year: 'numeric' };
+    const formattedDate = sixDaysLater.toLocaleDateString('en-GB', options);
 
     const handleQuantityChange = (e, item) => {
         e.preventDefault();
@@ -275,7 +281,7 @@ function CartPage() {
                                                         className="focus:outline-none font-bold rounded-full bg-transparent cursor-pointer"
                                                     >
                                                         {
-                                                            options.map((val, i) => (
+                                                            quantity.map((val, i) => (
                                                                 <option key={i} value={val} className="text-[rgb(8,43,61)] font-bold">
                                                                     {val}
                                                                 </option>
@@ -337,7 +343,7 @@ function CartPage() {
                                                 </p>
                                             </div>
                                             <p className="text-[9px] lg:text-[11px] font-semibold">
-                                                Delivered by 25 May, 2025
+                                                Delivered by {formattedDate}
                                             </p>
                                         </div>
                                         <div className="absolute bottom-0 lg:bottom-1 right-3 flex gap-3 items-center">

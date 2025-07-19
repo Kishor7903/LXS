@@ -44,7 +44,7 @@ function AdminHeader() {
 	}, []);
 
 	return (
-		<header className="h-[70px] w-full shadow-sm border-b flex fixed justify-between items-center z-30 bg-white">
+		<header className="h-[70px] w-full shadow-sm border-b flex fixed justify-between items-center z-20 bg-white">
 
 			{/* <div className="flex justify-start items-center w-[17%] border-r h-full shadow-sm pl-5">
                 <img src={lxsLogo} alt="" className="h-12" />

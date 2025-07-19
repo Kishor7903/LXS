@@ -25,16 +25,16 @@ function DialogBox({ isOpen, setIsOpen, className, children, parentDivClassName 
     }, [isOpen]);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen absolute z-50">
+        <div className="flex flex-col items-center justify-center min-h-screen absolute z-40">
             {isOpen && (
-                <div className={`fixed inset-0 flex bg-black bg-opacity-50 z-50 ${parentDivClassName}`}>
+                <div className={`fixed inset-0 flex bg-black bg-opacity-50 z-40 ${parentDivClassName}`}>
                     <motion.div
                         ref={dialogRef}
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.8, opacity: 0 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className={`min-h-40 min-w-60 shadow-md z-50 ${className}`}
+                        className={`min-h-40 min-w-60 shadow-md z-40 ${className}`}
                     >
                         {children}
                     </motion.div>

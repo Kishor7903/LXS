@@ -205,7 +205,7 @@ function Header({ className }) {
 	]
 
 	return (
-		<header className={`flex items-center justify-between px-3 md:px-5 xl:px-10 py-2 shadow-[0px_0px_10px_-5px_rgb(8,43,61)] sticky top-0 bg-white z-50 ${className}`}>
+		<header className={`flex items-center justify-between px-3 md:px-5 xl:px-10 py-2 shadow-[0px_0px_10px_-5px_rgb(8,43,61)] sticky top-0 bg-white z-30 ${className}`}>
 
 			<div className="flex gap-2 md:gap-3 items-center">
 
@@ -221,7 +221,7 @@ function Header({ className }) {
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							transition={{duration: 0.2, ease: "easeInOut" }}  // faster fade out
-							className="fixed inset-0 bg-black bg-opacity-50 z-40 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4"
+							className="fixed inset-0 bg-black bg-opacity-50 z-30 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4"
 						  >
 								<motion.div
 									ref={dialogRef}
@@ -230,7 +230,7 @@ function Header({ className }) {
 									animate={{ translateX: "0px" }}
 									exit={{ translateX: "-405px" }}
 									transition={{ duration: 0.3, ease: "easeInOut" }}
-									className="min-h-80 min-w-60 shadow-md z-50 h-[600px] xl:h-[700px] w-[300px] xl:w-[350px] overflow-hidden bg-white rounded-[35px] gap-3 xl:gap-5 flex flex-col relative"
+									className="min-h-80 min-w-60 shadow-md z-40 h-[600px] xl:h-[700px] w-[300px] xl:w-[350px] overflow-hidden bg-white rounded-[35px] gap-3 xl:gap-5 flex flex-col relative"
 								>
 									{/* --- Put your existing sidebar content here --- */}
 									{/* For example: */}
@@ -330,14 +330,14 @@ function Header({ className }) {
 					</AnimatePresence>
 
 					{/* {isSheetOpen && (
-						<div className={`fixed inset-0 bg-black bg-opacity-50 z-40 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4`}>
+						<div className={`fixed inset-0 bg-black bg-opacity-50 z-30 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4`}>
 							<motion.div
 								ref={dialogRef}
 								initial={{ translateX: "-405px" }}
 								animate={{ translateX: "0px" }}
 								exit={{ scale: 0.8, opacity: 0 }}
 								transition={{ duration: 0.2, ease: "easeOut", type: "spring", stiffness: 300, damping: 25 }}
-								className={`min-h-80 min-w-60 shadow-md z-50 h-[600px] xl:h-[700px] w-[300px] xl:w-[350px] overflow-hidden bg-white rounded-[35px] gap-3 xl:gap-5 flex flex-col relative`}
+								className={`min-h-80 min-w-60 shadow-md z-40 h-[600px] xl:h-[700px] w-[300px] xl:w-[350px] overflow-hidden bg-white rounded-[35px] gap-3 xl:gap-5 flex flex-col relative`}
 							>
 								<div className="h-[10%] bg-slate-200 w-full flex items-center px-3 gap-1  shadow-[inset_0px_-10px_5px_-10px_rgb(8,43,61)]">
 									<div className="w-1/6"><img src={user?.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="w-full rounded-full" /></div>
@@ -454,7 +454,7 @@ function Header({ className }) {
 							<div
 								onMouseEnter={() => setIsHovered(true)}
 								onMouseLeave={() => setIsHovered(false)}
-								className="bg-white w-48 rounded-xl shadow-lg border border-[rgb(8,43,61,0.4)] px-3 py-3 absolute -left-[60px] mt-1 top-5 z-50">
+								className="bg-white w-48 rounded-xl shadow-lg border border-[rgb(8,43,61,0.4)] px-3 py-3 absolute -left-[60px] mt-1 top-5 z-40">
 								<ul className="text-xs font-medium flex flex-col">
 									{
 										menuItems.map((items, index) => (

@@ -1,8 +1,9 @@
 import axios from "axios";
 import lxsLogo from "../assets/commonIcons/LXS Logo.png";
-import { createOrderInfo, deleteSelectedCartItems } from "./auth";
+import { createOrderInfo, deleteSelectedCartItems, updateOrderInfo } from "./auth";
 import { addNewOrder, removeAllSelectedCartItems } from "@/store/features/cartSlice";
 import { createShipmentOrder } from "./fship";
+import { getTimestamp } from "@/utils/commomFunctions";
 
 const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -79,61 +80,62 @@ export const displayRazorpay = async (
                 );
 
                 if (verifyRes.data.success) {
-                    
-                    createShipmentOrder(
+                    let timestamp = getTimestamp();
+
+                    let orderInfo = {
                         orderId,
-                        {
-                            name: address.name,
-                            phone: address.phone,
-                            email: user.email,
-                            address: `${address.houseNo}, ${address.area}`,
-                            landmark: address.landmark,
-                            address_type: address.address_type,
-                            pincode: address.pincode,
-                            city: address.city,
-                        },
-                        2,
-                        order.amount,
-                        11056,
-                        { weight: 0, length: 0, width: 0, height: 0 },
-                        cart
-                    )
-                        .then((res) => {
-							if(res.order_status === "success"){
-								let orderInfo = {
-                                    apiOrderId: res.apiorderid,
-                                    waybill: res.waybill,
-                                    orderId,
-                                    orderStatus: "pending",
-                                    products: cart,
-                                    address,
-                                    userId: user.id,
-                                    email: user.email,
-                                    paymentId: verifyRes.data.paymentDetails.id,
-                                    paymentMethod: verifyRes.data.paymentDetails.method,
-                                    amount: order.amount,
-                                    timestamp: new Date().toLocaleString("en-US", {
-                                        month: "short",
-                                        day: "2-digit",
-                                        year: "numeric",
-                                        hour: "numeric",
-                                        minute: "numeric",
-                                        second: "numeric",
-                                    }),
-                                };
-            
-                                createOrderInfo(user.id, orderInfo).then((res) => {
-                                    dispatch(addNewOrder({id: res.id, ...orderInfo}))
-                                    setPopupData({orderId, id:res.id})
-                                })
-                                deleteSelectedCartItems(user.id).then(() => {
-                                    dispatch(removeAllSelectedCartItems([]));
-                                });
-            
-                                setShowOrderedSuccessfull(true);
-							}
-						})
+                        orderStatus: "Pending",
+                        orderUpdates: [
+                            {
+                                title: "Order Placed",
+                                details: [
+                                    { text: "Your order is successfully placed", timestamp: timestamp },
+                                ],
+                            },
+                        ],
+                        products: cart,
+                        address,
+                        userId: user.id,
+                        email: user.email,
+                        paymentId: verifyRes.data.paymentDetails.id,
+                        paymentMethod: verifyRes.data.paymentDetails.method,
+                        amount: order.amount,
+                        timestamp: timestamp
+                    };
+
+                    createOrderInfo(user.id, orderInfo).then((res) => {
+                        dispatch(addNewOrder({id: res.id, ...orderInfo}))
+                        setPopupData({orderId, id:res.id})
+                        setShowOrderedSuccessfull(true);
+
+                        createShipmentOrder(
+                            orderId,
+                            {
+                                name: address.name,
+                                phone: address.phone,
+                                email: user.email,
+                                address: `${address.houseNo}, ${address.area}`,
+                                landmark: address.landmark,
+                                address_type: address.address_type,
+                                pincode: address.pincode,
+                                city: address.city,
+                            },
+                            2,
+                            order.amount,
+                            11056,
+                            { weight: 0, length: 0, width: 0, height: 0 },
+                            cart
+                        )
+                        .then((response) => {
+                            if(response.order_status === "success"){
+                                updateOrderInfo(user.id, res.id, {waybill: response.waybill, apiOrderId: response.apiorderid})
+                            }
+                        })
                         .catch((err) => console.log("Error Creating Shipping Order: ", err.message));
+                    })
+                    deleteSelectedCartItems(user.id).then(() => {
+                        dispatch(removeAllSelectedCartItems([]));
+                    });
                 }
             },
             prefill: {

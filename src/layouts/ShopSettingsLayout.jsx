@@ -13,6 +13,7 @@ import savedAddressIconFill from "../assets/commonIcons/Home (Fill).png"
 import savedAddressIconStroke from "../assets/commonIcons/Home (Stroke).png"
 import paymentOptionIconFill from "../assets/commonIcons/Payment (Fill).png"
 import paymentOptionIconStroke from "../assets/commonIcons/Payment (Stroke).png"
+import rocket from "../assets/commonIcons/Track Rocket (Fill).png"
 // import subscriptionIconFill from "../assets/commonIcons/Gift Cards (Fill).png"
 // import subscriptionIconStroke from "../assets/commonIcons/Gift Cards (Stroke).png"
 import settingIconFill from "../assets/commonIcons/Setting (Fill).png"
@@ -165,7 +166,7 @@ function ShopSettingsLayout() {
                             <p className="text-[10px] relative bottom-[5px]">+91 {user?.phone}</p>
                         </div>
                     </div> */}
-                    <div className="flex flex-col items-end h-full text-sm pt-5">
+                    <div className="flex flex-col items-end h-full text-sm pt-5 relative">
                         {
                             settingItems.map((item, index) => (
                                 <NavLink to={item.slug} key={index} className={({ isActive }) => `${item.childrens && openDropdown ? "h-[105px] justify-start font-bold text-base" : "h-8 justify-center"} w-full flex flex-col items-end  ${isActive ? "font-bold text-base" : ""}`}>
@@ -185,14 +186,17 @@ function ShopSettingsLayout() {
                                 </NavLink>
                             ))
                         }
+                        {/* <div className=" bg-white border h-8 w-10 rounded-l-full flex justify-end items-center absolute top-5 -right-7">
+                            <img src={rocket} alt="" className="h-5 rotate-180" />
+                        </div> */}
                     </div>
                     <div className="flex justify-between items-center w-full">
                         <Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-slate-200 w-[60%]  xl:px-3 pt-1 xl:py-1 rounded-l rounded-r-[20px]">
                             <img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Notification
                         </Link>
-                        <Link onClick={handleLogout} className="flex gap-1 items-center text-[rgb(240,85,120)] hover:underline font-medium">
+                        <button onClick={handleLogout} className="flex gap-1 items-center text-[rgb(240,85,120)] hover:underline font-medium">
                             <img src={logoutRedIcon} alt="" className="h-5" /> Logout
-                        </Link>
+                        </button>
                     </div>
                 </div>
                 <div className="w-[81%] m-5 rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-hidden"><Outlet /></div>

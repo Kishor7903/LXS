@@ -142,33 +142,6 @@ function PaymentsPage() {
         setPinNumber(input)
     }
 
-    useEffect(() => {
-        // const result = [];
-
-        // cartItems.forEach((product) => {
-        //     const sizeCount = {};
-
-        //     product.size.forEach((size) => {
-        //         if (sizeCount[size]) {
-        //             sizeCount[size] += 1;
-        //         } else {
-        //             sizeCount[size] = 1;
-        //         }
-        //     });
-
-        //     Object.entries(sizeCount).forEach(([size, qty]) => {
-        //         result.push({
-        //             productId: product.id,
-        //             size: size,
-        //             quantity: qty
-        //         });
-        //     });
-        // });
-
-        // console.log(result);
-    }, []);
-
-
     return (
         <>
             <div className="w-full h-full py-3 lg:py-8 px-3 lg:px-16 flex gap-10">
@@ -293,12 +266,11 @@ function PaymentsPage() {
                                                         <p className='font-semibold opacity-70 line-clamp-1'>{product.name}</p>
                                                         <p className='text-xs'>Estimated Delivery by <span className='font-semibold'>{formattedDate}</span></p>
                                                     <div className="flex gap-3 items-center text-xs">
-                                                        {console.log(product.size)}
-                                                        {/* {
+                                                        {
                                                             product?.size.map((size, i) => (
                                                                 <p key={i} className='px-1.5 py-0.5 my-0.5 border border-slate-300 rounded-full font-medium bg-slate-100'>Size{i+1}: <span className="text-[rgb(240,85,120)] font-bold">{size}</span></p>
                                                             ))
-                                                        } */}
+                                                        }
                                                     </div>
                                                     </div>
                                                 </div>

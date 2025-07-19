@@ -22,7 +22,7 @@ export default function ToastProvider({ children }) {
     <ToastContext.Provider value={showToast}>
       {children}
 
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col gap-2 items-center z-50">
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col gap-2 items-center z-40">
         <AnimatePresence initial={false}>
           {toasts.map((toast) => (
             <motion.div
