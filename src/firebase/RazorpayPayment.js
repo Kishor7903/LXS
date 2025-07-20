@@ -4,6 +4,7 @@ import { createOrderInfo, deleteSelectedCartItems, updateOrderInfo } from "./aut
 import { addNewOrder, removeAllSelectedCartItems } from "@/store/features/cartSlice";
 import { createShipmentOrder } from "./fship";
 import { getTimestamp } from "@/utils/commomFunctions";
+import { updateProduct } from "@/store/features/adminSlice";
 
 const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -85,6 +86,7 @@ export const displayRazorpay = async (
                     let orderInfo = {
                         orderId,
                         orderStatus: "Pending",
+                        isHidden: false,
                         orderUpdates: [
                             {
                                 title: "Order Placed",
@@ -128,7 +130,9 @@ export const displayRazorpay = async (
                         )
                         .then((response) => {
                             if(response.order_status === "success"){
-                                updateOrderInfo(user.id, res.id, {waybill: response.waybill, apiOrderId: response.apiorderid})
+                                updateOrderInfo(user.id, res.id, {waybill: response.waybill, apiOrderId: response.apiorderid}).then(() => {
+                                    dispatch(updateProduct({id: res.id, ...orderInfo, waybill: response.waybill, apiOrderId: response.apiorderid}))
+                                })
                             }
                         })
                         .catch((err) => console.log("Error Creating Shipping Order: ", err.message));

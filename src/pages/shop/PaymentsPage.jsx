@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import secureIcon from "../../assets/commonIcons/Secure.png"
 import paymentIcon from "../../assets/commonIcons/Cash White (Fill).png"
+import { getTimestamp } from '@/utils/commomFunctions';
 
 let offers = [
     {
@@ -88,6 +89,7 @@ function PaymentsPage() {
     let deliveryPrice = 49;
     let deliveryDiscount = 49;
     let platformFee = 9;
+    console.log(getTimestamp());
 
     const handleProceedToPayment = async (e) => {
         e.preventDefault();

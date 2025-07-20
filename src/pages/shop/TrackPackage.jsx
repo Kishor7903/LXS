@@ -70,7 +70,6 @@ function TrackPackage() {
     useEffect(() => {
         getSingleOrderDetails(user.id, id).then((res) => {
             setOrderDetails(res);
-            console.log(res);
         })
     }, [])
 
@@ -86,7 +85,10 @@ function TrackPackage() {
                     </div>
                     <div className="rounded-3xl bg-slate-100 shadow-md border border-slate-300 h-[92.2%] mt-5 px-8 py-5 flex overflow-y-scroll no-scrollbar">
                         <div className="flex flex-col gap-2 text-sm w-full">
-                            <OrderProgressStepper steps={steps} currentStep={4} />
+                            {
+                                orderDetails?.orderUpdates &&
+                            <OrderProgressStepper steps={orderDetails?.orderUpdates} currentStep={0} />
+                            }
                         </div>
                     </div>
                     <span className="text-[11px] font-medium lg:text-xs absolute bottom-3 lg:bottom-3 lg:right-5">
