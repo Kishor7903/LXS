@@ -86,6 +86,7 @@ import AdminPickupWarehouse from "./pages/admin/AdminPickupWarehouse"
 import SuccessfulPopup from "./components/SuccessfulPopup"
 import AddressPageLayout from "./layouts/AddressPageLayout"
 import reload from "./assets/GIF/reload.gif"
+import HiddenOrders from "./pages/shop/HiddenOrders"
 
 function App() {
 	let { isAuthenticated, user, isLoading } = useSelector(state => state.auth);
@@ -202,6 +203,7 @@ function App() {
 						<Route path="account-preference" element={<AccountPreference />} />
 						<Route path="Security-login" element={<SecurityLogin />} />
 						<Route path="privacy-data" element={<PrivacyData />} />
+						<Route path="hidden-orders" element={<HiddenOrders />} />
 					</Route>
 					<Route path="contact-us" element={<ShopSettingContactUs />} />
 				</Route>

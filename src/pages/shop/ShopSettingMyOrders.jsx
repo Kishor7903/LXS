@@ -20,7 +20,8 @@ function ShopSettingMyOrders() {
 
     useEffect(() => {
         setLoading(true);
-        let sortedOrders = [...orders].sort((a, b) => { return new Date(b.timestamp) - new Date(a.timestamp); })
+        let filteredOrders = orders.filter((item) => item.isHidden === false);
+        let sortedOrders = [...filteredOrders].sort((a, b) => { return new Date(b.timestamp) - new Date(a.timestamp); })
         setOrder(sortedOrders)
         setTimeout(() => {
             setLoading(false)
@@ -35,8 +36,8 @@ function ShopSettingMyOrders() {
                         <p className="text-xs font-normal">Because your wallet just took a hit!</p>
                     </span>
                     <div className="flex flex-col text-right text-[13px] relative bottom-3 font-semibold leading-4">
-                        <p>Total Orders: <span className="text-[rgb(240,85,120)]">{orders.length > 9 ? orders.length : `0${orders.length}`}</span></p>
-                        <p>Total Items: <span className="text-[rgb(240,85,120)]">{orders.reduce((sum, product) => { return sum + product.products.length }, 0) > 9 ? orders.reduce((sum, product) => { return sum + product.products.length }, 0) : `0${orders.reduce((sum, product) => { return sum + product.products.length }, 0)}`}</span></p>
+                        <p>Total Orders: <span className="text-[rgb(240,85,120)]">{order.length > 9 ? order.length : `0${order.length}`}</span></p>
+                        <p>Total Items: <span className="text-[rgb(240,85,120)]">{order.reduce((sum, product) => { return sum + product.products.length }, 0) > 9 ? order.reduce((sum, product) => { return sum + product.products.length }, 0) : `0${order.reduce((sum, product) => { return sum + product.products.length }, 0)}`}</span></p>
                         <p>Total Returns: <span className="text-[rgb(240,85,120)]">00</span></p>
                     </div>
                 </div>
