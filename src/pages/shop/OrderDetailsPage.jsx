@@ -10,6 +10,7 @@ import invoice from "../../assets/files/TAX INVOICE.docx"
 import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
 import { saveAs } from "file-saver";
+import { numberToWords } from "@/utils/commomFunctions";
 
 function OrderDetailsPage() {
     let navigate = useNavigate();
@@ -51,11 +52,34 @@ function OrderDetailsPage() {
             paragraphLoop: true,
             linebreaks: true,
         });
-        console.log(orderDetails);
 
         const data = {
             orderId: orderDetails?.orderId,
-            orderDate: `${orderDetails?.timestamp.split(",")[1].slice(1, orderDetails?.timestamp.split(",")[1].length)}, ${orderDetails?.timestamp.split(",")[2]}`
+            orderDate: `${orderDetails?.timestamp.split(",")[1].substring(2, orderDetails?.timestamp.split(",")[1].length)}, ${orderDetails?.timestamp.split(",")[2]}`,
+            phone: orderDetails?.address?.phone,
+            email: orderDetails?.email,
+            items: orderDetails?.products?.length,
+            products: orderDetails?.products?.map((item, index) => ({
+                qty: item.quantity,
+                name: item.productName,
+                s: index + 1,
+                gro: (item.price * item.quantity).toFixed(1),
+                tot: (item.quantity * item.unitPrice).toFixed(1),
+                tax: (((item.unitPrice * 100) / 105) * item.quantity).toFixed(1),
+                dis: ((item.price - (item.unitPrice * 100) / 105) * item.quantity).toFixed(1),
+                gst: ((item.quantity * item.unitPrice) - ((item.unitPrice * 100) / 105) * item.quantity).toFixed(1),
+            })),
+            tqt: orderDetails?.products?.reduce((sum, i) => {return sum + i.quantity}, 0),
+            tgr: orderDetails?.products?.reduce((sum, i) => {return sum + (i.price * i.quantity)}, 0).toFixed(1),
+            tto: orderDetails?.products?.reduce((sum, i) => {return sum + (i.unitPrice * i.quantity)}, 0).toFixed(1),
+            tta: orderDetails?.products?.reduce((sum, i) => {return sum + (((i.unitPrice * 100) / 105) * i.quantity)}, 0).toFixed(1),
+            tgs: orderDetails?.products?.reduce((sum, i) => {return sum + ((i.quantity * i.unitPrice) - ((i.unitPrice * 100) / 105) * i.quantity)}, 0).toFixed(1),
+            word: numberToWords(orderDetails?.products?.reduce((sum, i) => {return sum + (i.unitPrice * i.quantity)}, 0).toFixed(1)),
+            tdi: orderDetails?.products?.reduce((sum, i) => {return sum + ((i.price - (i.unitPrice * 100) / 105) * i.quantity)}, 0),
+            shipping_name: orderDetails?.address?.name,
+            shipping_area: `${orderDetails?.address?.houseNo}, ${orderDetails?.address?.area}`,
+            shipping_landmark: `${orderDetails?.address?.landmark}, ${orderDetails?.address?.city}`,
+            shipping_state: `${orderDetails?.address?.state} (${orderDetails?.address?.pincode})`
         };
 
         doc.setData(data);

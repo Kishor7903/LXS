@@ -1,5 +1,6 @@
-import HeadingText from "@/components/HeadingText"
+import DialogBox from "@/components/DialogBox";
 import HoverButton from "@/components/HoverButton";
+import RgbButton from "@/components/RgbButton";
 import { saveNewsletterInfo, saveWorkWithUsInfo } from "@/firebase/auth";
 import { useState } from "react"
 import { useSelector } from "react-redux";
@@ -19,6 +20,8 @@ function WorkWithUsAndNewsletter() {
     let [formData, setFormData] = useState(data);
     let [email, setEmail] = useState("");
     let { user } = useSelector(state => state.auth);
+    let [isOpen, setIsOpen] = useState(false);
+    let [open, setOpen] = useState(false);
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -37,30 +40,39 @@ function WorkWithUsAndNewsletter() {
         }
     }
 
-    const handleWorkWithUsSubmit = (e) => {
+    const workWithUsButton = (e) => {
         e.preventDefault();
+
+        if(!user){
+            toast.error("Login Required.")
+            return
+        }
 
         if (!formData.name || !formData.phone || !formData.email || !formData.describe || !formData.skill) {
             toast.error("Required All Fields!!")
             return
         }
+        setIsOpen(true);
+    }
 
-        if (user){
+    const handleWorkWithUsSubmit = (e) => {
+        e.preventDefault();
+
+        if (user) {
             saveWorkWithUsInfo(formData).then(() => {
+                setIsOpen(false)
                 toast.success("Info Send Successfully...");
                 setFormData(data);
             })
         }
-        else{
-            toast.error("Login Required!!");
-        }
-        
+
     }
 
     const handleNewsletterSubmit = (e) => {
         e.preventDefault();
 
         saveNewsletterInfo(email).then(() => {
+            setOpen(false)
             setEmail("");
             toast.success("Subscribed Successfully...")
         })
@@ -81,9 +93,31 @@ function WorkWithUsAndNewsletter() {
                     <textarea name="describe" value={formData.describe} onChange={handleChange} className="w-full h-20 md:h-32 lg:h-40 bg-slate-200 rounded-[6px] lg:rounded-3xl px-3 lg:px-5 text-xs md:text-base font-medium py-3 focus:outline-none placeholder:text-[rgb(8,43,61,0.6)] shadow-[inset_0px_0px_12px_-2px_rgb(8,43,61)]" placeholder="Describe!" cols="30" rows="10" autoComplete="off"></textarea>
                     <div className="flex gap-4">
                         <input name="skill" value={formData.skill} onChange={handleChange} className="w-[80%] h-10 lg:h-12 bg-slate-200 rounded-[12px] lg:rounded-3xl px-3 lg:px-5 focus:outline-none text-xs lg:text-base font-medium placeholder:text-[rgb(8,43,61,0.6)] shadow-[inset_0px_0px_12px_-2px_rgb(8,43,61)]" placeholder="Your Skills" autoComplete="off" />
-                        <HoverButton className="px-4 h-12 flex justify-center items-center font-semibold self-end" onClick={handleWorkWithUsSubmit}>Submit 🚀</HoverButton>
+                        <HoverButton className="px-4 h-12 flex justify-center items-center font-semibold self-end" onClick={workWithUsButton}>Submit 🚀</HoverButton>
                     </div>
                 </form>
+                <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="w-[40vw] bg-white rounded-xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
+                    <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
+                        Work With Us
+                    </h2>
+                    <div className="w-full p-10 flex flex-col gap-5">
+                        <div className="flex gap-5">
+                            <input type="text" className="h-9 w-1/2 rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.name} disabled />
+                            <input type="text" className="h-9 w-1/2 rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.phone} disabled />
+                        </div>
+                        <div className="flex gap-5">
+                            <input type="text" className="h-9 w-1/2 rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.email} disabled />
+                            <input type="text" className="h-9 w-1/2 rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.skill} disabled />
+                        </div>
+                        <input type="text" className="h-9 w-full rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.address} disabled />
+                        <textarea type="text" className="h-20 w-full rounded-xl border border-slate-300 px-3 py-2 opacity-80" value={formData.address} disabled ></textarea>
+                        <div className="flex gap-6 justify-center">
+                            <HoverButton onClick={() => setIsOpen(false)} className="px-6 py-2 border-2 font-semibold" >Cancel</HoverButton>
+                            <RgbButton onClick={(handleWorkWithUsSubmit)} className="text-base font-semibold px-6 py-2" >Submit</RgbButton>
+                        </div>
+                    </div>
+                    
+                </DialogBox>
 
             </div>
 
@@ -100,8 +134,21 @@ function WorkWithUsAndNewsletter() {
                 </span>
                 <form className="flex flex-col gap-4">
                     <textarea type="text" value={email} onChange={(e) => { e.preventDefault(), setEmail(e.target.value) }} className="h-9 xl:h-[128px] lg:h-10 w-full py-3 lg:px-5 mt-3 lg:mt-5 text-xs lg:text-base rounded-2xl font-medium focus:outline-none placeholder:text-[rgb(8,43,61,0.4)] bg-slate-200 shadow-[inset_0px_0px_12px_-2px_rgb(8,43,61)]" placeholder="Cosmic Feedback..." ></textarea>
-                    <HoverButton className="px-4 h-12 flex justify-center items-center font-semibold self-end" onClick={handleNewsletterSubmit}>Transmit 🛰️</HoverButton>
+                    <HoverButton className="px-4 h-12 flex justify-center items-center font-semibold self-end" onClick={(e) => email ?  (e.preventDefault(), setOpen(true)) : (e.preventDefault(), toast.error("Please enter your email"))}>Transmit 🛰️</HoverButton>
                 </form>
+                <DialogBox isOpen={open} setIsOpen={setOpen} className="w-[40vw] bg-white rounded-xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
+                    <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
+                        Work With Us
+                    </h2>
+                    <div className="w-full p-10 flex flex-col gap-5">
+                        <input type="text" className="h-9 w-full rounded-full border border-slate-300 px-3 py-2 opacity-80" value={email} disabled />
+                        <div className="flex gap-6 justify-center">
+                            <HoverButton onClick={() => setOpen(false)} className="px-6 py-2 border-2 font-semibold" >Cancel</HoverButton>
+                            <RgbButton onClick={handleNewsletterSubmit} className="text-base font-semibold px-6 py-2" >Submit</RgbButton>
+                        </div>
+                    </div>
+                    
+                </DialogBox>
             </div>
 
 
