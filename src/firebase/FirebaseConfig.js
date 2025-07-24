@@ -4,14 +4,14 @@ import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDqRLXgVYvin-eReEzZL4jDTTjg8t4THDw",
-  authDomain: "sachin-kumar-24.firebaseapp.com",
-  projectId: "sachin-kumar-24",
-  storageBucket: "sachin-kumar-24.firebasestorage.app",
-  messagingSenderId: "993289393235",
-  appId: "1:993289393235:web:7e7a6809c84a2587d562a6",
-  measurementId: "G-HZF7CCF6CQ",
-  databaseURL: "https://lxs-39801-default-rtdb.firebaseio.com"
+  apiKey: "AIzaSyBKL2I-Gv82X-q47RQzaz86vCK7DQuaTIQ",
+  authDomain: "lxslifestylestore-8935b.firebaseapp.com",
+  databaseURL: "https://lxslifestylestore-8935b-default-rtdb.firebaseio.com",
+  projectId: "lxslifestylestore-8935b",
+  storageBucket: "lxslifestylestore-8935b.firebasestorage.app",
+  messagingSenderId: "800913751199",
+  appId: "1:800913751199:web:b5dd70daaf8faa1a6cb6aa",
+  measurementId: "G-Z76G0DFHRP"
 };
 
 export const app = initializeApp(firebaseConfig);
