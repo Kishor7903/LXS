@@ -4,16 +4,16 @@ import { Link } from "react-router-dom";
 function PrivacyData() {
 
     const privacyData = [
-        // {
-        //     name: "Promotional Offers",
-        //     content: [
-        //         {
-        //             key: "newsletter:",
-        //             value: "Request email withdrawal",
-        //             slug: ""
-        //         },
-        //     ],
-        // },
+        {
+            name: "Confidential Data",
+            content: [
+                {
+                    key: "Hidden Orders:",
+                    value: "View",
+                    slug: "/setting/hidden-orders"
+                },
+            ],
+        },
         {
             name: "Legal & compliances",
             content: [

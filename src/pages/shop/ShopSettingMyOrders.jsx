@@ -1,4 +1,3 @@
-import HoverButton from "@/components/HoverButton";
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -11,11 +10,6 @@ function ShopSettingMyOrders() {
     // let { products } = useSelector(state => state.admin);
     let [loading, setLoading] = useState(false);
     let navigate = useNavigate();
-
-    // let orderItems = orders?.map(item => {
-    //     let product = products.find(p => console.log(p.id, item.products));
-    //     return product ? { ...product, quantity: item.productInfo.quantity, size: item.productInfo.size, orderId: item.orderId, amount: item.amount, timestamp: item.timestamp, order_id: item.id } : null;
-    // }).filter(item => item !== null);
 
 
     useEffect(() => {
@@ -70,7 +64,6 @@ function ShopSettingMyOrders() {
                                                             </div>
                                                             <p className="text-xs font-medium italic mt-1">(Delivery may vary due to unforeseen reasons)</p>
                                                         </div>
-                                                        <HoverButton onClick={(e) => { e.stopPropagation(), navigate(`/product-details/${product.id}`) }} className="px-2 py-[4px] text-[14px] text-center font-semibold absolute bottom-0 right-1">View Product Details</HoverButton>
                                                     </div>
                                                     {
                                                         item.products.length > 1 && idx !== item.products.length - 1 ?
@@ -81,7 +74,6 @@ function ShopSettingMyOrders() {
                                                 </div>
                                             ))
                                         }
-                                        <p className="text-[14px] mb-1 font-semibold tracking-tighter absolute top-2 right-4">{item.orderId}</p>
                                     </div>
                                 )) :
                                 <div className="text-xl font-semibold flex justify-center items-center h-40">No Orders Yet!!</div>

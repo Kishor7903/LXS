@@ -89,7 +89,6 @@ function PaymentsPage() {
     let deliveryPrice = 49;
     let deliveryDiscount = 49;
     let platformFee = 9;
-    console.log(getTimestamp());
 
     const handleProceedToPayment = async (e) => {
         e.preventDefault();

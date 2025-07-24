@@ -148,7 +148,7 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
                         <hr className="border w-7 absolute left-[28px] opacity-30 top-[38px] rotate-90 border-[rgb(8,43,61)]" />
                     </div>
                     <div className="w-1/2">
-                        <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> PinCode<span className="text-red-600">*</span></label>
+                        <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Pincode<span className="text-red-600">*</span></label>
                         <br />
                         <input type="number" name='pincode' value={formData.pincode} onChange={handlePincodeChange} onWheel={(e) => e.target.blur()} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" autoComplete='off' />
                     </div>

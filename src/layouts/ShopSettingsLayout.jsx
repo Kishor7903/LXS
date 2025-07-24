@@ -140,11 +140,7 @@ function ShopSettingsLayout() {
                 {
                     name: "Privacy Data",
                     slug: "/setting/settings/privacy-data"
-                },
-                {
-                    name: "Hidden Orders",
-                    slug: "/setting/settings/hidden-orders"
-                },
+                }
             ]
         },
         {
@@ -173,7 +169,7 @@ function ShopSettingsLayout() {
                     <div className="flex flex-col items-end h-full text-sm pt-5 relative">
                         {
                             settingItems.map((item, index) => (
-                                <NavLink to={item.slug} key={index} className={({ isActive }) => `${item.childrens && openDropdown ? "h-[115px] justify-start font-bold text-base" : "h-8 justify-center"} w-full flex flex-col items-end  ${isActive ? "font-bold text-base" : ""}`}>
+                                <NavLink to={item.slug} key={index} className={({ isActive }) => `${item.childrens && openDropdown ? "h-[105px] justify-start font-bold text-base" : "h-8 justify-center"} w-full flex flex-col items-end  ${isActive ? "font-bold text-base" : ""}`}>
                                     <span onClick={() => handleDropdown(index)} className="flex justify-end lg:hover:bg-slate-200 w-5/6 px-2 py-1 rounded-l-[20px] rounded-r">{item.name} <img src={`${location.includes(item.slug) || (item.childrens && openDropdown) ? item.activeIcon : item.icon}`} alt="" className="h-5 ml-2" /></span>
                                     {
                                         index === 6 && openDropdown ? (

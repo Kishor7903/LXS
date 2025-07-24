@@ -5,6 +5,7 @@ import { saveNewsletterInfo, saveWorkWithUsInfo } from "@/firebase/auth";
 import { useState } from "react"
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import flagIcon from "../../assets/commonIcons/Indian Flag (Fill).png"
 
 let data = {
     name: "",
@@ -43,7 +44,7 @@ function WorkWithUsAndNewsletter() {
     const workWithUsButton = (e) => {
         e.preventDefault();
 
-        if(!user){
+        if (!user) {
             toast.error("Login Required.")
             return
         }
@@ -100,23 +101,49 @@ function WorkWithUsAndNewsletter() {
                     <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
                         Work With Us
                     </h2>
-                    <div className="w-full p-10 flex flex-col gap-5">
-                        <div className="flex gap-5">
-                            <input type="text" className="h-9 w-1/2 rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.name} disabled />
-                            <input type="text" className="h-9 w-1/2 rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.phone} disabled />
+                    <div className="w-full px-8 py-5 flex flex-col gap-2">
+                        <div className="flex space-x-5">
+                            <div className="w-1/2 relative">
+                                <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Name</label>
+                                <br />
+                                <input type="text" value={formData.name} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" />
+                            </div>
+                            <div className="w-1/2 relative">
+                                <label className="relative top-2 left-3 pl-1 pr-5 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Phone<img src={flagIcon} alt="" className="h-2 absolute top-1 right-0 pr-1" /></label>
+                                <br />
+                                <input type="number" value={formData.phone} disabled className="border-[rgb(196,185,185)] border pr-3 pl-12 rounded-xl h-10 w-full outline-none" />
+                                <p className="absolute top-[32px] left-[8px]">+91</p>
+                                <hr className="border w-7 absolute left-[28px] opacity-30 top-[44px] rotate-90 border-[rgb(8,43,61)]" />
+                            </div>
                         </div>
-                        <div className="flex gap-5">
-                            <input type="text" className="h-9 w-1/2 rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.email} disabled />
-                            <input type="text" className="h-9 w-1/2 rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.skill} disabled />
+                        <div className="flex space-x-5">
+                            <div className="w-1/2 relative">
+                                <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Email</label>
+                                <br />
+                                <input type="text" value={formData.email} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" />
+                            </div>
+                            <div className="w-1/2 relative">
+                                <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Skills</label>
+                                <br />
+                                <input type="text" value={formData.skill} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" />
+                            </div>
                         </div>
-                        <input type="text" className="h-9 w-full rounded-full border border-slate-300 px-3 py-2 opacity-80" value={formData.address} disabled />
-                        <textarea type="text" className="h-20 w-full rounded-xl border border-slate-300 px-3 py-2 opacity-80" value={formData.address} disabled ></textarea>
+                        <div className="">
+                            <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Address</label>
+                            <br />
+                            <input type="text" value={formData.address} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" />
+                        </div>
+                        <div className="">
+                            <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Describe</label>
+                            <br />
+                            <textarea value={formData.address} disabled className="border-[rgb(196,185,185)] border px-3 py-1 rounded-xl h-24 w-full outline-none" ></textarea>
+                        </div>
                         <div className="flex gap-6 justify-center">
                             <HoverButton onClick={() => setIsOpen(false)} className="px-6 py-2 border-2 font-semibold" >Cancel</HoverButton>
-                            <RgbButton onClick={(handleWorkWithUsSubmit)} className="text-base font-semibold px-6 py-2" >Submit</RgbButton>
+                            <RgbButton onClick={(handleWorkWithUsSubmit)} className="text-base font-semibold px-6 py-2" >Confirm</RgbButton>
                         </div>
                     </div>
-                    
+
                 </DialogBox>
 
             </div>
@@ -134,20 +161,24 @@ function WorkWithUsAndNewsletter() {
                 </span>
                 <form className="flex flex-col gap-4">
                     <textarea type="text" value={email} onChange={(e) => { e.preventDefault(), setEmail(e.target.value) }} className="h-9 xl:h-[128px] lg:h-10 w-full py-3 lg:px-5 mt-3 lg:mt-5 text-xs lg:text-base rounded-2xl font-medium focus:outline-none placeholder:text-[rgb(8,43,61,0.4)] bg-slate-200 shadow-[inset_0px_0px_12px_-2px_rgb(8,43,61)]" placeholder="Cosmic Feedback..." ></textarea>
-                    <HoverButton className="px-4 h-12 flex justify-center items-center font-semibold self-end" onClick={(e) => email ?  (e.preventDefault(), setOpen(true)) : (e.preventDefault(), toast.error("Please enter your email"))}>Transmit 🛰️</HoverButton>
+                    <HoverButton className="px-4 h-12 flex justify-center items-center font-semibold self-end" onClick={(e) => email ? (e.preventDefault(), setOpen(true)) : (e.preventDefault(), toast.error("Please enter your email"))}>Transmit 🛰️</HoverButton>
                 </form>
                 <DialogBox isOpen={open} setIsOpen={setOpen} className="w-[40vw] bg-white rounded-xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
                     <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
-                        Work With Us
+                    Uplink your Thoughts! 🔮📡
                     </h2>
-                    <div className="w-full p-10 flex flex-col gap-5">
-                        <input type="text" className="h-9 w-full rounded-full border border-slate-300 px-3 py-2 opacity-80" value={email} disabled />
+                    <div className="w-full px-7 py-5 flex flex-col gap-5">
+                        <div className="">
+                            <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Email</label>
+                            <br />
+                            <input type="text" value={email} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none" />
+                        </div>
                         <div className="flex gap-6 justify-center">
                             <HoverButton onClick={() => setOpen(false)} className="px-6 py-2 border-2 font-semibold" >Cancel</HoverButton>
-                            <RgbButton onClick={handleNewsletterSubmit} className="text-base font-semibold px-6 py-2" >Submit</RgbButton>
+                            <RgbButton onClick={handleNewsletterSubmit} className="text-base font-semibold px-6 py-2" >Confirm</RgbButton>
                         </div>
                     </div>
-                    
+
                 </DialogBox>
             </div>
 

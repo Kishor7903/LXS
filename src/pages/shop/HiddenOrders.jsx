@@ -24,8 +24,8 @@ function HiddenOrders() {
     return (
         <div className="w-full h-full flex flex-col">
             <div className="leading-[1] font-semibold flex justify-between border-b-2 border-[rgb(8,43,61)] h-10">
-                <span>The Damage Report 🛠️<br />
-                    <p className="text-xs font-normal">Because your wallet just took a hit!</p>
+                <span>Shh... It's Hidden 🤐<br />
+                    <p className="text-xs font-normal">No one needs to know. Not even your wallet!</p>
                 </span>
             </div>
             <div className="space-y-3 h-full py-2 overflow-y-scroll no-scrollbar">

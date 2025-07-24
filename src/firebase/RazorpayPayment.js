@@ -1,5 +1,5 @@
 import axios from "axios";
-import lxsLogo from "../assets/commonIcons/LXS Logo.png";
+import lxsLogo from "../assets/commonIcons/Logo - small.png";
 import { createOrderInfo, deleteSelectedCartItems, updateOrderInfo } from "./auth";
 import { addNewOrder, removeAllSelectedCartItems } from "@/store/features/cartSlice";
 import { createShipmentOrder } from "./fship";
@@ -56,7 +56,7 @@ export const displayRazorpay = async (
         let orderId = generateOrderId();
 
         let response = await axios.post(
-            "/sachin-kumar-24/us-central1/createOrder",
+            "/lxslifestylestore-8935b/us-central1/createOrder",
             { ...order, orderId }
         );
 
@@ -72,7 +72,7 @@ export const displayRazorpay = async (
             description: "For Payment Testing Purpose",
             handler: async function (response) {
                 let verifyRes = await axios.post(
-                    "/sachin-kumar-24/us-central1/verifyPayment",
+                    "/lxslifestylestore-8935b/us-central1/verifyPayment",
                     {
                         razorpay_order_id: response.razorpay_order_id,
                         razorpay_payment_id: response.razorpay_payment_id,

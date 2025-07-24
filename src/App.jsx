@@ -202,8 +202,8 @@ function App() {
 						<Route path="account-preference" element={<AccountPreference />} />
 						<Route path="Security-login" element={<SecurityLogin />} />
 						<Route path="privacy-data" element={<PrivacyData />} />
-						<Route path="hidden-orders" element={<HiddenOrders />} />
 					</Route>
+						<Route path="hidden-orders" element={<HiddenOrders />} />
 					<Route path="contact-us" element={<ShopSettingContactUs />} />
 				</Route>
 				<Route path="/orders" element={
