@@ -55,7 +55,7 @@ function OrderDetailsPage() {
 
         const data = {
             orderId: orderDetails?.orderId,
-            orderDate: `${orderDetails?.timestamp.split(",")[1].substring(2, orderDetails?.timestamp.split(",")[1].length)}, ${orderDetails?.timestamp.split(",")[2]}`,
+            orderDate: `${orderDetails?.timestamp.split(",")[1].substring(1, orderDetails?.timestamp.split(",")[1].length)}, ${orderDetails?.timestamp.split(",")[2]}`,
             phone: orderDetails?.address?.phone,
             email: orderDetails?.email,
             items: orderDetails?.products?.length,
@@ -63,19 +63,19 @@ function OrderDetailsPage() {
                 qty: item.quantity,
                 name: item.productName,
                 s: index + 1,
-                gro: (item.price * item.quantity).toFixed(1),
-                tot: (item.quantity * item.unitPrice).toFixed(1),
-                tax: (((item.unitPrice * 100) / 105) * item.quantity).toFixed(1),
-                dis: ((item.price - (item.unitPrice * 100) / 105) * item.quantity).toFixed(1),
-                gst: ((item.quantity * item.unitPrice) - ((item.unitPrice * 100) / 105) * item.quantity).toFixed(1),
+                gro: (item.price * item.quantity).toFixed(2),
+                tot: (item.quantity * item.unitPrice).toFixed(2),
+                tax: (((item.unitPrice * 100) / 105) * item.quantity).toFixed(2),
+                dis: ((item.price - (item.unitPrice * 100) / 105) * item.quantity).toFixed(2),
+                gst: ((item.quantity * item.unitPrice) - ((item.unitPrice * 100) / 105) * item.quantity).toFixed(2),
             })),
             tqt: orderDetails?.products?.reduce((sum, i) => {return sum + i.quantity}, 0),
-            tgr: orderDetails?.products?.reduce((sum, i) => {return sum + (i.price * i.quantity)}, 0).toFixed(1),
-            tto: orderDetails?.products?.reduce((sum, i) => {return sum + (i.unitPrice * i.quantity)}, 0).toFixed(1),
-            tta: orderDetails?.products?.reduce((sum, i) => {return sum + (((i.unitPrice * 100) / 105) * i.quantity)}, 0).toFixed(1),
-            tgs: orderDetails?.products?.reduce((sum, i) => {return sum + ((i.quantity * i.unitPrice) - ((i.unitPrice * 100) / 105) * i.quantity)}, 0).toFixed(1),
-            word: numberToWords(orderDetails?.products?.reduce((sum, i) => {return sum + (i.unitPrice * i.quantity)}, 0).toFixed(1)),
-            tdi: orderDetails?.products?.reduce((sum, i) => {return sum + ((i.price - (i.unitPrice * 100) / 105) * i.quantity)}, 0),
+            tgr: orderDetails?.products?.reduce((sum, i) => {return sum + (i.price * i.quantity)}, 0).toFixed(2),
+            tto: orderDetails?.products?.reduce((sum, i) => {return sum + (i.unitPrice * i.quantity)}, 0).toFixed(2),
+            tta: orderDetails?.products?.reduce((sum, i) => {return sum + (((i.unitPrice * 100) / 105) * i.quantity)}, 0).toFixed(2),
+            tgs: orderDetails?.products?.reduce((sum, i) => {return sum + ((i.quantity * i.unitPrice) - ((i.unitPrice * 100) / 105) * i.quantity)}, 0).toFixed(2),
+            word: `${numberToWords(orderDetails?.products?.reduce((sum, i) => {return sum + (i.unitPrice * i.quantity)}, 0).toFixed(1))} only`,
+            tdi: orderDetails?.products?.reduce((sum, i) => {return sum + ((i.price - (i.unitPrice * 100) / 105) * i.quantity)}, 0).toFixed(2),
             shipping_name: orderDetails?.address?.name,
             shipping_area: `${orderDetails?.address?.houseNo}, ${orderDetails?.address?.area}`,
             shipping_landmark: `${orderDetails?.address?.landmark}, ${orderDetails?.address?.city}`,
@@ -108,30 +108,16 @@ function OrderDetailsPage() {
     useEffect(() => {
         const result = [];
 
-        orderDetails?.products.forEach((product) => {
-            const sizeCount = {};
-
-            product.size.forEach((size) => {
-                if (sizeCount[size]) {
-                    sizeCount[size] += 1;
-                } else {
-                    sizeCount[size] = 1;
-                }
+        orderDetails?.products?.forEach(item => {
+            item.size.forEach(sizeValue => {
+              result.push({
+                ...item,
+                size: sizeValue,
+                quantity: 1
+              });
             });
-
-            Object.entries(sizeCount).forEach(([size, qty]) => {
-                result.push({
-                    productId: product.id,
-                    image: product.image,
-                    productName: product.productName,
-                    brand: product.brand,
-                    unitPrice: product.unitPrice,
-                    price: product.price,
-                    size: size,
-                    quantity: qty,
-                });
-            });
-        });
+          });
+          
 
         setProducts(result);
     }, [orderDetails]);
@@ -165,7 +151,7 @@ function OrderDetailsPage() {
                                 <div className="flex text-xs gap-5 justify-end relative mr-2 self-end font-semibold">
                                     <p>{orderDetails?.timestamp}</p>{" "}
                                     <hr className="border border-[rgb(8,43,61)] h-4" />
-                                    <p>{orderDetails?.orderId}</p>
+                                    <p className="font-bold">Order ID: <span className="font-semibold">{orderDetails?.orderId}</span></p>
                                 </div>
                             </div>
                             <div className="flex gap-5 mt-5">
@@ -400,16 +386,10 @@ function OrderDetailsPage() {
                                                                 {item?.brand}
                                                             </span>
                                                         </p>
-                                                        <p className="font-semibold border-x-2 px-3 mx-3 border-[rgb(8,43,61)]">
+                                                        <p className="font-semibold border-l-2 px-3 mx-3 border-[rgb(8,43,61)]">
                                                             Size :{" "}
                                                             <span className="text-[rgb(240,85,120)]">
                                                                 {item?.size}
-                                                            </span>
-                                                        </p>
-                                                        <p className="font-semibold">
-                                                            Qty :{" "}
-                                                            <span className="text-[rgb(240,85,120)]">
-                                                                {item?.quantity}
                                                             </span>
                                                         </p>
                                                     </div>

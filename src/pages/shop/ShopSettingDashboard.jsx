@@ -1,26 +1,15 @@
-import ShopDashboardTile from "@/components/ShopDashboardTile"
-import tile1Image from "../../assets/commonIcons/Cart IMG.png"
-import tile1Icon from "../../assets/commonIcons/Recent Purchase.png"
-import tile2Image from "../../assets/commonIcons/Perks IMG.png"
-import tile2Icon from "../../assets/commonIcons/Member IMG.png"
-import tile3Image from "../../assets/commonIcons/Personalized Recommondation IMG.png"
-import tile3Icon from "../../assets/commonIcons/Artwork.png"
-import tile4Image from "../../assets/commonIcons/Refund Status IMG.png"
-import tile4Icon from "../../assets/commonIcons/Returned Order IMG.png"
-import tile10Image from "../../assets/commonIcons/Histort IMG.png"
-import tile10Icon from "../../assets/commonIcons/Payment History IMG.png"
-import tile11Image from "../../assets/commonIcons/Order Placed IMG.png"
-import tile11Icon from "../../assets/commonIcons/Total Order IMG.png"
-import tile12Image from "../../assets/commonIcons/Average IMG.png"
-import tile12Icon from "../../assets/commonIcons/Average Order Value 2 IMG.png"
-import tile13Image from "../../assets/commonIcons/First IMG.png"
-import tile13Icon from "../../assets/commonIcons/First Purchase IMG.png"
+import tile1Icon from "../../assets/dashboard/Recently Viewed Products.png"
+import tile2Icon from "../../assets/dashboard/LXS Crew Membership.png"
+import tile3Icon from "../../assets/dashboard/Personalise Your Order.png"
+import tile4Icon from "../../assets/dashboard/Returned & Cancelled Orders.png"
+import tile5Icon from "../../assets/dashboard/Payment History.png"
+import tile6Icon from "../../assets/dashboard/LXS Announcement.png"
+import tile7Icon from "../../assets/dashboard/Track Order.png"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 let tiles = [
   {
-    bgImage: tile1Icon,
     icon: tile1Icon,
     title1: "Recently",
     title2: "Viewed Products",
@@ -28,7 +17,6 @@ let tiles = [
     navigate: "/user/recent-viewed-products"
   },
   {
-    bgImage: tile2Icon,
     icon: tile2Icon,
     title1: "Exclusive",
     title2: "Membership",
@@ -36,7 +24,6 @@ let tiles = [
     navigate: ""
   },
   {
-    bgImage: tile3Icon,
     icon: tile3Icon,
     title1: "Personalised",
     title2: "Your Order",
@@ -44,7 +31,6 @@ let tiles = [
     navigate: ""
   },
   {
-    bgImage: tile4Icon,
     icon: tile4Icon,
     title1: "Returned &",
     title2: "Cancelled Orders",
@@ -52,24 +38,21 @@ let tiles = [
     navigate: ""
   },
   {
-    bgImage: tile2Icon,
-    icon: tile2Icon,
+    icon: tile5Icon,
     title1: "Payment",
     title2: "History",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
   {
-    bgImage: tile3Icon,
-    icon: tile3Icon,
+    icon: tile6Icon,
     title1: "LXS",
     title2: "Announcements",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
   {
-    bgImage: tile4Icon,
-    icon: tile4Icon,
+    icon: tile7Icon,
     title1: "Track",
     title2: "Orders",
     className: "bg-[rgb(111,54,123)]",
@@ -187,10 +170,9 @@ function ShopSettingDashboard() {
         <div className="flex gap-5 flex-wrap mt-5">
         {
           tiles.map((item, index) => (
-            <div key={index} className={`w-[23%] h-28 rounded-xl relative overflow-hidden flex flex-col justify-between px-4 py-2 text-[18px] shadow-md cursor-pointer hover:scale-[1.08] active:scale-[0.95] lg:hover:shadow-[0px_0px_10px_-2px_rgb(8,43,61)] duration-200 z-0 bg-slate-100 border border-slate-300 `} onClick={() => navigate(item.navigate)}>
-              <img src={item.bgImage} alt="" className='opacity-40 h-[70%] absolute top-6 right-0 -z-10 scale-110' />
-              <img src={item.icon} alt="" className='w-14' />
-              <div className="text-[15px] leading-[1.3]">
+            <div key={index} className={`w-[23%] h-28 rounded-xl relative overflow-hidden flex flex-col justify-end px-4 py-2 text-[18px] shadow-md cursor-pointer hover:scale-[1.08] active:scale-[0.95] lg:hover:shadow-[0px_0px_10px_-2px_rgb(8,43,61)] duration-200 z-0 bg-slate-100 border border-slate-300 `} onClick={() => navigate(item.navigate)}>
+              <img src={item.icon} alt="" className='w-14 absolute top-5 right-0 -z-10' />
+              <div className="text-[15px] leading-[1.3] text-center">
                 <p className=''>{item.title1}</p>
                 <p className='font-bold '>{item.title2}</p>
               </div>

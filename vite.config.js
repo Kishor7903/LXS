@@ -6,7 +6,7 @@ export default defineConfig({
   assetsInclude: ['**/*.docx'],
   server: {
     proxy: {
-      '/sachin-kumar-24': 'http://127.0.0.1:5001'
+      '/lxslifestylestore-8935b': 'http://127.0.0.1:5001'
     },
     host: true
   },

@@ -25,8 +25,8 @@ function Blogs() {
                 </div>
             </div>
             <TopBlogPosts />
-            <LatestStories />
-            <LXSHighlight />
+            {/* <LatestStories />
+            <LXSHighlight /> */}
         </>
     )
 }

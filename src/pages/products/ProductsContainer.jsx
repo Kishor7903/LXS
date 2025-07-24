@@ -25,7 +25,7 @@ function ProductsContainer() {
     let { products } = useSelector(state => state.admin)
     const [product, setProduct] = useState(products);
     const [minValue, setMinValue] = useState(400);
-    const [maxValue, setMaxValue] = useState(4000);
+    const [maxValue, setMaxValue] = useState(5000);
 
 
     const handleFilterChange = (e) => {
@@ -78,7 +78,7 @@ function ProductsContainer() {
                 </div>
                 <div className="flex items-center gap-2 text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="sort-by">Price :</label>
-                        <DualRangeSlider min={300} max={4000} minValue={minValue} setMinValue={setMinValue} maxValue={maxValue} setMaxValue={setMaxValue} />
+                        <DualRangeSlider min={300} max={5000} minValue={minValue} setMinValue={setMinValue} maxValue={maxValue} setMaxValue={setMaxValue} />
                         {
                             <p className='font-medium text-sm w-[160px] py-[2px] text-center'>Min: {minValue} - Max: {maxValue}</p>
                         }

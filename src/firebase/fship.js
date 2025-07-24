@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function addWarehouse(data) {
     const response = await axios.post(
-        "/sachin-kumar-24/us-central1/addWarehouse",
+        "/lxslifestylestore-8935b/us-central1/addWarehouse",
         data
     );
     return response.data;
@@ -18,7 +18,7 @@ export async function createShipmentOrder(
     items
 ) {
     const response = await axios.post(
-        "/sachin-kumar-24/us-central1/createShipment",
+        "/lxslifestylestore-8935b/us-central1/createShipment",
         {
             orderId,
             recipient,
@@ -34,7 +34,7 @@ export async function createShipmentOrder(
 
 export async function addShippingLabel(AWB) {
     const response = await axios.post(
-        "/sachin-kumar-24/us-central1/shippingLabel",
+        "/lxslifestylestore-8935b/us-central1/shippingLabel",
         {
             waybill: AWB,
         }
@@ -44,7 +44,7 @@ export async function addShippingLabel(AWB) {
 
 export async function cancelTheShipment(AWB, reason) {
     const response = await axios.post(
-        "/sachin-kumar-24/us-central1/cancelShipment",
+        "/lxslifestylestore-8935b/us-central1/cancelShipment",
         {
             waybill: AWB,
             reason,
@@ -55,7 +55,7 @@ export async function cancelTheShipment(AWB, reason) {
 
 export async function registerOrderPickup(AWBs) {
     const response = await axios.post(
-        "/sachin-kumar-24/us-central1/registerPickup",
+        "/lxslifestylestore-8935b/us-central1/registerPickup",
         {
             waybills: AWBs,
         }
@@ -65,7 +65,7 @@ export async function registerOrderPickup(AWBs) {
 
 export async function orderTrackingHistory(AWB) {
     const response = await axios.post(
-        "/sachin-kumar-24/us-central1/trackingHistory",
+        "/lxslifestylestore-8935b/us-central1/trackingHistory",
         {
             waybill: AWB,
         }
@@ -75,7 +75,7 @@ export async function orderTrackingHistory(AWB) {
 
 export async function orderCurrentStatus(AWB) {
     const response = await axios.post(
-        "/sachin-kumar-24/us-central1/shipmentCurrentStatus",
+        "/lxslifestylestore-8935b/us-central1/shipmentCurrentStatus",
         {
             waybill: AWB,
         }
@@ -85,14 +85,14 @@ export async function orderCurrentStatus(AWB) {
 
 export async function getAllCourierList() {
     const response = await axios.get(
-        "/sachin-kumar-24/us-central1/getCourierList"
+        "/lxslifestylestore-8935b/us-central1/getCourierList"
     );
     return response.data;
 }
 
 export async function checkPincode(sourcePincode, destinationPincode) {
     let response = await axios.post(
-        "/sachin-kumar-24/us-central1/checkPincodeServiceability",
+        "/lxslifestylestore-8935b/us-central1/checkPincodeServiceability",
         {
             source_Pincode: sourcePincode,
             destination_Pincode: destinationPincode,
@@ -103,7 +103,7 @@ export async function checkPincode(sourcePincode, destinationPincode) {
 
 export async function orderReattempt(apiorderid, action, reattempt_date, contact_name, complete_address, landmark, mobilenumber, remarks) {
     let response = await axios.post(
-        "/sachin-kumar-24/us-central1/reattemptOrder",
+        "/lxslifestylestore-8935b/us-central1/reattemptOrder",
         {
             apiorderid,
             action,
