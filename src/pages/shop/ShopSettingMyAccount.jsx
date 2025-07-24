@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import HoverButton from "@/components/HoverButton";
 import editIcon from "../../assets/commonIcons/Edit (Fill).png"
 import editIconActive from "../../assets/commonIcons/Edit White (Fill).png"
-import flagIcon from "../../assets/commonIcons/Logo - IND Bg.png"
+import flagIcon from "../../assets/commonIcons/IND Bg frame.png"
 import { useEffect, useState } from "react";
 import EditUserInfoPopup from "@/components/EditUserInfoPopup";
 import EditProfilePicPopup from "@/components/EditProfilePicPopup";

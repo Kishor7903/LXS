@@ -47,9 +47,8 @@ export const registerUser = async (formData) => {
                 }),
             };
 
-            const userReference = collection(fireDB, "user");
-
-            await addDoc(userReference, user);
+            const userReference = doc(fireDB, "user", users.user.uid);
+            await setDoc(userReference, user);
 
             toast.success("User Created Successfully ...");
         }

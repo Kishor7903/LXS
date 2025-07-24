@@ -5,7 +5,7 @@ import twitterLogo from "../assets/Socials/Twitter.png"
 import youtubeLogo from "../assets/Socials/Youtube.png"
 import linkedinLogo from "../assets/Socials/Linkedin.png"
 import whatsappLogo from "../assets/Socials/Whatsapp (Fill).png"
-import LxsLogo from "../assets/commonIcons/Website Logo (TM).png"
+import LxsLogo from "../assets/commonIcons/Website Logo (TM) with tagline.png"
 import playStoreImg from "../assets/commonIcons/Playstore 3.png"
 import appStoreImg from "../assets/commonIcons/App Store 3.png"
 import { useEffect, useState } from "react"
@@ -24,19 +24,19 @@ let menu = [
                 "slug": "#"
             },
             {
-                "name": "Fan Art",
-                "slug": "#"
-            },
-            {
                 "name": "All Blogs",
                 "slug": "/all-blogs"
             },
             {
-                "name": "LXS PrimeVerse",
+                "name": "LXS Crew",
                 "slug": "/subscription"
             },
             {
                 "name": "Customers Review",
+                "slug": "#"
+            },
+            {
+                "name": "Customer's Spotlight",
                 "slug": "#"
             },
         ]

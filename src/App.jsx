@@ -85,7 +85,7 @@ import AdminPromotionalBanners from "./pages/admin/AdminPromotionalBanners"
 import AdminPickupWarehouse from "./pages/admin/AdminPickupWarehouse"
 import SuccessfulPopup from "./components/SuccessfulPopup"
 import AddressPageLayout from "./layouts/AddressPageLayout"
-import reload from "./assets/GIF/reload.gif"
+import reload from "./assets/GIF/Page Reload Animation 2.gif"
 import HiddenOrders from "./pages/shop/HiddenOrders"
 
 function App() {
@@ -117,7 +117,6 @@ function App() {
 				isLoading ?
 				<div className="h-screen w-full flex flex-col text-white text-xl font-medium justify-center items-center bg-[rgb(0,0,0,0.3)] z-50 fixed top-0">
 					<img src={reload} alt="" className="h-44 w-44" />
-					<span>Loading...</span>
 				</div>
 				:
 				null
