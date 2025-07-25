@@ -20,16 +20,12 @@ let menu = [
         "title": "Explore the Universe",
         "menus": [
             {
-                "name": "LUPIN (Story)",
-                "slug": "#"
-            },
-            {
                 "name": "All Blogs",
                 "slug": "/all-blogs"
             },
             {
-                "name": "LXS Crew",
-                "slug": "/subscription"
+                "name": "LUPIN (Story)",
+                "slug": "#"
             },
             {
                 "name": "Customers Review",
@@ -38,6 +34,10 @@ let menu = [
             {
                 "name": "Customer's Spotlight",
                 "slug": "#"
+            },
+            {
+                "name": "LXS Crew Membership",
+                "slug": "/subscription"
             },
         ]
     },

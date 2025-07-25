@@ -3,12 +3,11 @@ import HoverButton from '@/components/HoverButton';
 import KnowMorePopup from '@/components/KnowMorePopup';
 import RequestSuccessfullPopup from '@/components/RequestSuccessfullPopup';
 import { displayRazorpay } from '@/firebase/RazorpayPayment';
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import secureIcon from "../../assets/commonIcons/Secure.png"
 import paymentIcon from "../../assets/commonIcons/Cash White (Fill).png"
-import { getTimestamp } from '@/utils/commomFunctions';
 
 let offers = [
     {
@@ -22,61 +21,70 @@ let offers = [
 ]
 
 let paymentOptions = [
-    {
-        type: "LXS Cosmic Pay",
-        icon: "fi fi-rr-sack",
-        iconActive: "fi fi-sr-sack"
-    },
+    // {
+    //     type: "LXS Cosmic Pay",
+    //     value: ""
+    //     icon: "fi fi-rr-sack",
+    //     iconActive: "fi fi-sr-sack"
+    // },
     {
         type: "UPI / QR CODE",
+        value: "upi",
         icon: "fi fi-rr-qr-scan",
         iconActive: "fi fi-br-qr-scan"
     },
     {
         type: "Credit or Debit Card",
+        value: "card",
         icon: "fi fi-rr-credit-card",
         iconActive: "fi fi-sr-credit-card"
     },
     {
         type: "Net Banking",
+        value: "netbanking",
         icon: "fi fi-rr-bank",
         iconActive: "fi fi-sr-bank"
     },
     {
         type: "EMI",
+        value: "emi",
         icon: "fi fi-rr-tax-alt",
         iconActive: "fi fi-sr-tax-alt"
     },
     {
         type: "Wallet",
+        value: "wallet",
         icon: "fi fi-rr-wallet",
         iconActive: "fi fi-sr-wallet"
     },
     {
         type: "Buy Now, Pay Later",
+        value: "paylater",
         icon: "fi fi-rr-payroll-calendar",
         iconActive: "fi fi-br-payroll-calendar"
     },
-    {
-        type: "POD (Pay On Delivery)",
-        icon: "fi fi-rr-money-bills-simple",
-        iconActive: "fi fi-sr-money-bills-simple"
-    }
+    // {
+    //     type: "POD (Pay On Delivery)",
+    //     value: "pod",
+    //     icon: "fi fi-rr-money-bills-simple",
+    //     iconActive: "fi fi-sr-money-bills-simple"
+    // }
 ]
 
 function PaymentsPage() {
     let [showMore, setShowMore] = useState(false);
     let [formattedNumber, setFormattedNumber] = useState("");
     let [pinNumber, setPinNumber] = useState("");
-    let [paymentMode, setPaymentMode] = useState(-1);
+    let [paymentMode, setPaymentMode] = useState("");
     let [isOpen, setIsOpen] = useState(false);
     let [popupData, setPopupData] = useState({ orderId: "", id: "" });
     let [showOrderedSuccessfull, setShowOrderedSuccessfull] = useState(false);
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    let cartItems = JSON.parse(sessionStorage.getItem("cart"));
-    let address = JSON.parse(sessionStorage.getItem("address"))
+    let cartItems = JSON.parse(localStorage.getItem("cart"));
+    let address = JSON.parse(localStorage.getItem("address"))
     let { user } = useSelector(state => state.auth)
+
 
     const today = new Date();
     const sixDaysLater = new Date();
@@ -109,7 +117,7 @@ function PaymentsPage() {
             image: item.images[0]
         }))
 
-        displayRazorpay(order, cart, address, user, setShowOrderedSuccessfull, setPopupData, dispatch);
+        displayRazorpay(order, cart, address, user, setShowOrderedSuccessfull, setPopupData, dispatch, paymentMode);
     }
 
     const handleGiftCardNumberChange = (e) => {
@@ -156,10 +164,10 @@ function PaymentsPage() {
                         <CheckoutNavigator />
                         <div className="w-full flex flex-col lg:flex-row gap-8">
                             <div className="w-full lg:w-[55%] space-y-4">
-                                <div className="w-full py-4 px-4 rounded-xl shadow-md border border-slate-300 " >
+                                <div className="w-full py-4 px-4 rounded-xl shadow-md border border-slate-300 bg-slate-100" >
                                     <div className="flex gap-3 items-center">
                                         <span className="bg-[rgb(8,43,61)] h-4 text-white rounded flex justify-center items-center select-none px-2 text-[10px] font-medium ">{address.address_type}</span>
-                                        <span className="font-semibold text-base">Drop Location</span>
+                                        <span className="font-semibold text-base">Shipping Address</span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-y-3 gap-x-5 pl-2 mt-2 text-[11px]">
                                         <div className="flex flex-col leading-3">
@@ -213,12 +221,12 @@ function PaymentsPage() {
                                     </div>
                                     <span onClick={(e) => { e.preventDefault(), setShowMore(!showMore) }} className='xl:text-xs 2xl:text-sm cursor-pointer font-medium '>{showMore ? "View Less" : "View More"} {showMore ? <i className="fi fi-br-angle-small-up relative top-[2px]"></i> : <i className="fi fi-br-angle-small-right relative top-[2px]"></i>}</span>
                                 </div> */}
-                                <div className="shadow-md border border-slate-300 rounded-xl px-4 py-3 relative">
+                                <div className="shadow-md border border-slate-300 rounded-xl px-4 py-3 relative bg-slate-100">
                                     <p className='xl:text-sm 2xl:text-base font-semibold'><i className="fi fi-sr-gift-card relative top-[2px] mr-1"></i>HAVE A GIFT CARD ?</p>
                                     <div className="flex gap-4">
                                         <div className='w-[80%] ml-4'>
-                                            <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-slate-100 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]' placeholder='Enter Gift Card Number' />
-                                            <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-slate-100 px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]' placeholder='Enter Gift Card Pin' />
+                                            <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-white px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]' placeholder='Enter Gift Card Number' />
+                                            <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-white px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]' placeholder='Enter Gift Card Pin' />
                                         </div>
                                         <HoverButton className="h-8 px-4 text-sm font-semibold self-end">Apply</HoverButton>
                                     </div>
@@ -228,9 +236,9 @@ function PaymentsPage() {
                                     <div className="space-y-3">
                                         {
                                             paymentOptions.map((item, index) => (
-                                                <div onClick={(e) => { e.preventDefault(), setPaymentMode(index) }} key={index} className={`border-[rgb(8,43,61)] rounded-xl px-4 py-3 font-medium relative overflow-hidden cursor-pointer duration-200 ${paymentMode === index ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "shadow-md border border-slate-300 scale-[0.96] lg:hover:scale-[0.98]"}`}><i className={`${paymentMode === index ? item.iconActive : item.icon} mr-2 relative top-1 text-xl`}></i>{item.type}
+                                                <div onClick={(e) => { e.preventDefault(), setPaymentMode(item.value) }} key={index} className={`border-[rgb(8,43,61)] rounded-xl px-4 py-3 font-medium relative overflow-hidden cursor-pointer duration-200 bg-slate-100 ${paymentMode === item.value ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "shadow-md border border-slate-300 scale-[0.96] lg:hover:scale-[0.98]"}`}><i className={`${paymentMode === item.value ? item.iconActive : item.icon} mr-2 relative top-1 text-xl`}></i>{item.type}
                                                     {
-                                                        paymentMode === index && (
+                                                        paymentMode === item.value && (
                                                             <div className="h-10 w-24 bg-[rgb(8,43,61)] absolute -top-5 -right-[48px] rotate-45 flex justify-center items-end">
                                                                 <i className="fi fi-br-check text-white text-xs relative left-[2px] top-[2px] -rotate-45"></i>
                                                             </div>
@@ -257,7 +265,7 @@ function PaymentsPage() {
                                 <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-2 right-4 lg:right-5">Need Help? <Link className="text-blue-500 lg:hover:underline font-bold">Contact Us</Link></span>
                             </div> */}
                             <div className="flex flex-col gap-5 w-[45%]">
-                                <div className="p-2 shadow-md border border-slate-300 rounded-xl flex flex-col ">
+                                <div className="p-2 shadow-md border border-slate-300 rounded-xl flex flex-col bg-slate-100">
                                     {
                                         cartItems.map((product, idx) => (
                                             <>
@@ -285,7 +293,7 @@ function PaymentsPage() {
                                         ))
                                     }
                                 </div>
-                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300 font-medium'><span className='text-[rgb(240,85,120)] font-semibold text-xs'>Please Note:</span> If you cancel any item after pickup but before delivery, all items in the same shipment will be cancelled. However, items in separate shipments will continue to be delivered if already in transit.</p>
+                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300 font-medium bg-slate-100'><span className='text-[rgb(240,85,120)] font-semibold text-xs'>Please Note:</span> If you cancel any item after pickup but before delivery, all items in the same shipment will be cancelled. However, items in separate shipments will continue to be delivered if already in transit.</p>
                                 <div className="w-full flex gap-2 text-sm">
                                     <input type="text" className="bg-slate-100 px-3 h-8 text-[12px] font-medium rounded-full w-full outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]" placeholder="Apply Coupons" />
                                     <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-full ">Apply</button>
@@ -302,8 +310,8 @@ function PaymentsPage() {
                                         <span className="flex justify-between text-xs">Payment Method: <p className="text-blue-500">{paymentOptions[paymentMode]?.type}</p></span>
                                         <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                     </div>
-                                    <button className={`w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 flex gap-2 justify-center items-center ${paymentMode === -1 ? "cursor-not-allowed opacity-50" : "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"}`} onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
-                                    <p className='opacity-70 font-medium text-xs mt-1 text-center'>(You can tell your Brothers and Sisters to Pay, bcoz Sharing is Caring 💸😅  #IShopTheyDrop)</p>
+                                    <button className={`w-full h-11 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 flex gap-2 justify-center items-center ${paymentMode === "" ? "cursor-not-allowed opacity-50" : "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"}`} onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
+                                    <p className='opacity-70 font-medium text-[11px] mt-1 text-center'>(You can tell your Brothers and Sisters to Pay, bcoz Sharing is Caring 💸😅)</p>
                                 </div>
                             </div>
 

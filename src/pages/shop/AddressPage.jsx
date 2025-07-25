@@ -31,7 +31,7 @@ function AddressPage() {
     let { user } = useSelector(state => state.auth);
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    let cartItems = JSON.parse(sessionStorage.getItem("cart"));
+    let cartItems = JSON.parse(localStorage.getItem("cart"));
     let [open, setOpen] = useState(false);
 
     let totalPrice = cartItems.reduce((sum, cart) => sum + Number(cart.price * cart.quantity), 0);
@@ -55,7 +55,7 @@ function AddressPage() {
     }, [])
 
     useEffect(() => {
-        sessionStorage.setItem("address", JSON.stringify(selectedAddress))
+        localStorage.setItem("address", JSON.stringify(selectedAddress))
     }, [selectedAddress, setSelectedAddress])
 
     return (
@@ -112,7 +112,7 @@ function AddressPage() {
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                 </div>
-                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={() => address ? navigate("/checkout/payment") : null}>Continue To Payment<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
+                                <button className="w-full h-11 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={() => address ? navigate("/checkout/payment") : null}>Continue To Payment<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
                             </div>
                         </div>
                     </div>

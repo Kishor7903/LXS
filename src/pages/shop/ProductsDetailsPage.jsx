@@ -185,7 +185,7 @@ function ProductDetailsPage({ id, data }) {
 			{
 				productData && (
 					<Helmet>
-						<title>LXS Lifestyle Store</title>
+						
 						<meta property="og:title" content={productData?.name} />
 						<meta property="og:description" content={productData?.description?.text} />
 						<meta property="og:image" content={productData?.images[0]} />

@@ -56,7 +56,7 @@ import EnviromentalAndEthicalSourcingPolicy from "./pages/shop/EnviromentalAndEt
 import FAQs from "./pages/shop/FAQs"
 import CheckAuth from "./layouts/CheckAuth"
 import { useDispatch, useSelector } from "react-redux"
-import { loadingFalse, loadingTrue, login } from "./store/features/authSlice"
+import { login } from "./store/features/authSlice"
 import AdminCarousel from "./pages/admin/AdminCarousel"
 import ScrollToTop from "./components/ScrollToTop"
 import PolicyLayout from "./layouts/PolicyLayout"
@@ -64,7 +64,6 @@ import AdminNewsletter from "./pages/admin/AdminNewsletter"
 import AdminWorkWithUs from "./pages/admin/AdminWorkWithUs"
 import AdminTicketAndReports from "./pages/admin/AdminTicketAndReports"
 import AdminRequestCall from "./pages/admin/AdminRequestCall"
-import PaymentsPage from "./pages/shop/PaymentsPage"
 import EventGallery from "./pages/admin/EventGallery"
 import ProductsPageLayout from "./layouts/ProductsPageLayout"
 import BlogPageLayout from "./layouts/BlogPageLayout"
@@ -85,42 +84,31 @@ import AdminPromotionalBanners from "./pages/admin/AdminPromotionalBanners"
 import AdminPickupWarehouse from "./pages/admin/AdminPickupWarehouse"
 import SuccessfulPopup from "./components/SuccessfulPopup"
 import AddressPageLayout from "./layouts/AddressPageLayout"
-import reload from "./assets/GIF/Page Reload Animation 2.gif"
 import HiddenOrders from "./pages/shop/HiddenOrders"
+import GlobalLoader from "./components/GlobalLoader"
+import PaymentPageLayout from "./layouts/PaymentPageLayout"
 
 function App() {
-	let { isAuthenticated, user, isLoading } = useSelector(state => state.auth);
+	let { isAuthenticated, user } = useSelector(state => state.auth);
+	const [loading, setLoading] = useState(() => {
+		const isShown = sessionStorage.getItem("appLoaderShown");
+		return !isShown;
+	});
 	let dispatch = useDispatch();
-	let location = useLocation().pathname;
 
 	useEffect(() => {
-		let user = JSON.parse(sessionStorage.getItem("user"));
+		let user = JSON.parse(localStorage.getItem("user"));
 		if (user) {
 			dispatch(login(user))
 		}
-		setTimeout(() => {
-			dispatch(loadingFalse())
-		}, 2000)
 	}, [dispatch])
-
-	// useEffect(() => {
-	// 	dispatch(loadingTrue());
-	// 	setTimeout(() => {
-	// 		dispatch(loadingFalse())
-	// 	}, 1000)
-	// }, [location])
 
 	return (
 		<div className="h-screen w-full overflow-y-scroll scrollable-content relative">
-			<ScrollToTop />
 			{
-				isLoading ?
-				<div className="h-screen w-full flex flex-col text-white text-xl font-medium justify-center items-center bg-[rgb(0,0,0,0.3)] z-50 fixed top-0">
-					<img src={reload} alt="" className="h-44 w-44" />
-				</div>
-				:
-				null
+				loading && <GlobalLoader onFinish={() => setLoading(false)} />
 			}
+			<ScrollToTop />
 			<Routes>
 				<Route path="/" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
@@ -175,7 +163,7 @@ function App() {
 				} >
 					<Route path="cart" element={<CartPageLayout />} />
 					<Route path="address" element={<AddressPageLayout />} />
-					<Route path="payment" element={<PaymentsPage />} />
+					<Route path="payment" element={<PaymentPageLayout />} />
 				</Route>
 				<Route path="/user" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
@@ -203,7 +191,7 @@ function App() {
 						<Route path="Security-login" element={<SecurityLogin />} />
 						<Route path="privacy-data" element={<PrivacyData />} />
 					</Route>
-						<Route path="hidden-orders" element={<HiddenOrders />} />
+					<Route path="hidden-orders" element={<HiddenOrders />} />
 					<Route path="contact-us" element={<ShopSettingContactUs />} />
 				</Route>
 				<Route path="/orders" element={

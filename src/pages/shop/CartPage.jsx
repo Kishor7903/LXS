@@ -147,7 +147,7 @@ function CartPage() {
     };
 
     const handleProceedToAddress = () => {
-        sessionStorage.setItem("cart", JSON.stringify(selectedItems));
+        localStorage.setItem("cart", JSON.stringify(selectedItems));
         navigate("/checkout/address");
     };
 
@@ -476,7 +476,7 @@ function CartPage() {
                                 </div>
                                 {selectedItems.length > 0 && (
                                     <button
-                                        className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"
+                                        className="w-full h-11 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"
                                         onClick={handleProceedToAddress}
                                     >
                                         Proceed To Checkout
