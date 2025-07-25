@@ -1,7 +1,14 @@
 import axios from "axios";
-import lxsLogo from "../assets/commonIcons/Logo - small.png";
-import { createOrderInfo, deleteSelectedCartItems, updateOrderInfo } from "./auth";
-import { addNewOrder, removeAllSelectedCartItems } from "@/store/features/cartSlice";
+import lxsLogo from "../assets/commonIcons/LXS Logo.png";
+import {
+    createOrderInfo,
+    deleteSelectedCartItems,
+    updateOrderInfo,
+} from "./auth";
+import {
+    addNewOrder,
+    removeAllSelectedCartItems,
+} from "@/store/features/cartSlice";
 import { createShipmentOrder } from "./fship";
 import { getTimestamp } from "@/utils/commomFunctions";
 import { updateProduct } from "@/store/features/adminSlice";
@@ -48,7 +55,8 @@ export const displayRazorpay = async (
     user,
     setShowOrderedSuccessfull,
     setPopupData,
-    dispatch
+    dispatch,
+    method
 ) => {
     try {
         await loadScript("https://checkout.razorpay.com/v1/checkout.js");
@@ -70,6 +78,14 @@ export const displayRazorpay = async (
             name: "LXS Store",
             image: lxsLogo,
             description: "For Payment Testing Purpose",
+            config: {
+                display: {
+                    sequence: [method],
+                    preferences: {
+                        show_default_blocks: false,
+                    },
+                },
+            },
             handler: async function (response) {
                 let verifyRes = await axios.post(
                     "/lxslifestylestore-8935b/us-central1/verifyPayment",
@@ -91,7 +107,10 @@ export const displayRazorpay = async (
                             {
                                 title: "Order Placed",
                                 details: [
-                                    { text: "Your order is successfully placed", timestamp: timestamp },
+                                    {
+                                        text: "Your order is successfully placed",
+                                        timestamp: timestamp,
+                                    },
                                 ],
                             },
                         ],
@@ -102,12 +121,12 @@ export const displayRazorpay = async (
                         paymentId: verifyRes.data.paymentDetails.id,
                         paymentMethod: verifyRes.data.paymentDetails.method,
                         amount: order.amount,
-                        timestamp: timestamp
+                        timestamp: timestamp,
                     };
 
                     createOrderInfo(user.id, orderInfo).then((res) => {
-                        dispatch(addNewOrder({id: res.id, ...orderInfo}))
-                        setPopupData({orderId, id:res.id})
+                        dispatch(addNewOrder({ id: res.id, ...orderInfo }));
+                        setPopupData({ orderId, id: res.id });
                         setShowOrderedSuccessfull(true);
 
                         createShipmentOrder(
@@ -128,15 +147,30 @@ export const displayRazorpay = async (
                             { weight: 0, length: 0, width: 0, height: 0 },
                             cart
                         )
-                        .then((response) => {
-                            if(response.order_status === "success"){
-                                updateOrderInfo(user.id, res.id, {waybill: response.waybill, apiOrderId: response.apiorderid}).then(() => {
-                                    dispatch(updateProduct({id: res.id, ...orderInfo, waybill: response.waybill, apiOrderId: response.apiorderid}))
-                                })
-                            }
-                        })
-                        .catch((err) => console.log("Error Creating Shipping Order: ", err.message));
-                    })
+                            .then((response) => {
+                                if (response.order_status === "success") {
+                                    updateOrderInfo(user.id, res.id, {
+                                        waybill: response.waybill,
+                                        apiOrderId: response.apiorderid,
+                                    }).then(() => {
+                                        dispatch(
+                                            updateProduct({
+                                                id: res.id,
+                                                ...orderInfo,
+                                                waybill: response.waybill,
+                                                apiOrderId: response.apiorderid,
+                                            })
+                                        );
+                                    });
+                                }
+                            })
+                            .catch((err) =>
+                                console.log(
+                                    "Error Creating Shipping Order: ",
+                                    err.message
+                                )
+                            );
+                    });
                     deleteSelectedCartItems(user.id).then(() => {
                         dispatch(removeAllSelectedCartItems([]));
                     });

@@ -12,28 +12,35 @@ let tiles = [
   {
     icon: tile1Icon,
     title1: "Recently",
-    title2: "Viewed Products",
+    title2: "Viewed",
     className: "bg-[rgb(8,43,61)]",
     navigate: "/user/recent-viewed-products"
   },
   {
-    icon: tile2Icon,
-    title1: "Exclusive",
-    title2: "Membership",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
     icon: tile3Icon,
-    title1: "Personalised",
-    title2: "Your Order",
+    title1: "Custom",
+    title2: "Orders",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
   {
     icon: tile4Icon,
     title1: "Returned &",
-    title2: "Cancelled Orders",
+    title2: "Cancelled",
+    className: "bg-[rgb(111,54,123)]",
+    navigate: ""
+  },
+  {
+    icon: tile7Icon,
+    title1: "Track",
+    title2: "Orders",
+    className: "bg-[rgb(111,54,123)]",
+    navigate: ""
+  },
+  {
+    icon: tile2Icon,
+    title1: "LXS Crew",
+    title2: "Member",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
@@ -47,14 +54,7 @@ let tiles = [
   {
     icon: tile6Icon,
     title1: "LXS",
-    title2: "Announcements",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
-  {
-    icon: tile7Icon,
-    title1: "Track",
-    title2: "Orders",
+    title2: "Updates",
     className: "bg-[rgb(111,54,123)]",
     navigate: ""
   },
@@ -170,9 +170,9 @@ function ShopSettingDashboard() {
         <div className="flex gap-5 flex-wrap mt-5">
         {
           tiles.map((item, index) => (
-            <div key={index} className={`w-[23%] h-28 rounded-xl relative overflow-hidden flex flex-col justify-end px-4 py-2 text-[18px] shadow-md cursor-pointer hover:scale-[1.08] active:scale-[0.95] lg:hover:shadow-[0px_0px_10px_-2px_rgb(8,43,61)] duration-200 z-0 bg-slate-100 border border-slate-300 `} onClick={() => navigate(item.navigate)}>
-              <img src={item.icon} alt="" className='w-14 absolute top-5 right-0 -z-10' />
-              <div className="text-[15px] leading-[1.3] text-center">
+            <div key={index} className={`w-[18%] h-14 rounded-xl relative overflow-hidden flex flex-col justify-end px-3 py-2 text-[18px] shadow-md cursor-pointer hover:scale-[1.08] active:scale-[0.95] lg:hover:shadow-[0px_0px_10px_-2px_rgb(8,43,61)] duration-200 z-0 bg-slate-100 border border-slate-300 `} onClick={() => navigate(item.navigate)}>
+              <img src={item.icon} alt="" className='w-10 absolute top-2 right-3 -z-10' />
+              <div className="text-[15px] leading-[1.3] text-left">
                 <p className=''>{item.title1}</p>
                 <p className='font-bold '>{item.title2}</p>
               </div>

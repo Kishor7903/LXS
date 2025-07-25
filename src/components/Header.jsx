@@ -186,12 +186,12 @@ function Header({ className }) {
 			activeIcon: bulkOrderIconActive,
 			slug: "/bulk-order"
 		},
-		{
-			name: "LXS Subscription",
-			icon: subscriptionIcon,
-			activeIcon: subscriptionIconActive,
-			slug: "/subscription"
-		},
+		// {
+		// 	name: "LXS Subscription",
+		// 	icon: subscriptionIcon,
+		// 	activeIcon: subscriptionIconActive,
+		// 	slug: "/subscription"
+		// },
 		// {
 		// 	name: "Voucher & Coupons",
 		// 	icon: vouchersAndCouponsIcon,
@@ -210,6 +210,8 @@ function Header({ className }) {
 			<div className="flex gap-2 md:gap-3 items-center">
 
 				<div className="" onClick={() => setIsSheetOpen(true)}><img src={menuIcon} alt="" className="h-4 md:h-5 cursor-pointer mt-1 inline-block lg:hidden" /></div>
+
+				{/* Sheet panel */}
 
 				<div className="flex flex-col items-center justify-center">
 
@@ -328,105 +330,6 @@ function Header({ className }) {
 							</motion.div>
 						)}
 					</AnimatePresence>
-
-					{/* {isSheetOpen && (
-						<div className={`fixed inset-0 bg-black bg-opacity-50 z-30 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4`}>
-							<motion.div
-								ref={dialogRef}
-								initial={{ translateX: "-405px" }}
-								animate={{ translateX: "0px" }}
-								exit={{ scale: 0.8, opacity: 0 }}
-								transition={{ duration: 0.2, ease: "easeOut", type: "spring", stiffness: 300, damping: 25 }}
-								className={`min-h-80 min-w-60 shadow-md z-40 h-[600px] xl:h-[700px] w-[300px] xl:w-[350px] overflow-hidden bg-white rounded-[35px] gap-3 xl:gap-5 flex flex-col relative`}
-							>
-								<div className="h-[10%] bg-slate-200 w-full flex items-center px-3 gap-1  shadow-[inset_0px_-10px_5px_-10px_rgb(8,43,61)]">
-									<div className="w-1/6"><img src={user?.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="w-full rounded-full" /></div>
-									<div className="font-medium w-4/6">
-										<h4 className="text-base xl:text-xl font-bold relative top-[2px]">{!user ? "Sign Up/Log In" : user?.name}</h4>
-										{
-											user && (
-												<>
-													<p className="text-[10px] xl:text-xs tracking-tighter relative bottom-[3px] ">Type: <span className="text-[rgb(240,85,120)]">User Account</span></p>
-												</>
-											)
-										}
-									</div>
-									<div className="w-1/6"><img src={popupMenuIcon} alt="" className="h-7 ml-3 xl:ml-5 cursor-pointer" onClick={() => setIsSheetOpen(false)} /></div>
-								</div>
-								<div className="px-5 xl:px-10">
-									<ul className="w-full text-sm xl:text-base">
-										{
-											navItems.map((item, index) => (
-												item.active === true ? (
-													<li key={index} className="text-left px-2 active:bg-slate-200 hover:bg-slate-200 rounded-xl cursor-pointer">
-														<NavLink
-															to={item.slug}
-															onClick={() => setIsSheetOpen(false)}
-															className={({ isActive }) => `text-[rgb(8,43,61)] py-2 relative flex items-center gap-2 ${isActive ? "font-extrabold" : "font-medium"}`}
-														><img src={location.includes(item.slug) ? item.activeIcon : item.icon} alt="" className="h-4 xl:h-5" /> {item.name}
-														</NavLink>
-													</li>
-												) : null
-											))
-										}
-										<div className="border-b last:border-none">
-											<button
-												className={`w-full h- flex justify-between items-center px-2 text-left lg:hover:bg-slate-200 py-2 cursor-pointer transition font-medium ${openIndex ? "rounded-t-xl bg-slate-200" : " rounded-xl bg-white"}`}
-												onClick={() => setOpenIndex(!openIndex)}
-											>
-												<span className={`flex items-center gap-2 text-sm xl:text-base`}><img src={openIndex ? moreIconFill : moreIcon} alt="" className="h-4 xl:h-5" />More</span>
-												<motion.div
-													animate={{ rotate: openIndex === true ? -180 : 0 }}
-													transition={{ duration: 0.2 }}
-												>
-													<i className="fi fi-br-angle-small-down relative top-1"></i>
-												</motion.div>
-											</button>
-											{openIndex === true ? (
-												<ul
-													className="pb-2 px-4 bg-slate-200 rounded-b-xl text-center text-[11px] xl:text-xs font-medium"
-												>
-													{
-														menuItems.map((item, index) => (
-															<li className="lg:hover:bg-white rounded-xl pt-1 xl:py-1"><Link onClick={() => setIsSheetOpen(false)} key={index} to={item.slug} >{item.name}</Link></li>
-														))
-													}
-												</ul>
-											)
-												:
-												null
-											}
-										</div>
-									</ul>
-								</div>
-								<div className={`p-5 flex items-end xl:gap-1 font-semibold text-[rgb(8,43,61)] absolute bottom-0 text-sm xl:text-base w-full justify-between`}>
-									<div className="space-y-1">
-										{/* <Link to="" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
-											<img src={settingIcon} alt="" className="h-4 xl:h-5" /> Settings
-										</Link> 
-										<Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
-											<img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Notification
-										</Link>
-										{/* <Link to="/setting/contact-us" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
-											<img src={helpIcon} alt="" className="h-4 xl:h-5" /> Help & Support
-										</Link> 
-									</div>
-									<div className="">
-										{
-											isAuthenticated ? (
-												<button onClick={handleLogout} className="flex gap-1 items-center text-[rgb(240,85,120)] hover:underline">
-													<img src={logoutRedIcon} alt="" className="h-5" /> Logout
-												</button>
-											) :
-												(
-													<button onClick={() => { setIsSheetOpen(false), setIsOpen(true) }} className="text-sm xl:text-lg font-semibold h-8 xl:h-9 px-4 text-white bg-[rgb(8,43,61)] rounded-full lg:active:bg-blue-600">Login</button>
-												)
-										}
-									</div>
-								</div>
-							</motion.div>
-						</div>
-					)} */}
 				</div>
 
 				<LxsLogo className="h-9 md:h-10 lg:h-11 xl:h-12" />

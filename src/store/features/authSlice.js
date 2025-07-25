@@ -13,7 +13,7 @@ const authSlice = createSlice({
 		login: (state, actions) => {
 			state.isAuthenticated = true,
 			state.user = actions.payload,
-			sessionStorage.setItem("user", JSON.stringify(actions.payload));
+			localStorage.setItem("user", JSON.stringify(actions.payload));
 		},
 		logout: (state) => {
 			state.isAuthenticated = false,
@@ -21,7 +21,7 @@ const authSlice = createSlice({
 		},
 		updateUserInfo: (state, actions) => {
 			state.user = actions.payload,
-			sessionStorage.setItem("user", JSON.stringify(actions.payload));
+			localStorage.setItem("user", JSON.stringify(actions.payload));
 		},
 		loadingTrue: (state) => {
 			state.isLoading = true

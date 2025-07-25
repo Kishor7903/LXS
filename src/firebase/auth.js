@@ -96,7 +96,7 @@ export const loginUser = async (formData) => {
 
 export const logoutUser = async () => {
     try {
-        sessionStorage.clear();
+        localStorage.clear();
         toast.success("User Logged Out Successfully ...");
     } catch (error) {
         console.log("Logout Error: ", error.message);
