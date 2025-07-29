@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { fireDB } from "./FirebaseConfig";
 import { deleteFromCloudinary } from "./cloudinary";
+import { getTimestamp } from "@/utils/commomFunctions";
 
 export const addProduct = (item) => {
     try {
@@ -67,30 +68,6 @@ export const getAllProducts = async () => {
 
 export const editProduct = async (item_id, item) => {
     try {
-        // const productData = await getDoc(doc(fireDB, "products", item.currentEditId));
-
-        // let product = productData.data();
-
-        // for(let i=0; i < product.imagesId.length; i++){
-        //     if(product.imagesId[i]){
-        //         deleteFromCloudinary(product.imagesId[i]);
-        //     }
-        // }
-
-        // const editedProduct = {
-        //     name: item.formData.name,
-        //     description: item.formData.description,
-        //     category: item.formData.category,
-        //     brand: item.formData.brand,
-        //     price: item.formData.price,
-        //     salePrice: item.formData.salePrice,
-        //     images: item.imageData.urls,
-        //     imagesId: item.imageData.ids
-        // }
-
-        // await setDoc(doc(fireDB, "products", item.currentEditId), editedProduct);
-
-        // return editedProduct;
         const productRef = doc(fireDB, "products", item_id);
         await updateDoc(productRef, item);
     } catch (error) {
@@ -294,3 +271,50 @@ export const getAllOrders = async () => {
         console.error("Error getting all orders:", error);
     }
 };
+
+export const addBlog = async (item) => {
+    try {
+        let timestamp = getTimestamp()
+        const blogRef = collection(fireDB, "Blogs");
+        const dataSnap = await addDoc(blogRef, {...item, timestamp: timestamp});
+
+        return {id: dataSnap.id, ...item, timestamp: timestamp};
+    } catch (error) {
+        console.log("Adding new blog error:", error.message);
+    }
+}
+
+export const getBlogs = async () => {
+    try {
+        const blogsRef = collection(fireDB, "Blogs");
+        const querySnapshot = await getDocs(blogsRef);
+
+        const data = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        return data;
+
+    } catch (error) {
+        console.log("Error on getting all blogs: ", error.message);
+    }
+}
+
+export const editBlog = async (item_id, item) => {
+    try {
+        const blogRef = doc(fireDB, "Blogs", item_id);
+        await updateDoc(blogRef, item);
+    } catch (error) {
+        console.log("Edit Blog Error: ", error.message);
+    }
+}
+
+export const deleteBlog = async (item) => {
+    try {
+        deleteFromCloudinary(item.publicId);
+
+        await deleteDoc(doc(fireDB, "Blogs", item.id));
+    } catch (error) {
+        console.log("Delete Carousel Image Error: ", error.message);
+    }
+}

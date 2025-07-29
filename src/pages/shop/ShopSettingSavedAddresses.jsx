@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import AddNewAddressButton from "@/components/AddNewAddressButton";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAddress, getAllAddress, setAsDefaultNewAddress } from "@/firebase/auth";
-import { deleteAnAddress, updateAddress, updateSetDefault } from "@/store/features/cartSlice";
-import { toast } from "react-toastify";
+import { deleteAddress, setAsDefaultNewAddress } from "@/firebase/auth";
+import { deleteAnAddress, updateSetDefault } from "@/store/features/cartSlice";
 import HoverButton from "@/components/HoverButton";
 import editIcon from "../../assets/commonIcons/Edit (Fill).png"
 import editIconActive from "../../assets/commonIcons/Edit White (Fill).png"
 import ConfirmationPopp from "@/components/ConfirmationPopp";
+import { useToast } from "@/components/ToastProvider";
 
 let addressDetails = {
 	name: "",
@@ -32,6 +32,7 @@ function ShopSettingSavedAddresses() {
 	let [currentEditId, setCurrentEditId] = useState(null);
 	let { user } = useSelector(state => state.auth)
 	let dispatch = useDispatch();
+	const toast = useToast();
 
 	const handleAddressEditButton = (e, address) => {
 		e.preventDefault();
@@ -59,7 +60,7 @@ function ShopSettingSavedAddresses() {
 
 		deleteAddress(user.id, item_id).then(() => {
 			dispatch(deleteAnAddress(item_id));
-			toast.success("Address Deleted Successfully...");
+			toast("Address Deleted Successfully...");
 		})
 	}
 
@@ -158,7 +159,7 @@ function ShopSettingSavedAddresses() {
 									}
 								</div>)
 								:
-								(<div className="w-full p-4 rounded-xl border border-gray-300 shadow-sm animate-pulse space-y-4 relative">
+								(<div key={index} className="w-full p-4 rounded-xl border border-gray-300 shadow-sm animate-pulse space-y-4 relative">
 									<div className="flex justify-start gap-5 items-center">
 										<div className="h-6 w-28 bg-gray-300 rounded-full"></div>
 										<div className="h-2 w-24 bg-gray-300 rounded"></div>

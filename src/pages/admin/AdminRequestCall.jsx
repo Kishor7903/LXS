@@ -1,16 +1,17 @@
 import AdminHeadings from '@/components/AdminHeadings';
+import { useToast } from '@/components/ToastProvider';
 import { getAllTalkToAgents, getUserInfo, removeUserFromTalkToAgents } from '@/firebase/auth'
 import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify';
 
 function AdminRequestCall() {
   let [users, setUsers] = useState([]);
+  const toast = useToast();
 
   const handleRemoveUser = (e, user_id) => {
     e.preventDefault();
 
     removeUserFromTalkToAgents(user_id).then(() => {
-      toast.success("User Removed...");
+      toast("User Removed...");
     })
   }
 

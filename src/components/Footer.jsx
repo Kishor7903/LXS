@@ -13,7 +13,7 @@ import DialogBox from "./DialogBox"
 import starIconStroke from "../assets/commonIcons/Rewards 2 (Stroke).png"
 import starIconFill from "../assets/commonIcons/Rewards 2 (Fill).png"
 import { addWebsiteReview } from "@/firebase/auth"
-import { toast } from "react-toastify"
+import { useToast } from "./ToastProvider"
 
 let menu = [
     {
@@ -100,6 +100,7 @@ function Footer() {
         rating: 0
     })
     let date = new Date();
+    const toast = useToast();
 
     const handleSendWhatsApp = () => {
         const url = `https://wa.me/${+918987888368}`;
@@ -131,7 +132,7 @@ function Footer() {
         e.preventDefault();
 
         addWebsiteReview(formData).then(() => {
-            toast.success("Reviewed Successfully");
+            toast("Reviewed Successfully");
             setIsOpen(false);
             setFormData({
                 name: "",

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import DialogBox from "./DialogBox";
-import { toast } from "react-toastify";
 import { editUserDetails } from "@/firebase/auth";
 import { useDispatch } from "react-redux";
 import { updateUserInfo } from "@/store/features/authSlice";
 import flagIcon from "../assets/commonIcons/Indian Flag (Fill).png"
+import { useToast } from "./ToastProvider";
 
 function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
     let [formData, setFormData] = useState(user);
     let [isEdited, setIsEdited] = useState(true);
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -39,13 +40,13 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
         e.preventDefault();
 
         if (!formData.name || !formData.gender || !formData.DOB || !formData.email) {
-            toast.error("Required All Fields!!")
+            toast("Required All Fields!!")
             return
         }
 
         if (formData.altPhone) {
             if (formData.altPhone.length > 10 || formData.altPhone.length < 10) {
-                toast.error("Alternate Phone Number is Invalid ...");
+                toast("Alternate Phone Number is Invalid ...");
                 return
             }
         }
@@ -54,7 +55,7 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
             dispatch(updateUserInfo(formData));
             setFormData(formData);
             setIsOpen(false);
-            toast.success("User Updated Successfully...")
+            toast("User Updated Successfully...")
         })
     }
 

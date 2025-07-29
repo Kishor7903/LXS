@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import DialogBox from './DialogBox'
 import { uploadToCloudinary } from '@/firebase/cloudinary';
-import { toast } from 'react-toastify';
 import { addProduct, editProduct } from '@/firebase/admin';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewProduct, updateProduct } from '@/store/features/adminSlice';
+import { useToast } from './ToastProvider';
 
 let category = ['Select', 'Mens', 'Womens', 'Kids'];
 let subCategory = ['Select', 'T-Shirts', 'Shirts', 'Jeans', 'Sweatshirts', 'Hoddies', 'Shoes', 'Watches', 'Shorts', 'Joggers'];
@@ -29,6 +29,7 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
     const [publicIds, setPublicIds] = useState([null, null, null, null, null, null])
     const fileInputs = useRef([]);
     let dispatch = useDispatch();
+    const toast = useToast();
     let { products } = useSelector(state => state.admin);
 
     const handleChange = (field, value) => {
@@ -105,7 +106,7 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
     const handleAddProductSubmit = async () => {
 
         if(formData.name === "" || formData.category === "Select" || formData.subCategory === "Select" || formData.brand === "Select" || formData.isLxsCertified === "Select" || formData.price === "" || formData.salePrice === "" || formData.codAvailability === "Select" || formData.returnAvailability === "Select" || formData.description.text === "" || formData.description.sizeFit === "Select" || formData.description.color === "Select" || formData.description.material === "Select" || formData.description.washCare === "Select" || formData.description.sleevLength === "Select" || formData.description.neck === "Select" || formData.description.occasion === "Select" || formData.description.modelHeight === "" ||formData.description.modelWearingSize === "Select" || files.length === 0){
-            toast.error("Requires all the fields!!");
+            toast("Requires all the fields!!");
             return
         }
 
@@ -182,7 +183,7 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
         setUploadedUrls([null, null, null, null, null, null]);
         setPublicIds([null, null, null, null, null, null]);
 
-        toast.success("Product Added Successfully ...")
+        toast("Product Added Successfully ...")
         setIsOpen(false);
         setFormData(productData);
     };
@@ -201,7 +202,7 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
         e.preventDefault();
 
         if(formData.name === "" || formData.category === "Select" || formData.subCategory === "Select" || formData.brand === "Select" || formData.isLxsCertified === "Select" || formData.price === "" || formData.salePrice === "" || formData.codAvailability === "Select" || formData.returnAvailability === "Select" || formData.description.text === "" || formData.description.sizeFit === "Select" || formData.description.color === "Select" || formData.description.material === "Select" || formData.description.washCare === "Select" || formData.description.sleevLength === "Select" || formData.description.neck === "Select" || formData.description.occasion === "Select" || formData.description.modelHeight === "" ||formData.description.modelWearingSize === "Select" || files.length === 0){
-            toast.error("Requires all the fields!!");
+            toast("Requires all the fields!!");
             return
         }
 
@@ -226,7 +227,7 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
 
         editProduct(currentEditId, {...formData, imagesId: ids, images: urls}).then(() => {
             dispatch(updateProduct({id: currentEditId, ...formData, imagesId: ids, images: urls}))
-            toast.success("Product Edited Successfully ...")
+            toast("Product Edited Successfully ...")
             setIsOpen(false);
         })
     }

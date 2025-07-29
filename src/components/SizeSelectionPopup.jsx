@@ -3,13 +3,14 @@ import lxsLogo from "../assets/commonIcons/LXS Certified Logo.png"
 import { addCartItem } from '@/firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/store/features/cartSlice';
-import { toast } from 'react-toastify';
+import { useToast } from './ToastProvider';
 
 let sizes = ["S", "M", "L", "XL"];
 
 function SizeSelectionPopup({ isOpen, setIsOpen, item, selectedSize, setSelectedSize }) {
     let { user } = useSelector(state => state.auth);
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -27,7 +28,7 @@ function SizeSelectionPopup({ isOpen, setIsOpen, item, selectedSize, setSelected
 
         setIsOpen(false);
         setSelectedSize([]);
-        toast.success("Product added to cart..")
+        toast("Product added to cart..")
     }
 
     return (

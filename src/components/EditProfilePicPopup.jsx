@@ -3,8 +3,8 @@ import DialogBox from './DialogBox'
 import { useDispatch } from 'react-redux';
 import { uploadToCloudinary } from '@/firebase/cloudinary';
 import { editUserDetails } from '@/firebase/auth';
-import { toast } from 'react-toastify';
 import { updateUserInfo } from '@/store/features/authSlice';
+import { useToast } from './ToastProvider';
 
 function EditProfilePicPopup({isOpen, setIsOpen, user}) {
     let [formData, setFormData] = useState(user);
@@ -12,6 +12,7 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
     const [files, setFiles] = useState(null);
     const fileInputs = useRef(null);
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -63,7 +64,7 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
     
             editUserDetails(formData).then(() => {
                 dispatch(updateUserInfo(formData));
-                toast.success("Profile Picture Edited...")
+                toast("Profile Picture Edited...")
                 setIsOpen(false);
                 setPreviews(null);
                 setFiles(null);
@@ -72,7 +73,7 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
                 }
             })
         } else{
-            toast.error("Select Image First...")
+            toast("Select Image First...")
         }
     }
 

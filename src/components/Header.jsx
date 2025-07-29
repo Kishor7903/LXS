@@ -34,11 +34,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllAddress, getAllRecentPoducts, getUserCart, getUserWishlist, logoutUser } from "@/firebase/auth";
 import { logout } from "@/store/features/authSlice";
 import { getAllOrdersItems, getRecentViewed, updateAddress, updateCart, updateWishlist } from "@/store/features/cartSlice";
-import { getAllOrders, getAllProducts } from "@/firebase/admin";
+import { getAllOrders, getAllProducts, getBlogs } from "@/firebase/admin";
 import PhoneLogin from "./PhoneLogin";
 import DialogBox from "./DialogBox";
 import HoverButton from "./HoverButton";
-import { getProducts } from "@/store/features/adminSlice";
+import { getAllBlogs, getProducts } from "@/store/features/adminSlice";
 
 
 function Header({ className }) {
@@ -112,6 +112,15 @@ function Header({ className }) {
 			})
 		}
 	}, [user])
+
+	useEffect(() => {
+		getBlogs().then((res) => {
+			let sortedBlogs = res.sort((a, b) => {
+				return new Date(b.timestamp) - new Date(a.timestamp);
+			})
+			dispatch(getAllBlogs(sortedBlogs))
+		})
+	}, [])
 
 
 	const navItems = [

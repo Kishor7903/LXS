@@ -5,7 +5,8 @@ let initialState = {
     carouselImg: [],
     eventGalleryImg: [],
     warehouses: [],
-    orders: []
+    orders: [],
+    blogs: []
 }
 
 
@@ -54,10 +55,22 @@ const adminSlice = createSlice({
         },
         getAllOrdersAdmin: (state, actions) => {
             state.orders = actions.payload;
+        },
+        addNewBlog: (state, actions) => {
+            state.blogs = [actions.payload, ...state.blogs]
+        },
+        getAllBlogs: (state, actions) => {
+            state.blogs = actions.payload
+        },
+        editABlog: (state, actions) => {
+            state.blogs = state.blogs.map((item) => item.id === actions.payload.id ? actions.payload : item)
+        },
+        deleteABlog: (state, actions) => {
+            state.blogs = state.blogs.filter((item) => item.id !== actions.payload)
         }
 
     }
 })
 
-export const { addNewProduct, getProducts, updateProduct, addNewCarouselImg, getCarouselImgs, editCarouselImage, deleteCarouselImage, addNewEventGalleryImg, getEventGalleryImgs, deleteEventGalleryImage, addNewWarehouse, getWarehouses, updateWarehouse, getAllOrdersAdmin } = adminSlice.actions;
+export const { addNewProduct, getProducts, updateProduct, addNewCarouselImg, getCarouselImgs, editCarouselImage, deleteCarouselImage, addNewEventGalleryImg, getEventGalleryImgs, deleteEventGalleryImage, addNewWarehouse, getWarehouses, updateWarehouse, getAllOrdersAdmin, addNewBlog, getAllBlogs, editABlog, deleteABlog } = adminSlice.actions;
 export default adminSlice.reducer;

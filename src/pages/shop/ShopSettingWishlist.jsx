@@ -5,7 +5,7 @@ import { addToCart, deleteFromWishlist } from '@/store/features/cartSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useToast } from '@/components/ToastProvider';
 
 function ShopSettingWishlist() {
 	let [wishlistItems, setWishlistItems] = useState([]);
@@ -15,6 +15,7 @@ function ShopSettingWishlist() {
 	let { user } = useSelector(state => state.auth);
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
+	const toast = useToast();
 
 	const moveToCart = (e, item_id) => {
 		e.preventDefault();
@@ -30,10 +31,10 @@ function ShopSettingWishlist() {
 		if (user) {
 			addCartItem(user.id, itemDetails).then(() => {
 				dispatch(addToCart(itemDetails));
-				toast.success("Product Moved To Cart ...");
+				toast("Product Moved To Cart ...");
 			})
 		} else {
-			toast.error("Please Login First ...")
+			toast("Please Login First ...")
 		}
 	}
 

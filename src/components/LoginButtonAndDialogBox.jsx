@@ -5,11 +5,11 @@ import viewPasswordIcon from "../assets/loginIcons/View Password.png";
 import hidePasswordIcon from "../assets/loginIcons/Hide Password.png";
 import { useEffect, useState } from "react";
 import DialogBox from "./DialogBox";
-import { toast } from "react-toastify";
 import { loginUser, registerUser } from "@/firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "@/store/features/authSlice";
+import { useToast } from "./ToastProvider";
 
 
 let userData = {
@@ -32,6 +32,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
     const [formData, setFormData] = useState(userData);
     let navigate = useNavigate();
     let dispatch = useDispatch();
+    const toast = useToast();
 
 
     useEffect(() => {
@@ -58,23 +59,29 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
         e.preventDefault();
 
         if (!formData.name || !formData.phone || !formData.email || !formData.password || !formData.confirmPassword) {
-            toast.error("Required All Fields!!")
+            toast("Required All Fields!!")
             return
         }
 
         if (formData.phone.length > 10 || formData.phone.length < 10) {
-            toast.error("Phone Number is Invalid ...");
+            toast("Phone Number is Invalid ...");
             return
         }
 
         if (formData.password !== formData.confirmPassword) {
-            toast.error("Password and Confirm Password doesn't match..")
+            toast("Password and Confirm Password doesn't match..")
             return
         }
 
-        registerUser(formData).then(() => {
-            setFormData(userData);
-            setUserState("login");
+        registerUser(formData).then((res) => {
+            if(res.id){
+                setFormData(userData);
+                toast("User Created Successfully ...");
+                setUserState("login");
+            }else{
+                if(res.message === "Firebase: Error (auth/email-already-in-use).")
+                toast("Email already Registered.")
+            }
         })
     }
 
@@ -82,12 +89,12 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
         e.preventDefault();
 
         if (!formData.email || !formData.password) {
-            toast.error("Required all fields!")
+            toast("Required all fields!")
             return
         }
 
         loginUser(formData).then((res) => {
-            if (res !== null) {
+            if (res.id !== null) {
                 dispatch(login(res))
 
                 if (res?.role === "admin") {
@@ -98,6 +105,11 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
 
                 setIsOpen(false);
                 setFormData(userData);
+            }
+            else{
+                if(res.message === "Firebase: Error (auth/invalid-credential)."){
+                    toast("Email or Password is Incorrect.");
+                }
             }
         })
     }

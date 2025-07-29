@@ -103,17 +103,6 @@ export const displayRazorpay = async (
                         orderId,
                         orderStatus: "Pending",
                         isHidden: false,
-                        orderUpdates: [
-                            {
-                                title: "Order Placed",
-                                details: [
-                                    {
-                                        text: "Your order is successfully placed",
-                                        timestamp: timestamp,
-                                    },
-                                ],
-                            },
-                        ],
                         products: cart,
                         address,
                         userId: user.id,
@@ -147,18 +136,32 @@ export const displayRazorpay = async (
                             { weight: 0, length: 0, width: 0, height: 0 },
                             cart
                         )
-                            .then((response) => {
-                                if (response.order_status === "success") {
+                            .then((respo) => {
+                                if (respo.order_status === "success") {
+                                    let orderUpdates = [
+                                        {
+                                            title: "Order Placed",
+                                            details: [
+                                                {
+                                                    text: "Your order is successfully placed",
+                                                    timestamp: timestamp,
+                                                },
+                                            ],
+                                        },
+                                    ]
+
                                     updateOrderInfo(user.id, res.id, {
-                                        waybill: response.waybill,
-                                        apiOrderId: response.apiorderid,
+                                        waybill: respo.waybill,
+                                        apiOrderId: respo.apiorderid,
+                                        orderUpdates
                                     }).then(() => {
                                         dispatch(
                                             updateProduct({
                                                 id: res.id,
                                                 ...orderInfo,
-                                                waybill: response.waybill,
-                                                apiOrderId: response.apiorderid,
+                                                waybill: respo.waybill,
+                                                apiOrderId: respo.apiorderid,
+                                                orderUpdates
                                             })
                                         );
                                     });

@@ -2,15 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import DialogBox from './DialogBox';
 import { addCarouselImg, editCarouselImg } from '@/firebase/admin';
 import { addNewCarouselImg, editCarouselImage } from '@/store/features/adminSlice';
-import { toast } from 'react-toastify';
 import { uploadToCloudinary } from '@/firebase/cloudinary';
 import { useDispatch } from 'react-redux';
+import { useToast } from './ToastProvider';
 
 function AddCarouselmageButton({ isOpen, setIsOpen, currentEditId, setCurrentEditId }) {
     const [previews, setPreviews] = useState(null);
     const [files, setFiles] = useState(null);
     const fileInputs = useRef(null);
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -64,7 +65,7 @@ function AddCarouselmageButton({ isOpen, setIsOpen, currentEditId, setCurrentEdi
     
             addCarouselImg(imageData).then((res) => {
                 dispatch(addNewCarouselImg(res))
-                toast.success("New Image Added Successfully ...")
+                toast("New Image Added Successfully ...")
             })
         }
 
@@ -87,7 +88,7 @@ function AddCarouselmageButton({ isOpen, setIsOpen, currentEditId, setCurrentEdi
     
             editCarouselImg(currentEditId, imageData).then((res) => {
                 dispatch(editCarouselImage(res));
-                toast.success("Image Edited Successfully ...");
+                toast("Image Edited Successfully ...");
             }) 
         }
         
@@ -103,7 +104,7 @@ function AddCarouselmageButton({ isOpen, setIsOpen, currentEditId, setCurrentEdi
         }else{
             setPreviews(null)
         }
-    })
+    },[currentEditId])
 
     return (
         <div className='h-12'>

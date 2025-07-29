@@ -1,22 +1,23 @@
 import AddEventGalleryButton from '@/components/AddEventGalleryButton';
 import AdminHeadings from '@/components/AdminHeadings';
+import { useToast } from '@/components/ToastProvider';
 import { deleteEventGalleryImg, getAllEventGaleryImages } from '@/firebase/admin';
 import { deleteEventGalleryImage, getEventGalleryImgs } from '@/store/features/adminSlice';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
 function EventGallery() {
     let [isOpen, setIsOpen] = useState(false);
     let { eventGalleryImg } = useSelector(state => state.admin)
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleEventImgDelete = (e, item) => {
         e.preventDefault();
 
         deleteEventGalleryImg(item).then(() => {
             dispatch(deleteEventGalleryImage(item.imgPublicId))
-            toast.success("Image Deleted Successfully ...");
+            toast("Image Deleted Successfully ...");
         })
     }
 

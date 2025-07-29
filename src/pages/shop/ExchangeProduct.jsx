@@ -1,6 +1,7 @@
 import Breadcrum from "@/components/Breadcrum"
 import RequestSuccessfullPopup from "@/components/RequestSuccessfullPopup"
 import RgbButton from "@/components/RgbButton"
+import { useToast } from "@/components/ToastProvider"
 import { getSingleOrderDetails } from "@/firebase/auth"
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
@@ -23,6 +24,7 @@ function ProductExchange() {
     let { user } = useSelector(state => state.auth);
     let { products } = useSelector(state => state.admin);
     let { id } = useParams();
+    const toast = useToast();
 
     let productInfo = products.filter(item => item.id === orderDetails?.productInfo?.product_id)[0];
 
@@ -97,7 +99,7 @@ function ProductExchange() {
         setUploadedUrls([null, null, null, null]);
         setPublicIds([null, null, null, null]);
 
-        toast.success("Product Added Successfully ...")
+        toast("Product Added Successfully ...")
         setIsOpen(false);
         setFormData(productData);
     };

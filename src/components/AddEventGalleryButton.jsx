@@ -2,15 +2,16 @@ import { useRef, useState } from 'react';
 import DialogBox from './DialogBox';
 import { uploadToCloudinary } from '@/firebase/cloudinary';
 import { addEventGalleryImg } from '@/firebase/admin';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { addNewEventGalleryImg } from '@/store/features/adminSlice';
+import { useToast } from './ToastProvider';
 
 function AddEventGalleryButton({ isOpen, setIsOpen }) {
     const [previews, setPreviews] = useState(null);
     const [files, setFiles] = useState(null);
     const fileInputs = useRef(null);
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -63,7 +64,7 @@ function AddEventGalleryButton({ isOpen, setIsOpen }) {
     
             addEventGalleryImg(imageData).then((res) => {
                 dispatch(addNewEventGalleryImg(res))
-                toast.success("New Image Added Successfully ...")
+                toast("New Image Added Successfully ...")
             })
         }
 

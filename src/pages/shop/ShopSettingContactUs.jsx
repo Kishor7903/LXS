@@ -1,10 +1,10 @@
 import DialogBox from "@/components/DialogBox";
+import { useToast } from "@/components/ToastProvider";
 import { addNewReportAndIssue, talkToAnAgent } from "@/firebase/auth";
 import { uploadToCloudinary } from "@/firebase/cloudinary";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 
 let data = {
     reason: "",
@@ -23,6 +23,7 @@ function ShopSettingContactUs() {
     const [publicIds, setPublicIds] = useState([null, null, null, null, null]);
     const [isEnabled, setIsEnabled] = useState(false);
     const fileInputs = useRef([]);
+    const toast = useToast();
     let { user } = useSelector(state => state.auth);
 
     const handleSendGmail = () => {
@@ -42,7 +43,7 @@ function ShopSettingContactUs() {
 
         talkToAnAgent(user.uid).then(() => {
             setIsOpen(false);
-            toast.success("Request sent sucessfully...");
+            toast("Request sent sucessfully...");
         })
     }
 
@@ -141,7 +142,7 @@ function ShopSettingContactUs() {
             setUploadedUrls([null, null, null, null, null]);
             setPublicIds([null, null, null, null, null]);
 
-            toast.success("Issue Send Successfully...")
+            toast("Issue Send Successfully...")
         })
         setOpen(false);
         setFormData(data);
@@ -259,7 +260,7 @@ function ShopSettingContactUs() {
                         <select name='category' value={formData.category} onChange={handleChange} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
                             {
                                 reasonOptions.map((opt, idx) => (
-                                    <option value={opt}>{opt}</option>
+                                    <option key={idx} value={opt}>{opt}</option>
                                 ))
                             }
                         </select>

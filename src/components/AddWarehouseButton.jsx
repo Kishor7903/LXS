@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import DialogBox from './DialogBox';
 import axios from "axios";
 import flagIcon from "../assets/commonIcons/Indian Flag (Fill).png"
@@ -6,9 +5,11 @@ import { addWarehouse } from '@/firebase/fship';
 import { addSellerWarehouse } from '@/firebase/admin';
 import { useDispatch } from 'react-redux';
 import { addNewWarehouse } from '@/store/features/adminSlice';
+import { useToast } from './ToastProvider';
 
 function AddWarehouseButton({ isOpen, setIsOpen, formData, setFormData, warehouseData }) {
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleAddWarehouseButton = (e) => {
         e.preventDefault();
@@ -51,7 +52,7 @@ function AddWarehouseButton({ isOpen, setIsOpen, formData, setFormData, warehous
         e.preventDefault();
 
         if (formData.warehouseName === "" || formData.contactName === "" || formData.addressLine1 === "" || formData.addressLine2 === "" || formData.pincode === "" || formData.city === "" || formData.phoneNumber === "" || formData.email === "") {
-            toast.error("All Fields Required!!");
+            toast("All Fields Required!!");
             return;
         }
 
@@ -59,13 +60,13 @@ function AddWarehouseButton({ isOpen, setIsOpen, formData, setFormData, warehous
             if(res.fshipResponse.status){
                 let warehouseId = res.fshipResponse.warehouseId;
                 addSellerWarehouse({...formData, warehouseId}).then(() => {
-                    toast.success(res.fshipResponse.response)
+                    toast(res.fshipResponse.response)
                     setFormData(warehouseData);
                     setIsOpen(false);
                     dispatch(addNewWarehouse({warehouseId, ...formData}))
                 })
             } else{
-                toast.success(res.fshipResponse.response)
+                toast(res.fshipResponse.response)
             }
         }).catch((err) => {
             console.log("Error at Adding Warehouse:", err.message);

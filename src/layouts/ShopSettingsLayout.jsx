@@ -28,8 +28,8 @@ import notificationIcon from "../assets/commonIcons/Notification (Stroke).png";
 import { useEffect, useState } from "react"
 import { logoutUser } from "@/firebase/auth"
 import { logout } from "@/store/features/authSlice"
-import { toast } from "react-toastify"
 import { useDispatch } from "react-redux"
+import { useToast } from "@/components/ToastProvider"
 // import { useDispatch, useSelector } from "react-redux"
 // import { logoutUser } from "@/firebase/auth"
 // import { toast } from "react-toastify"
@@ -40,6 +40,7 @@ function ShopSettingsLayout() {
     let location = useLocation().pathname;
     let navigate = useNavigate();
     let dispatch = useDispatch();
+    const toast = useToast();
     let [openDropdown, setOpenDropdown] = useState(false);
 
     useEffect(() => {
@@ -66,6 +67,7 @@ function ShopSettingsLayout() {
 
         logoutUser().then(() => {
             dispatch(logout());
+            toast("User Logout Successfully.")
             navigate("/shop")
         })
     }

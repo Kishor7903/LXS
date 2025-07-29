@@ -134,7 +134,7 @@ function PrivacyData() {
                         <h3 className="font-bold tracking-wide text-lg capitalize">{items.name}</h3>
                         <div className="space-y-1 text-xs leading-3 mt-2 flex flex-col gap-1 font-medium ml-3">
                             {items.content.map((item,idx) => (
-                                <div className="">
+                                <div key={idx} className="">
                                     <span key={idx} className="capitalize mr-3 ">{item.key}</span>
                                     <Link to={item.slug} className="capitalize text-[rgb(240,85,120)] font-medium lg:hover:underline">{item.value}</Link>
                                 </div>

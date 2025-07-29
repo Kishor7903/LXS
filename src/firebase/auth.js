@@ -18,6 +18,7 @@ import {
 import { toast } from "react-toastify";
 import { auth, fireDB } from "./FirebaseConfig.js";
 
+
 export const registerUser = async (formData) => {
     try {
         let users = await createUserWithEmailAndPassword(
@@ -50,13 +51,11 @@ export const registerUser = async (formData) => {
             const userReference = doc(fireDB, "user", users.user.uid);
             await setDoc(userReference, user);
 
-            toast.success("User Created Successfully ...");
+            return {id: users.user.uid, ...user}
         }
     } catch (error) {
-        if (error.message === "Firebase: Error (auth/email-already-in-use).") {
-            toast.error("Email Already Exists ...");
-        }
         console.log("Sign Up Error :", error.message);
+        return {id: null, message: error.message}
     }
 };
 
@@ -80,24 +79,20 @@ export const loginUser = async (formData) => {
                 userData = { id: doc.id, ...doc.data() };
             });
 
-            toast.success("Logged In Successfully ...");
+            toast("Logged In Successfully ...");
             return userData;
         }
 
-        toast.error("User Login Failed ...");
+        toast("User Login Failed ...");
     } catch (error) {
-        if (error.message === "Firebase: Error (auth/invalid-credential).") {
-            toast.error("Email or Password is Incorrect ...");
-        }
         console.log("Login Error: ", error.message);
-        return null;
+        return {id: null, message: error.message};
     }
 };
 
 export const logoutUser = async () => {
     try {
         localStorage.clear();
-        toast.success("User Logged Out Successfully ...");
     } catch (error) {
         console.log("Logout Error: ", error.message);
     }
@@ -600,3 +595,13 @@ export const addWebsiteReview = async (formData) => {
         console.log("Adding New Website Review Error: ", error.message);
     }
 };
+
+export const getBlogWithId = async (id) => {
+    try {
+        let blog = await getDoc(doc(fireDB, "Blogs", id));
+
+        return { id, ...blog.data() };
+    } catch (error) {
+        console.log("Error getting blog data: ", error.message);
+    }
+}

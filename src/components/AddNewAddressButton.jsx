@@ -2,10 +2,10 @@ import DialogBox from './DialogBox';
 import { addNewAddress, editAnAddress } from '@/firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAddress, editAddress } from '@/store/features/cartSlice';
-import { toast } from 'react-toastify';
 import addAddressIcon from "../assets/commonIcons/Address House (Fill).png"
 import flagIcon from "../assets/commonIcons/Indian Flag (Fill).png"
 import axios from 'axios';
+import { useToast } from './ToastProvider';
 
 const indianStates = [
     "Select", "Andaman & Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
@@ -15,6 +15,7 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
     let { user } = useSelector(state => state.auth);
     let { address } = useSelector(state => state.cart);
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -35,17 +36,17 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
         e.preventDefault();
 
         if (!formData.name || !formData.phone || !formData.houseNo || !formData.area || !formData.city || !formData.state || !formData.pincode || !formData.address_type) {
-            toast.error("Required All Fields !!")
+            toast("Required All Fields !!")
             return
         }
 
         if (formData.phone.length !== 10) {
-            toast.error("Enter a Valid Phone No !!");
+            toast("Enter a Valid Phone No !!");
             return
         }
 
         if (formData.pincode < 100000 && formData.pincode > 1000000) {
-            toast.error("Enter a Valid Pincode");
+            toast("Enter a Valid Pincode");
             return
         }
 
@@ -55,7 +56,7 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
 
         addNewAddress(user.id, formData).then((res) => {
             dispatch(addAddress(res));
-            toast.success("New Address Added Successfully ...");
+            toast("New Address Added Successfully ...");
         })
         setIsOpen(false);
         setFormData(addressDetails);
@@ -65,23 +66,23 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
         e.preventDefault();
 
         if (!formData.name || !formData.phone || !formData.houseNo || !formData.area || !formData.city || !formData.state || !formData.pincode) {
-            toast.error("Required All Fields with * !!")
+            toast("Required All Fields with * !!")
             return
         }
 
         if (formData.phone.length !== 10) {
-            toast.error("Enter a Valid Phone No !!");
+            toast("Enter a Valid Phone No !!");
             return
         }
 
         if (formData.pincode < 100000 && formData.pincode > 1000000) {
-            toast.error("Enter a Valid Pincode");
+            toast("Enter a Valid Pincode");
             return
         }
 
         editAnAddress(user.id, formData, currentEditId).then(() => {
             dispatch(editAddress(formData));
-            toast.success("Address Edited Successfully...")
+            toast("Address Edited Successfully...")
         })
 
         setFormData(addressDetails);

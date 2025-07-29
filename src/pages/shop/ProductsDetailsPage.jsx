@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { addCartItem, addNewRecentProduct, addWishlistItem, deleteWishlistItem } from "@/firebase/auth";
 import { addToCart, addToRecentViewed, addToWishlist, deleteFromWishlist } from "@/store/features/cartSlice";
 import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
@@ -34,6 +33,7 @@ function ProductDetailsPage({ id, data }) {
 	let { cart, wishlist } = useSelector(state => state.cart);
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
+	const toast = useToast();
 	let toaster = useToast();
 	let { user } = useSelector(state => state.auth);
 	let { address } = useSelector(state => state.cart);
@@ -56,11 +56,11 @@ function ProductDetailsPage({ id, data }) {
 		if (user) {
 			addCartItem(user?.id, itemDetails).then(() => {
 				dispatch(addToCart(itemDetails));
-				toast.success("Product Added To Cart ...");
+				toast("Product Added To Cart ...");
 				toaster("Added to cart..")
 			})
 		} else {
-			toast.error("Please Login First ...")
+			toast("Please Login First ...")
 		}
 	}
 
@@ -70,11 +70,11 @@ function ProductDetailsPage({ id, data }) {
 		if (user) {
 			addWishlistItem(user?.id, item_id).then((res) => {
 				dispatch(addToWishlist(res));
-				toast.success("Product Added To Wishlist ...");
+				toast("Product Added To Wishlist ...");
 				toaster("Products Wislisted..")
 			})
 		} else {
-			toast.error("Please Login First ...")
+			toast("Please Login First ...")
 		}
 	}
 
@@ -83,7 +83,7 @@ function ProductDetailsPage({ id, data }) {
 
 		deleteWishlistItem(user.id, item_id).then(() => {
 			dispatch(deleteFromWishlist(item_id));
-			toast.success("Product Removed From Wishlist ...")
+			toast("Product Removed From Wishlist ...")
 			toaster("Products removed Wislisted..hgwegiuegd")
 		})
 	}

@@ -1,9 +1,9 @@
 import AddProductButtonAndPopup from "@/components/AddProductButtonAndPopup"
 import AdminHeadings from "@/components/AdminHeadings"
+import { useToast } from "@/components/ToastProvider";
 import { deleteProduct } from "@/firebase/admin";
 import { useState } from "react";
 import { useSelector } from "react-redux"
-import { toast } from "react-toastify";
 
 
 let productData = {
@@ -38,13 +38,14 @@ function AdminProducts() {
     let [formData, setFormData] = useState(productData);
     const { products } = useSelector(state => state.admin)
     let [currentEditId, setCurrentEditId] = useState(null);
+    const toast = useToast();
 
     const handleDeleteProduct = (e, id) => {
         e.preventDefault();
 
         deleteProduct(id).then((res) => {
             if (res) {
-                toast.success("Product Deleted Successfully ...")
+                toast("Product Deleted Successfully ...")
             }
             else {
                 console.log("Product Delete Error ...");

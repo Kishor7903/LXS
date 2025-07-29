@@ -1,5 +1,5 @@
-import { getAllOrders, getAllProducts } from "@/firebase/admin";
-import { getAllOrdersAdmin, getProducts } from "@/store/features/adminSlice";
+import { getAllOrders, getAllProducts, getBlogs } from "@/firebase/admin";
+import { getAllBlogs, getAllOrdersAdmin, getProducts } from "@/store/features/adminSlice";
 import { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux";
 
@@ -40,6 +40,13 @@ function AdminHeader() {
 				return new Date(b.timestamp) - new Date(a.timestamp);
 			})
 			dispatch(getAllOrdersAdmin(sortedOrders))
+		})
+
+		getBlogs().then((res) => {
+			let sortedBlogs = res.sort((a, b) => {
+				return new Date(b.timestamp) - new Date(a.timestamp);
+			})
+			dispatch(getAllBlogs(sortedBlogs))
 		})
 	}, []);
 

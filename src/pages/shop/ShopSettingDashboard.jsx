@@ -164,7 +164,7 @@ function ShopSettingDashboard() {
     <div className="flex gap-4 h-full w-full pl-5">
       <div className="w-[60%] h-full pr-5">
         <div className="w-full">
-          <p className="text-xl font-bold">Hello, {user.name.split(" ")[0]}!</p>
+          <p className="text-xl font-bold">Hello, {user?.name.split(" ")[0]}!</p>
           <p className="font-medium text-sm relative bottom-1">Today is {formattedDate[0] + ", " + formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]}</p>
         </div>
         <div className="flex gap-5 flex-wrap mt-5">

@@ -20,8 +20,9 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import secureIcon from "../../assets/commonIcons/Secure.png";
+import GlobalDropdown from "@/components/GlobalDropDown";
+import { useToast } from "@/components/ToastProvider";
 
 let quantity = ["1", "2", "3", "4", "5"];
 let sizes = ["S", "M", "L", "XL"];
@@ -36,6 +37,7 @@ function CartPage() {
     let { user } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     let dispatch = useDispatch();
+    const toast = useToast();
 
     let totalPrice;
     let discountOnMRP;
@@ -66,7 +68,6 @@ function CartPage() {
     const formattedDate = sixDaysLater.toLocaleDateString('en-GB', options);
 
     const handleQuantityChange = (e, item) => {
-        e.preventDefault();
         let i = {
             id: item.id,
             quantity: parseInt(e.target.value),
@@ -92,7 +93,6 @@ function CartPage() {
     };
 
     const handleSizeChange = (e, item, idx) => {
-        e.preventDefault();
         let size = [...item.size];
         size[idx] = e.target.value;
         let i = {
@@ -121,7 +121,7 @@ function CartPage() {
                 dispatch(addToWishlist(res));
             });
         } else {
-            toast.error("Please Login First ...");
+            toast("Please Login First ...");
         }
     };
 
@@ -233,13 +233,10 @@ function CartPage() {
                                             ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200"
                                             : "border-slate-300 border shadow-md lg:hover:scale-[0.97] duration-150 scale-95"
                                             }`}
-                                        onClick={(e) =>
-                                            handletoggleCartSelect(
-                                                e,
-                                                item.id,
-                                                !item.isSelected
-                                            )
-                                        }
+                                        onClick={(e) => {
+                                            if (e.target.closest(".dropdown-portal")) return;
+                                            handletoggleCartSelect(e, item.id, !item.isSelected);
+                                        }}
                                     >
                                         <img
                                             onClick={(e) => {
@@ -253,7 +250,7 @@ function CartPage() {
                                             className="w-20 rounded border lg:border-2"
                                         />
                                         <div className="leading-[0.7] lg:leading-3 w-[83%]">
-                                            <h4 className="text-sm lg:text-base font-bold w-full line-clamp-1">
+                                            <h4 className="text-sm lg:text-base font-bold w-[90%] line-clamp-1">
                                                 {item.name}
                                             </h4>
                                             <p className="text-[9px] font-bold mt-1 hidden lg:inline-block lg:text-[11px] relative bottom-1">
@@ -263,60 +260,24 @@ function CartPage() {
                                                 </span>
                                             </p>
                                             <div className="flex gap-3 lg:gap-2 w-full text-[9px] font-medium lg:text-[11px] lg:mt-[1px] ">
-                                                <div className="bg-[rgb(8,43,61)] text-white rounded-full pl-1 cursor-pointer mr-3" onClick={(e) =>
-                                                    e.stopPropagation()
-                                                }>
-                                                    <label className="cursor-pointer">
-                                                        Qty :
-                                                    </label>
-                                                    <select
-                                                        value={item.quantity}
+                                                <GlobalDropdown
+                                                    options={quantity}
+                                                    selected={item.quantity}
+                                                    onSelect={(val) => handleQuantityChange({ target: { value: val } }, item)}
+                                                    placeholder="Qty"
+                                                    className="text-white"
+                                                />
 
-                                                        onChange={(e) =>
-                                                            handleQuantityChange(
-                                                                e,
-                                                                item
-                                                            )
-                                                        }
-                                                        className="focus:outline-none font-bold rounded-full bg-transparent cursor-pointer"
-                                                    >
-                                                        {
-                                                            quantity.map((val, i) => (
-                                                                <option key={i} value={val} className="text-[rgb(8,43,61)] font-bold">
-                                                                    {val}
-                                                                </option>
-                                                            ))
-                                                        }
-                                                    </select>
-                                                </div>
                                                 {
                                                     Array.from({ length: item.quantity }).map((_, idx) => (
-                                                        <div key={idx} className="border border-[rgb(8,43,61)] rounded-full pl-1" onClick={(e) =>
-                                                            e.stopPropagation()
-                                                        }>
-                                                            <label className="cursor-pointer">
-                                                                Size{idx + 1}:
-                                                            </label>
-                                                            <select
-                                                                value={item.size[idx]}
-                                                                onChange={(e) =>
-                                                                    handleSizeChange(
-                                                                        e,
-                                                                        item,
-                                                                        idx
-                                                                    )
-                                                                }
-                                                                className="focus:outline-none font-bold rounded-full bg-transparent cursor-pointer text-[rgb(240,85,120)]"
-                                                            >
-                                                                {
-                                                            sizes.map((val, i) => (
-                                                                <option key={i} value={val} className="font-bold">
-                                                                    {val}
-                                                                </option>
-                                                            ))
-                                                        }
-                                                            </select>
-                                                        </div>
+                                                        <GlobalDropdown
+                                                            options={sizes}
+                                                            selected={item.size[idx]}
+                                                            onSelect={(val) => handleSizeChange({ target: { value: val } }, item, idx)}
+                                                            placeholder={`Size${idx+1}`}
+                                                            className="bg-transparent border border-[rgb(8,43,61)] text-[rgb(8,43,61)]"
+                                                        />
+
                                                     ))
                                                 }
                                             </div>

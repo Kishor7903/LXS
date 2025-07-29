@@ -1,23 +1,24 @@
 import AddCarouselmageButton from '@/components/AddCarouselmageButton';
 import AdminHeadings from '@/components/AdminHeadings'
+import { useToast } from '@/components/ToastProvider';
 import { deleteCarouselImg, getAllCarouselImages } from '@/firebase/admin';
 import { deleteCarouselImage, getCarouselImgs } from '@/store/features/adminSlice';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
 function AdminCarousel() {
     let [isOpen, setIsOpen] = useState(false);
     let [currentEditId, setCurrentEditId] = useState(null);
     let { carouselImg } = useSelector(state => state.admin);
     let dispatch = useDispatch();
+    const toast = useToast();
 
     const handleCarouselImgDelete = (e,item) => {
         e.preventDefault();
 
         deleteCarouselImg(item).then((res) => {
             dispatch(deleteCarouselImage(res.imgPublicId));
-            toast.success("Image Deleted Successfully ...");
+            toast("Image Deleted Successfully ...");
         })
     }
 

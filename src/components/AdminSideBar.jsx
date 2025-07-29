@@ -49,6 +49,11 @@ function AdminSideBar() {
             icon: "fi fi-sr-dolly-flatbed-alt"
         },
         {
+            name: "Blogs",
+            slug: "/admin/blogs",
+            icon: "fi fi-sr-blog-pencil"
+        },
+        {
             name: "Reviews",
             slug: "/admin/reviews",
             icon: "fi fi-sr-feedback-review"
