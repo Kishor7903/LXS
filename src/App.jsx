@@ -72,14 +72,9 @@ import PersonalizedOrderPageLayout from "./layouts/PersonalizedOrderPageLayout"
 import BulkOrderPageLayout from "./layouts/BulkOrderPageLayout"
 import RecentViewedProducts from "./pages/shop/RecentViewedProducts"
 import UserLayout from "./layouts/UserLayout"
-import Blog1 from "./pages/shop/Blog1"
 import Subscription from "./pages/shop/Subscription"
 import PartnerWithUs from "./pages/shop/PartnerWithUs"
 import CartPageLayout from "./layouts/CartPageLayout"
-import Blog2 from "./pages/shop/Blog2"
-import Blog3 from "./pages/shop/Blog3"
-import Blog4 from "./pages/shop/Blog4"
-import Blog5 from "./pages/shop/Blog5"
 import AdminPromotionalBanners from "./pages/admin/AdminPromotionalBanners"
 import AdminPickupWarehouse from "./pages/admin/AdminPickupWarehouse"
 import SuccessfulPopup from "./components/SuccessfulPopup"
@@ -96,14 +91,12 @@ function App() {
 		const isShown = sessionStorage.getItem("appLoaderShown");
 		return !isShown;
 	});
-	const [loader, setLoader] = useState(true);
 	let dispatch = useDispatch();
 
 	useEffect(() => {
-		let user = JSON.parse(localStorage.getItem("user"));
+		let user = JSON.parse(sessionStorage.getItem("user"));
 		if (user) {
 			dispatch(login(user))
-			setLoader(false);
 		}
 	}, [dispatch])
 
@@ -112,135 +105,125 @@ function App() {
 			{
 				loading && <GlobalLoader onFinish={() => setLoading(false)} />
 			}
-			{
-				!loading && !loader &&
-				<>
-					<ScrollToTop />
-					<Routes>
-						<Route path="/" element={
-							<CheckAuth isAuthenticated={isAuthenticated} user={user} >
-								<ShopLayout />
-							</CheckAuth>
-						} >
-							<Route path="shop" element={<HomePageLayout />} />
-							<Route path="products" element={<ProductsPageLayout />} />
-							<Route path="product-details/:id" element={<ProductDetailsPageLayout />} />
-							<Route path="blogs" element={<BlogPageLayout />} />
-							<Route path="about-us" element={<AboutUsPageLayout />} />
-							<Route path="all-blogs" element={<AllBlogs />} />
-							<Route path="blog/:id" element={<Blog />} />
-							<Route path="blog1" element={<Blog1 />} />
-							<Route path="blog2" element={<Blog2 />} />
-							<Route path="blog3" element={<Blog3 />} />
-							<Route path="blog4" element={<Blog4 />} />
-							<Route path="blog5" element={<Blog5 />} />
-							<Route path="bulk-order" element={<BulkOrderPageLayout />} />
-							<Route path="personalized-order" element={<PersonalizedOrderPageLayout />} />
-							<Route path="subscription" element={<Subscription />} />
-							<Route path="/partner-with-us" element={<PartnerWithUs />} />
-						</Route>
-						<Route path="/policy" element={
-							<CheckAuth isAuthenticated={isAuthenticated} user={user} >
-								<PolicyLayout />
-							</CheckAuth>
-						} >
-							<Route path="privacy-policy" element={<PrivacyPolicy />} />
-							<Route path="terms-and-conditions" element={<TermsAndCondition />} />
-							<Route path="legal-compliance" element={<LegalCompliancePolicy />} />
-							<Route path="intellectual-property-policy" element={<IntellectualPropertyPolicy />} />
-							<Route path="intergalactic-framework-policy" element={<IntergalacticFrameworkPolicy />} />
-							<Route path="general-shopping-policy" element={<GeneralShoppingPolicy />} />
-							<Route path="payments-and-checkout-policy" element={<PaymentAndCheckoutPolicy />} />
-							<Route path="discounts-and-pricing-policy" element={<DiscountsAndPricingPolicy />} />
-							<Route path="shipping-and-delivery-policy" element={<ShippingAndDeliveryPolicy />} />
-							<Route path="order-cancellation-policy" element={<OrderCancellationPolicy />} />
-							<Route path="return-and-refund-policy" element={<ReturnAndRefundPolicy />} />
-							<Route path="exchange-and-replacemennt-policy" element={<ExchangeAndReplacementPolicy />} />
-							<Route path="custumer-support-and-resolution-policy" element={<CustomerSupportAndComplaintResolutionPolicy />} />
-							<Route path="custumer-support-and-dispute-resolution-policy" element={<CustomerSupportAndCustomerDisputeResolutionPolicy />} />
-							<Route path="loyalty-and-reward-program" element={<LoyaltyAndRewardProgramPolicy />} />
-							<Route path="affiliate-and-influencer-policy" element={<AffiliateAndInfluencerPolicy />} />
-							<Route path="community-guidelines" element={<CommunityGuidelinesAndUserGeneratedContentPolicy />} />
-							<Route path="enviromental-ethical-sourcing-policy" element={<EnviromentalAndEthicalSourcingPolicy />} />
-							<Route path="FAQs" element={<FAQs />} />
-						</Route>
-						<Route path="/checkout" element={
-							<CheckAuth isAuthenticated={isAuthenticated} user={user} >
-								<CheckoutLayout />
-							</CheckAuth>
-						} >
-							<Route path="cart" element={<CartPageLayout />} />
-							<Route path="address" element={<AddressPageLayout />} />
-							<Route path="payment" element={<PaymentPageLayout />} />
-						</Route>
-						<Route path="/user" element={
-							<CheckAuth isAuthenticated={isAuthenticated} user={user} >
-								<UserLayout />
-							</CheckAuth>
-						} >
-							<Route path="recent-viewed-products" element={<RecentViewedProducts />} />
-						</Route>
-						<Route path="/setting" element={
-							<CheckAuth isAuthenticated={isAuthenticated} user={user} >
-								<ShopSettingsLayout />
-							</CheckAuth>
-						} >
-							<Route path="dashboard" element={<ShopSettingDashboard />} />
-							<Route path="my-account" element={<ShopSettingMyAccount />} />
-							<Route path="my-orders" element={<ShopSettingMyOrders />} />
-							<Route path="wishlist" element={<ShopSettingWishlist />} />
-							<Route path="saved-addresses" element={<ShopSettingSavedAddresses />} />
-							{/* <Route path="payment-options" element={<ShopSettingPaymentOptions />} /> */}
-							{/* <Route path="subscriptions" element={<ShopSettingSubscriptions />} /> */}
-							<Route path="my-ratings-reviews" element={<ShopSettingMyRatingsAndReviews />} />
-							<Route path="settings" element={<ShopSettingSettings />} >
-								<Route path="notification" element={<Notification />} />
-								<Route path="account-preference" element={<AccountPreference />} />
-								<Route path="Security-login" element={<SecurityLogin />} />
-								<Route path="privacy-data" element={<PrivacyData />} />
-							</Route>
-							<Route path="hidden-orders" element={<HiddenOrders />} />
-							<Route path="contact-us" element={<ShopSettingContactUs />} />
-						</Route>
-						<Route path="/orders" element={
-							<CheckAuth isAuthenticated={isAuthenticated} user={user} >
-								<OrdersPageLayout />
-							</CheckAuth>
-						} >
-							<Route path="notifications" element={<Notifications />} />
-							<Route path="order-details/:id" element={<OrderDetailsPage />} />
-							<Route path="track-package/:id" element={<TrackPackage />} />
-							<Route path="product-reviews/:id" element={<ProductReviewPage />} />
-							<Route path="seller-profile/:id" element={<SellerProfile />} />
-							<Route path="product-exchange/:id" element={<ProductExchange />} />
-							<Route path="product-return/:id" element={<ProductReturn />} />
-							<Route path="track-return/:id" element={<TrackReturnAndRefund />} />
-							<Route path="successfull/:id" element={<SuccessfulPopup />} />
-						</Route>
-						<Route path="/admin" element={
-							<CheckAuth isAuthenticated={isAuthenticated} user={user} >
-								<AdminLayout />
-							</CheckAuth>
-						}>
-							<Route path="dashboard" element={<AdminDashboard />} />
-							<Route path="carousel" element={<AdminCarousel />} />
-							<Route path="promotional-banners" element={<AdminPromotionalBanners />} />
-							<Route path="products" element={<AdminProducts />} />
-							<Route path="pickup-warehouse" element={<AdminPickupWarehouse />} />
-							<Route path="orders" element={<AdminOrders />} />
-							<Route path="blogs" element={<AdminBlogs />} />
-							<Route path="reviews" element={<AdminReviews />} />
-							<Route path="event-gallery" element={<EventGallery />} />
-							<Route path="sellers" element={<AdminSellers />} />
-							<Route path="newsletter" element={<AdminNewsletter />} />
-							<Route path="work-with-us" element={<AdminWorkWithUs />} />
-							<Route path="ticket-and-reports" element={<AdminTicketAndReports />} />
-							<Route path="request-call" element={<AdminRequestCall />} />
-							<Route path="settings" element={<AdminSettings />} />
-						</Route>
-					</Routes>
-				</>
-			}
+			<ScrollToTop />
+			<Routes>
+				<Route path="/" element={
+					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
+						<ShopLayout />
+					</CheckAuth>
+				} >
+					<Route path="shop" element={<HomePageLayout />} />
+					<Route path="products" element={<ProductsPageLayout />} />
+					<Route path="product-details/:id" element={<ProductDetailsPageLayout />} />
+					<Route path="blogs" element={<BlogPageLayout />} />
+					<Route path="about-us" element={<AboutUsPageLayout />} />
+					<Route path="all-blogs" element={<AllBlogs />} />
+					<Route path="blog/:id" element={<Blog />} />
+					<Route path="bulk-order" element={<BulkOrderPageLayout />} />
+					<Route path="personalized-order" element={<PersonalizedOrderPageLayout />} />
+					<Route path="subscription" element={<Subscription />} />
+					<Route path="/partner-with-us" element={<PartnerWithUs />} />
+				</Route>
+				<Route path="/policy" element={
+					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
+						<PolicyLayout />
+					</CheckAuth>
+				} >
+					<Route path="privacy-policy" element={<PrivacyPolicy />} />
+					<Route path="terms-and-conditions" element={<TermsAndCondition />} />
+					<Route path="legal-compliance" element={<LegalCompliancePolicy />} />
+					<Route path="intellectual-property-policy" element={<IntellectualPropertyPolicy />} />
+					<Route path="intergalactic-framework-policy" element={<IntergalacticFrameworkPolicy />} />
+					<Route path="general-shopping-policy" element={<GeneralShoppingPolicy />} />
+					<Route path="payments-and-checkout-policy" element={<PaymentAndCheckoutPolicy />} />
+					<Route path="discounts-and-pricing-policy" element={<DiscountsAndPricingPolicy />} />
+					<Route path="shipping-and-delivery-policy" element={<ShippingAndDeliveryPolicy />} />
+					<Route path="order-cancellation-policy" element={<OrderCancellationPolicy />} />
+					<Route path="return-and-refund-policy" element={<ReturnAndRefundPolicy />} />
+					<Route path="exchange-and-replacemennt-policy" element={<ExchangeAndReplacementPolicy />} />
+					<Route path="custumer-support-and-resolution-policy" element={<CustomerSupportAndComplaintResolutionPolicy />} />
+					<Route path="custumer-support-and-dispute-resolution-policy" element={<CustomerSupportAndCustomerDisputeResolutionPolicy />} />
+					<Route path="loyalty-and-reward-program" element={<LoyaltyAndRewardProgramPolicy />} />
+					<Route path="affiliate-and-influencer-policy" element={<AffiliateAndInfluencerPolicy />} />
+					<Route path="community-guidelines" element={<CommunityGuidelinesAndUserGeneratedContentPolicy />} />
+					<Route path="enviromental-ethical-sourcing-policy" element={<EnviromentalAndEthicalSourcingPolicy />} />
+					<Route path="FAQs" element={<FAQs />} />
+				</Route>
+				<Route path="/checkout" element={
+					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
+						<CheckoutLayout />
+					</CheckAuth>
+				} >
+					<Route path="cart" element={<CartPageLayout />} />
+					<Route path="address" element={<AddressPageLayout />} />
+					<Route path="payment" element={<PaymentPageLayout />} />
+				</Route>
+				<Route path="/user" element={
+					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
+						<UserLayout />
+					</CheckAuth>
+				} >
+					<Route path="recent-viewed-products" element={<RecentViewedProducts />} />
+				</Route>
+				<Route path="/setting" element={
+					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
+						<ShopSettingsLayout />
+					</CheckAuth>
+				} >
+					<Route path="dashboard" element={<ShopSettingDashboard />} />
+					<Route path="my-account" element={<ShopSettingMyAccount />} />
+					<Route path="my-orders" element={<ShopSettingMyOrders />} />
+					<Route path="wishlist" element={<ShopSettingWishlist />} />
+					<Route path="saved-addresses" element={<ShopSettingSavedAddresses />} />
+					{/* <Route path="payment-options" element={<ShopSettingPaymentOptions />} /> */}
+					{/* <Route path="subscriptions" element={<ShopSettingSubscriptions />} /> */}
+					<Route path="my-ratings-reviews" element={<ShopSettingMyRatingsAndReviews />} />
+					<Route path="settings" element={<ShopSettingSettings />} >
+						<Route path="notification" element={<Notification />} />
+						<Route path="account-preference" element={<AccountPreference />} />
+						<Route path="Security-login" element={<SecurityLogin />} />
+						<Route path="privacy-data" element={<PrivacyData />} />
+					</Route>
+					<Route path="hidden-orders" element={<HiddenOrders />} />
+					<Route path="contact-us" element={<ShopSettingContactUs />} />
+				</Route>
+				<Route path="/orders" element={
+					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
+						<OrdersPageLayout />
+					</CheckAuth>
+				} >
+					<Route path="notifications" element={<Notifications />} />
+					<Route path="order-details/:id" element={<OrderDetailsPage />} />
+					<Route path="track-package/:id" element={<TrackPackage />} />
+					<Route path="product-reviews/:id" element={<ProductReviewPage />} />
+					<Route path="seller-profile/:id" element={<SellerProfile />} />
+					<Route path="product-exchange/:id" element={<ProductExchange />} />
+					<Route path="product-return/:id" element={<ProductReturn />} />
+					<Route path="track-return/:id" element={<TrackReturnAndRefund />} />
+					<Route path="successfull/:id" element={<SuccessfulPopup />} />
+				</Route>
+				<Route path="/admin" element={
+					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
+						<AdminLayout />
+					</CheckAuth>
+				}>
+					<Route path="dashboard" element={<AdminDashboard />} />
+					<Route path="carousel" element={<AdminCarousel />} />
+					<Route path="promotional-banners" element={<AdminPromotionalBanners />} />
+					<Route path="products" element={<AdminProducts />} />
+					<Route path="pickup-warehouse" element={<AdminPickupWarehouse />} />
+					<Route path="orders" element={<AdminOrders />} />
+					<Route path="blogs" element={<AdminBlogs />} />
+					<Route path="reviews" element={<AdminReviews />} />
+					<Route path="event-gallery" element={<EventGallery />} />
+					<Route path="sellers" element={<AdminSellers />} />
+					<Route path="newsletter" element={<AdminNewsletter />} />
+					<Route path="work-with-us" element={<AdminWorkWithUs />} />
+					<Route path="ticket-and-reports" element={<AdminTicketAndReports />} />
+					<Route path="request-call" element={<AdminRequestCall />} />
+					<Route path="settings" element={<AdminSettings />} />
+				</Route>
+			</Routes>
 		</div>
 	)
 }

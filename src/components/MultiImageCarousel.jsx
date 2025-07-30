@@ -81,7 +81,7 @@ const MultiImageCarousel = ({images}) => {
                                 <img
                                     src={image.imgUrl}
                                     alt={`Slide ${index + 1}`}
-                                    className="w-full h-full object-fit rounded-xl shadow-sm border"
+                                    className="w-full h-full object-fit rounded-xl shadow-sm border border-black"
                                 />
                             </div>
                         </div>

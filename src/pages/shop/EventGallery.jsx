@@ -1,4 +1,3 @@
-import HeadingText from "@/components/HeadingText";
 import HeadingWithUnderline from "@/components/HeadingWithUnderline";
 import MultiImageCarousel from "@/components/MultiImageCarousel";
 import { getAllEventGaleryImages } from "@/firebase/admin";

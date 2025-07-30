@@ -96,7 +96,7 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
         loginUser(formData).then((res) => {
             if (res.id !== null) {
                 dispatch(login(res))
-
+                toast("Logged In Successfully.")
                 if (res?.role === "admin") {
                     navigate("/admin/dashboard");
                 } else {

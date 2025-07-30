@@ -74,7 +74,7 @@ export const displayRazorpay = async (
             amount: response.data.amount,
             currency: response.data.currency,
             order_id: response.data.id,
-            order_receipt: orderId,
+            order_receipt: "",   //order_receipt: orderId,
             name: "LXS Store",
             image: lxsLogo,
             description: "For Payment Testing Purpose",

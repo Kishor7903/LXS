@@ -167,8 +167,6 @@ function ProductDetailsPage({ id, data }) {
 
 
 	useEffect(() => {
-		// addShippingLabel("FSPP0004343539").then(res => console.log(res)).catch(err => console.log(err.message));
-		// registerOrderPickup(["FSPP0004343539"]).then(res => console.log(res)).catch(err => console.log(err.message));
 		// orderTrackingHistory("FSPP0004343537").then(res => console.log(res)).catch(err => console.log(err.message));
 		// orderCurrentStatus("FSPP0004343537").then(res => console.log(res)).catch(err => console.log(err.message));
 	}, [])

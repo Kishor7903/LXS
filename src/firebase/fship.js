@@ -117,3 +117,11 @@ export async function orderReattempt(apiorderid, action, reattempt_date, contact
     );
     return response;
 }
+
+export const sendEmail = async () => {
+    let response = await axios.post(
+        "/lxslifestylestore-8935b/us-central1/sendEmailOnNewDoc",
+        {}
+    );
+    return response;
+}

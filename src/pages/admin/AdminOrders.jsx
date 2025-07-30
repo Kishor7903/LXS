@@ -1,14 +1,23 @@
 import AdminHeadings from "@/components/AdminHeadings"
-import { getUserInfo } from "@/firebase/auth";
+import { useToast } from "@/components/ToastProvider";
+import { getUserInfo, updateOrderInfo } from "@/firebase/auth";
+import { addShippingLabel, registerOrderPickup } from "@/firebase/fship";
+import { updateOrder } from "@/store/features/cartSlice";
+import { getTimestamp } from "@/utils/commomFunctions";
 import { useState } from "react"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+const statusOrder = ["pending", "approved", "in transit", "delivered", "return/replaced"];
 
 
 function AdminOrders() {
     let [isOpen, setIsOpen] = useState(-1);
     let [user, setUser] = useState(null);
-    let [orderCurrentState, setOrderCurrentState] = useState(null);
+    const [isStatusChanged, setIsStatusChanged] = useState({});
+    let [orderStatusMap, setOrderStatusMap] = useState({});
     let { orders } = useSelector(state => state.admin);
+    let dispatch = useDispatch();
+    let toast = useToast();
 
     const handleOrderClick = (e, user_id, i) => {
         e.preventDefault();
@@ -19,6 +28,41 @@ function AdminOrders() {
                 setUser(res);
             })
         }
+    }
+
+    const handleSave = (e, order) => {
+        e.stopPropagation();
+        const newStatus = orderStatusMap[order.orderId] || order.orderStatus;
+        if(order.orderStatus === "pending"){
+            addShippingLabel(order.waybill).then(response => {
+                if(response.status === "success"){
+                    registerOrderPickup([order.waybill]).then(res => {
+                        if(res.status){
+                            let newUpdates = {
+                                orderStatus: newStatus,
+                                shippingPartner: res.apipickuporderids[0].serviceProviderName,
+                                fshipPickupId: res.apipickuporderids[0].fshipPickupId,
+                                pickupOrderId: res.apipickuporderids[0].pickupOrderId,
+                                orderUpdates: [...order.orderUpdates, {
+                                    title: "Order Approved",
+                                    details: { text: "Seller has processed your order.", timestamp: getTimestamp() },
+                                }]
+                            }
+                            updateOrderInfo(order.userId, order.id, {...newUpdates})
+                            .then(() => {
+                                dispatch(updateOrder({...order, ...newUpdates}))
+                                toast("Order Status Changed!")
+                            })
+                        }
+                    }).catch(err => console.log("Register Order Pickup Error: ", err.message));
+                }
+            }).catch(error => console.log("Adding Shipping Label Error: ", error.message));
+            
+        }
+        setIsStatusChanged((prev) => ({
+            ...prev,
+            [order.orderId]: false
+        }));
     }
 
     return (
@@ -48,14 +92,46 @@ function AdminOrders() {
                                         <p className="text-gray-500 text-sm">{order.orderId}</p>
                                     </div>
                                     <div className="flex items-center gap-5 w-[27%]" >
-                                        <select className="border p-2 rounded outline-none" value={order.orderStatus} onChange={(e) => { e.preventDefault(), setOrderCurrentState(e.target.value)}} onClick={(e) => e.stopPropagation()}>
-                                            <option value="pending">Pending</option>
-                                            <option value="approved">Approved</option>
-                                            <option value="in transit">In Transit</option>
-                                            <option value="delivered">Delivered</option>
-                                            <option value="return/replaced">Return/Replaced</option>
+                                        <select
+                                            className="border p-2 rounded outline-none"
+                                            value={orderStatusMap[order.orderId] || order.orderStatus}
+                                            onChange={(e) => {
+                                                const newValue = e.target.value;
+                                                setOrderStatusMap((prev) => ({
+                                                    ...prev,
+                                                    [order.orderId]: newValue
+                                                }));
+
+                                                setIsStatusChanged((prev) => ({
+                                                    ...prev,
+                                                    [order.orderId]: newValue !== order.orderStatus
+                                                }));
+                                            }}
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            {statusOrder.map((status) => (
+                                                <option
+                                                    key={status}
+                                                    value={status}
+                                                    disabled={
+                                                        statusOrder.indexOf(status) < statusOrder.indexOf(order.orderStatus)
+                                                    }
+                                                >
+                                                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                                                </option>
+                                            ))}
                                         </select>
-                                        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={(e) => {e.stopPropagation()}}>Save</button>
+
+                                        <button
+                                            className={`px-4 py-2 rounded text-white ${isStatusChanged[order.orderId] ? 'bg-blue-500' : 'bg-gray-400 cursor-not-allowed'
+                                                }`}
+                                            disabled={!isStatusChanged[order.orderId]}
+                                            onClick={(e) => handleSave(e, order)}
+                                        >
+                                            Save
+                                        </button>
+
+
                                     </div>
                                 </div>
 

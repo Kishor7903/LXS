@@ -15,7 +15,6 @@ import {
     updateDoc,
     where,
 } from "firebase/firestore";
-import { toast } from "react-toastify";
 import { auth, fireDB } from "./FirebaseConfig.js";
 
 
@@ -79,7 +78,6 @@ export const loginUser = async (formData) => {
                 userData = { id: doc.id, ...doc.data() };
             });
 
-            toast("Logged In Successfully ...");
             return userData;
         }
 
@@ -605,3 +603,4 @@ export const getBlogWithId = async (id) => {
         console.log("Error getting blog data: ", error.message);
     }
 }
+
