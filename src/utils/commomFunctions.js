@@ -11,7 +11,7 @@ export const getTimestamp = () => {
         year: "numeric",
     });
     let parts = date.split(', ');
-    date = `${parts[0].split(' ')[1]} ${parts[0].split(' ')[0]}, ${parts[1]}`;
+    date = `${parts[0].split(' ')[1]} ${parts[0].split(' ')[0]} ${parts[1]}`;
 
     const time = now.toLocaleTimeString("en-US", {
         hour: "numeric",

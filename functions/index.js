@@ -218,7 +218,6 @@ export const shippingLabel = functions.https.onRequest(async (req, res) => {
 
     try {
         const { waybill } = req.body;
-        console.log(waybill);
 
         const response = await axios.post(
             "https://capi-qc.fship.in/api/shippinglabel",

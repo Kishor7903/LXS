@@ -13,6 +13,7 @@ function ProductDetailsPageLayout() {
 	let [data, setData] = useState(null);
 	let [isProductAvailable, setIsProductAvailable] = useState(true);
 	let { products } = useSelector(state => state.admin);
+	let { user } = useSelector(state => state.auth);
 
 	useEffect(() => {
 		let d = products.some(p => p.id === id);
@@ -48,7 +49,10 @@ function ProductDetailsPageLayout() {
 				data &&
 				<YourMayAlsoLikeThesePage data={data} />
 			}
-			<RecentProductsPage />
+			{
+				user &&
+				<RecentProductsPage />
+			}
 			<InfoIconsContainer />
 
 		</>

@@ -1,10 +1,10 @@
-import tile1Icon from "../../assets/dashboard/Recently Viewed Products.png"
-import tile2Icon from "../../assets/dashboard/LXS Crew Membership.png"
-import tile3Icon from "../../assets/dashboard/Personalise Your Order.png"
-import tile4Icon from "../../assets/dashboard/Returned & Cancelled Orders.png"
+import tile1Icon from "../../assets/dashboard/Recently Viewed.png"
+import tile2Icon from "../../assets/dashboard/LXS Crew Member.png"
+import tile3Icon from "../../assets/dashboard/Custom Orders.png"
+import tile4Icon from "../../assets/dashboard/Returned & Cancelled.png"
 import tile5Icon from "../../assets/dashboard/Payment History.png"
-import tile6Icon from "../../assets/dashboard/LXS Announcement.png"
-import tile7Icon from "../../assets/dashboard/Track Order.png"
+import tile6Icon from "../../assets/dashboard/LXS Updates.png"
+import tile7Icon from "../../assets/dashboard/Track Orders.png"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
@@ -171,7 +171,7 @@ function ShopSettingDashboard() {
         {
           tiles.map((item, index) => (
             <div key={index} className={`w-[18%] h-14 rounded-xl relative overflow-hidden flex flex-col justify-end px-3 py-2 text-[18px] shadow-md cursor-pointer hover:scale-[1.08] active:scale-[0.95] lg:hover:shadow-[0px_0px_10px_-2px_rgb(8,43,61)] duration-200 z-0 bg-slate-100 border border-slate-300 `} onClick={() => navigate(item.navigate)}>
-              <img src={item.icon} alt="" className='w-10 absolute top-2 right-3 -z-10' />
+              <img src={item.icon} alt="" className='w-10 absolute top-2 right-2 -z-10' />
               <div className="text-[15px] leading-[1.3] text-left">
                 <p className=''>{item.title1}</p>
                 <p className='font-bold '>{item.title2}</p>

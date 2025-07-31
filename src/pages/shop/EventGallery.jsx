@@ -17,7 +17,7 @@ function EventGallery() {
     }, [])
 
     return (
-        <div className="lg:pt-5 space-y-2 lg:space-y-5 w-full h-auto pb-10 border-y flex flex-col">
+        <div className="lg:pt-5 mt-5 space-y-2 lg:space-y-5 w-full h-auto pb-10 border-y flex flex-col">
 
             <HeadingWithUnderline name="Mission Logs!" />
 

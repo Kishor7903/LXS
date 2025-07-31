@@ -10,7 +10,8 @@ import invoice from "../../assets/files/TAX INVOICE.docx"
 import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
 import { saveAs } from "file-saver";
-import { numberToWords } from "@/utils/commomFunctions";
+import { getTimestamp, numberToWords } from "@/utils/commomFunctions";
+import { cancelTheShipment } from "@/firebase/fship";
 
 function OrderDetailsPage() {
     let navigate = useNavigate();
@@ -95,15 +96,37 @@ function OrderDetailsPage() {
         saveAs(out, "invoice.docx");
     }
 
+    const handleCancelOrder = (e) =>{
+        e.preventDefault();
+
+        if(orderDetails?.orderStatus === "approved"){
+            cancelTheShipment(orderDetails?.waybill, "Not Needed Further.").then((res) =>{
+                if(res.status){
+                    updateOrderInfo(user.id, id, {
+                        orderStatus: "Cancelled",
+                        orderUpdates: [...orderDetails?.orderUpdates, {
+                            title: "Order Cancelled",
+                            details: [{ text: "Order Cancelled by user.", timestamp: getTimestamp() }]
+                        }]
+                    })
+                }
+            }).catch(err => {
+                console.log("Error at cancelling the shipment: ", err.message);
+            })
+        }
+    }
+
     useEffect(() => {
         setLoading(true);
-        getSingleOrderDetails(user.id, id).then((res) => {
-            setOrderDetails(res);
-        });
+        if(user){
+            getSingleOrderDetails(user?.id, id).then((res) => {
+                setOrderDetails(res);
+            });
+        }
         setTimeout(() => {
             setLoading(false);
         }, 1000);
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         const result = [];
@@ -301,9 +324,7 @@ function OrderDetailsPage() {
                             <div className="flex gap-5">
                                 <button
                                     className="w-1/4 text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md border border-slate-300 bg-slate-100  px-3 py-2 flex justify-between items-center font-semibold gap-5"
-                                    onClick={() =>
-                                        navigate(`/orders/track-package/${id}`)
-                                    }
+                                    onClick={handleCancelOrder}
                                 >
                                     Cancel Order{" "}
                                     <i className="fi fi-sr-cross-circle relative top-[2px]"></i>

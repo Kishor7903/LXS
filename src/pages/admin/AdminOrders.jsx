@@ -7,7 +7,7 @@ import { getTimestamp } from "@/utils/commomFunctions";
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
-const statusOrder = ["pending", "approved", "in transit", "delivered", "return/replaced"];
+const statusOrder = ["Order Placed", "Order Approved", "Pickup Done", "In-Transit", "Out for Delivery", "Delivered"];
 
 
 function AdminOrders() {
@@ -33,7 +33,7 @@ function AdminOrders() {
     const handleSave = (e, order) => {
         e.stopPropagation();
         const newStatus = orderStatusMap[order.orderId] || order.orderStatus;
-        if(order.orderStatus === "pending"){
+        if(order.orderStatus === "Order Placed"){
             addShippingLabel(order.waybill).then(response => {
                 if(response.status === "success"){
                     registerOrderPickup([order.waybill]).then(res => {
@@ -43,10 +43,13 @@ function AdminOrders() {
                                 shippingPartner: res.apipickuporderids[0].serviceProviderName,
                                 fshipPickupId: res.apipickuporderids[0].fshipPickupId,
                                 pickupOrderId: res.apipickuporderids[0].pickupOrderId,
-                                orderUpdates: [...order.orderUpdates, {
+                                orderUpdates: order.orderUpdates.map((item) => item.title === "Order Approved" ? {
                                     title: "Order Approved",
-                                    details: { text: "Seller has processed your order.", timestamp: getTimestamp() },
-                                }]
+                                    details: [
+                                        {text: "Boom! Your Order is Confirmed by LXS Store 💥"},
+                                        {text: "All Set! Your Shipment is Packed and Ready 📦", timestamp: getTimestamp()}
+                                    ]
+                                } : item),
                             }
                             updateOrderInfo(order.userId, order.id, {...newUpdates})
                             .then(() => {
@@ -109,7 +112,7 @@ function AdminOrders() {
                                             }}
                                             onClick={(e) => e.stopPropagation()}
                                         >
-                                            {statusOrder.map((status) => (
+                                            {statusOrder.slice(0,2).map((status) => (
                                                 <option
                                                     key={status}
                                                     value={status}
@@ -117,7 +120,7 @@ function AdminOrders() {
                                                         statusOrder.indexOf(status) < statusOrder.indexOf(order.orderStatus)
                                                     }
                                                 >
-                                                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                                                    {status === "Order Placed" ? "Pending" : "Approved"}
                                                 </option>
                                             ))}
                                         </select>

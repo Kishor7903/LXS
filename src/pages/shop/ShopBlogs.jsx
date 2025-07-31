@@ -1,42 +1,20 @@
-import HeadingText from "@/components/HeadingText";
-import TabSwitcher from "@/components/TabSwitcher";
-import ViewAllIcon from "@/components/ViewAllIcon";
-import { useEffect, useState } from "react"
+import HeadingWithUnderline from "@/components/HeadingWithUnderline";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 
 function ShopBlogs() {
-    const tabs = ["Popular", "Latest"];
-    const [activeTab, setActiveTab] = useState(tabs[0]);
     let navigate = useNavigate();
     let { blogs } = useSelector(state => state.admin);
-    let [blog, setBlogs] = useState(blogs);
-
-    useEffect(() => {
-        if (activeTab === tabs[1] && blogs.length > 0) {
-            let sortedBlogs = [...blogs].sort((a,b) => {
-                return new Date(b.timestamp) - new Date(a.timestamp);
-            })
-            setBlogs(sortedBlogs)
-        }
-        else{
-            setBlogs(blogs);
-        }
-    }, [blogs, activeTab])
 
     return (
         <div className="space-y-2 lg:space-y-1 px-5 md:px-8 lg:px-12 xl:px-16 border-t py-5 flex flex-col gap-0 lg:gap-2">
 
-            <HeadingText name="Intergalactic Intel!" />
-
-            <TabSwitcher activeTab={activeTab} setActiveTab={setActiveTab} layoutId="shop-blogs" tabs={tabs} />
-
-            <ViewAllIcon navigate="/all-blogs" className="hidden md:flex" />
+            <HeadingWithUnderline name="Intergalactic Intel!" className="mb-5" />
 
             <div className="h-auto w-full grid grid-cols-2 md:grid-cols-5 gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-5 lg:gap-x-8 lg:gap-y-6">
                 {
-                    blog.slice(0,4).map((item, index) => {
+                    blogs.slice(0,4).map((item, index) => {
                         return (
                             <div key={index} className="h-[200px] md:h-[240px] lg:h-[300px] xl:h-[390px] rounded md:rounded-[10px] overflow-hidden cursor-pointer duration-200 border-slate-300 border-[1px] shadow-lg pb-3" onClick={() => navigate(`/blog/${item.id}`)}>
                                 <div className='w-full h-[50%] md:h-[55%] rounded-sm md:rounded overflow-hidden border-b'>
@@ -55,9 +33,6 @@ function ShopBlogs() {
                     })
                 }
             </div>
-
-            <ViewAllIcon navigate="/blog" className="flex md:hidden px-5 md:px-8 lg:px-12 xl:px-16" />
-
         </div>
     )
 }

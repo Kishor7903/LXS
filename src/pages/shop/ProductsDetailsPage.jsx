@@ -9,7 +9,7 @@ import instagramLogo from "../../assets/Socials/Instagram.png"
 import twitterLogo from "../../assets/Socials/Twitter.png"
 import youtubeLogo from "../../assets/Socials/Youtube.png"
 import linkedinLogo from "../../assets/Socials/Linkedin.png"
-import whatsappLogo from "../../assets/Socials/Whatsapp (Fill).png"
+import whatsappLogo from "../../assets/Socials/Whatsapp.png"
 // import reviewLogo from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import reviewLogoActive from "../../assets/commonIcons/Ratings & Reviews (Fill).png"
 import starIcon from "../../assets/commonIcons/Rewards 2 (Fill).png"
@@ -167,8 +167,8 @@ function ProductDetailsPage({ id, data }) {
 
 
 	useEffect(() => {
-		// orderTrackingHistory("FSPP0004343537").then(res => console.log(res)).catch(err => console.log(err.message));
-		// orderCurrentStatus("FSPP0004343537").then(res => console.log(res)).catch(err => console.log(err.message));
+		// orderTrackingHistory("FSPP0004350062").then(res => console.log(res)).catch(err => console.log(err.message));
+		// orderCurrentStatus("FSPP0004350062").then(res => console.log(res)).catch(err => console.log(err.message));
 	}, [])
 
 	useEffect(() => {

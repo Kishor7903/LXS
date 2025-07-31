@@ -79,7 +79,7 @@ const GlobalDropdown = ({
         onClick={openDropdown}
       >
         <span>{placeholder} : {renderLabel(selected)}</span>
-        <i class="fi fi-br-angle-small-down relative top-[2px]"></i>
+        <i className="fi fi-br-angle-small-down relative top-[2px]"></i>
       </div>
       {isOpen && ReactDOM.createPortal(dropdown, document.body)}
     </>

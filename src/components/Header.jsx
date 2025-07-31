@@ -115,7 +115,10 @@ function Header({ className }) {
 
 	useEffect(() => {
 		getBlogs().then((res) => {
-			dispatch(getAllBlogs(res))
+			let sortedBlogs = res.sort((a,b) => {
+				return new Date(b.timestamp) - new Date(a.timestamp)
+			})
+			dispatch(getAllBlogs(sortedBlogs))
 		})
 	}, [])
 

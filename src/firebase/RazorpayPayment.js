@@ -74,7 +74,7 @@ export const displayRazorpay = async (
             amount: response.data.amount,
             currency: response.data.currency,
             order_id: response.data.id,
-            order_receipt: "",   //order_receipt: orderId,
+            order_receipt: "", //orderId
             name: "LXS Store",
             image: lxsLogo,
             description: "For Payment Testing Purpose",
@@ -101,7 +101,7 @@ export const displayRazorpay = async (
 
                     let orderInfo = {
                         orderId,
-                        orderStatus: "Pending",
+                        orderStatus: "Order Placed",
                         isHidden: false,
                         products: cart,
                         address,
@@ -143,10 +143,30 @@ export const displayRazorpay = async (
                                             title: "Order Placed",
                                             details: [
                                                 {
-                                                    text: "Your order is successfully placed",
+                                                    text: "Your Order is Placed Successfully ✅",
                                                     timestamp: timestamp,
                                                 },
                                             ],
+                                        },
+                                        {
+                                            title: "Order Approved",
+                                            details: [],
+                                        },
+                                        {
+                                            title: "Pickup Done",
+                                            details: [],
+                                        },
+                                        {
+                                            title: "In-Transit",
+                                            details: [],
+                                        },
+                                        {
+                                            title: "Out For Delivery",
+                                            details: [],
+                                        },
+                                        {
+                                            title: "Delivered",
+                                            details: [],
                                         },
                                     ]
 
