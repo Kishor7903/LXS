@@ -32,10 +32,6 @@ let menu = [
                 "slug": "#"
             },
             {
-                "name": "Customer's Spotlight",
-                "slug": "#"
-            },
-            {
                 "name": "LXS Crew Membership",
                 "slug": "/subscription"
             },
@@ -170,19 +166,19 @@ function Footer() {
                             <Link to="https://www.facebook.com/lxslifestylestore" target="_blank"><img src={facebookLogo} alt="" className='h-6 lg:h-9 cursor-pointer' /></Link>
                         </div>
                     </div>
-                    <div className="flex gap-6">
-                        <div className="w-48 py-2 rounded-xl px-[14px] flex items-center gap-2 cursor-pointer lg:hover:scale-[1.05] bg-slate-300 lg:active:scale-[0.98] duration-150">
+                    <div className="flex gap-6 ">
+                        <div className="w-44 py-2 rounded-xl px-[14px] flex items-center gap-2 cursor-pointer lg:hover:scale-[1.05] bg-slate-100 border border-slate-300 shadow-md lg:active:scale-[0.98] duration-150">
                             <img src={playStoreImg} alt="" className="h-9" />
                             <div className="flex flex-col justify-center items-start h-10">
-                            <p className="text-xs font-medium">ADDING ON</p>
-                                <p className="text-lg font-semibold leading-5">Play Store</p>
+                            <p className="text-[11px] font-medium">ADDING SOON ON</p>
+                                <p className="text-base font-semibold leading-4">Play Store</p>
                             </div>
                         </div>
-                        <div className="w-48 py-2 rounded-xl px-[14px] flex items-center gap-2 cursor-pointer lg:hover:scale-[1.03] bg-slate-300 lg:active:scale-[0.98] duration-150">
+                        <div className="w-44 py-2 rounded-xl px-[14px] flex items-center gap-2 cursor-pointer lg:hover:scale-[1.03] bg-slate-100 border border-slate-300 shadow-md lg:active:scale-[0.98] duration-150">
                             <img src={appStoreImg} alt="" className="h-9" />
                             <div className="flex flex-col justify-center items-start h-10">
-                                <p className="text-xs font-medium">ADDING ON</p>
-                                <p className="text-lg font-semibold leading-5">App Store</p>
+                                <p className="text-[11px] font-medium">ADDING SOON ON</p>
+                                <p className="text-base font-semibold leading-4">App Store</p>
                             </div>
                         </div>
                         
@@ -190,16 +186,16 @@ function Footer() {
                     </div>
 
                 </div>
-                <div className="w-[52%] flex justify-between px-8 gap-8 text-xs">
+                <div className="w-[52%] flex justify-between 2xl:px-8 px-5 text-xs">
                     {
                         menu.map((item, index) => {
                             return (
-                                <div key={index} className="text-center">
+                                <div key={index} className="text-center w-56">
                                     <h3 className='font-bold h-10 mb-1 flex justify-center text-sm md:text-[16px] lg:text-xl leading-[1.1] tracking-tight'>{item.title}</h3>
                                     <div className="flex flex-col items-center text-[10px] md:text-xs lg:text-sm md:gap-1 tracking-tighter">
                                         {
                                             item.menus.map((link, idx) => (
-                                                <Link key={idx} to={link.slug} className='active:underline lg:hover:underline font-medium h-[14px] active:font-semibold lg:hover:font-semibold'>{link.name}</Link>
+                                                <Link key={idx} to={link.slug} className='active:underline font-medium h-[14px] active:font-semibold lg:hover:font-semibold'>{link.name}</Link>
                                             ))
                                         }
                                     </div>

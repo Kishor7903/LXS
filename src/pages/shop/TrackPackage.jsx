@@ -1,17 +1,16 @@
 import Breadcrum from "@/components/Breadcrum"
 import OrderProgressStepper from "@/components/OrderProgressStepper";
-import { getSingleOrderDetails } from "@/firebase/auth";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom"
-
-const statusOrder = ["Order Placed", "Order Approved", "Pickup Done", "In-Transit", "Out for Delivery", "Delivered"];
 
 
 function TrackPackage() {
     let { id } = useParams();
     let { user } = useSelector(state => state.auth);
+    let { orders } = useSelector(state => state.cart);
     let [orderDetails, setOrderDetails] = useState(null);
+    let [status, setStatus] = useState([])
 
     let items = [
         {
@@ -29,11 +28,15 @@ function TrackPackage() {
 
     useEffect(() => {
         if(user){
-            getSingleOrderDetails(user?.id, id).then((res) => {
-                setOrderDetails(res);
-            })
+            let orderedItem = orders.find((item) => item.id === id);
+            setOrderDetails(orderedItem);
+            if(orderedItem.orderStatus === "Cancelled"){
+                setStatus(["Order Placed", "Cancelled"]);
+            }else{
+                setStatus(["Order Placed", "Order Approved", "Pickup Done", "In-Transit", "Out for Delivery", "Delivered"])
+            }
         }
-    }, [user])
+    }, [orders])
 
     return (
         <div className="px-16 py-6 h-[91vh]">
@@ -49,7 +52,7 @@ function TrackPackage() {
                         <div className="flex flex-col gap-2 text-sm w-full">
                             {
                                 orderDetails?.orderUpdates &&
-                            <OrderProgressStepper steps={orderDetails?.orderUpdates} currentStep={statusOrder.indexOf(orderDetails?.orderStatus)} />
+                            <OrderProgressStepper steps={orderDetails?.orderUpdates} currentStep={status.indexOf(orderDetails?.orderStatus)} currentState={orderDetails?.orderStatus} />
                         }
                         </div>
                     </div>

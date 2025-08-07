@@ -390,7 +390,7 @@ function Header({ className }) {
 
 				<div className="flex justify-between items-center text-xl lg:text-3xl ">
 
-					<div className="flex gap-2 lg:gap-4 mr-3 lg:mr-8">
+					<div className="flex gap-2 lg:gap-4 mr-3 lg:mr-6">
 						<img src={heartIcon} alt="" className="h-6 lg:h-7 cursor-pointer active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/setting/wishlist") : null} />
 						<div className="relative active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/checkout/cart") : null}>
 							{

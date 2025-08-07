@@ -3,6 +3,7 @@ import Razorpay from "razorpay";
 import dotenv from "dotenv";
 import CryptoJS from "crypto-js";
 import axios from "axios";
+import sibApiV3Sdk from "sib-api-v3-sdk";
 
 dotenv.config({
     path: "./.env",
@@ -331,38 +332,40 @@ export const trackingHistory = functions.https.onRequest(async (req, res) => {
     }
 });
 
-export const shipmentCurrentStatus = functions.https.onRequest(async (req, res) => {
-    if (req.method !== "POST") {
-        return res.status(405).send({ error: "Method Not Allowed" });
+export const shipmentCurrentStatus = functions.https.onRequest(
+    async (req, res) => {
+        if (req.method !== "POST") {
+            return res.status(405).send({ error: "Method Not Allowed" });
+        }
+
+        try {
+            const { waybill } = req.body;
+
+            const response = await axios.post(
+                "https://capi-qc.fship.in/api/shipmentcurrentstatus",
+                { waybill },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        signature: process.env.FSHIP_SECURITY_KEY,
+                    },
+                }
+            );
+
+            const info = response.data;
+            res.status(200).send(info);
+        } catch (error) {
+            console.error(
+                "Error Fetching Order Current Status:",
+                error.message
+            );
+            res.status(500).send({
+                error: "Failed to fetch order current status",
+                data: error.message,
+            });
+        }
     }
-
-    try {
-        const { waybill } = req.body;
-
-        const response = await axios.post(
-            "https://capi-qc.fship.in/api/shipmentcurrentstatus",
-            { waybill },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    signature: process.env.FSHIP_SECURITY_KEY,
-                },
-            }
-        );
-
-        const info = response.data;
-        res.status(200).send(info);
-    } catch (error) {
-        console.error(
-            "Error Fetching Order Current Status:",
-            error.message
-        );
-        res.status(500).send({
-            error: "Failed to fetch order current status",
-            data: error.message,
-        });
-    }
-});
+);
 
 export const checkPincodeServiceability = functions.https.onRequest(
     async (req, res) => {
@@ -372,6 +375,7 @@ export const checkPincodeServiceability = functions.https.onRequest(
 
         try {
             const { source_Pincode, destination_Pincode } = req.body;
+            console.log(req.body.source_Pincode, req.body.destination_Pincode);
 
             if (!source_Pincode || !destination_Pincode) {
                 return res.status(400).send({
@@ -464,38 +468,105 @@ export const reattemptOrder = functions.https.onRequest(async (req, res) => {
 
 // Bvevo email sender...................
 
-// export const sendEmailOnNewDoc = functions.firestore
-//     .document("emails/{emailId}")
-//     .onCreate(async (snap, context) => {
-//         const data = snap.data();
+export const sendPromoEmail = functions.https.onRequest(async (req, res) => {
+    if (req.method !== "POST") {
+        return res.status(405).send({ error: "Method Not Allowed" });
+    }
 
-//         const email = data.to;
-//         const subject = data.subject;
-//         const content = data.message;
+    const { email, subject, htmlContent } = req.body;
 
-//         const payload = {
-//             sender: { name: "LXS Store", email: "contact@lxs-lifestyle-store.com" },
-//             to: [{ email }],
-//             subject,
-//             htmlContent: content,
-//         };
+    if (!email || !subject || !htmlContent) {
+        return res.status(400).json({ error: "Missing fields" });
+    }
 
-//         try {
-//             const res = await axios.post(
-//                 "https://api.brevo.com/v3/smtp/email",
-//                 payload,
-//                 {
-//                     headers: {
-//                         "Content-Type": "application/json",
-//                         "api-key": process.env.BREVO_API,
-//                     },
-//                 }
-//             );
-//             console.log("Email sent:", res.data);
-//         } catch (err) {
-//             console.error(
-//                 "Failed to send email:",
-//                 err.response?.data || err.message
-//             );
-//         }
-//     });
+    const defaultClient = sibApiV3Sdk.ApiClient.instance;
+    const apiKeyInstance = defaultClient.authentications["api-key"];
+    apiKeyInstance.apiKey = process.env.BREVO_EMAIL_KEY;
+
+    const apiInstance = new sibApiV3Sdk.TransactionalEmailsApi();
+
+    const sendSmtpEmail = {
+        to: [{ email }],
+        sender: {
+            name: "LXS Lifestyle Store",
+            email: "lxs.lifestyle.store@gmail.com",
+        },
+        subject,
+        htmlContent,
+    };
+
+    try {
+        const response = await apiInstance.sendTransacEmail(sendSmtpEmail);
+        return res.status(200).json({ success: true, response });
+    } catch (error) {
+        console.error("Error sending email:", error);
+        return res.status(500).json({ error: "Failed to send email" });
+    }
+});
+
+// export const sendSMS = functions.https.onRequest(async (req, res) => {
+//     if (req.method !== "POST") {
+//         return res.status(405).send({ error: "Method Not Allowed" });
+//     }
+
+//     try {
+//         const { phone, message } = req.body;
+
+//         const response = await axios.post(
+//             "https://api.brevo.com/v3/transactionalSMS/sms",
+//             {
+//                 sender: "YourBrand", // Must be approved in Brevo
+//                 recipient: phone, // Format: +91XXXXXXXXXX
+//                 content: message,
+//                 type: "transactional",
+//             },
+//             {
+//                 headers: {
+//                     "api-key": "YOUR_BREVO_API_KEY",
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         return res.status(200).json({ success: true, data: response.data });
+//     } catch (error) {
+//         console.error("SMS Error:", error.response?.data || error.message);
+//         return res.status(500).json({ success: false, error: error.message });
+//     }
+// });
+
+export const sendWhatsAppMessage = functions.https.onRequest(async (req, res) => {
+    if (req.method !== "POST") {
+        return res.status(405).send({ error: "Method Not Allowed" });
+    }
+
+    try {
+        const { recipient, message } = req.body;
+
+        const token = process.env.META_ACCESS_TOKEN;
+        const phoneNumberId = process.env.META_PHONE_ID;
+
+        const response = await axios.post(
+            `https://graph.facebook.com/v19.0/${phoneNumberId}/messages`,
+            {
+                messaging_product: "whatsapp",
+                to: recipient, // E.g., "+919876543210"
+                type: "text",
+                text: {
+                    body: message,
+                },
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        return res.status(200).json({ success: true, data: response.data });
+    } catch (error) {
+        console.error("WhatsApp Error:", error.response?.data || error.message);
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});

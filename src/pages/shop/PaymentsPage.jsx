@@ -1,7 +1,6 @@
 import CheckoutNavigator from '@/components/CheckoutNavigator'
 import HoverButton from '@/components/HoverButton';
 import KnowMorePopup from '@/components/KnowMorePopup';
-import RequestSuccessfullPopup from '@/components/RequestSuccessfullPopup';
 import { displayRazorpay } from '@/firebase/RazorpayPayment';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -72,13 +71,11 @@ let paymentOptions = [
 ]
 
 function PaymentsPage() {
-    let [showMore, setShowMore] = useState(false);
+    // let [showMore, setShowMore] = useState(false);
     let [formattedNumber, setFormattedNumber] = useState("");
     let [pinNumber, setPinNumber] = useState("");
     let [paymentMode, setPaymentMode] = useState("");
     let [isOpen, setIsOpen] = useState(false);
-    let [popupData, setPopupData] = useState({ orderId: "", id: "" });
-    let [showOrderedSuccessfull, setShowOrderedSuccessfull] = useState(false);
     let navigate = useNavigate();
     let dispatch = useDispatch();
     let cartItems = JSON.parse(localStorage.getItem("cart"));
@@ -96,7 +93,7 @@ function PaymentsPage() {
     let discountOnMRP = totalPrice - cartItems.reduce((sum, cart) => sum + Number(cart.salePrice * cart.quantity), 0);
     let deliveryPrice = 49;
     let deliveryDiscount = 49;
-    let platformFee = 9;
+    let platformFee = 15;
 
     const handleProceedToPayment = async (e) => {
         e.preventDefault();
@@ -117,7 +114,7 @@ function PaymentsPage() {
             image: item.images[0]
         }))
 
-        displayRazorpay(order, cart, address, user, setShowOrderedSuccessfull, setPopupData, dispatch, paymentMode);
+        displayRazorpay(order, cart, address, navigate, user, dispatch, paymentMode);
     }
 
     const handleGiftCardNumberChange = (e) => {
@@ -268,7 +265,7 @@ function PaymentsPage() {
                                 <div className="p-2 shadow-md border border-slate-300 rounded-xl flex flex-col bg-slate-100">
                                     {
                                         cartItems.map((product, idx) => (
-                                            <>
+                                            <div key={idx}>
                                                 <div key={idx} className=" gap-4 flex items-center">
                                                     <img src={product.images[0]} alt="" className='h-16 rounded-[6px]' />
                                                     <div className="flex flex-col">
@@ -289,7 +286,7 @@ function PaymentsPage() {
                                                         :
                                                         null
                                                 }
-                                            </>
+                                            </div>
                                         ))
                                     }
                                 </div>
@@ -321,7 +318,6 @@ function PaymentsPage() {
                 </div>
                 <div className="border hidden lg:inline-block w-[35%] h-[85vh] sticky top-10 rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)]"></div>
             </div>
-            <RequestSuccessfullPopup popupData={popupData} showSuccessfullPopup={showOrderedSuccessfull} setShowSuccessfullPopup={setShowOrderedSuccessfull} state="Ordered" />
             <KnowMorePopup setIsOpen={setIsOpen} isOpen={isOpen} />
         </>
     )

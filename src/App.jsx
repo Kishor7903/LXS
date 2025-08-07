@@ -84,6 +84,7 @@ import GlobalLoader from "./components/GlobalLoader"
 import PaymentPageLayout from "./layouts/PaymentPageLayout"
 import Blog from "./pages/shop/Blog"
 import AdminBlogs from "./pages/admin/AdminBlogs"
+import ReturnedAndCancelled from "./pages/shop/ReturnedAndCancelled"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -186,6 +187,7 @@ function App() {
 					</Route>
 					<Route path="hidden-orders" element={<HiddenOrders />} />
 					<Route path="contact-us" element={<ShopSettingContactUs />} />
+					<Route path="returned-and-cancelled-orders" element={<ReturnedAndCancelled />} />
 				</Route>
 				<Route path="/orders" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

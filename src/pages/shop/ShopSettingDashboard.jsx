@@ -28,7 +28,7 @@ let tiles = [
     title1: "Returned &",
     title2: "Cancelled",
     className: "bg-[rgb(111,54,123)]",
-    navigate: ""
+    navigate: "/setting/returned-and-cancelled-orders"
   },
   {
     icon: tile7Icon,
@@ -49,7 +49,7 @@ let tiles = [
     title1: "Payment",
     title2: "History",
     className: "bg-[rgb(111,54,123)]",
-    navigate: ""
+    navigate: "/setting/payment-history"
   },
   {
     icon: tile6Icon,

@@ -63,33 +63,35 @@ function ShopSettingWishlist() {
 
 	return (
 		<div className="w-full h-full px-5 flex gap-8 ">
-			<div className="w-1/2 flex flex-col justify-between">
+			<div className="w-full flex flex-col justify-between">
 				<div className="leading-[1] font-semibold border-b-2 border-[rgb(8,43,61)] h-10">Future Regrets 💔<br />
 					<p className="text-xs font-normal">Because you will probably buy it later anyway!</p>
 				</div>
-				<div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
+				<div className="space-y-3 h-full py-4 px-2 overflow-y-scroll no-scrollbar">
 					{
 						!loading ? (
 							wishlist && wishlist.length > 0 ? (
 								wishlistItems?.map((item, index) => (
-									<div key={index} className="bg-slate-100 flex gap-2 items-center p-[6px] border border-slate-300 shadow-md rounded-xl w-full py-2 scale-[0.98] lg:hover:scale-100 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] duration-200 cursor-pointer" onClick={() => navigate(`/product-details/${item.id}`)}>
-										<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1" >
-											<img
-												src={item.images[0]}
-												className="h-24 w-full object-fill rounded border"
-											/>
-										</div>
-										<div className="w-[70%] leading-4 ">
-											<div className="flex gap-2 items-center">
-												<div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[10px] text-white font-medium">LXS Certified</span>
-												</div>
-												<span className="opacity-50 mr-3 font-semibold tracking-tight text-xs">APPAREL & FASHION</span>
+									<div key={index} className="bg-slate-100 flex gap-2 justify-between items-center border border-slate-300 shadow-md rounded-xl w-[99%] mx-auto p-2 pr-5 lg:hover:scale-[1.01] lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] lg:hover:duration-200 cursor-pointer" onClick={() => navigate(`/product-details/${item.id}`)}>
+										<div className="flex gap-2">
+											<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1" >
+												<img
+													src={item.images[0]}
+													className="h-24 w-full object-fill rounded border"
+												/>
 											</div>
-											<h2 className="text-lg font-semibold line-clamp-1">{item.name}</h2>
-											<p className='text-[12px] font-medium'>Brand: {item.brand}</p>
-											<p className="text-sm lg:text-lg font-semibold">₹{item.salePrice}<s className="font-medium text-sm opacity-60 ml-2">₹{item.price}</s> <span className="font-semibold text-xs text-red-500">({`${Math.floor(((item.price - (item.salePrice)) * 100) / item.price)}`}% OFF)</span></p>
+											<div className="">
+												<div className="flex gap-2 items-center">
+													<div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[10px] text-white font-medium">LXS Certified</span>
+													</div>
+													<span className="opacity-50 mr-3 font-semibold tracking-tight text-xs">APPAREL & FASHION</span>
+												</div>
+												<h2 className="font-semibold line-clamp-1">{item.name}</h2>
+												<p className='text-[12px] font-medium'>Brand: {item.brand}</p>
+												<p className="text-sm lg:text-lg font-semibold">₹{item.salePrice}<s className="font-medium text-sm opacity-60 ml-2">₹{item.price}</s> <span className="font-semibold text-xs text-red-500">({`${Math.floor(((item.price - (item.salePrice)) * 100) / item.price)}`}% OFF)</span></p>
+											</div>
 										</div>
-										<div className="flex flex-col items-center w-40">
+										<div className="flex flex-col items-center">
 											{
 												cart.some((p) => p.item_id === item.id) ? (
 													<span className='text-[9px] mt-1 lg:text-[13px] mb-2 font-medium text-center leading-[1] text-green-700 flex gap-1'>Added to Basket <i className="fi fi-rs-check-circle relative text-[13px] "></i></span>
@@ -128,7 +130,7 @@ function ShopSettingWishlist() {
 				</div>
 				<hr className="border-[rgb(8,43,61)] border" />
 			</div>
-			<div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
+			{/* <div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div> */}
 		</div>
 	)
 }

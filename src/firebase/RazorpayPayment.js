@@ -52,9 +52,8 @@ export const displayRazorpay = async (
     order,
     cart,
     address,
+    navigate,
     user,
-    setShowOrderedSuccessfull,
-    setPopupData,
     dispatch,
     method
 ) => {
@@ -115,8 +114,7 @@ export const displayRazorpay = async (
 
                     createOrderInfo(user.id, orderInfo).then((res) => {
                         dispatch(addNewOrder({ id: res.id, ...orderInfo }));
-                        setPopupData({ orderId, id: res.id });
-                        setShowOrderedSuccessfull(true);
+                        navigate(`/orders/successfull/${res.id}`);
 
                         createShipmentOrder(
                             orderId,
@@ -197,6 +195,8 @@ export const displayRazorpay = async (
                     deleteSelectedCartItems(user.id).then(() => {
                         dispatch(removeAllSelectedCartItems([]));
                     });
+                    localStorage.removeItem("cart");
+                    localStorage.removeItem("address");
                 }
             },
             prefill: {

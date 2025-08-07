@@ -38,7 +38,7 @@ function AddressPage() {
     let discountOnMRP = totalPrice - cartItems.reduce((sum, cart) => sum + Number(cart.salePrice * cart.quantity), 0);
     let deliveryPrice = 49;
     let deliveryDiscount = 49;
-    let platformFee = 9;
+    let platformFee = 15;
 
     const handleAddAddressButton = (e) => {
         e.preventDefault();

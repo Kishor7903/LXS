@@ -58,7 +58,7 @@ function CartPage() {
             );
         deliveryPrice = 49;
         deliveryDiscount = 49;
-        platformFee = 9;
+        platformFee = 15;
     }
 
     const today = new Date();

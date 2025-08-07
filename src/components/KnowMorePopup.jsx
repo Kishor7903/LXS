@@ -6,7 +6,7 @@ function KnowMorePopup({ isOpen, setIsOpen }) {
             <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
                 Platform Fee – Why It’s Important
             </h2>
-            <p className='mt-4 text-sm px-10'>At <span className='font-semibold'>LXS Store</span>, we apply a small <span className='font-semibold'>platform fee</span> to every order. This nominal charge helps us maintain and enhance your overall shopping experience. It supports the behind-the-scenes operations that make our store reliable, secure, and easy to use.
+            <p className='mt-4 text-sm px-10'>At <span className='font-semibold'>LXS Store</span>, we apply a small <span className='font-semibold'>platform fee of ₹15</span> (inclusive of GST) to every order. This nominal charge helps us maintain and enhance your overall shopping experience. It supports the behind-the-scenes operations that make our store reliable, secure, and easy to use.
             </p>
             <span className='mt-3 text-sm px-10'>Your contribution through the platform fee enables us to:</span>
             <ul className='list-disc pl-20 text-sm pr-10'>

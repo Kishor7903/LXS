@@ -21,12 +21,9 @@ function ProductDetailsPageLayout() {
 	}, [])
 
 	useEffect(() => {
-		getSingleProductData(id).then((res) => {
-			if (res) {
-				setData(res);
-			}
-		})
-	}, [id])
+		let product = products.find((item) => item.id === id);
+		setData(product)
+	}, [id, products])
 
 	return (
 		<>

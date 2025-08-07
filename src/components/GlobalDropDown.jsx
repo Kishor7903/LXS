@@ -53,16 +53,14 @@ const GlobalDropdown = ({
       }}
       onClick={(e) => e.stopPropagation()}
     >
-      {options.map((val, i) => (
+      {options.map((val, index) => (
         <div
-          key={i}
+          key={index}
           onClick={() => {
             onSelect(val);
             setIsOpen(false);
           }}
-          className={`px-2 py-1 text-sm font-semibold cursor-pointer hover:bg-[rgb(8,43,61)] hover:text-white ${
-            val === selected ? 'bg-[rgb(230,245,255)]' : ''
-          }`}
+          className={`px-2 py-1 text-sm font-semibold cursor-pointer hover:bg-[rgb(8,43,61)] hover:text-white`}
         >
           {renderLabel(val)}
         </div>

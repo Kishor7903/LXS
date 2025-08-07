@@ -13,7 +13,7 @@ import whatsappLogo from "../../assets/Socials/Whatsapp.png"
 // import reviewLogo from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import reviewLogoActive from "../../assets/commonIcons/Ratings & Reviews (Fill).png"
 import starIcon from "../../assets/commonIcons/Rewards 2 (Fill).png"
-import { addShippingLabel, checkPincode, orderCurrentStatus, orderTrackingHistory } from "@/firebase/fship";
+import { addShippingLabel, checkPincode, orderCurrentStatus, orderTrackingHistory, sendEmail, sendWhatsAppMessage } from "@/firebase/fship";
 import { useToast } from "@/components/ToastProvider";
 import DialogBox from "@/components/DialogBox";
 import { Helmet } from "react-helmet-async";
@@ -167,8 +167,14 @@ function ProductDetailsPage({ id, data }) {
 
 
 	useEffect(() => {
+		sendEmail().then(res => console.log(res)).catch(err => console.log(err.message));
+		// sendWhatsAppMessage().then(res => console.log(res)).catch(err => console.log(err.message));
 		// orderTrackingHistory("FSPP0004350062").then(res => console.log(res)).catch(err => console.log(err.message));
 		// orderCurrentStatus("FSPP0004350062").then(res => console.log(res)).catch(err => console.log(err.message));
+		// onMessage(messaging, (payload) => {
+		// 	console.log("Message received in foreground:", payload);
+		// 	// Optionally show toast or alert
+		// });
 	}, [])
 
 	useEffect(() => {

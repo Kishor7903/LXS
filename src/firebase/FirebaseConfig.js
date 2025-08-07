@@ -4,14 +4,14 @@ import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBKL2I-Gv82X-q47RQzaz86vCK7DQuaTIQ",
-  authDomain: "lxslifestylestore-8935b.firebaseapp.com",
-  databaseURL: "https://lxslifestylestore-8935b-default-rtdb.firebaseio.com",
-  projectId: "lxslifestylestore-8935b",
-  storageBucket: "lxslifestylestore-8935b.firebasestorage.app",
-  messagingSenderId: "800913751199",
-  appId: "1:800913751199:web:b5dd70daaf8faa1a6cb6aa",
-  measurementId: "G-Z76G0DFHRP"
+  apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTHDOMAIN,
+  databaseURL: import.meta.env.VITE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_FIREBASE_APPID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENTID
 };
 
 export const app = initializeApp(firebaseConfig);

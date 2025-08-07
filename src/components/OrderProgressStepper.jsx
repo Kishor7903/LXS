@@ -4,7 +4,7 @@ import rocketGreen from "../assets/commonIcons/Track Rocket (Fill) Green.png";
 import rocketYellow from "../assets/commonIcons/Track Rocket (Fill) Yellow.png";
 import rocketPink from "../assets/commonIcons/Track Rocket (Fill) Pink.png";
 
-export default function OrderProgressStepper({ steps, currentStep }) {
+export default function OrderProgressStepper({ steps, currentStep, currentState }) {
     const containerRef = useRef(null);
     const stepRefs = useRef([]);
     const [lineHeight, setLineHeight] = useState(0);
@@ -12,7 +12,7 @@ export default function OrderProgressStepper({ steps, currentStep }) {
 
 
     useEffect(() => {
-        const deliveredIndex = steps.findIndex(step => step.title.toLowerCase() === "delivered");
+        const deliveredIndex = steps.findIndex(step => step.title.toLowerCase() === "delivered" || step.title.toLowerCase() === "cancelled");
         const cappedStep = deliveredIndex !== -1 ? Math.min(currentStep, deliveredIndex) : currentStep;
 
         if (stepRefs.current.length > 0) {
@@ -62,7 +62,7 @@ export default function OrderProgressStepper({ steps, currentStep }) {
                                         duration: 0.3,
                                         delay: 1 * ((index + 1) / steps.length),
                                     }}
-                                    src={rocketYellow}
+                                    src={currentState === "Cancelled" ? rocketPink : currentState === "Delivered" ? rocketGreen : rocketYellow}
                                     alt=""
                                     className="h-5 absolute -left-[37px] top-1"
                                 />
@@ -86,8 +86,8 @@ export default function OrderProgressStepper({ steps, currentStep }) {
 
                             <div>
                                 <h3
-                                    className={`font-semibold text-lg ${isActive ? "opacity-100 text-[rgb(38,165,65)]" : "opacity-40"
-                                        } ${index === currentStep ? "text-[rgb(248,181,44)]" : ""}`}
+                                    className={`font-semibold text-lg ${isActive ? index === currentStep ? currentState === "Cancelled" ? "text-[rgb(240,85,120)]" : currentState === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]" : "text-[rgb(38,165,65)]" : "opacity-40"
+                                        }`}
                                 >
                                     {step.title}
                                 </h3>

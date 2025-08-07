@@ -226,7 +226,8 @@ function ShopSettingSavedAddresses() {
 			<div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
 			<ConfirmationPopp isOpen={confirmPopupOpen} setIsOpen={setConfirmPopupOpen} heading="Wait, You're Deleting This Address! 😲" description="Whoa whoa whoaaa! It’s your boy Lupin here.
 			You’re about to delete this address — are you sure? Like, really sure?
-			If you’re 100% sure, hit confirm. If not, I’ll pretend this never happened 😅" onClick={(e) => { handleDeleteAddress(e, deleteItemId), setConfirmPopupOpen(false) }} />
+			If you’re 100% sure, hit confirm. If not, I’ll pretend this never happened 😅" 
+			onClick={(e) => { handleDeleteAddress(e, deleteItemId), setConfirmPopupOpen(false) }} />
 		</div>
 	)
 }

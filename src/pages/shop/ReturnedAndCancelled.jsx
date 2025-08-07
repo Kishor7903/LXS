@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
-import HoverButton from "@/components/HoverButton";
-import { useNavigate } from "react-router-dom";
+import HoverButton from '@/components/HoverButton';
 
-
-function HiddenOrders() {
+function ReturnedAndCancelled() {
     let { orders } = useSelector(state => state.cart);
     let [order, setOrder] = useState([]);
     let [loading, setLoading] = useState(true);
-    let navigate = useNavigate()
 
     useEffect(() => {
-        setLoading(true);
-        let filteredOrders = orders.filter((item) => item.isHidden === true);
+        let filteredOrders = orders.filter((item) => (item.orderStatus === "Cancelled" && item.isHidden === false));
         let sortedOrders = [...filteredOrders].sort((a, b) => { return new Date(b.timestamp) - new Date(a.timestamp); })
         setOrder(sortedOrders)
         setTimeout(() => {
@@ -21,8 +17,8 @@ function HiddenOrders() {
         }, 1000)
     }, [orders])
 
-    return (
-        <div className="w-full h-full flex flex-col">
+  return (
+    <div className="w-full h-full flex flex-col">
             <div className="leading-[1] font-semibold flex justify-between border-b-2 border-[rgb(8,43,61)] h-10">
                 <span>Shh... It's Hidden 🤐<br />
                     <p className="text-xs font-normal">No one needs to know. Not even your wallet!</p>
@@ -71,7 +67,7 @@ function HiddenOrders() {
                                     <p className="text-[14px] mb-1 font-semibold tracking-tighter absolute top-2 right-4">{item.orderId}</p>
                                 </div>
                             )) :
-                            <div className="text-xl font-semibold flex justify-center items-center h-40">No Hidden Orders Yet!!</div>
+                            <div className="text-xl font-semibold flex justify-center items-center h-40">No Returned or Cancelled Orders Yet!!</div>
                     )
                         :
                         (
@@ -95,7 +91,7 @@ function HiddenOrders() {
             </div>
             <hr className="border-[rgb(8,43,61)] border" />
         </div>
-    )
+  )
 }
 
-export default HiddenOrders
+export default ReturnedAndCancelled

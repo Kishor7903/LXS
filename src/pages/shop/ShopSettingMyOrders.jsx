@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom"
 import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 
 
-let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 let options = { weekday: "long", day: '2-digit', month: 'short', year: 'numeric' };
-let expectedDate = new Date();
-expectedDate.setDate("2025-7-23");
-let orderDate = new Date();
 
 function ShopSettingMyOrders() {
     let { orders } = useSelector(state => state.cart);
@@ -30,7 +26,7 @@ function ShopSettingMyOrders() {
 
     return (
         <div className="w-full h-full px-5 flex gap-8 ">
-            <div className="w-1/2 flex flex-col justify-between">
+            <div className="w-full flex flex-col justify-between">
                 <div className="leading-[1] font-semibold flex justify-between border-b-2 border-[rgb(8,43,61)] h-10">
                     <span>The Damage Report 🛠️<br />
                         <p className="text-xs font-normal">Because your wallet just took a hit!</p>
@@ -49,12 +45,12 @@ function ShopSettingMyOrders() {
                             })()}</span></p>
                     </div>
                 </div>
-                <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
+                <div className="space-y-3 h-full py-4 px-2 overflow-y-scroll no-scrollbar">
                     {
                         !loading ? (
                             order && order.length > 0 ?
                                 order.map((item, index) => (
-                                    <div key={index} className="flex flex-col items-center p-3 border border-slate-300 scale-[0.98] duration-200 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] rounded-xl lg:hover:scale-100 w-full cursor-pointer relative bg-slate-100 shadow-md" onClick={() => navigate(`/orders/order-details/${item.id}`)} >
+                                    <div key={index} className="flex flex-col items-center p-3 border border-slate-300 lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] rounded-xl lg:hover:scale-[1.01] lg:hover:duration-200 w-[99%] mx-auto cursor-pointer relative bg-slate-100 shadow-md" onClick={() => navigate(`/orders/order-details/${item.id}`)} >
                                         {
                                             item.products.map((product, idx) => (
                                                 <div key={product.id} className="w-full">
@@ -114,7 +110,7 @@ function ShopSettingMyOrders() {
                                                 </div>
                                             ))
                                         }
-                                        <div className="absolute top-2 right-3 text-sm font-semibold">Status: <span className={`${order[index].orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]"}`}>{item.orderStatus}</span></div>
+                                        <div className="absolute top-2 right-3 text-sm font-semibold">Status: <span className={`${order[index].orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : order[index].orderStatus === "Cancelled" ? "text-[rgb(240,85,120)]" : "text-[rgb(248,181,44)]"}`}>{item.orderStatus}</span></div>
                                     </div>
                                 )) :
                                 <div className="text-xl font-semibold flex justify-center items-center h-40">No Orders Yet!!</div>
@@ -141,7 +137,7 @@ function ShopSettingMyOrders() {
                 </div>
                 <hr className="border-[rgb(8,43,61)] border" />
             </div>
-            <div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
+            {/* <div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div> */}
         </div>
     )
 }

@@ -74,27 +74,18 @@ function AdminOrders() {
             <div className="bg-white p-5 flex flex-col gap-7">
                 <div className="flex justify-between items-center">
                     <input type="text" className="h-10 w-72 rounded-full border border-[rgb(8,43,61,0.5)] px-4" placeholder="Search order" />
-                    <div className="space-x-5">
-                        <select className="border border-[rgb(8,43,61,0.5)] rounded-[6px] px-1 py-2">
-                            <option>Pending</option>
-                            <option>Approved</option>
-                            <option>In Transit</option>
-                            <option>Delivered</option>
-                            <option>Return/Replaced</option>
-                        </select>
-                    </div>
                 </div>
                 {
                     orders && orders.length > 0 ? (
                         orders.map((order, index) => (
-                            <div key={index} className="w-full mx-auto bg-white shadow-md rounded-lg border" onClick={(e) => handleOrderClick(e, order.userId, isOpen !== index ? index : -1)}>
+                            <div key={index} className="w-full mx-auto bg-white shadow-md rounded-[8px] border border-slate-300" onClick={(e) => handleOrderClick(e, order.userId, isOpen !== index ? index : -1)}>
                                 {/* Clickable Header for Accordion */}
-                                <div className="flex justify-between items-center cursor-pointer shadow-sm">
-                                    <div className="w-[73%] h-full p-6">
+                                <div className="flex justify-between items-center cursor-pointer shadow-sm px-6 py-4">
+                                    <div className="h-full">
                                         <h2 className="text-lg font-semibold">{order.timestamp}</h2>
                                         <p className="text-gray-500 text-sm">{order.orderId}</p>
                                     </div>
-                                    <div className="flex items-center gap-5 w-[27%]" >
+                                    <div className="flex items-center gap-5" >
                                         <select
                                             className="border p-2 rounded outline-none"
                                             value={orderStatusMap[order.orderId] || order.orderStatus}
@@ -134,7 +125,7 @@ function AdminOrders() {
                                             Save
                                         </button>
 
-
+                                        <i className={`fi fi-rr-angle-small-down duration-150 relative text-xl ${isOpen ? "-rotate-90" : "top-1 -left-0.5"}`}></i>
                                     </div>
                                 </div>
 
@@ -172,7 +163,7 @@ function AdminOrders() {
                                                     order.products.map((product, idx) => (
                                                         <tr key={idx} className="border-b">
                                                             <td className="p-2 text-blue-500">{product.productName}</td>
-                                                            <td className="p-2">{product.size}</td>
+                                                            <td className="p-2">{product.size.join(",")}</td>
                                                             <td className="p-2">{product.quantity}</td>
                                                             <td className="p-2">₹ {product.unitPrice}</td>
                                                             <td className="p-2">₹ {product.unitPrice * product.quantity}</td>
