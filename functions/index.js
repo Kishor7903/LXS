@@ -375,7 +375,6 @@ export const checkPincodeServiceability = functions.https.onRequest(
 
         try {
             const { source_Pincode, destination_Pincode } = req.body;
-            console.log(req.body.source_Pincode, req.body.destination_Pincode);
 
             if (!source_Pincode || !destination_Pincode) {
                 return res.status(400).send({
@@ -535,30 +534,78 @@ export const sendPromoEmail = functions.https.onRequest(async (req, res) => {
 //     }
 // });
 
-export const sendWhatsAppMessage = functions.https.onRequest(async (req, res) => {
+export const sendWhatsAppMessage = functions.https.onRequest(
+    async (req, res) => {
+        if (req.method !== "POST") {
+            return res.status(405).send({ error: "Method Not Allowed" });
+        }
+
+        try {
+            const { recipient, message } = req.body;
+
+            const token = process.env.META_ACCESS_TOKEN;
+            const phoneNumberId = process.env.META_PHONE_ID;
+
+            const response = await axios.post(
+                `https://graph.facebook.com/v19.0/${phoneNumberId}/messages`,
+                {
+                    messaging_product: "whatsapp",
+                    to: recipient, // E.g., "+919876543210"
+                    type: "text",
+                    text: {
+                        body: message,
+                    },
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            return res.status(200).json({ success: true, data: response.data });
+        } catch (error) {
+            console.error(
+                "WhatsApp Error:",
+                error.response?.data || error.message
+            );
+            return res
+                .status(500)
+                .json({ success: false, error: error.message });
+        }
+    }
+);
+
+// Fast2SMS api for sms sending............................
+
+export const sendSMS = functions.https.onRequest(async (req, res) => {
     if (req.method !== "POST") {
-        return res.status(405).send({ error: "Method Not Allowed" });
+        return res.status(405).json({ error: "Method Not Allowed" });
+    }
+
+    const { phone, message } = req.body;
+    console.log(phone, message);
+
+    if (!phone || !message) {
+        return res
+            .status(400)
+            .json({ error: "Phone and message are required" });
     }
 
     try {
-        const { recipient, message } = req.body;
-
-        const token = process.env.META_ACCESS_TOKEN;
-        const phoneNumberId = process.env.META_PHONE_ID;
-
         const response = await axios.post(
-            `https://graph.facebook.com/v19.0/${phoneNumberId}/messages`,
+            "https://www.fast2sms.com/dev/bulkV2",
             {
-                messaging_product: "whatsapp",
-                to: recipient, // E.g., "+919876543210"
-                type: "text",
-                text: {
-                    body: message,
-                },
+                route: "v3",
+                sender_id: "TXTIND", // Change if approved
+                message,
+                language: "english",
+                numbers: phone,
             },
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    authorization: process.env.FAST2SMS_API_KEY,
                     "Content-Type": "application/json",
                 },
             }
@@ -566,7 +613,6 @@ export const sendWhatsAppMessage = functions.https.onRequest(async (req, res) =>
 
         return res.status(200).json({ success: true, data: response.data });
     } catch (error) {
-        console.error("WhatsApp Error:", error.response?.data || error.message);
         return res.status(500).json({ success: false, error: error.message });
     }
 });

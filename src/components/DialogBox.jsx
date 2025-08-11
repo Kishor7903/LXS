@@ -11,14 +11,23 @@ function DialogBox({ isOpen, setIsOpen, className, children, parentDivClassName 
     };
 
     useEffect(() => {
+        const handleBackButton = (event) => {
+            setIsOpen(false);
+        };
+
         if (isOpen) {
+            // Push a new state so that back button will trigger popstate
+            window.history.pushState({ popupOpen: true }, "");
+            window.addEventListener("popstate", handleBackButton);
             document.addEventListener("mousedown", handleClickOutside);
             document.body.style.overflow = "hidden";
         } else {
             document.removeEventListener("mousedown", handleClickOutside);
             document.body.style.overflow = "auto";
         }
+
         return () => {
+            window.removeEventListener("popstate", handleBackButton);
             document.removeEventListener("mousedown", handleClickOutside);
             document.body.style.overflow = "auto";
         };
@@ -42,5 +51,6 @@ function DialogBox({ isOpen, setIsOpen, className, children, parentDivClassName 
             )}
         </div>
     );
-};
-export default DialogBox
+}
+
+export default DialogBox;

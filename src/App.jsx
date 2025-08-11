@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import ShopLayout from "./layouts/ShopLayout"
 import HomePageLayout from "./layouts/HomePageLayout"
 import AdminLayout from "./layouts/AdminLayout"
@@ -85,13 +85,16 @@ import PaymentPageLayout from "./layouts/PaymentPageLayout"
 import Blog from "./pages/shop/Blog"
 import AdminBlogs from "./pages/admin/AdminBlogs"
 import ReturnedAndCancelled from "./pages/shop/ReturnedAndCancelled"
+import BlankPage from "./components/BlankPage"
+import loader from "./assets/GIF/Page Reload Animation 2.gif"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
-	const [loading, setLoading] = useState(() => {
-		const isShown = sessionStorage.getItem("appLoaderShown");
-		return !isShown;
-	});
+	// const [loading, setLoading] = useState(() => {
+	// 	const isShown = sessionStorage.getItem("appLoaderShown");
+	// 	return !isShown;
+	// });
+	let [loading, setLoading] = useState(true);
 	let dispatch = useDispatch();
 
 	useEffect(() => {
@@ -99,13 +102,20 @@ function App() {
 		if (user) {
 			dispatch(login(user))
 		}
+		setLoading(false)
 	}, [dispatch])
+
+	if(loading){
+		return <div className="h-screen flex justify-center items-center">
+			<img src={loader} alt="" className="h-60" />
+		</div>
+	}
 
 	return (
 		<div className="h-screen w-full overflow-y-scroll scrollable-content relative">
-			{
+			{/* {
 				loading && <GlobalLoader onFinish={() => setLoading(false)} />
-			}
+			} */}
 			<ScrollToTop />
 			<Routes>
 				<Route path="/" element={
@@ -124,6 +134,7 @@ function App() {
 					<Route path="personalized-order" element={<PersonalizedOrderPageLayout />} />
 					<Route path="subscription" element={<Subscription />} />
 					<Route path="/partner-with-us" element={<PartnerWithUs />} />
+					<Route path="/blank" element={<BlankPage />} />
 				</Route>
 				<Route path="/policy" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

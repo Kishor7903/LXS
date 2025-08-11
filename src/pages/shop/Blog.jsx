@@ -27,14 +27,14 @@ function Blog() {
     }
     return (
         <div className="">
-            <h1 className="text-3xl font-bold mb-4 flex items-center bg-[rgb(8,43,61)] text-white px-32 text-center sticky top-16 py-3">{blog?.heading}</h1>
+            <h1 className="text-3xl font-bold mb-4 flex items-center justify-center bg-[rgb(8,43,61)] text-white px-32 text-center sticky top-16 py-3">{blog?.heading}</h1>
                 <p className="mb-4 pt-4 text-lg px-32" dangerouslySetInnerHTML={formatText(blog?.intro)} />
 
             {/* Blog Sections */}
             {blog.sections.map((member, index) => (
                 <div key={index} className="mb-8 pt-8 text-lg mx-32">
 
-                    { member.title && <h2 className="text-2xl font-bold mb-1">🔹 {member?.title}</h2>}
+                    { member.title && <h2 className="text-2xl font-bold mb-1">{member?.title}</h2>}
                     {
                         member.items.map((item, idx) => (
                             <div className="" key={idx}>

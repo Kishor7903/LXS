@@ -22,7 +22,7 @@ let discount = ['All Discounts', '0-25', '26-50', '51-70', '71-90'];
 function ProductsContainer() {
     let dispatch = useDispatch();
     let [filters, setFilters] = useState(filter);
-    let { products } = useSelector(state => state.admin)
+    let { products } = useSelector(state => state.admin);
     const [product, setProduct] = useState(products);
     const [minValue, setMinValue] = useState(400);
     const [maxValue, setMaxValue] = useState(5000);
@@ -151,11 +151,9 @@ function ProductsContainer() {
             <div className="h-full flex my-1 lg:my-3 px-5 md:px-8 lg:px-12 xl:px-16">
                 <div className="h-auto w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-4 md:gap-x-5 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 xl:gap-x-7 xl:gap-y-8 py-2 lg:py-1">
                     {
-                        product.map((item) => {
-                            return (
-                                <ProductCard key={item.id} item={item} />
-                            )
-                        })
+                        product.map((item) =>
+                            <ProductCard item={item} />
+                        )
                     }
                 </div>
                 {/* <div className="h-auto w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-3 gap-y-4 md:gap-x-5 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 xl:gap-x-8 xl:gap-y-8 px-3 lg:px-10 ">

@@ -11,12 +11,25 @@ import WorkWithUsAndNewsletter from "@/pages/shop/WorkWithUsAndNewsletter"
 // import Reviews from "@/pages/shop/Reviews"
 import { getCarouselImgs } from "@/store/features/adminSlice"
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import banner1 from "../assets/Banners/Carousel Image 1.png"
+import banner2 from "../assets/Banners/Carousel Image 4.png"
 
 
 function HomePageLayout() {
     let dispatch = useDispatch();
-    let { carouselImg } = useSelector(state => state.admin);
+    let navigate = useNavigate();
+    let carouselImg = [
+        {
+            img: banner1,
+            url: "/about-us"
+        },
+        {
+            img: banner2,
+            url: "/blank"
+        }
+    ]
 
 
     useEffect(() => {
@@ -27,7 +40,16 @@ function HomePageLayout() {
     return (
         <>
             {/* <ShiftingNavbar /> */}
-            <Carousel carouselImg={carouselImg} />
+            {/* <Carousel carouselImg={carouselImg} /> */}
+            <div className="flex flex-wrap gap-12 xl:px-20 2xl:px-32 pt-10">
+                {
+                    carouselImg.map((img, idx) => 
+                    <div onClick={() => navigate(img.url)} key={idx} className="w-[calc(50%-1.5rem)] rounded-xl h-full lg:rounded-2xl overflow-hidden border border-[rgb(8,43,61,0.2)] cursor-pointer lg:hover:scale-[1.02] duration-200 hover:shadow-[0px_0px_20px_-1px_rgb(8,43,61)] lg:hover:border-none shadow-md">
+                        <img src={img.img} alt="" className="object-fill" />
+                    </div>
+                    )
+                }
+            </div>
             <OfferBannerSection />
             <FeaturedProducts />
             <ShopBlogs />

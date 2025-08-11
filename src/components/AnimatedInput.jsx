@@ -79,7 +79,7 @@ export default function AnimatedInput() {
 			<i className="fi fi-rr-search absolute right-3 top-2 text-gray-500"></i>
 			{
 				searchText && searchedProducts.length > 0 ? (
-					<div ref={dropdownRef} onClick={() => setIsFocused(true)} className="w-full rounded-b-[17px] absolute top-[34px] bg-white border border-slate-400 flex flex-col overflow-hidden">
+					<div ref={dropdownRef} onClick={() => setIsFocused(true)} className="w-full rounded-b-[17px] absolute top-[34px] bg-white border border-slate-300 flex flex-col overflow-hidden">
 						{
 							searchedProducts.map((item, index) => (
 								<div

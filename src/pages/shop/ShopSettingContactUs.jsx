@@ -200,8 +200,8 @@ function ShopSettingContactUs() {
 
 
     return (
-        <div className="w-full h-full px-5 flex gap-8 ">
-            <div className="w-1/2 flex flex-col justify-between">
+        <div className="w-full h-full pl-5 flex gap-5 ">
+            <div className="w-[60%] flex flex-col justify-between">
                 <div className="leading-[1] font-semibold h-10">Mayday Mayday 🛸 <br />
                     <p className="text-xs font-normal">Lost in Space? We'll guide you home because we won't let you collapse!</p>
                 </div>
@@ -225,7 +225,7 @@ function ShopSettingContactUs() {
                     }
                 </div>
             </div>
-            <div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
+            <div className="border w-[40%] h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
             <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-[40vw] bg-white rounded-xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
                 <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
                     Talk to an Agent

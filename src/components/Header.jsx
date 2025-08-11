@@ -343,7 +343,7 @@ function Header({ className }) {
 
 				<LxsLogo className="h-9 md:h-10 lg:h-11 xl:h-12" />
 
-				<nav className={`lg:flex hidden ml-10 ${!isAuthenticated ? "gap-10" : "gap-7"}`}>
+				<nav className={`lg:flex hidden ml-10 gap-8`}>
 
 					{
 						navItems.map((item, index) => (
@@ -411,9 +411,9 @@ function Header({ className }) {
 								window.innerWidth >= 1280 ?
 									(
 										<>
-											<div className="rounded-full shadow-[0px_0px_10px_-2px_rgb(8,43,61)] flex items-center p-[5px] cursor-pointer active:scale-[0.90] duration-300" onClick={(e) => { e.preventDefault(), setUserPopup(true) }}>
-												<img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-8 rounded-full" />
-												<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center max-w-16 leading-4 mr-2 px-3">{`${user.name.split(" ")[0].slice(0, 6)}${user.name.split(" ")[0].length > 5 ? "..." : ""}`} </span>
+											<div className="text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 border border-slate-300 shadow flex items-center px-2 cursor-pointer active:scale-[0.90] h-10" onClick={(e) => { e.preventDefault(), setUserPopup(true) }}>
+												<img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-7 w-7 rounded-full" />
+												<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center leading-4 mr-1 pr-1 pl-2">{`${user.name.split(" ")[0]}`} </span>
 												<i className={`fi fi-br-angle-small-down text-lg relative duration-200 ${userPopup ? "top-1 right-[2px]" : "-rotate-90"}`}></i>
 											</div>
 											<DialogBox isOpen={userPopup} setIsOpen={setUserPopup} className="w-[300px] p-6 bg-white rounded-xl flex flex-col gap-4" parentDivClassName="flex justify-center items-center">

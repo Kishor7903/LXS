@@ -237,12 +237,13 @@ function CartPage() {
                                             if (e.target.closest(".dropdown-portal")) return;
                                             handletoggleCartSelect(e, item.id, !item.isSelected);
                                         }}
+                                        
                                     >
                                         <img
                                             onClick={(e) => {
                                                 e.stopPropagation(),
                                                     navigate(
-                                                        `/product-details/${item.id}`
+                                                        `/product-details/${item.item_id}`
                                                     );
                                             }}
                                             src={item.images[0]}

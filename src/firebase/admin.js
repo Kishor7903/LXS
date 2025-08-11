@@ -11,11 +11,13 @@ import {
     setDoc,
     updateDoc,
 } from "firebase/firestore";
-import { fireDB } from "./FirebaseConfig";
+import { fireDB, storage } from "./FirebaseConfig";
 import { deleteFromCloudinary } from "./cloudinary";
 import { getTimestamp } from "@/utils/commomFunctions";
+import { v4 as uuidv4 } from "uuid";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-export const addProduct = (item) => {
+export const addProduct = async (item) => {
     try {
         const product = {
             name: item.name,
@@ -27,8 +29,6 @@ export const addProduct = (item) => {
             salePrice: parseInt(item.salePrice),
             codAvailability: item.codAvailability,
             returnAvailability: item.returnAvailability,
-            images: item.urls,
-            imagesId: item.ids,
             SKU: item.SKU,
             description: item.description,
             timestamp: new Date().toLocaleString("en-US", {
@@ -42,7 +42,7 @@ export const addProduct = (item) => {
         };
 
         const productRef = collection(fireDB, "products");
-        const docSnap = addDoc(productRef, product);
+        const docSnap = await addDoc(productRef, product);
 
         return { ...product, id: docSnap.id };
     } catch (error) {
@@ -316,5 +316,27 @@ export const deleteBlog = async (item) => {
         await deleteDoc(doc(fireDB, "Blogs", item.id));
     } catch (error) {
         console.log("Delete Carousel Image Error: ", error.message);
+    }
+}
+
+export const uploadImage = async (image, path) => {
+    try {
+        const imageRef = ref(storage, `${path}/${uuidv4()}-${image.name}`);
+
+        await uploadBytes(imageRef, image);
+
+        const downloadURL = await getDownloadURL(imageRef);
+        return downloadURL;
+    } catch (error) {
+        console.log("Image Uploading Error: ", error.message);
+    }
+}
+
+export const deleteImage = async (img) => {
+    try {
+        const imageRef = ref(storage, img);
+        await deleteObject(imageRef);
+    } catch (error) {
+        console.error("Error deleting image:", error);
     }
 }

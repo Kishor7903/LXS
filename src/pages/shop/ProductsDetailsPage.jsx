@@ -13,7 +13,7 @@ import whatsappLogo from "../../assets/Socials/Whatsapp.png"
 // import reviewLogo from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import reviewLogoActive from "../../assets/commonIcons/Ratings & Reviews (Fill).png"
 import starIcon from "../../assets/commonIcons/Rewards 2 (Fill).png"
-import { addShippingLabel, checkPincode, orderCurrentStatus, orderTrackingHistory, sendEmail, sendWhatsAppMessage } from "@/firebase/fship";
+import { addShippingLabel, checkPincode, orderCurrentStatus, orderTrackingHistory, sendEmail, sendSms, sendWhatsAppMessage } from "@/firebase/fship";
 import { useToast } from "@/components/ToastProvider";
 import DialogBox from "@/components/DialogBox";
 import { Helmet } from "react-helmet-async";
@@ -167,7 +167,7 @@ function ProductDetailsPage({ id, data }) {
 
 
 	useEffect(() => {
-		sendEmail().then(res => console.log(res)).catch(err => console.log(err.message));
+		// sendEmail().then(res => console.log(res)).catch(err => console.log(err.message));
 		// sendWhatsAppMessage().then(res => console.log(res)).catch(err => console.log(err.message));
 		// orderTrackingHistory("FSPP0004350062").then(res => console.log(res)).catch(err => console.log(err.message));
 		// orderCurrentStatus("FSPP0004350062").then(res => console.log(res)).catch(err => console.log(err.message));
@@ -175,6 +175,7 @@ function ProductDetailsPage({ id, data }) {
 		// 	console.log("Message received in foreground:", payload);
 		// 	// Optionally show toast or alert
 		// });
+		// sendSms().then(res => console.log(res)).catch(err => console.log(err.message));
 	}, [])
 
 	useEffect(() => {
@@ -213,6 +214,7 @@ function ProductDetailsPage({ id, data }) {
 					<div className="h-full grid gap-4 grid-cols-2 grid-rows-3">
 						{
 							productData?.images.slice(0, 6).map((item, index) => (
+								item && 
 								<img onClick={() => setMainPic(item)} key={index} src={item} alt="" className={`col-span-1 row-span-1 h-full rounded-[20px] cursor-pointer ${mainPic === item ? "border-2 border-[rgb(8,43,61)] shadow-[0px_0px_5px_0px_rgb(8,43,61)]" : "shadow-[0px_0px_5px_0px_rgb(8,43,61,0.6)] lg:hover:border lg:hover:border-[rgb(8,43,61)]"}`} />
 							))
 						}

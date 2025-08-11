@@ -20,8 +20,7 @@ const authSlice = createSlice({
 			state.user = null
 		},
 		updateUserInfo: (state, actions) => {
-			state.user = actions.payload,
-			sessionStorage.setItem("user", JSON.stringify(actions.payload));
+			state.user = actions.payload
 		},
 		loadingTrue: (state) => {
 			state.isLoading = true

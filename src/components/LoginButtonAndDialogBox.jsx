@@ -116,8 +116,8 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
 
     return (
         <>
-            <button className="flex items-center gap-2 font-semibold bg-[rgb(8,43,61)] text-white px-2 py-[5px] text-sm lg:text-base rounded-full" onClick={() => { setIsOpen(true), setUserState("login") }}>
-                <img src={accountIcon} alt="" className="h-6 lg:h-7 hidden md:block" />
+            <button className="flex items-center gap-2 font-semibold bg-[rgb(8,43,61)] text-white px-2 border border-[rgb(8,43,61)] h-10 lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 text-sm lg:text-base rounded-xl" onClick={() => { setIsOpen(true), setUserState("login") }}>
+                <img src={accountIcon} alt="" className="h-6 lg:h-7 lg:w-7 hidden md:block" />
                 SignUp
             </button>
             {

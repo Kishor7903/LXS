@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 function CartPageLayout() {
   let { user } = useSelector(state => state.auth);
+  
   return (
     <>
         <CartPage />

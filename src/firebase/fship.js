@@ -140,3 +140,15 @@ export const sendWhatsAppMessage = async () => {
     );
     return response.data;
 }
+
+export const sendSms = async () => {
+    let response = await axios.post(
+        "/lxslifestylestore-8935b/us-central1/sendSMS",
+        {
+            message: "Hii",
+            phone: "+917903189506"
+        }
+    )
+    console.log(response);
+    return response.data;
+}

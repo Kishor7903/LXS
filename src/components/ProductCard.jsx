@@ -69,9 +69,6 @@ function ProductCard({ item }) {
 
                 </div>
             </div>
-            {
-                console.log(item, selectedSize)
-            }
             <SizeSelectionPopup isOpen={isOpen} setIsOpen={setIsOpen} item={item} selectedSize={selectedSize} setSelectedSize={setSelectedSize} />
         </div>
     )

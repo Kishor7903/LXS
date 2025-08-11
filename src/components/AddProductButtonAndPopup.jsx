@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import DialogBox from './DialogBox'
 import { uploadToCloudinary } from '@/firebase/cloudinary';
-import { addProduct, editProduct } from '@/firebase/admin';
+import { addProduct, editProduct, uploadImage } from '@/firebase/admin';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewProduct, updateProduct } from '@/store/features/adminSlice';
 import { useToast } from './ToastProvider';
@@ -158,25 +158,20 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
         else{
             uniqueDigit = `${products.length+1}`;
         }
-
-        const urls = [...uploadedUrls];
-        const ids = [...publicIds];
-
-        for (let i = 0; i < files.length; i++) {
-            if (files[i]) {
-                let response = await uploadToCloudinary(files[i]);
-                urls[i] = response?.url;
-                ids[i] = response?.public_id
+            
+        addProduct({ ...formData, SKU: `${prefix}-${cate}-${subC}-${uniqueDigit}` }).then((res)=>{
+            let images = [];
+            for (let i = 0; i < files.length; i++) {
+                if (files[i]) {
+                    let response = uploadImage(files[i], `products/${res.id}`)
+                    images.push(response);
+                }
             }
-        }
 
-        let imageData = {
-            urls,
-            ids
-        }
-
-        let product = addProduct({ ...formData, ...imageData, SKU: `${prefix}-${cate}-${subC}-${uniqueDigit}` })
-        dispatch(addNewProduct(product));
+            editProduct({ images: images }).then((res) => {
+                dispatch(addNewProduct({...res, images: images}));
+            })
+        })
 
         setFiles([null, null, null, null, null, null]);
         setPreviews([null, null, null, null, null, null]);
@@ -207,26 +202,23 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
         }
 
         const urls = [...uploadedUrls];
-        const ids = [...publicIds];
 
         for (let i = 0; i < files.length; i++) {
             if(formData.images[i] && previews[i] && files[i] === null){
                 urls[i] = formData.images[i];
-                ids[i] = formData.imagesId[i]
             }
             else if(formData.images[i] && previews[i] === null && files[i] === null){
                 urls[i] = null;
-                ids[i] = null
             }
             else if (formData.images[i] && files[i]) {
-                let response = await uploadToCloudinary(files[i]);
-                urls[i] = response?.url;
-                ids[i] = response?.public_id
+                await uploadImage(files[i], `products/${currentEditId}`).then((res) => {
+                    urls[i] = res;
+                })
             }
         }
 
-        editProduct(currentEditId, {...formData, imagesId: ids, images: urls}).then(() => {
-            dispatch(updateProduct({id: currentEditId, ...formData, imagesId: ids, images: urls}))
+        editProduct(currentEditId, {...formData, images: urls}).then(() => {
+            dispatch(updateProduct({id: currentEditId, ...formData, images: urls}))
             toast("Product Edited Successfully ...")
             setIsOpen(false);
         })

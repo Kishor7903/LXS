@@ -182,218 +182,217 @@ function OrderDetailsPage() {
     ];
 
     return (
-        <div className="px-16 py-6 h-[91vh]">
+        <div className="px-16 py-6 h-[calc(100%-64px)] flex gap-10">
+            <div className="w-[65%] flex flex-col gap-5">
             <Breadcrum items={items} />
-            <div className="w-full h-[95%] pl-4 mt-4 flex gap-10">
-                <div className="w-7/12">
-                    {!loading ? (
-                        <>
-                            <div className="flex justify-between">
-                                <div className="leading-[1] font-semibold">
-                                    Shipment LogBook 📦
-                                    <br />
-                                    <p className="text-xs font-normal">
-                                        Every purchase, every dispatch — all
-                                        under your command
-                                    </p>
+                {!loading ? (
+                    <div className="flex flex-col">
+                        <div className="flex justify-between">
+                            <div className="leading-[1] font-semibold">
+                                Shipment LogBook 📦
+                                <br />
+                                <p className="text-xs font-normal">
+                                    Every purchase, every dispatch — all
+                                    under your command
+                                </p>
+                            </div>
+                            <div className="flex text-xs gap-5 justify-end relative mr-2 self-end font-semibold">
+                                <p>{orderDetails?.timestamp}</p>{" "}
+                                <hr className="border border-[rgb(8,43,61)] h-4" />
+                                <p className="font-bold">Order ID: <span className="font-semibold">{orderDetails?.orderId}</span></p>
+                            </div>
+                        </div>
+                        <div className="flex gap-5 mt-5">
+                            <div className={`w-[60%] py-4 px-6 rounded-xl shadow-md ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}>
+                                <div className="font-semibold flex gap-1 items-center">
+                                    <span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] select-none px-1 text-[9px] font-medium">
+                                        {
+                                            orderDetails?.address
+                                                ?.address_type
+                                        }
+                                    </span>
+                                    <span className="font-semibold text-base">
+                                        Drop Location
+                                    </span>
                                 </div>
-                                <div className="flex text-xs gap-5 justify-end relative mr-2 self-end font-semibold">
-                                    <p>{orderDetails?.timestamp}</p>{" "}
-                                    <hr className="border border-[rgb(8,43,61)] h-4" />
-                                    <p className="font-bold">Order ID: <span className="font-semibold">{orderDetails?.orderId}</span></p>
+                                <div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 mt-2 text-[11px]">
+                                    <div className="flex flex-col leading-3">
+                                        <p>Name</p>
+                                        <p className="text-[14px] font-semibold">
+                                            {orderDetails?.address?.name}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col leading-3">
+                                        <p>Phone No. </p>
+                                        <p className="text-[14px] font-semibold">
+                                            {orderDetails?.address?.phone}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col leading-3">
+                                        <p>House No./Appartment No. </p>
+                                        <p className="text-[14px] font-semibold">
+                                            {orderDetails?.address?.houseNo}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col leading-3">
+                                        <p>Village/Area Name </p>
+                                        <p className="text-[14px] font-semibold">
+                                            {orderDetails?.address?.area}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col leading-3">
+                                        <p>Landmark </p>
+                                        <p className="text-[14px] font-semibold">
+                                            {orderDetails?.address?.landmark
+                                                ? orderDetails?.address
+                                                    ?.landmark
+                                                : "_"}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col leading-3">
+                                        <p>Pincode </p>
+                                        <p className="text-[14px] font-semibold">
+                                            {orderDetails?.address?.pincode}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col leading-3">
+                                        <p>City/Town </p>
+                                        <p className="text-[14px] font-semibold">
+                                            {orderDetails?.address?.city}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col leading-3">
+                                        <p>State </p>
+                                        <p className="text-[14px] font-semibold">
+                                            {orderDetails?.address?.state}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex gap-5 mt-5">
-                                <div className={`w-[60%] py-4 px-6 rounded-xl shadow-md ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}>
-                                    <div className="font-semibold flex gap-1 items-center">
-                                        <span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] select-none px-1 text-[9px] font-medium">
-                                            {
-                                                orderDetails?.address
-                                                    ?.address_type
-                                            }
-                                        </span>
-                                        <span className="font-semibold text-base">
-                                            Drop Location
-                                        </span>
-                                    </div>
-                                    <div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 mt-2 text-[11px]">
-                                        <div className="flex flex-col leading-3">
-                                            <p>Name</p>
-                                            <p className="text-[14px] font-semibold">
-                                                {orderDetails?.address?.name}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col leading-3">
-                                            <p>Phone No. </p>
-                                            <p className="text-[14px] font-semibold">
-                                                {orderDetails?.address?.phone}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col leading-3">
-                                            <p>House No./Appartment No. </p>
-                                            <p className="text-[14px] font-semibold">
-                                                {orderDetails?.address?.houseNo}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col leading-3">
-                                            <p>Village/Area Name </p>
-                                            <p className="text-[14px] font-semibold">
-                                                {orderDetails?.address?.area}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col leading-3">
-                                            <p>Landmark </p>
-                                            <p className="text-[14px] font-semibold">
-                                                {orderDetails?.address?.landmark
-                                                    ? orderDetails?.address
-                                                        ?.landmark
-                                                    : "_"}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col leading-3">
-                                            <p>Pincode </p>
-                                            <p className="text-[14px] font-semibold">
-                                                {orderDetails?.address?.pincode}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col leading-3">
-                                            <p>City/Town </p>
-                                            <p className="text-[14px] font-semibold">
-                                                {orderDetails?.address?.city}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col leading-3">
-                                            <p>State </p>
-                                            <p className="text-[14px] font-semibold">
-                                                {orderDetails?.address?.state}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-44 px-8 py-3 w-1/2">
+                            {/* <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border h-44 px-8 py-3 w-1/2">
                                         <span className="font-semibold text-base">Shipping Address</span>
                                         <p className="leading-[1] text-sm mt-1 font-medium pl-2">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
                                     </div> */}
-                                <div className={`rounded-xl shadow-md py-4 px-6 leading-[1.6] font-medium w-[40%] text-[12px] ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}>
-                                    <span className="font-semibold text-base">
-                                        Price Details ({product.length} items)
-                                    </span>
-                                    <span className="flex justify-between mt-2">
-                                        Total MRP{" "}
-                                        <p className="">
-                                            ₹
-                                            {product.reduce((sum, p) => {
-                                                return sum + p.price;
-                                            }, 0)}
-                                        </p>
-                                    </span>
-                                    <span className="flex justify-between">
-                                        Delivery <p className="">₹ 50</p>
-                                    </span>
-                                    <span className="flex justify-between text-[rgb(240,85,120)]">
-                                        Discount on MRP{" "}
-                                        <p className="">
-                                            - ₹
-                                            {product.reduce((sum, p) => {
-                                                return (
-                                                    sum +
-                                                    (p.price - p.unitPrice)
-                                                );
-                                            }, 0)}
-                                        </p>
-                                    </span>
-                                    <span className="flex justify-between text-[rgb(240,85,120)]">
-                                        Discount on Delivery{" "}
-                                        <p className="">- ₹ 50</p>
-                                    </span>
-                                    <span className="flex justify-between">
-                                        <p>
-                                            Platform Fee{" "}
-                                            <Link
-                                                onClick={(e) => {
-                                                    e.preventDefault(),
-                                                        setOpen(true);
-                                                }}
-                                                className="text-[10px] text-blue-500 lg:hover:underline font-semibold"
-                                            >
-                                                (Know More)
-                                            </Link>
-                                        </p>{" "}
-                                        <p className="">₹ {platformFee}</p>
-                                    </span>
-                                    <hr className="pb-1 mt-1" />
-                                    <span className="flex justify-between mt-[2px] text-base font-bold text-green-500">
-                                        Grand Total{" "}
-                                        <p>
-                                            ₹
-                                            {product.reduce((sum, p) => {
-                                                return sum + p.unitPrice;
-                                            }, 0) + platformFee}
-                                        </p>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="flex gap-5 my-5">
-                                <button
-                                    className={`w-[70%] text-sm rounded-xl lg:hover:scale-[1.03] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
-                                    onClick={() =>
-                                        navigate(`/orders/successfull/${id}`)
-                                    }
-                                >
+                            <div className={`rounded-xl shadow-md py-4 px-6 leading-[1.6] font-medium w-[40%] text-[12px] ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}>
+                                <span className="font-semibold text-base">
+                                    Price Details ({product.length} items)
+                                </span>
+                                <span className="flex justify-between mt-2">
+                                    Total MRP{" "}
+                                    <p className="">
+                                        ₹
+                                        {product.reduce((sum, p) => {
+                                            return sum + p.price;
+                                        }, 0)}
+                                    </p>
+                                </span>
+                                <span className="flex justify-between">
+                                    Delivery <p className="">₹ 50</p>
+                                </span>
+                                <span className="flex justify-between text-[rgb(240,85,120)]">
+                                    Discount on MRP{" "}
+                                    <p className="">
+                                        - ₹
+                                        {product.reduce((sum, p) => {
+                                            return (
+                                                sum +
+                                                (p.price - p.unitPrice)
+                                            );
+                                        }, 0)}
+                                    </p>
+                                </span>
+                                <span className="flex justify-between text-[rgb(240,85,120)]">
+                                    Discount on Delivery{" "}
+                                    <p className="">- ₹ 50</p>
+                                </span>
+                                <span className="flex justify-between">
                                     <p>
-                                        Payment Method:{" "}
-                                        <span className="uppercase ml-2 font-semibold">
-                                            {orderDetails?.paymentMethod}
-                                        </span>
+                                        Platform Fee{" "}
+                                        <Link
+                                            onClick={(e) => {
+                                                e.preventDefault(),
+                                                    setOpen(true);
+                                            }}
+                                            className="text-[10px] text-blue-500 lg:hover:underline font-semibold"
+                                        >
+                                            (Know More)
+                                        </Link>
                                     </p>{" "}
-                                    <i className="fi fi-br-angle-double-small-right relative top-[2px]"></i>
-                                </button>
-                                <button
-                                    className={`w-[30%] text-sm rounded-xl  shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 cursor-default ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}
-                                >
+                                    <p className="">₹ {platformFee}</p>
+                                </span>
+                                <hr className="pb-1 mt-1" />
+                                <span className="flex justify-between mt-[2px] text-base font-bold text-green-500">
+                                    Grand Total{" "}
                                     <p>
-                                        Status:{" "}
-                                        <span className={`ml-2 font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "text-[rgb(240,85,120)]" : orderDetails?.orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]"}`}>
-                                            {orderDetails?.orderStatus}
-                                        </span>
-                                    </p>{" "}
-                                    <i className="fi fi-br-location-crosshairs relative top-[2px]"></i>
-                                </button>
+                                        ₹
+                                        {product.reduce((sum, p) => {
+                                            return sum + p.unitPrice;
+                                        }, 0) + platformFee}
+                                    </p>
+                                </span>
                             </div>
-                            <div className="flex gap-5 justify-between">
-                                <button
-                                    className={`w-full text-sm rounded-xl duration-200 lg:hover:scale-[1.05] lg:active:scale-[0.98] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5  ${orderDetails?.orderStatus === "Cancelled" ? "hidden" : "inline-block"} ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"}`}
-                                    onClick={handleCancelOrder}
-                                >
-                                    {orderDetails?.orderStatus === "Delivered" ? "Show Off Your Look" : "Cancel Order"}{" "}
-                                    <i className={`${orderDetails?.orderStatus === "Delivered" ? "fi fi-sr-camera" : "fi fi-sr-cross-circle"} relative top-[2px]`}></i>
-                                </button>
-                                <button
-                                    className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
-                                    onClick={() =>
-                                        navigate(`/orders/track-package/${id}`)
-                                    }
-                                >
-                                    Track Shipment{" "}
-                                    <i className="fi fi-br-track relative top-[2px]"></i>
-                                </button>
-                                <button
-                                    className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
-                                    onClick={orderDetails?.isHidden ? handleUnhideOrder : handleHideOrder}
-                                >
-                                    {orderDetails?.isHidden ? "Unhide" : "Hide"} Order{" "}
-                                    <i className={`${orderDetails?.isHidden ? "fi fi-sr-eye" : "fi fi-sr-eye-crossed"} relative top-[2px]`}></i>
-                                </button>
-                                <button
-                                    className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "hidden" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)] inline-block"}`}
-                                    onClick={handelDownloadInvoice}
-                                >
-                                    Download Invoice{" "}
-                                    <i className="fi fi-sr-down-to-line relative top-[2px]"></i>
-                                </button>
-                            </div>
+                        </div>
+                        <div className="flex gap-5 my-5">
+                            <button
+                                className={`w-[70%] text-sm rounded-xl lg:hover:scale-[1.03] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
+                                onClick={() =>
+                                    navigate(`/orders/successfull/${id}`)
+                                }
+                            >
+                                <p>
+                                    Payment Method:{" "}
+                                    <span className="uppercase ml-2 font-semibold">
+                                        {orderDetails?.paymentMethod}
+                                    </span>
+                                </p>{" "}
+                                <i className="fi fi-br-angle-double-small-right relative top-[2px]"></i>
+                            </button>
+                            <button
+                                className={`w-[30%] text-sm rounded-xl  shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 cursor-default ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}
+                            >
+                                <p>
+                                    Status:{" "}
+                                    <span className={`ml-2 font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "text-[rgb(240,85,120)]" : orderDetails?.orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]"}`}>
+                                        {orderDetails?.orderStatus}
+                                    </span>
+                                </p>{" "}
+                                <i className="fi fi-br-location-crosshairs relative top-[2px]"></i>
+                            </button>
+                        </div>
+                        <div className="flex gap-5 justify-between">
+                            <button
+                                className={`w-full text-sm rounded-xl duration-200 lg:hover:scale-[1.05] lg:active:scale-[0.98] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5  ${orderDetails?.orderStatus === "Cancelled" ? "hidden" : "inline-block"} ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"}`}
+                                onClick={handleCancelOrder}
+                            >
+                                {orderDetails?.orderStatus === "Delivered" ? "Show Off Your Look" : "Cancel Order"}{" "}
+                                <i className={`${orderDetails?.orderStatus === "Delivered" ? "fi fi-sr-camera" : "fi fi-sr-cross-circle"} relative top-[2px]`}></i>
+                            </button>
+                            <button
+                                className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
+                                onClick={() =>
+                                    navigate(`/orders/track-package/${id}`)
+                                }
+                            >
+                                Track Shipment{" "}
+                                <i className="fi fi-br-track relative top-[2px]"></i>
+                            </button>
+                            <button
+                                className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
+                                onClick={orderDetails?.isHidden ? handleUnhideOrder : handleHideOrder}
+                            >
+                                {orderDetails?.isHidden ? "Unhide" : "Hide"} Order{" "}
+                                <i className={`${orderDetails?.isHidden ? "fi fi-sr-eye" : "fi fi-sr-eye-crossed"} relative top-[2px]`}></i>
+                            </button>
+                            <button
+                                className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "hidden" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)] inline-block"}`}
+                                onClick={handelDownloadInvoice}
+                            >
+                                Download Invoice{" "}
+                                <i className="fi fi-sr-down-to-line relative top-[2px]"></i>
+                            </button>
+                        </div>
 
-                            {/* <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border mt-5 px-6 py-4 flex justify-between items-center font-semibold">
+                        {/* <div className="rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border mt-5 px-6 py-4 flex justify-between items-center font-semibold">
                                     
                                     <div className="w-1/4 h-full flex flex-col justify-end gap-3 text-sm font-semibold">
                                         <button className="h-8 w-full bg-gray-200 lg:hover:bg-gray-300 rounded-full border border-[rgb(8,43,61)]" onClick={() => navigate(`/orders/track-package/${id}`)}>Track Package <i className="fi fi-br-angle-double-small-right relative top-[2px]"></i></button>
@@ -402,201 +401,200 @@ function OrderDetailsPage() {
                                         <button className="h-8 w-full bg-gray-200 lg:hover:bg-gray-300 rounded-full border border-[rgb(8,43,61)]" onClick={() => navigate(`/orders/seller-profile/${id}`)}>Seller Feedback</button> 
                                     </div>
                                 </div> */}
-                            <div className="pb-8 mt-5 relative">
-                                {product?.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`rounded-xl shadow-md mt-2 p-3 flex flex-col gap-y-5 mb-5 cursor-pointer ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(245,80,118)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}
-                                    >
-                                        <div className="w-full flex items-end relative">
-                                            <div className="flex gap-3 w-full">
-                                                <img
-                                                    src={item.image}
-                                                    alt=""
-                                                    className="border h-[121px] rounded-[6px] object-fit"
-                                                    onClick={() =>
-                                                        navigate(
-                                                            `/product-details/${item?.id}`
-                                                        )
-                                                    }
-                                                />
-                                                <div className="text-[11px] leading-[1.3] relative w-[68%]">
-                                                    <div className="flex gap-2 items-center">
-                                                        <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]">
-                                                            <img
-                                                                src={lxsLogo}
-                                                                alt=""
-                                                                className="h-[12px]"
-                                                            />{" "}
-                                                            <span className="text-[10px] text-white font-medium">
-                                                                LXS Certified
-                                                            </span>
-                                                        </div>
-                                                        <span className="opacity-50 mr-3 font-semibold tracking-tight">
-                                                            APPAREL & FASHION
+                        <div className="mt-5 relative pb-1">
+                            {product?.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className={`rounded-xl shadow-md mt-2 p-3 flex flex-col gap-y-5 mb-5 cursor-pointer ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(245,80,118)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}
+                                >
+                                    <div className="w-full flex items-end relative">
+                                        <div className="flex gap-3 w-full">
+                                            <img
+                                                src={item.image}
+                                                alt=""
+                                                className="border h-[121px] rounded-[6px] object-fit"
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/product-details/${item?.id}`
+                                                    )
+                                                }
+                                            />
+                                            <div className="text-[11px] leading-[1.3] relative w-[68%]">
+                                                <div className="flex gap-2 items-center">
+                                                    <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]">
+                                                        <img
+                                                            src={lxsLogo}
+                                                            alt=""
+                                                            className="h-[12px]"
+                                                        />{" "}
+                                                        <span className="text-[10px] text-white font-medium">
+                                                            LXS Certified
                                                         </span>
                                                     </div>
-                                                    <h3 className="font-bold text-base line-clamp-1 w-[90%]">
-                                                        {item?.productName}
-                                                    </h3>
-                                                    <div className="flex text-sm leading-4">
-                                                        <p className="font-semibold">
-                                                            Brand :{" "}
-                                                            <span className="text-[rgb(240,85,120)] lg:hover:underline active:underline">
-                                                                {item?.brand}
-                                                            </span>
-                                                        </p>
-                                                        <p className="font-semibold border-l-2 px-3 mx-3 border-[rgb(8,43,61)]">
-                                                            Size :{" "}
-                                                            <span className="text-[rgb(240,85,120)]">
-                                                                {item?.size}
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                    <p className="text-sm lg:text-base leading-5 font-semibold">
-                                                        ₹{item.unitPrice}
-                                                        <s className="font-medium text-sm opacity-60 ml-2">
-                                                            ₹{item.price}
-                                                        </s>{" "}
-                                                        <span className="font-bold text-xs text-[rgb(240,85,120)]">
-                                                            (
-                                                            {`${Math.floor(
-                                                                ((item.price -
-                                                                    item.unitPrice) *
-                                                                    100) /
-                                                                item.price
-                                                            )}`}
-                                                            % OFF)
+                                                    <span className="opacity-50 mr-3 font-semibold tracking-tight">
+                                                        APPAREL & FASHION
+                                                    </span>
+                                                </div>
+                                                <h3 className="font-bold text-base line-clamp-1 w-[90%]">
+                                                    {item?.productName}
+                                                </h3>
+                                                <div className="flex text-sm leading-4">
+                                                    <p className="font-semibold">
+                                                        Brand :{" "}
+                                                        <span className="text-[rgb(240,85,120)] lg:hover:underline active:underline">
+                                                            {item?.brand}
                                                         </span>
                                                     </p>
-                                                    {
-                                                        orderDetails?.orderStatus === "Delivered" &&
-                                                        <div className="flex space-x-3 font-semibold h-10">
-                                                            <button onClick={() => navigate(`/orders/product-exchange/${id}`)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2 "><i className="fi fi-br-restock relative top-[2px] mr-1"></i>Request Exchange <i className="fi fi-br-angle-double-small-right relative top-[3px]"></i></button>
-                                                            <button onClick={() => navigate(`/orders/product-return/${id}`)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2 "><i className="fi fi-sr-truck-arrow-left relative top-[2px] mr-1"></i>Request Return <i className="fi fi-br-angle-double-small-right relative top-[3px]"></i></button>
-                                                        </div>
-                                                    }
+                                                    <p className="font-semibold border-l-2 px-3 mx-3 border-[rgb(8,43,61)]">
+                                                        Size :{" "}
+                                                        <span className="text-[rgb(240,85,120)]">
+                                                            {item?.size}
+                                                        </span>
+                                                    </p>
                                                 </div>
+                                                <p className="text-sm lg:text-base leading-5 font-semibold">
+                                                    ₹{item.unitPrice}
+                                                    <s className="font-medium text-sm opacity-60 ml-2">
+                                                        ₹{item.price}
+                                                    </s>{" "}
+                                                    <span className="font-bold text-xs text-[rgb(240,85,120)]">
+                                                        (
+                                                        {`${Math.floor(
+                                                            ((item.price -
+                                                                item.unitPrice) *
+                                                                100) /
+                                                            item.price
+                                                        )}`}
+                                                        % OFF)
+                                                    </span>
+                                                </p>
                                                 {
-                                                    orderDetails?.orderStatus === "Delivered" ? 
-                                                    <div className="flex flex-col space-y-2 font-semibold w-[20%]">
-                                                    <button onClick={() => navigate(`/orders/product-exchange/${id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-feedback relative top-[2px] mr-1"></i>Product Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button>
-                                                    <button onClick={() => navigate(`/orders/product-return/${id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-talent-alt relative top-[2px] mr-1"></i>Seller Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button>
-                                                </div>:
-                                                null
+                                                    orderDetails?.orderStatus === "Delivered" &&
+                                                    <div className="flex space-x-3 font-semibold h-10">
+                                                        <button onClick={() => navigate(`/orders/product-exchange/${id}`)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2 "><i className="fi fi-br-restock relative top-[2px] mr-1"></i>Request Exchange <i className="fi fi-br-angle-double-small-right relative top-[3px]"></i></button>
+                                                        <button onClick={() => navigate(`/orders/product-return/${id}`)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2 "><i className="fi fi-sr-truck-arrow-left relative top-[2px] mr-1"></i>Request Return <i className="fi fi-br-angle-double-small-right relative top-[3px]"></i></button>
+                                                    </div>
                                                 }
                                             </div>
                                             {
-                                                orderDetails?.orderStatus === "Cancelled" &&
-                                                <button onClick={(e) => handleReorderButton(e, item.id)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] bg-white duration-200 lg:hover:bg-[rgb(240,85,120)] lg:hover:text-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end absolute bottom-2 right-2"><i className="fi fi-sr-cart-shopping-fast relative top-[2px]"></i>Buy Again </button>
+                                                orderDetails?.orderStatus === "Delivered" ?
+                                                    <div className="flex flex-col space-y-2 font-semibold w-[20%]">
+                                                        <button onClick={() => navigate(`/orders/product-exchange/${id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-feedback relative top-[2px] mr-1"></i>Product Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button>
+                                                        <button onClick={() => navigate(`/orders/product-return/${id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-talent-alt relative top-[2px] mr-1"></i>Seller Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button>
+                                                    </div> :
+                                                    null
                                             }
                                         </div>
-                                    </div>
-                                ))}
-                                <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-3 lg:right-0">
-                                    Need Help?{" "}
-                                    <Link
-                                        to="/setting/contact-us"
-                                        className="text-blue-500 lg:hover:underline font-bold"
-                                    >
-                                        Contact Us
-                                    </Link>
-                                </span>
-                            </div>
-                        </>
-                    ) : (
-                        <div className="space-y-6 max-w-5xl w-full animate-pulse">
-                            {/* Header */}
-                            <div className="flex justify-between items-center text-sm">
-                                <div className="h-4 w-36 bg-gray-300 rounded-md" />
-                                <div className="flex gap-7 relative top-2">
-                                    <div className="h-3 w-52 bg-gray-300 rounded" />
-                                    <div className="h-3 w-52 bg-gray-300 rounded" />
-                                </div>
-                            </div>
-
-                            {/* Summary Box */}
-                            <div className="grid grid-cols-3 gap-4 border border-gray-300 rounded-xl px-6 py-5 shadow-sm">
-                                <div className="space-y-2">
-                                    <div className="h-5 w-32 bg-gray-300 rounded" />
-                                    <div className="h-3 w-40 bg-gray-200 rounded" />
-                                    <div className="h-3 w-44 bg-gray-200 rounded" />
-                                    <div className="h-3 w-36 bg-gray-200 rounded" />
-                                    <div className="h-3 w-40 bg-gray-200 rounded" />
-                                    <div className="h-3 w-20 bg-gray-200 rounded" />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <div className="h-5 w-36 bg-gray-300 rounded" />
-                                    <div className="h-3 w-24 bg-gray-200 rounded" />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <div className="h-5 w-36 bg-gray-300 rounded" />
-                                    <div className="flex justify-between">
-                                        <div className="h-3 w-24 bg-gray-200 rounded" />
-                                        <div className="h-3 w-10 bg-gray-200 rounded" />
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <div className="h-3 w-24 bg-gray-200 rounded" />
-                                        <div className="h-3 w-10 bg-gray-200 rounded" />
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <div className="h-3 w-24 bg-gray-200 rounded" />
-                                        <div className="h-3 w-10 bg-gray-200 rounded" />
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <div className="h-3 w-28 bg-red-200 rounded" />
-                                        <div className="h-3 w-10 bg-red-200 rounded" />
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <div className="h-5 w-28 bg-green-300 rounded" />
-                                        <div className="h-5 w-12 bg-green-300 rounded" />
+                                        {
+                                            orderDetails?.orderStatus === "Cancelled" &&
+                                            <button onClick={(e) => handleReorderButton(e, item.id)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] bg-white duration-200 lg:hover:bg-[rgb(240,85,120)] lg:hover:text-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end absolute bottom-2 right-2"><i className="fi fi-sr-cart-shopping-fast relative top-[2px]"></i>Buy Again </button>
+                                        }
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* Product Details */}
-                            <div className="flex flex-col border border-gray-300 rounded-xl px-6 py-5 shadow-sm gap-4">
-                                <div className="bg-gray-300 h-4 w-72 rounded"></div>
-                                {/* Image */}
-                                <div className="grid grid-cols-12 space-x-8">
-                                    <div className="col-span-2 h-40 w-32 bg-gray-300 rounded-xl" />
-
-                                    {/* Info */}
-                                    <div className="col-span-7 space-y-2">
-                                        <div className="h-3 w-40 bg-gray-200 rounded" />
-                                        <div className="h-4 w-80 bg-gray-300 rounded" />
-                                        <div className="h-2 w-32 bg-gray-200 rounded" />
-                                        <div className="h-2 w-20 bg-gray-200 rounded" />
-                                        <div className="h-4 w-36 bg-green-300 rounded" />
-                                        <div className="flex gap-5 pt-2">
-                                            <div className="h-9 w-36 bg-orange-300 rounded-full" />
-                                            <div className="h-9 w-44 bg-red-300 rounded-full" />
-                                        </div>
-                                        <div className="h-3 w-64 bg-gray-200 rounded ml-2" />
-                                    </div>
-
-                                    {/* Buttons */}
-                                    <div className="col-span-3 flex flex-col gap-3 items-end">
-                                        {[...Array(4)].map((_, i) => (
-                                            <div
-                                                key={i}
-                                                className="h-8 w-44 bg-gray-300 rounded-full"
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Footer */}
-                            <div className="flex justify-end gap-6 text-sm relative bottom-2">
-                                <div className="h-3 w-16 bg-gray-300 rounded" />
-                                <div className="h-3 w-28 bg-gray-300 rounded" />
+                            ))}
+                            <span className="text-[11px] font-medium lg:text-xs absolute -bottom-0.5 lg:right-2">
+                                Need Help?{" "}
+                                <Link
+                                    to="/setting/contact-us"
+                                    className="text-blue-500 lg:hover:underline font-bold"
+                                >
+                                    Contact Us
+                                </Link>
+                            </span>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="space-y-6 max-w-5xl w-full animate-pulse">
+                        {/* Header */}
+                        <div className="flex justify-between items-center text-sm">
+                            <div className="h-4 w-36 bg-gray-300 rounded-md" />
+                            <div className="flex gap-7 relative top-2">
+                                <div className="h-3 w-52 bg-gray-300 rounded" />
+                                <div className="h-3 w-52 bg-gray-300 rounded" />
                             </div>
                         </div>
-                    )}
-                </div>
+
+                        {/* Summary Box */}
+                        <div className="grid grid-cols-3 gap-4 border border-gray-300 rounded-xl px-6 py-5 shadow-sm">
+                            <div className="space-y-2">
+                                <div className="h-5 w-32 bg-gray-300 rounded" />
+                                <div className="h-3 w-40 bg-gray-200 rounded" />
+                                <div className="h-3 w-44 bg-gray-200 rounded" />
+                                <div className="h-3 w-36 bg-gray-200 rounded" />
+                                <div className="h-3 w-40 bg-gray-200 rounded" />
+                                <div className="h-3 w-20 bg-gray-200 rounded" />
+                            </div>
+
+                            <div className="space-y-2">
+                                <div className="h-5 w-36 bg-gray-300 rounded" />
+                                <div className="h-3 w-24 bg-gray-200 rounded" />
+                            </div>
+
+                            <div className="space-y-2">
+                                <div className="h-5 w-36 bg-gray-300 rounded" />
+                                <div className="flex justify-between">
+                                    <div className="h-3 w-24 bg-gray-200 rounded" />
+                                    <div className="h-3 w-10 bg-gray-200 rounded" />
+                                </div>
+                                <div className="flex justify-between">
+                                    <div className="h-3 w-24 bg-gray-200 rounded" />
+                                    <div className="h-3 w-10 bg-gray-200 rounded" />
+                                </div>
+                                <div className="flex justify-between">
+                                    <div className="h-3 w-24 bg-gray-200 rounded" />
+                                    <div className="h-3 w-10 bg-gray-200 rounded" />
+                                </div>
+                                <div className="flex justify-between">
+                                    <div className="h-3 w-28 bg-red-200 rounded" />
+                                    <div className="h-3 w-10 bg-red-200 rounded" />
+                                </div>
+                                <div className="flex justify-between">
+                                    <div className="h-5 w-28 bg-green-300 rounded" />
+                                    <div className="h-5 w-12 bg-green-300 rounded" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Product Details */}
+                        <div className="flex flex-col border border-gray-300 rounded-xl px-6 py-5 shadow-sm gap-4">
+                            <div className="bg-gray-300 h-4 w-72 rounded"></div>
+                            {/* Image */}
+                            <div className="grid grid-cols-12 space-x-8">
+                                <div className="col-span-2 h-40 w-32 bg-gray-300 rounded-xl" />
+
+                                {/* Info */}
+                                <div className="col-span-7 space-y-2">
+                                    <div className="h-3 w-40 bg-gray-200 rounded" />
+                                    <div className="h-4 w-80 bg-gray-300 rounded" />
+                                    <div className="h-2 w-32 bg-gray-200 rounded" />
+                                    <div className="h-2 w-20 bg-gray-200 rounded" />
+                                    <div className="h-4 w-36 bg-green-300 rounded" />
+                                    <div className="flex gap-5 pt-2">
+                                        <div className="h-9 w-36 bg-orange-300 rounded-full" />
+                                        <div className="h-9 w-44 bg-red-300 rounded-full" />
+                                    </div>
+                                    <div className="h-3 w-64 bg-gray-200 rounded ml-2" />
+                                </div>
+
+                                {/* Buttons */}
+                                <div className="col-span-3 flex flex-col gap-3 items-end">
+                                    {[...Array(4)].map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className="h-8 w-44 bg-gray-300 rounded-full"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="flex justify-end gap-6 text-sm relative bottom-2">
+                            <div className="h-3 w-16 bg-gray-300 rounded" />
+                            <div className="h-3 w-28 bg-gray-300 rounded" />
+                        </div>
+                    </div>
+                )}
                 <KnowMorePopup setIsOpen={setOpen} isOpen={open} />
                 {
                     item &&
@@ -632,8 +630,8 @@ function OrderDetailsPage() {
                     <p className="px-10 text-sm mb-2">Every share strengthens our fashion-forward community.</p>
                     <span className="text-center text-[rgb(240,85,120)] font-semibold mb-5">You’re not just a customer — you’re part of the story.</span>
                 </DialogBox>
-                <div className="w-5/12 h-full rounded-3xl shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border"></div>
             </div>
+            <div className="w-[35%] h-[84vh] rounded-3xl shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border sticky top-[92px]"></div>
         </div>
     );
 }

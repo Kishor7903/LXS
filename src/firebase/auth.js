@@ -537,7 +537,6 @@ export const addNewRecentProduct = async (user_id, item, maxItems = 50) => {
         const q = query(userRef, orderBy("timestamp", "desc"));
         const snapshot = await getDocs(q);
 
-        let exists = false;
         for (const docSnap of snapshot.docs) {
             if (docSnap.item_id === item.item_id) {
                 exists = true;
@@ -546,7 +545,7 @@ export const addNewRecentProduct = async (user_id, item, maxItems = 50) => {
         }
 
         // Add to the front
-        await setDoc(doc(userRef, item.item_id), {...item});
+        await addDoc(userRef, {...item});
 
         // Limit to maxItems
         const updatedSnapshot = await getDocs(

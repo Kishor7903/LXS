@@ -35,8 +35,8 @@ function ShopSettingMyAccount() {
     }, [])
 
     return (
-        <div className="w-full h-full px-5 flex gap-8 ">
-            <div className="w-1/2 flex flex-col justify-between">
+        <div className="w-full h-full pl-5 flex gap-5 ">
+            <div className="w-[60%] flex flex-col justify-between">
                 <div className="leading-[1] font-semibold h-10">Mission Control 🚀 <br />
                     <p className="text-xs font-normal">Because you are the boss of your Shopping Universe!</p>
                 </div>
@@ -44,7 +44,7 @@ function ShopSettingMyAccount() {
                     <div className="bg-slate-100 py-3 px-5 border border-slate-300 flex items-center rounded-xl mx-5 relative shadow-md">
                         <div className="relative mr-4">
                             <img src={flagIcon} alt="" className="h-16 rounded-full" />
-                            <img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-14 absolute top-1 left-1 rounded-full" />
+                            <img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-14 w-14 absolute top-1 left-1 rounded-full" />
                         </div>
                         <p className="text-2xl h-10 leading-[0.7] font-bold relative top-1">{user.name} <br /> <span className="text-base font-medium text-[rgb(240,85,120)]">User Account</span></p>
                         <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium" onClick={handleProfilePicEditButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
@@ -79,7 +79,7 @@ function ShopSettingMyAccount() {
                 <EditUserInfoPopup isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
                 <EditProfilePicPopup isOpen={open} setIsOpen={setOpen} user={user} />
             </div>
-            <div className="border w-1/2 h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
+            <div className="border w-[40%] h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
         </div>
     )
 }

@@ -1,13 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import DialogBox from './DialogBox'
 import { useDispatch } from 'react-redux';
-import { uploadToCloudinary } from '@/firebase/cloudinary';
 import { editUserDetails } from '@/firebase/auth';
 import { updateUserInfo } from '@/store/features/authSlice';
 import { useToast } from './ToastProvider';
+import { deleteImage, uploadImage } from '@/firebase/admin';
 
 function EditProfilePicPopup({isOpen, setIsOpen, user}) {
-    let [formData, setFormData] = useState(user);
     const [previews, setPreviews] = useState(null);
     const [files, setFiles] = useState(null);
     const fileInputs = useRef(null);
@@ -45,37 +44,38 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         if (files) {
-            let response = await uploadToCloudinary(files);
-
-            let url = response?.url;
-            let publicId = response?.public_id;
-
-            let imageData = {
-                img_url: url,
-                publicId: publicId
+            if(files.size > (1024 * 1024)){
+                toast("Image size should not exceeds 1MB.")
+                return
             }
-
-            setFormData({
-                ...formData,
-                profilePic: imageData
+            uploadImage(files, `user/${user.id}`).then((res) => {
+                editUserDetails({ ...user, profilePic: res}).then(() => {
+                    deleteImage(user.profilePic).then(() => {
+                        dispatch(updateUserInfo({ ...user, profilePic: res}));
+                        toast("Profile Picture Edited...")
+                        setIsOpen(false);
+                        setPreviews(null);
+                        setFiles(null);
+                        if (fileInputs.current) {
+                            fileInputs.current.value = null;
+                        }
+                    })
+                })
             })
-    
-            editUserDetails(formData).then(() => {
-                dispatch(updateUserInfo(formData));
-                toast("Profile Picture Edited...")
-                setIsOpen(false);
-                setPreviews(null);
-                setFiles(null);
-                if (fileInputs.current) {
-                    fileInputs.current.value = null;
-                }
-            })
+        } else if(!files && previews){
+            toast("Select New Image First...")
         } else{
             toast("Select Image First...")
         }
     }
+
+    useEffect(() =>{
+        if(user.profilePic){
+            setPreviews(user.profilePic);
+        }
+    }, [user])
 
     return (
         <DialogBox
