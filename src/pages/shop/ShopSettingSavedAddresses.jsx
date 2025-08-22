@@ -104,7 +104,7 @@ function ShopSettingSavedAddresses() {
 									<div className="font-semibold flex gap-1 items-center">
 										<span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] flex justify-center items-center select-none px-2 ml-2 text-[10px] font-medium ">{item.address_type}</span>
 										<label htmlFor={`address${index}`} className={`rounded-full px-2`}>ADDRESS {index + 1} </label>
-										<span onClick={(e) => item.isDefault ? null : handleSetDefault(e, item.id)} className={`${item.isDefault ? "text-[rgb(240,85,120)]" : "text-blue-500 lg:hover:underline cursor-pointer"} text-xs `}>{`${item.isDefault ? "(Default)" : "Set as Default"}`}</span>
+										<span onClick={(e) => item.isDefault ? null : handleSetDefault(e, item.id)} className={`${item.isDefault ? "text-[rgb(253,84,120)]" : "text-blue-500 lg:hover:underline cursor-pointer"} text-xs `}>{`${item.isDefault ? "(Default)" : "Set as Default"}`}</span>
 									</div>
 									<div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-5 w-[90%] text-[11px] ml-2" >
 										<div className="flex flex-col leading-3">
@@ -140,7 +140,7 @@ function ShopSettingSavedAddresses() {
 											<p className="text-[14px] font-semibold">{item.state}</p>
 										</div>
 										<div className="absolute bottom-3 right-2 flex flex-col gap-1 justify-center items-center">
-											<HoverButton className="px-3 text-sm font-medium" onClick={(e) => handleAddressEditButton(e, item)} icon={editIcon} iconActive={editIconActive} iconClassName="h-4">Edit</HoverButton>
+											<HoverButton className="px-3 text-sm font-medium rounded-[8px]" onClick={(e) => handleAddressEditButton(e, item)} icon={editIcon} iconActive={editIconActive} iconClassName="h-4">Edit</HoverButton>
 											{
 												item.isDefault !== true ? (
 													<span className="cursor-pointer lg:hover:underline text-xs text-blue-500 font-semibold right-[22px]" onClick={() => { setConfirmPopupOpen(true), setDeleteItemId(item.id) }}>Delete</span>

@@ -8,7 +8,7 @@ function HoverButton({ className, onClick, children, icon, iconActive, iconClass
     <button
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white border border-[rgb(8,43,61)] min-h-6 min-w-12 rounded-full flex items-center gap-1 ${className}`} 
+        className={`lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white border border-[rgb(8,43,61)] min-h-6 min-w-12 flex items-center gap-1 ${className}`} 
         onClick={onClick} {...props}
     >
         {children}

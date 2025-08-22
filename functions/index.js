@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import CryptoJS from "crypto-js";
 import axios from "axios";
 import sibApiV3Sdk from "sib-api-v3-sdk";
+import admin from "firebase-admin";
+admin.initializeApp();
 
 dotenv.config({
     path: "./.env",
@@ -61,6 +63,32 @@ export const verifyPayment = functions.https.onRequest(async (req, res) => {
             success: false,
             message: "Payment verified, but fetch failed",
         });
+    }
+});
+
+export const refundPayment = functions.https.onRequest(async (req, res) => {
+    if (req.method !== "POST") {
+        return res
+            .status(405)
+            .send({ error: "Only POST requests are allowed" });
+    }
+
+    const { payment_id, amount } = req.body;
+
+    if (!payment_id) {
+        return res.status(400).send({ error: "Payment ID is required" });
+    }
+
+    try {
+        const refund = await razorpay.payments.refund(payment_id, {
+            amount: amount*100,
+            speed: "optimum",
+        });
+
+        return res.status(200).send({ success: true, refund });
+    } catch (error) {
+        console.error("Refund Error:", error);
+        return res.status(500).send({ success: false, error: error.message });
     }
 });
 
@@ -614,5 +642,24 @@ export const sendSMS = functions.https.onRequest(async (req, res) => {
         return res.status(200).json({ success: true, data: response.data });
     } catch (error) {
         return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Push Notificationn using FCM ........................
+
+export const sendNotification = functions.https.onRequest(async (req, res) => {
+    const {token, title, body} = req.body;
+
+    try {
+        const response = await admin.messaging().send({
+            token: token,
+            notification: {
+                title,
+                body
+            }
+        });
+        res.send(response);
+    } catch (error) {
+        res.status(500).send(error);
     }
 });

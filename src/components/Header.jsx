@@ -21,7 +21,7 @@ import aboutUsIcon from "../assets/commonIcons/About Us (Stroke).png";
 import aboutUsIconActive from "../assets/commonIcons/About Us (Fill).png";
 import moreIcon from "../assets/commonIcons/More (Stroke).png";
 import moreIconFill from "../assets/commonIcons/More (Fill).png";
-import logoutRedIcon from "../assets/commonIcons/Log Out (Fill).png";
+import logoutRedIcon from "../assets/commonIcons/Log Out (Fill) Pink.png";
 import productsIcon from "../assets/commonIcons/Products (Stroke).png";
 import productsIconActive from "../assets/commonIcons/Products (Fill).png";
 import subscriptionIcon from "../assets/commonIcons/Subscription (Stroke).png";
@@ -106,7 +106,7 @@ function Header({ className }) {
 			getAllAddress(user?.id).then((res) => {
 				dispatch(updateAddress(res));
 			})
-			
+
 			getAllRecentPoducts(user.id).then((res) => {
 				dispatch(getRecentViewed(res))
 			})
@@ -115,7 +115,7 @@ function Header({ className }) {
 
 	useEffect(() => {
 		getBlogs().then((res) => {
-			let sortedBlogs = res.sort((a,b) => {
+			let sortedBlogs = res.sort((a, b) => {
 				return new Date(b.timestamp) - new Date(a.timestamp)
 			})
 			dispatch(getAllBlogs(sortedBlogs))
@@ -134,7 +134,7 @@ function Header({ className }) {
 		},
 		{
 			name: "My Account",
-			slug: "/setting/dashboard",
+			slug: "/setting",
 			icon: myAccountIcon,
 			activeIcon: myAccountIconActive,
 			active: isAuthenticated,
@@ -147,6 +147,14 @@ function Header({ className }) {
 			activeIcon: productsIconActive,
 			active: true,
 			width: "w-[71px]"
+		},
+		{
+			name: "Personalise Order",
+			slug: "/personalized-order",
+			icon: productsIcon,
+			activeIcon: productsIconActive,
+			active: true,
+			width: "w-[150px]"
 		},
 		// {
 		// 	name: "Sell on LXS",
@@ -214,9 +222,9 @@ function Header({ className }) {
 	]
 
 	return (
-		<header className={`flex items-center justify-between px-3 md:px-5 xl:px-10 py-2 shadow-[0px_0px_10px_-5px_rgb(8,43,61)] sticky top-0 bg-white z-30 ${className}`}>
+		<header className={`flex items-center justify-between px-3 md:px-5 xl:px-16 py-2 shadow-[0px_0px_10px_-5px_rgb(8,43,61)] sticky top-0 bg-white z-30 ${className}`}>
 
-			<div className="flex gap-2 md:gap-3 items-center">
+			<div className="flex items-center">
 
 				<div className="" onClick={() => setIsSheetOpen(true)}><img src={menuIcon} alt="" className="h-4 md:h-5 cursor-pointer mt-1 inline-block lg:hidden" /></div>
 
@@ -227,13 +235,13 @@ function Header({ className }) {
 					<AnimatePresence>
 						{isSheetOpen && (
 							<motion.div
-							key="sidebar-overlay"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{duration: 0.2, ease: "easeInOut" }}  // faster fade out
-							className="fixed inset-0 bg-black bg-opacity-50 z-30 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4"
-						  >
+								key="sidebar-overlay"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ duration: 0.2, ease: "easeInOut" }}  // faster fade out
+								className="fixed inset-0 bg-black bg-opacity-50 z-30 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4"
+							>
 								<motion.div
 									ref={dialogRef}
 									key="sidebar-panel"
@@ -255,7 +263,7 @@ function Header({ className }) {
 											</h4>
 											{user && (
 												<p className="text-[10px] xl:text-xs tracking-tighter relative bottom-[3px] ">
-													Type: <span className="text-[rgb(240,85,120)]">User Account</span>
+													Type: <span className="text-[rgb(253,84,120)]">User Account</span>
 												</p>
 											)}
 										</div>
@@ -265,22 +273,22 @@ function Header({ className }) {
 									</div>
 
 									<div className="px-5 xl:px-10">
-									<ul className="w-full text-sm xl:text-base">
-										{
-											navItems.map((item, index) => (
-												item.active === true ? (
-													<li key={index} className="text-left px-2 active:bg-slate-200 hover:bg-slate-200 rounded-xl cursor-pointer">
-														<NavLink
-															to={item.slug}
-															onClick={() => setIsSheetOpen(false)}
-															className={({ isActive }) => `text-[rgb(8,43,61)] py-2 relative flex items-center gap-2 ${isActive ? "font-extrabold" : "font-medium"}`}
-														><img src={location.includes(item.slug) ? item.activeIcon : item.icon} alt="" className="h-4 xl:h-5" /> {item.name}
-														</NavLink>
-													</li>
-												) : null
-											))
-										}
-										<div className="border-b last:border-none">
+										<ul className="w-full text-sm xl:text-base">
+											{
+												navItems.map((item, index) => (
+													item.active === true ? (
+														<li key={index} className="text-left px-2 active:bg-slate-200 hover:bg-slate-200 rounded-xl cursor-pointer">
+															<NavLink
+																to={item.slug}
+																onClick={() => setIsSheetOpen(false)}
+																className={({ isActive }) => `text-[rgb(8,43,61)] py-2 relative flex items-center gap-2 ${isActive ? "font-extrabold" : "font-medium"}`}
+															><img src={location.includes(item.slug) ? item.activeIcon : item.icon} alt="" className="h-4 xl:h-5" /> {item.name}
+															</NavLink>
+														</li>
+													) : null
+												))
+											}
+											{/* <div className="border-b last:border-none">
 											<button
 												className={`w-full h- flex justify-between items-center px-2 text-left lg:hover:bg-slate-200 py-2 cursor-pointer transition font-medium ${openIndex ? "rounded-t-xl bg-slate-200" : " rounded-xl bg-white"}`}
 												onClick={() => setOpenIndex(!openIndex)}
@@ -307,34 +315,34 @@ function Header({ className }) {
 												:
 												null
 											}
-										</div>
-									</ul>
-								</div>
-								<div className={`p-5 flex items-end xl:gap-1 font-semibold text-[rgb(8,43,61)] absolute bottom-0 text-sm xl:text-base w-full justify-between`}>
-									<div className="space-y-1">
-										{/* <Link to="" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
+										</div> */}
+										</ul>
+									</div>
+									<div className={`p-5 flex items-end xl:gap-1 font-semibold text-[rgb(8,43,61)] absolute bottom-0 text-sm xl:text-base w-full justify-between`}>
+										<div className="space-y-1">
+											{/* <Link to="" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
 											<img src={settingIcon} alt="" className="h-4 xl:h-5" /> Settings
 										</Link>  */}
-										<Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
-											<img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Notification
-										</Link>
-										{/* <Link to="/setting/contact-us" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
+											<Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
+												<img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Notification
+											</Link>
+											{/* <Link to="/setting/contact-us" className="flex gap-2 items-center lg:hover:bg-[rgb(210,224,232)] w-48 xl:px-3 pt-1 xl:py-1 rounded-[6px]">
 											<img src={helpIcon} alt="" className="h-4 xl:h-5" /> Help & Support
 										</Link>  */}
+										</div>
+										<div className="">
+											{
+												isAuthenticated ? (
+													<button onClick={handleLogout} className="flex gap-1 items-center text-[rgb(253,84,120)] hover:underline">
+														<img src={logoutRedIcon} alt="" className="h-5" /> Logout
+													</button>
+												) :
+													(
+														<button onClick={() => { setIsSheetOpen(false), setIsOpen(true) }} className="text-sm xl:text-lg font-semibold h-8 xl:h-9 px-4 text-white bg-[rgb(8,43,61)] rounded-full lg:active:bg-blue-600">Login</button>
+													)
+											}
+										</div>
 									</div>
-									<div className="">
-										{
-											isAuthenticated ? (
-												<button onClick={handleLogout} className="flex gap-1 items-center text-[rgb(240,85,120)] hover:underline">
-													<img src={logoutRedIcon} alt="" className="h-5" /> Logout
-												</button>
-											) :
-												(
-													<button onClick={() => { setIsSheetOpen(false), setIsOpen(true) }} className="text-sm xl:text-lg font-semibold h-8 xl:h-9 px-4 text-white bg-[rgb(8,43,61)] rounded-full lg:active:bg-blue-600">Login</button>
-												)
-										}
-									</div>
-								</div>
 								</motion.div>
 							</motion.div>
 						)}
@@ -358,7 +366,7 @@ function Header({ className }) {
 							) : null
 						))
 					}
-					<div
+					{/* <div
 						onMouseEnter={() => setIsHovered(true)}
 						onMouseLeave={() => setIsHovered(false)}
 						className="font-medium hover:text-[rgb(8,43,61)] lg:hover:-translate-y-[1px] lg:hover:font-bold relative  text-[rgb(8,43,61,0.9)] cursor-pointer z-10 w-[63px]">More <i className={`relative top-[2px] ${isHovered ? "fi fi-br-angle-small-down" : "fi fi-br-angle-small-right"}`}></i>
@@ -378,7 +386,7 @@ function Header({ className }) {
 								</ul>
 							</div>
 						)}
-					</div>
+					</div> */}
 
 				</nav>
 
@@ -395,7 +403,7 @@ function Header({ className }) {
 						<div className="relative active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/checkout/cart") : null}>
 							{
 								user && cart?.length > 0 && (
-									<div className="h-[12px] lg:h-[15px] w-[12px] lg:w-[15px] rounded-full bg-red-500 absolute -top-1 lg:-top-[6px] -right-[6px] lg:-right-2 flex justify-center items-center text-white text-[10px] lg:text-xs cursor-pointer " >{cart.length}</div>
+									<div className="h-[12px] lg:h-[15px] w-[12px] lg:w-[15px] rounded-full bg-[rgb(253,84,120)] absolute -top-1 lg:-top-[6px] -right-[6px] lg:-right-2 flex justify-center items-center text-white text-[10px] lg:text-xs cursor-pointer " >{cart.length}</div>
 								)
 							}
 							<img src={cartIcon} alt="" className="h-6 lg:h-7 cursor-pointer" />
@@ -411,9 +419,9 @@ function Header({ className }) {
 								window.innerWidth >= 1280 ?
 									(
 										<>
-											<div className="text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 border border-slate-300 shadow flex items-center px-2 cursor-pointer active:scale-[0.90] h-10" onClick={(e) => { e.preventDefault(), setUserPopup(true) }}>
-												<img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-7 w-7 rounded-full" />
-												<span className="text-base text-[rgb(240,85,120)] font-semibold flex items-center text-center leading-4 mr-1 pr-1 pl-2">{`${user.name.split(" ")[0]}`} </span>
+											<div className="text-sm gradient-border-btn bg-white rounded-[12px] lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 border border-slate-300 shadow flex items-center px-[5px] cursor-pointer active:scale-[0.90] h-10" onClick={(e) => { e.preventDefault(), setUserPopup(true) }}>
+												<img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-7 w-7 rounded-[6px]" />
+												<span className="text-base font-semibold flex items-center text-center leading-4 mr-1 pr-1 pl-2">{`${user.name.split(" ")[0]}`} </span>
 												<i className={`fi fi-br-angle-small-down text-lg relative duration-200 ${userPopup ? "top-1 right-[2px]" : "-rotate-90"}`}></i>
 											</div>
 											<DialogBox isOpen={userPopup} setIsOpen={setUserPopup} className="w-[300px] p-6 bg-white rounded-xl flex flex-col gap-4" parentDivClassName="flex justify-center items-center">

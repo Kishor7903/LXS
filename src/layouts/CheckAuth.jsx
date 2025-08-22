@@ -19,6 +19,10 @@ function CheckAuth({ isAuthenticated, user, children }) {
             }
         }
 
+        if(isAuthenticated && location === "/setting"){
+            navigate("/setting/dashboard")
+        }
+
         // Block unauthenticated users from certain routes
         if (
             !isAuthenticated &&

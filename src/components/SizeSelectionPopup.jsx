@@ -70,7 +70,7 @@ function SizeSelectionPopup({ isOpen, setIsOpen, item, selectedSize, setSelected
                         ))}
                     </div>
                     <button
-                        className="rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-sm 2xl:text-base font-semibold text-white px-5 py-3 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"
+                        className="rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-sm 2xl:text-base font-semibold text-white px-5 py-3 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"
                         onClick={handleAddToCart}
                     >
                         <i className="fi fi-sr-cart-shopping-fast relative top-1 text-lg mr-2"></i>

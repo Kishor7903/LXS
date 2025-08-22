@@ -30,11 +30,11 @@ function SuccessfulPopup() {
                     <div className="h-[90%] flex flex-col justify-center items-center ">
                         <img src={gif} alt="" className="w-28 mb-8" />
                         <h5 className="text-2xl font-semibold">Ordered Placed Successfully</h5>
-                        <p className="text-sm">Order ID: <span className="font-semibold text-[rgb(240,85,120)]">{order?.orderId}</span></p>
+                        <p className="text-sm">Order ID: <span className="font-semibold text-[rgb(253,84,120)]">{order?.orderId}</span></p>
                         {
                             order?.orderStatus === "Cancelled" ?
-                            <p className='text-sm'>Status: <span className="font-semibold text-[rgb(240,85,120)]">{order?.orderStatus}</span></p>:
-                            <p className="text-sm">Expected Delivery Date: <span className="font-semibold text-[rgb(240,85,120)]">{(() => {
+                            <p className='text-sm'>Status: <span className="font-semibold text-[rgb(253,84,120)]">{order?.orderStatus}</span></p>:
+                            <p className="text-sm">Expected Delivery Date: <span className="font-semibold text-[rgb(253,84,120)]">{(() => {
                                 const orderDate = new Date(order?.timestamp);
                                 const expectedDate = new Date(orderDate);
                                 expectedDate.setDate(orderDate.getDate() + 6);
@@ -44,7 +44,7 @@ function SuccessfulPopup() {
                                 return `${date.split(" ")[0]} ${date.split(" ")[2].split(",")[0]} ${date.split(" ")[1]} ${date.split(",")[2]}`
                             })()}</span></p>
                         }
-                        <button className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] rounded-full h-12 w-[30vw] mt-5 font-semibold text-white text-lg" onClick={() => navigate(`/orders/track-package/${id}`)}><i className="fi fi-br-track relative top-[2px] mr-3"></i>Track Shipment <i className='fi fi-br-angle-double-small-right relative top-[3px] ml-2'></i></button>
+                        <button className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] rounded-full h-12 w-[30vw] mt-5 font-semibold text-white text-lg" onClick={() => navigate(`/orders/track-package/${id}`)}><i className="fi fi-br-track relative top-[2px] mr-3"></i>Track Shipment <i className='fi fi-br-angle-double-small-right relative top-[3px] ml-2'></i></button>
                         <button className="bg-white text-[rgb(8,43,61)] rounded-full h-12 w-[30vw] mt-3 font-semibold text-lg" onClick={() => navigate('/products')}><i className='fi fi-sr-cart-shopping-fast relative top-0.5 mr-3'></i> Continue Shopping <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
                     </div>
                     :

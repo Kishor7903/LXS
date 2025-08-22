@@ -78,7 +78,8 @@ function SecurityLogin() {
 
 
     return (
-        <div className="w-full space-y-2">
+        <div className="w-full h-full pl-5 flex gap-5 ">
+            <div className="w-[60%] space-y-2">
             <div className="leading-[1] font-semibold h-10">Guardian Console 🛡️<br />
                 <p className="text-xs font-normal">Defend your data, verify your logins, and trace intrusions</p>
             </div>
@@ -98,7 +99,7 @@ function SecurityLogin() {
                             {items.content.map((item,idx) => (
                                 <div key={idx} className="">
                                     <span key={idx} className="capitalize mr-3 ">{item.key}</span>
-                                    <span to={item.slug} className="capitalize text-[rgb(240,85,120)] ">{item.value}</span>
+                                    <span to={item.slug} className="capitalize text-[rgb(253,84,120)] ">{item.value}</span>
                                 </div>
                             ))}
                         </div>
@@ -106,6 +107,8 @@ function SecurityLogin() {
                 ))
             }
             </div>
+        </div>
+            <div className="border w-[40%] h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
         </div>
     )
 }

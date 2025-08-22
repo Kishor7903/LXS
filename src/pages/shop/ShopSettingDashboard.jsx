@@ -35,7 +35,7 @@ let tiles = [
     title1: "Track",
     title2: "Orders",
     className: "bg-[rgb(111,54,123)]",
-    navigate: ""
+    navigate: "/setting/track-orders"
   },
   {
     icon: tile2Icon,
@@ -164,7 +164,7 @@ function ShopSettingDashboard() {
     <div className="flex gap-5 h-full w-full pl-5">
       <div className="w-[60%] h-full">
         <div className="w-full">
-          <p className="text-xl font-bold">Hello, {user?.name.split(" ")[0]}!</p>
+          <p className="text-xl font-bold">Hello, <span className="text-[rgb(253,84,120)]">{user?.name.split(" ")[0]}!</span></p>
           <p className="font-medium text-sm relative bottom-1">Today is {formattedDate[0] + ", " + formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]}</p>
         </div>
         <div className="flex gap-5 flex-wrap mt-5">

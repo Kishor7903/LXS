@@ -15,6 +15,7 @@ import { cancelTheShipment } from "@/firebase/fship";
 import KnowMorePopup from "@/components/KnowMorePopup";
 import SizeSelectionPopup from "@/components/SizeSelectionPopup";
 import DialogBox from "@/components/DialogBox";
+import { initiateRefund } from "@/firebase/RazorpayPayment";
 
 function OrderDetailsPage() {
     let navigate = useNavigate();
@@ -121,9 +122,13 @@ function OrderDetailsPage() {
                             details: [{ text: "Order Cancelled by user.", timestamp: getTimestamp() }]
                         }]
                     }
-                    dispatch(updateOrder({ ...orderDetails, ...newUpdate }))
-                    toast("Order Cancelled Successfully.")
-                    updateOrderInfo(user.id, id, { ...newUpdate })
+                    updateOrderInfo(user.id, id, { ...newUpdate }).then(() => {
+                        dispatch(updateOrder({ ...orderDetails, ...newUpdate }))
+                        toast("Order Cancelled Successfully.")
+                    })
+                    initiateRefund(orderDetails?.paymentId, orderDetails?.amount).then((res) => {
+                        console.log(res);
+                    })
                 }
             }).catch(err => {
                 console.log("Error at cancelling the shipment: ", err.message);
@@ -167,7 +172,6 @@ function OrderDetailsPage() {
             });
         });
 
-
         setProduct(result);
     }, [orderDetails]);
 
@@ -203,7 +207,7 @@ function OrderDetailsPage() {
                             </div>
                         </div>
                         <div className="flex gap-5 mt-5">
-                            <div className={`w-[60%] py-4 px-6 rounded-xl shadow-md ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}>
+                            <div className={`w-[60%] py-4 px-6 rounded-xl shadow-md ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(253,84,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}>
                                 <div className="font-semibold flex gap-1 items-center">
                                     <span className="bg-[rgb(8,43,61)] text-white rounded py-[1px] select-none px-1 text-[9px] font-medium">
                                         {
@@ -273,7 +277,7 @@ function OrderDetailsPage() {
                                         <span className="font-semibold text-base">Shipping Address</span>
                                         <p className="leading-[1] text-sm mt-1 font-medium pl-2">{orderDetails?.address?.name} <br />{orderDetails?.address?.houseNo} <br />{orderDetails?.address?.area} <br />{orderDetails?.address?.city},<br /> {orderDetails?.address?.state} <br />{orderDetails?.address?.pincode} <br />India</p>
                                     </div> */}
-                            <div className={`rounded-xl shadow-md py-4 px-6 leading-[1.6] font-medium w-[40%] text-[12px] ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}>
+                            <div className={`rounded-xl shadow-md py-4 px-6 leading-[1.6] font-medium w-[40%] text-[12px] ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(253,84,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}>
                                 <span className="font-semibold text-base">
                                     Price Details ({product.length} items)
                                 </span>
@@ -289,7 +293,7 @@ function OrderDetailsPage() {
                                 <span className="flex justify-between">
                                     Delivery <p className="">₹ 50</p>
                                 </span>
-                                <span className="flex justify-between text-[rgb(240,85,120)]">
+                                <span className="flex justify-between text-[rgb(253,84,120)]">
                                     Discount on MRP{" "}
                                     <p className="">
                                         - ₹
@@ -301,7 +305,7 @@ function OrderDetailsPage() {
                                         }, 0)}
                                     </p>
                                 </span>
-                                <span className="flex justify-between text-[rgb(240,85,120)]">
+                                <span className="flex justify-between text-[rgb(253,84,120)]">
                                     Discount on Delivery{" "}
                                     <p className="">- ₹ 50</p>
                                 </span>
@@ -334,7 +338,7 @@ function OrderDetailsPage() {
                         </div>
                         <div className="flex gap-5 my-5">
                             <button
-                                className={`w-[70%] text-sm rounded-xl lg:hover:scale-[1.03] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
+                                className={`w-[70%] text-sm rounded-xl lg:hover:scale-[1.03] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(253,84,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(253,84,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
                                 onClick={() =>
                                     navigate(`/orders/successfull/${id}`)
                                 }
@@ -348,11 +352,11 @@ function OrderDetailsPage() {
                                 <i className="fi fi-br-angle-double-small-right relative top-[2px]"></i>
                             </button>
                             <button
-                                className={`w-[30%] text-sm rounded-xl  shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 cursor-default ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}
+                                className={`w-[30%] text-sm rounded-xl  shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 cursor-default ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(253,84,120)] bg-[rgb(253,238,241)]" : "border border-slate-300 bg-slate-100"}`}
                             >
                                 <p>
                                     Status:{" "}
-                                    <span className={`ml-2 font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "text-[rgb(240,85,120)]" : orderDetails?.orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]"}`}>
+                                    <span className={`ml-2 font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "text-[rgb(253,84,120)]" : orderDetails?.orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]"}`}>
                                         {orderDetails?.orderStatus}
                                     </span>
                                 </p>{" "}
@@ -361,14 +365,14 @@ function OrderDetailsPage() {
                         </div>
                         <div className="flex gap-5 justify-between">
                             <button
-                                className={`w-full text-sm rounded-xl duration-200 lg:hover:scale-[1.05] lg:active:scale-[0.98] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5  ${orderDetails?.orderStatus === "Cancelled" ? "hidden" : "inline-block"} ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"}`}
+                                className={`w-full text-sm rounded-xl duration-200 lg:hover:scale-[1.05] lg:active:scale-[0.98] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5  ${orderDetails?.orderStatus === "Cancelled" ? "hidden" : "inline-block"} ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(253,84,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(253,84,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"}`}
                                 onClick={handleCancelOrder}
                             >
                                 {orderDetails?.orderStatus === "Delivered" ? "Show Off Your Look" : "Cancel Order"}{" "}
                                 <i className={`${orderDetails?.orderStatus === "Delivered" ? "fi fi-sr-camera" : "fi fi-sr-cross-circle"} relative top-[2px]`}></i>
                             </button>
                             <button
-                                className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
+                                className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(253,84,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(253,84,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
                                 onClick={() =>
                                     navigate(`/orders/track-package/${id}`)
                                 }
@@ -377,7 +381,7 @@ function OrderDetailsPage() {
                                 <i className="fi fi-br-track relative top-[2px]"></i>
                             </button>
                             <button
-                                className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(240,85,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(240,85,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
+                                className={`w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:text-white shadow-md px-3 py-2 flex justify-between items-center font-semibold gap-5 ${orderDetails?.orderStatus === "Cancelled" ? "border-2 border-[rgb(253,84,120)] bg-[rgb(253,238,241)] lg:hover:bg-[rgb(253,84,120)]" : "border border-slate-300 bg-slate-100 lg:hover:bg-[rgb(8,43,61)]"}`}
                                 onClick={orderDetails?.isHidden ? handleUnhideOrder : handleHideOrder}
                             >
                                 {orderDetails?.isHidden ? "Unhide" : "Hide"} Order{" "}
@@ -441,13 +445,13 @@ function OrderDetailsPage() {
                                                 <div className="flex text-sm leading-4">
                                                     <p className="font-semibold">
                                                         Brand :{" "}
-                                                        <span className="text-[rgb(240,85,120)] lg:hover:underline active:underline">
+                                                        <span className="text-[rgb(253,84,120)] lg:hover:underline active:underline">
                                                             {item?.brand}
                                                         </span>
                                                     </p>
                                                     <p className="font-semibold border-l-2 px-3 mx-3 border-[rgb(8,43,61)]">
                                                         Size :{" "}
-                                                        <span className="text-[rgb(240,85,120)]">
+                                                        <span className="text-[rgb(253,84,120)]">
                                                             {item?.size}
                                                         </span>
                                                     </p>
@@ -457,7 +461,7 @@ function OrderDetailsPage() {
                                                     <s className="font-medium text-sm opacity-60 ml-2">
                                                         ₹{item.price}
                                                     </s>{" "}
-                                                    <span className="font-bold text-xs text-[rgb(240,85,120)]">
+                                                    <span className="font-bold text-xs text-[rgb(253,84,120)]">
                                                         (
                                                         {`${Math.floor(
                                                             ((item.price -
@@ -487,7 +491,7 @@ function OrderDetailsPage() {
                                         </div>
                                         {
                                             orderDetails?.orderStatus === "Cancelled" &&
-                                            <button onClick={(e) => handleReorderButton(e, item.id)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] bg-white duration-200 lg:hover:bg-[rgb(240,85,120)] lg:hover:text-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end absolute bottom-2 right-2"><i className="fi fi-sr-cart-shopping-fast relative top-[2px]"></i>Buy Again </button>
+                                            <button onClick={(e) => handleReorderButton(e, item.id)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] bg-white duration-200 lg:hover:bg-[rgb(253,84,120)] lg:hover:text-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end absolute bottom-2 right-2"><i className="fi fi-sr-cart-shopping-fast relative top-[2px]"></i>Buy Again </button>
                                         }
                                     </div>
                                 </div>
@@ -628,7 +632,7 @@ function OrderDetailsPage() {
                     </ul>
                     <span className="px-10 text-sm font-semibold mt-2">Step 5: Join the LXS Movement</span>
                     <p className="px-10 text-sm mb-2">Every share strengthens our fashion-forward community.</p>
-                    <span className="text-center text-[rgb(240,85,120)] font-semibold mb-5">You’re not just a customer — you’re part of the story.</span>
+                    <span className="text-center text-[rgb(253,84,120)] font-semibold mb-5">You’re not just a customer — you’re part of the story.</span>
                 </DialogBox>
             </div>
             <div className="w-[35%] h-[84vh] rounded-3xl shadow-[0px_0px_10px_-1px_rgb(8,43,61)] border sticky top-[92px]"></div>

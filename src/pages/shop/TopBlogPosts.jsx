@@ -1,4 +1,5 @@
 import HeadingText from '@/components/HeadingText'
+import HeadingWithUnderline from '@/components/HeadingWithUnderline';
 import ViewAllIcon from '@/components/ViewAllIcon'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -34,10 +35,10 @@ function TopBlogPosts() {
         },
     ]
   return (
-    <div className='border-t mt-5 py-3 lg:py-5'>
-        <HeadingText name="Top Blog Post" />
+    <div className='border-t mt-5 py-3 lg:py-5 flex justify-center items-center flex-col'>
+        <HeadingWithUnderline name="Top Blog Posts!" />
         <div className="w-full px-6 lg:px-16 flex flex-col">
-            <ViewAllIcon navigate="/all-blogs" className="hidden md:flex" />
+            <ViewAllIcon navigate="/all-blogs" className="hidden md:flex text-sm" />
             <div className="flex justify-center flex-wrap lg:flex-nowrap gap-6 mt-2 w-full py-3 lg:py-1">
                 {
                     item.map((items,index) => (

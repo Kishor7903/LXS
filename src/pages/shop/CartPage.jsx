@@ -27,12 +27,12 @@ import { useToast } from "@/components/ToastProvider";
 let quantity = ["1", "2", "3", "4", "5"];
 let sizes = ["S", "M", "L", "XL"];
 
-function CartPage() {
+function CartPage({ cart }) {
     let [isOpen, setIsOpen] = useState(false);
     let [selectedItems, setSelectedItems] = useState([]);
     let [cartItems, setCartItems] = useState([]);
     let [isSelectedAll, setIsSelectedAll] = useState(false);
-    let { cart, wishlist } = useSelector((state) => state.cart);
+    let { wishlist } = useSelector((state) => state.cart);
     let { products } = useSelector((state) => state.admin);
     let { user } = useSelector((state) => state.auth);
     const navigate = useNavigate();
@@ -256,7 +256,7 @@ function CartPage() {
                                             </h4>
                                             <p className="text-[9px] font-bold mt-1 hidden lg:inline-block lg:text-[11px] relative bottom-1">
                                                 Sold By :{" "}
-                                                <span className="text-[rgb(240,85,120)]">
+                                                <span className="text-[rgb(253,84,120)]">
                                                     LXS Store
                                                 </span>
                                             </p>
@@ -272,6 +272,7 @@ function CartPage() {
                                                 {
                                                     Array.from({ length: item.quantity }).map((_, idx) => (
                                                         <GlobalDropdown
+                                                            key={idx}
                                                             options={sizes}
                                                             selected={item.size[idx]}
                                                             onSelect={(val) => handleSizeChange({ target: { value: val } }, item, idx)}
@@ -293,7 +294,7 @@ function CartPage() {
                                                             item.quantity}
                                                     </s>
                                                 </p>
-                                                <p className="font-bold text-sm text-[rgb(240,85,120)]">
+                                                <p className="font-bold text-sm text-[rgb(253,84,120)]">
                                                     (
                                                     {`${Math.floor(
                                                         ((item.price -
@@ -342,7 +343,7 @@ function CartPage() {
                                                             item.id
                                                         );
                                                 }}
-                                                className="px-2 py-1 text-[10px] font-semibold"
+                                                className="px-2 py-1 text-[10px] font-semibold rounded-[8px]"
                                             >
                                                 Remove
                                             </HoverButton>
@@ -388,11 +389,11 @@ function CartPage() {
                                                 : 0}
                                         </p>
                                     </span>
-                                    <span className="flex justify-between text-xs text-[rgb(240,85,120)]">
+                                    <span className="flex justify-between text-xs text-[rgb(253,84,120)]">
                                         Discount on MRP{" "}
                                         <p className="">- ₹{discountOnMRP}</p>
                                     </span>
-                                    <span className="flex justify-between text-xs text-[rgb(240,85,120)]">
+                                    <span className="flex justify-between text-xs text-[rgb(253,84,120)]">
                                         Discount on Delivery{" "}
                                         <p className="">
                                             - ₹
@@ -438,7 +439,7 @@ function CartPage() {
                                 </div>
                                 {selectedItems.length > 0 && (
                                     <button
-                                        className="w-full h-11 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"
+                                        className="w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"
                                         onClick={handleProceedToAddress}
                                     >
                                         Proceed To Checkout

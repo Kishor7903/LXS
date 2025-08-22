@@ -14,7 +14,7 @@ function BulkOrder() {
                         <p className="w-2/3 text-lg leading-6 opacity-80 mb-10">Embark on a journey with us! Whether you're outfitting your starship crew or gearing up for an epic mission, our bulk order service ensures you're equipped for the voyage ahead.</p>
                         <span className=" text-xl font-semibold">EXPLORE THIS UNIVERSE WITH US! </span>
                         <p className="mb-5 text-lg opacity-80 ">For shipment of 25 Units or more.</p>
-                        <button className="text-xl font-semibold rounded-full px-10 py-1 lg:py-3 text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)]">Submit Your Requirement !</button>
+                        <button className="text-xl font-semibold rounded-full px-10 py-1 lg:py-3 text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)]">Submit Your Requirement !</button>
                     </div>
                 </div>
             </div>

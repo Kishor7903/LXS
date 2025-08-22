@@ -146,7 +146,7 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
                         <br />
                         <input type="number" name='phone' value={formData.phone} onChange={handlePhoneNoChange} className="border-[rgb(196,185,185)] border pr-3 pl-12 rounded-xl h-10 w-full outline-none" autoComplete='off' />
                         <p className="font-semibold absolute top-[30px] left-[8px]">+91</p>
-                        <hr className="border w-7 absolute left-[28px] opacity-30 top-[38px] rotate-90 border-[rgb(8,43,61)]" />
+                        <hr className="border w-7 absolute left-[28px] opacity-30 top-[42px] rotate-90 border-[rgb(8,43,61)]" />
                     </div>
                     <div className="w-1/2">
                         <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Pincode<span className="text-red-600">*</span></label>
@@ -180,7 +180,7 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
             </form>
             <div className='flex justify-center gap-6 mt-5'>
                 <button className='border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white' onClick={handleCancelButton} >Cancel</button>
-                <button className='h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]' onClick={currentEditId === null ? handleSubmit : handleEditProductSubmit} >{currentEditId === null ? "Add" : "Apply"}</button>
+                <button className='h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]' onClick={currentEditId === null ? handleSubmit : handleEditProductSubmit} >{currentEditId === null ? "Add" : "Apply"}</button>
             </div>
         </DialogBox>
     )

@@ -52,7 +52,7 @@ function HiddenOrders() {
                                                         </div>
                                                         <h2 className="font-semibold line-clamp-1">{product.productName}</h2>
                                                         <div className="flex">
-                                                            <p className="text-[14px] text-gray-600 tracking-tight font-semibold pr-2 border-r-2 border-[rgb(8,43,61)] mr-2 leading-4">Order Date: <span className="text-[rgb(240,85,120)]">{`${item.timestamp.split(" ")[1].slice(0, 2)} ${item.timestamp.split(" ")[0]}, ${item.timestamp.split(" ")[2].slice(0, 4)}`}</span></p>
+                                                            <p className="text-[14px] text-gray-600 tracking-tight font-semibold pr-2 border-r-2 border-[rgb(8,43,61)] mr-2 leading-4">Order Date: <span className="text-[rgb(253,84,120)]">{`${item.timestamp.split(" ")[1].slice(0, 2)} ${item.timestamp.split(" ")[0]}, ${item.timestamp.split(" ")[2].slice(0, 4)}`}</span></p>
                                                             <p className="text-[14px] text-gray-600 tracking-tight font-semibold leading-4">Expected Delivery: </p>
                                                         </div>
                                                         <p className="text-xs font-medium italic mt-1">(Delivery may vary due to unforeseen reasons)</p>

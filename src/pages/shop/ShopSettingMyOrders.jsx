@@ -32,9 +32,9 @@ function ShopSettingMyOrders() {
                         <p className="text-xs font-normal">Because your wallet just took a hit!</p>
                     </span>
                     <div className="flex text-right gap-3 text-[12px] self-end mb-1 font-semibold leading-4">
-                        <p>Total Orders: <span className="text-[rgb(240,85,120)]">{order.length > 9 ? order.length : `0${order.length}`}</span></p>
-                        <p>Total Items: <span className="text-[rgb(240,85,120)]">{order.reduce((sum, product) => { return sum + product.products.length }, 0) > 9 ? order.reduce((sum, product) => { return sum + product.products.length }, 0) : `0${order.reduce((sum, product) => { return sum + product.products.length }, 0)}`}</span></p>
-                        <p>Total Quantity: <span className="text-[rgb(240,85,120)]">
+                        <p>Total Orders: <span className="text-[rgb(253,84,120)]">{order.length > 9 ? order.length : `0${order.length}`}</span></p>
+                        <p>Total Items: <span className="text-[rgb(253,84,120)]">{order.reduce((sum, product) => { return sum + product.products.length }, 0) > 9 ? order.reduce((sum, product) => { return sum + product.products.length }, 0) : `0${order.reduce((sum, product) => { return sum + product.products.length }, 0)}`}</span></p>
+                        <p>Total Quantity: <span className="text-[rgb(253,84,120)]">
                             {(() => {
                                 let total = order.reduce((sum, product) => {
                                     return sum + product.products.reduce((s, p) => {
@@ -66,17 +66,19 @@ function ShopSettingMyOrders() {
                                                                 <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[90px] px-2"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[8px] text-white font-medium">LXS Certified</span>
                                                                 </div>
                                                                 <p className="text-gray-500 text-[11px] uppercase font-bold line-clamp-1">Apparel & Fashion</p>
-                                                                <p className="text-xs ml-3 font-bold">Quantity: <span className="text-[rgb(240,85,120)]">{product.quantity < 10 ? `0${product.quantity}` : product.quantity}</span></p>
+                                                                <p className="text-xs ml-3 font-bold">Quantity: <span className="text-[rgb(253,84,120)]">{product.quantity < 10 ? `0${product.quantity}` : product.quantity}</span></p>
                                                             </div>
-                                                            <h2 className="font-semibold w-[80%] line-clamp-1">{product.productName}</h2>
+                                                            <h2 className="font-semibold w-[70%] line-clamp-1">{product.productName}</h2>
                                                             <div className="flex flex-col">
-                                                                <p className="text-xs tracking-tight font-semibold pr-2 mr-2 leading-4">Order Date: <span className="text-[rgb(240,85,120)]">{`${item.timestamp.split(",")[0]}, ${item.timestamp.split(",")[1]}`}</span></p>
-                                                                <p className="text-xs tracking-tight font-semibold leading-4">
+                                                                <p className="text-xs tracking-tight font-semibold pr-2 mr-2 leading-4">Order Date: <span className="text-[rgb(253,84,120)]">{`${item.timestamp.split(",")[0]}, ${item.timestamp.split(",")[1]}`}</span></p>
+                                                                {
+                                                                    item.orderStatus !== "Cancelled" && 
+                                                                    <p className="text-xs tracking-tight font-semibold leading-4">
                                                                     {
                                                                         order[index]?.orderStatus !== "Delivered" ? (
                                                                             <>
                                                                                 Expected Delivery:{" "}
-                                                                                <span className="text-[rgb(240,85,120)]">
+                                                                                <span className="text-[rgb(253,84,120)]">
                                                                                     {(() => {
                                                                                         const orderDate = new Date(item.timestamp);
                                                                                         const expectedDate = new Date(orderDate);
@@ -97,6 +99,7 @@ function ShopSettingMyOrders() {
                                                                         )
                                                                     }
                                                                 </p>
+                                                                }
 
                                                             </div>
                                                         </div>
@@ -110,7 +113,7 @@ function ShopSettingMyOrders() {
                                                 </div>
                                             ))
                                         }
-                                        <div className="absolute top-2 right-3 text-sm font-semibold">Status: <span className={`${order[index].orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : order[index].orderStatus === "Cancelled" ? "text-[rgb(240,85,120)]" : "text-[rgb(248,181,44)]"}`}>{item.orderStatus}</span></div>
+                                        <div className="absolute top-2 right-3 text-sm font-semibold">Status: <span className={`${order[index].orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : order[index].orderStatus === "Cancelled" ? "text-[rgb(253,84,120)]" : "text-[rgb(248,181,44)]"}`}>{item.orderStatus}</span></div>
                                     </div>
                                 )) :
                                 <div className="text-xl font-semibold flex justify-center items-center h-40">No Orders Yet!!</div>

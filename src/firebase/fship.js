@@ -149,6 +149,19 @@ export const sendSms = async () => {
             phone: "+917903189506"
         }
     )
-    console.log(response);
+    // console.log(response);
     return response.data;
 }
+
+export const sendPushNotification = async (token, title, body) => {
+    let response = await axios.post(
+        "/lxslifestylestore-8935b/us-central1/sendNotification",
+        {
+            token,
+            title,
+            body
+        }
+    )
+    return response.data;
+}
+  

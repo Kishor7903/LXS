@@ -123,3 +123,22 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="checkbox"]:checked {
   accent-color: rgb(8,43,61);
 }
+
+.border-gradient {
+  border: 3px solid transparent;
+  border-image: linear-gradient(to right, #3b82f6, #9333ea, #ec4899) 1;
+}
+
+.gradient-border-btn {
+  border: 2px solid transparent;
+  background: 
+    linear-gradient(white, white) padding-box,               /* inner background */
+    linear-gradient(to right, #f8b52c, #fd5478) border-box; /* border */
+}
+
+.gradient-border-btn-blue {
+  border: 2px solid transparent;
+  background: 
+    linear-gradient(rgb(8,43,61), rgb(8,43,61)) padding-box,               /* inner background */
+    linear-gradient(to right, #f8b52c, #fd5478) border-box; /* border */
+}

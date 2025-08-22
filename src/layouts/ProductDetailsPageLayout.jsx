@@ -48,7 +48,7 @@ function ProductDetailsPageLayout() {
 			}
 			{
 				user &&
-				<RecentProductsPage />
+				<RecentProductsPage id={id} />
 			}
 			<InfoIconsContainer />
 

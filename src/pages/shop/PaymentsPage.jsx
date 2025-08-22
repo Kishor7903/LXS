@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import secureIcon from "../../assets/commonIcons/Secure.png"
 import paymentIcon from "../../assets/commonIcons/Cash White (Fill).png"
+import { useToast } from '@/components/ToastProvider';
 
 let offers = [
     {
@@ -21,11 +22,17 @@ let offers = [
 
 let paymentOptions = [
     // {
-    //     type: "LXS Cosmic Pay",
-    //     value: ""
-    //     icon: "fi fi-rr-sack",
-    //     iconActive: "fi fi-sr-sack"
-    // },
+        //     type: "LXS Cosmic Pay",
+        //     value: ""
+        //     icon: "fi fi-rr-sack",
+        //     iconActive: "fi fi-sr-sack"
+        // },
+    {
+        type: "Wallet",
+        value: "wallet",
+        icon: "fi fi-rr-wallet",
+        iconActive: "fi fi-sr-wallet"
+    },
     {
         type: "UPI / QR CODE",
         value: "upi",
@@ -33,7 +40,7 @@ let paymentOptions = [
         iconActive: "fi fi-br-qr-scan"
     },
     {
-        type: "Credit or Debit Card",
+        type: "Debit or Credit Card",
         value: "card",
         icon: "fi fi-rr-credit-card",
         iconActive: "fi fi-sr-credit-card"
@@ -45,19 +52,13 @@ let paymentOptions = [
         iconActive: "fi fi-sr-bank"
     },
     {
-        type: "EMI",
+        type: "EMI (Equated Monthly Installement)",
         value: "emi",
         icon: "fi fi-rr-tax-alt",
         iconActive: "fi fi-sr-tax-alt"
     },
     {
-        type: "Wallet",
-        value: "wallet",
-        icon: "fi fi-rr-wallet",
-        iconActive: "fi fi-sr-wallet"
-    },
-    {
-        type: "Buy Now, Pay Later",
+        type: "Buy Now, Pay Later (BNPL)",
         value: "paylater",
         icon: "fi fi-rr-payroll-calendar",
         iconActive: "fi fi-br-payroll-calendar"
@@ -81,6 +82,7 @@ function PaymentsPage() {
     let cartItems = JSON.parse(localStorage.getItem("cart"));
     let address = JSON.parse(localStorage.getItem("address"))
     let { user } = useSelector(state => state.auth)
+    let toast = useToast();
 
 
     const today = new Date();
@@ -97,24 +99,27 @@ function PaymentsPage() {
 
     const handleProceedToPayment = async (e) => {
         e.preventDefault();
-        navigate("/checkout/payment")
 
-        let order = {
-            amount: (totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee)
+        if(paymentMode){
+            let order = {
+                amount: (totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee)
+            }
+    
+            let cart = cartItems.map(item => ({
+                id: item.item_id,
+                productName: item.name,
+                unitPrice: item.salePrice,
+                price: item.price,
+                size: item.size,
+                brand: item.brand,
+                quantity: item.quantity,
+                image: item.images[0]
+            }))
+    
+            displayRazorpay(order, cart, address, navigate, user, dispatch, paymentMode);
+        } else{
+            toast("Select any payment method.")
         }
-
-        let cart = cartItems.map(item => ({
-            id: item.item_id,
-            productName: item.name,
-            unitPrice: item.salePrice,
-            price: item.price,
-            size: item.size,
-            brand: item.brand,
-            quantity: item.quantity,
-            image: item.images[0]
-        }))
-
-        displayRazorpay(order, cart, address, navigate, user, dispatch, paymentMode);
     }
 
     const handleGiftCardNumberChange = (e) => {
@@ -222,10 +227,10 @@ function PaymentsPage() {
                                     <p className='xl:text-sm 2xl:text-base font-semibold'><i className="fi fi-sr-gift-card relative top-[2px] mr-1"></i>HAVE A GIFT CARD ?</p>
                                     <div className="flex gap-4">
                                         <div className='w-[80%] ml-4'>
-                                            <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-white px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]' placeholder='Enter Gift Card Number' />
-                                            <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-white px-3 h-8 text-[12px] font-medium rounded-full w-full mt-2 outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]' placeholder='Enter Gift Card Pin' />
+                                            <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-white px-3 h-8 text-[12px] font-medium rounded-xl w-full mt-2 outline-none shadow-md border border-slate-300' placeholder='Enter Gift Card Number' />
+                                            <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-white px-3 h-8 text-[12px] font-medium rounded-xl w-full mt-2 outline-none shadow-md border border-slate-300' placeholder='Enter Gift Card Pin' />
                                         </div>
-                                        <HoverButton className="h-8 px-4 text-sm font-semibold self-end">Apply</HoverButton>
+                                        <HoverButton className="h-8 px-4 text-sm font-semibold self-end rounded-xl">Apply</HoverButton>
                                     </div>
                                 </div>
                                 <div className="">
@@ -258,7 +263,7 @@ function PaymentsPage() {
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                 </div>
-                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToPayment}>Proceed To Payments</button>
+                                <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToPayment}>Proceed To Payments</button>
                                 <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-2 right-4 lg:right-5">Need Help? <Link className="text-blue-500 lg:hover:underline font-bold">Contact Us</Link></span>
                             </div> */}
                             <div className="flex flex-col gap-5 w-[45%]">
@@ -274,7 +279,7 @@ function PaymentsPage() {
                                                     <div className="flex gap-3 items-center text-xs">
                                                         {
                                                             product?.size.map((size, i) => (
-                                                                <p key={i} className='px-1.5 py-0.5 my-0.5 border border-slate-300 rounded-full font-medium bg-slate-100'>Size{i+1}: <span className="text-[rgb(240,85,120)] font-bold">{size}</span></p>
+                                                                <p key={i} className='px-1.5 py-0.5 my-0.5 border bg-white border-slate-300 rounded-full font-medium'>Size{i+1}: <span className="text-[rgb(253,84,120)] font-bold ">{size}</span></p>
                                                             ))
                                                         }
                                                     </div>
@@ -290,10 +295,10 @@ function PaymentsPage() {
                                         ))
                                     }
                                 </div>
-                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300 font-medium bg-slate-100'><span className='text-[rgb(240,85,120)] font-semibold text-xs'>Please Note:</span> If you cancel any item after pickup but before delivery, all items in the same shipment will be cancelled. However, items in separate shipments will continue to be delivered if already in transit.</p>
+                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300 font-medium bg-slate-100'><span className='text-[rgb(253,84,120)] font-semibold text-xs'>Please Note:</span> If you cancel any item after pickup but before delivery, all items in the same shipment will be cancelled. However, items in separate shipments will continue to be delivered if already in transit.</p>
                                 <div className="w-full flex gap-2 text-sm">
-                                    <input type="text" className="bg-slate-100 px-3 h-8 text-[12px] font-medium rounded-full w-full outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)]" placeholder="Apply Coupons" />
-                                    <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-full ">Apply</button>
+                                    <input type="text" className="px-3 h-8 text-[12px] font-medium rounded-xl w-full outline-none shadow-md border border-slate-300" placeholder="Apply Coupons" />
+                                    <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-xl ">Apply</button>
                                 </div>
                                 <div className="w-full">
                                     <div className="leading-3 font-semibold">
@@ -307,8 +312,8 @@ function PaymentsPage() {
                                         <span className="flex justify-between text-xs">Payment Method: <p className="text-blue-500">{paymentOptions[paymentMode]?.type}</p></span>
                                         <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                     </div>
-                                    <button className={`w-full h-11 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 flex gap-2 justify-center items-center ${paymentMode === "" ? "cursor-not-allowed opacity-50" : "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"}`} onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
-                                    <p className='opacity-70 font-medium text-[11px] mt-1 text-center'>(You can tell your Brothers and Sisters to Pay, bcoz Sharing is Caring 💸😅)</p>
+                                    <button className={`w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 flex gap-2 justify-center items-center ${paymentMode === "" ? "cursor-not-allowed opacity-50" : "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"}`} onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
+                                    <p className='opacity-70 font-medium text-[11px] mt-1 text-center'>(You can tell your Brother and Sister to Pay, bcoz Sharing is Caring 💸😅)</p>
                                 </div>
                             </div>
 

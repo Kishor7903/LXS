@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import banner1 from "../../assets/Banners/Promotional Image 1.jpg"
-import banner2 from "../../assets/Banners/Promotional Image 2.png"
+import banner1 from "../../assets/Banners/Banner 3.jpg"
+import banner2 from "../../assets/Banners/Banner 5.png"
 import banner3 from "../../assets/Banners/Promotional Image 3.png"
-import banner4 from "../../assets/Banners/Promotional Image 4.jpg"
+import banner4 from "../../assets/Banners/Banner 4.jpg"
 
 function OfferBannerSection() {
     let navigate = useNavigate();

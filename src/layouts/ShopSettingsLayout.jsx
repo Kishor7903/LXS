@@ -1,30 +1,32 @@
 import Header from "@/components/Header"
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom"
 import accountIcon from "../assets/commonIcons/Account.png"
-import dashboardIconStroke from "../assets/commonIcons/Dash Board (Stroke).png"
-import dashboardIconFill from "../assets/commonIcons/Dash Board (Fill).png"
-import accountIconFill from "../assets/commonIcons/Account Management (Fill).png"
-import accountIconStroke from "../assets/commonIcons/Account Management (Stroke).png"
-import orderIconFill from "../assets/commonIcons/Orders 2 (Fill).png"
-import orderIconStroke from "../assets/commonIcons/Orders 2 (Stroke) (1).png"
-import wishlistIconFill from "../assets/commonIcons/Wishlist (Fill).png"
-import wishlistIconStroke from "../assets/commonIcons/Wishlist (Stroke).png"
-import savedAddressIconFill from "../assets/commonIcons/Home (Fill).png"
-import savedAddressIconStroke from "../assets/commonIcons/Home (Stroke).png"
-import paymentOptionIconFill from "../assets/commonIcons/Payment (Fill).png"
-import paymentOptionIconStroke from "../assets/commonIcons/Payment (Stroke).png"
+import dashboardIconFill from "../assets/commonIcons/Dashboard (Fill).png"
+import dashboardIconFillPink from "../assets/commonIcons/Dashboard (Fill) Pink.png"
+import accountIconFillPink from "../assets/commonIcons/Account Info (Fill) Pink.png"
+import accountIconFill from "../assets/commonIcons/Account Info (Fill).png"
+import orderIconFillPink from "../assets/commonIcons/Orders (Fill) Pink.png"
+import orderIconFill from "../assets/commonIcons/Orders (Fill).png"
+import wishlistIconFillPink from "../assets/commonIcons/Favourites (Fill) Pink.png"
+import wishlistIconFill from "../assets/commonIcons/Favourites (Fill).png"
+import savedAddressIconFillPink from "../assets/commonIcons/Saved Address (Fill) Pink.png"
+import savedAddressIconFill from "../assets/commonIcons/Saved Address (Fill).png"
 import rocket from "../assets/commonIcons/Track Rocket (Fill) Green.png"
-// import subscriptionIconFill from "../assets/commonIcons/Gift Cards (Fill).png"
-// import subscriptionIconStroke from "../assets/commonIcons/Gift Cards (Stroke).png"
-import settingIconFill from "../assets/commonIcons/Setting (Fill).png"
-import settingIconStroke from "../assets/commonIcons/Setting (Stroke).png"
-import contactUsIconFill from "../assets/commonIcons/Call (Fill).png"
-import contactUsIconStroke from "../assets/commonIcons/Call (Stroke).png"
-import myReviewsAndRatingIconStroke from "../assets/commonIcons/Ratings & Reviews (Stroke).png"
+import notificationIconFillPink from "../assets/commonIcons/Notifications (Fill) Pink.png"
+import notificationIconFill from "../assets/commonIcons/Notifications (Fill).png"
+import accountAndPreferenceIconFillPink from "../assets/commonIcons/Account & Preference (Fill) Pink.png"
+import accountAndPreferenceIconFill from "../assets/commonIcons/Account & Preference (Fill).png"
+import securityAndLoginIconFillPink from "../assets/commonIcons/Security & Login (Fill) Pink.png"
+import securityAndLoginIconFill from "../assets/commonIcons/Security & Login (Fill).png"
+import privacyDataIconFillPink from "../assets/commonIcons/Privacy Data (Fill) Pink.png"
+import privacyDataIconFill from "../assets/commonIcons/Privacy Data (Fill).png"
+import contactUsIconFillPink from "../assets/commonIcons/Contact Us (Fill) Pink.png"
+import contactUsIconFill from "../assets/commonIcons/Contact Us (Fill).png"
 import myReviewsAndRatingIconFill from "../assets/commonIcons/Ratings & Reviews (Fill).png"
+import myReviewsAndRatingIconFillPink from "../assets/commonIcons/Ratings & Reviews (Fill) Pink.png"
 // import helpIcon from "../assets/commonIcons/Help (Stroke).png";
-import logoutRedIcon from "../assets/commonIcons/Log Out (Fill).png";
-import notificationIcon from "../assets/commonIcons/Notification (Stroke).png";
+import logoutRedIcon from "../assets/commonIcons/Log Out (Fill) Pink.png";
+import notificationIcon from "../assets/commonIcons/Updates (Fill).png";
 import { useEffect, useState } from "react"
 import { logoutUser } from "@/firebase/auth"
 import { logout } from "@/store/features/authSlice"
@@ -76,32 +78,32 @@ function ShopSettingsLayout() {
         {
             name: "Dashboard",
             slug: "/setting/dashboard",
-            icon: dashboardIconStroke,
-            activeIcon: dashboardIconFill,
+            icon: dashboardIconFill,
+            activeIcon: dashboardIconFillPink
         },
         {
             name: "Account Info",
             slug: "/setting/my-account",
-            icon: accountIconStroke,
-            activeIcon: accountIconFill,
+            icon: accountIconFill,
+            activeIcon: accountIconFillPink
         },
         {
             name: "Orders",
             slug: "/setting/my-orders",
-            icon: orderIconStroke,
-            activeIcon: orderIconFill,
+            icon: orderIconFill,
+            activeIcon: orderIconFillPink
         },
         {
             name: "Favourites",
             slug: "/setting/wishlist",
-            icon: wishlistIconStroke,
-            activeIcon: wishlistIconFill,
+            icon: wishlistIconFill,
+            activeIcon: wishlistIconFillPink
         },
         {
             name: "Saved Addresses",
             slug: "/setting/saved-addresses",
-            icon: savedAddressIconStroke,
-            activeIcon: savedAddressIconFill,
+            icon: savedAddressIconFill,
+            activeIcon: savedAddressIconFillPink
         },
         // {
         //     name: "Payment Options",
@@ -118,46 +120,70 @@ function ShopSettingsLayout() {
         {
             name: "Ratings & Reviews",
             slug: "/setting/my-ratings-reviews",
-            icon: myReviewsAndRatingIconStroke,
-            activeIcon: myReviewsAndRatingIconFill
+            icon: myReviewsAndRatingIconFill,
+            activeIcon: myReviewsAndRatingIconFillPink
         },
         {
-            name: "Settings",
-            slug: "/setting/settings/notification",
-            icon: settingIconStroke,
-            activeIcon: settingIconFill,
-            childrens: [
-                {
-                    name: "Notifications",
-                    slug: "/setting/settings/notification"
-                },
-                {
-                    name: "Account & Preferences",
-                    slug: "/setting/settings/account-preference"
-                },
-                {
-                    name: "Security & Login",
-                    slug: "/setting/settings/security-login"
-                },
-                {
-                    name: "Privacy Data",
-                    slug: "/setting/settings/privacy-data"
-                }
-            ]
+            name: "Account & Preferences",
+            slug: "/setting/account-preference",
+            icon: accountAndPreferenceIconFill,
+            activeIcon: accountAndPreferenceIconFillPink
         },
+        {
+            name: "Notifications",
+            slug: "/setting/notification",
+            icon: notificationIconFill,
+            activeIcon: notificationIconFillPink
+        },
+        {
+            name: "Security & Login",
+            slug: "/setting/security-login",
+            icon: securityAndLoginIconFill,
+            activeIcon: securityAndLoginIconFillPink
+        },
+        {
+            name: "Privacy Data",
+            slug: "/setting/privacy-data",
+            icon: privacyDataIconFill,
+            activeIcon: privacyDataIconFillPink
+        },
+        // {
+        //     name: "Settings",
+        //     slug: "/setting/settings/notification",
+        //     icon: settingIconStroke,
+        //     activeIcon: settingIconFill,
+        //     childrens: [
+        //         {
+        //             name: "Notifications",
+        //             slug: "/setting/settings/notification"
+        //         },
+        //         {
+        //             name: "Account & Preferences",
+        //             slug: "/setting/settings/account-preference"
+        //         },
+        //         {
+        //             name: "Security & Login",
+        //             slug: "/setting/settings/security-login"
+        //         },
+        //         {
+        //             name: "Privacy Data",
+        //             slug: "/setting/settings/privacy-data"
+        //         }
+        //     ]
+        // },
         {
             name: "Contact Us",
             slug: "/setting/contact-us",
-            icon: contactUsIconStroke,
-            activeIcon: contactUsIconFill,
+            icon: contactUsIconFill,
+            activeIcon: contactUsIconFillPink
         },
     ]
 
     return (
         <>
             <Header className="h-16" />
-            <div className="flex w-full h-[91%]">
-                <div className="xl:w-[20%] 2xl:w-[15%] flex flex-col px-2 py-5">
+            <div className="flex w-full h-[calc(100vh-64px)]">
+                <div className="w-[16%] 2xl:w-[14%] flex flex-col px-2 py-5">
                     {/* <div className="h-[13%] w-full flex items-center px-5 gap-1">
                         <div>
                             <img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-12 rounded-full" />
@@ -171,9 +197,9 @@ function ShopSettingsLayout() {
                     <div className="flex flex-col items-end h-full text-sm pt-5 relative">
                         {
                             settingItems.map((item, index) => (
-                                <NavLink to={item.slug} key={index} className={({ isActive }) => `${item.childrens && openDropdown ? "h-[105px] justify-start font-bold text-base" : "h-8 justify-center"} w-full flex flex-col items-end  ${isActive ? "font-bold text-base" : ""}`}>
-                                    <span onClick={() => handleDropdown(index)} className="flex justify-end lg:hover:bg-slate-200 w-5/6 px-2 py-1 rounded-l-[20px] rounded-r">{item.name} <img src={`${location.includes(item.slug) || (item.childrens && openDropdown) ? item.activeIcon : item.icon}`} alt="" className="h-5 ml-2" /></span>
-                                    {
+                                <NavLink to={item.slug} key={index} className={({ isActive }) => `h-8 w-full flex flex-col items-end font-semibold  ${isActive ? "text-[rgb(253,84,120)]" : ""}`}>
+                                    <span onClick={() => handleDropdown(index)} className="flex justify-end lg:hover:bg-slate-200 w-full px-2 py-1 rounded-[8px]">{item.name} <img src={`${location.includes(item.slug) || (item.childrens && openDropdown) ? item.activeIcon : item.icon}`} alt="" className="h-5 ml-2" /></span>
+                                    {/* {
                                         index === 6 && openDropdown ? (
                                             <div className="mr-5">
                                                 {
@@ -184,7 +210,7 @@ function ShopSettingsLayout() {
                                             </div>
                                         ) :
                                             null
-                                    }
+                                    } */}
                                 </NavLink>
                             ))
                         }
@@ -194,14 +220,14 @@ function ShopSettingsLayout() {
                     </div>
                     <div className="flex justify-between items-center w-full">
                         <Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-slate-200 w-[60%]  xl:px-3 pt-1 xl:py-1 rounded-l rounded-r-[20px]">
-                            <img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Notification
+                            <img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Updates
                         </Link>
-                        <button onClick={handleLogout} className="flex gap-1 items-center text-[rgb(240,85,120)] hover:underline font-medium">
+                        <button onClick={handleLogout} className="flex gap-1 items-center text-[rgb(253,84,120)] hover:underline font-medium">
                             <img src={logoutRedIcon} alt="" className="h-5" /> Logout
                         </button>
                     </div>
                 </div>
-                <div className="w-[81%] m-5 rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-hidden"><Outlet /></div>
+                <div className="w-[84%] 2xl:w-[86%] m-5 rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-hidden"><Outlet /></div>
             </div>
         </>
     )

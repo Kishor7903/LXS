@@ -13,12 +13,13 @@ import whatsappLogo from "../../assets/Socials/Whatsapp.png"
 // import reviewLogo from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import reviewLogoActive from "../../assets/commonIcons/Ratings & Reviews (Fill).png"
 import starIcon from "../../assets/commonIcons/Rewards 2 (Fill).png"
-import { addShippingLabel, checkPincode, orderCurrentStatus, orderTrackingHistory, sendEmail, sendSms, sendWhatsAppMessage } from "@/firebase/fship";
+import { addShippingLabel, checkPincode, orderCurrentStatus, orderTrackingHistory, sendEmail, sendPushNotification, sendSms, sendWhatsAppMessage } from "@/firebase/fship";
 import { useToast } from "@/components/ToastProvider";
 import DialogBox from "@/components/DialogBox";
 import { Helmet } from "react-helmet-async";
 import HeadingWithUnderline from "@/components/HeadingWithUnderline";
 import ViewAllIcon from "@/components/ViewAllIcon";
+import { getTimestamp } from "@/utils/commomFunctions";
 
 const sizes = ["S", "M", "L", "XL"];
 
@@ -71,7 +72,6 @@ function ProductDetailsPage({ id, data }) {
 			addWishlistItem(user?.id, item_id).then((res) => {
 				dispatch(addToWishlist(res));
 				toast("Product Added To Wishlist ...");
-				toaster("Products Wislisted..")
 			})
 		} else {
 			toast("Please Login First ...")
@@ -84,7 +84,6 @@ function ProductDetailsPage({ id, data }) {
 		deleteWishlistItem(user.id, item_id).then(() => {
 			dispatch(deleteFromWishlist(item_id));
 			toast("Product Removed From Wishlist ...")
-			toaster("Products removed Wislisted..hgwegiuegd")
 		})
 	}
 
@@ -149,14 +148,7 @@ function ProductDetailsPage({ id, data }) {
 			if (user) {
 				let item = {
 					item_id: id,
-					timestamp: new Date().toLocaleString("en-US", {
-						month: "short",
-						day: "2-digit",
-						year: "numeric",
-						hour: "numeric",
-						minute: "numeric",
-						second: "numeric",
-					}),
+					timestamp: getTimestamp()
 				};
 				addNewRecentProduct(user.id, item).then(() => {
 					dispatch(addToRecentViewed(item));
@@ -167,14 +159,14 @@ function ProductDetailsPage({ id, data }) {
 
 
 	useEffect(() => {
+		// sendPushNotification(user.permissions.push, "Hii", "This is body").then(res => {
+		// 	console.log(res);
+
+		// })
 		// sendEmail().then(res => console.log(res)).catch(err => console.log(err.message));
 		// sendWhatsAppMessage().then(res => console.log(res)).catch(err => console.log(err.message));
-		// orderTrackingHistory("FSPP0004350062").then(res => console.log(res)).catch(err => console.log(err.message));
-		// orderCurrentStatus("FSPP0004350062").then(res => console.log(res)).catch(err => console.log(err.message));
-		// onMessage(messaging, (payload) => {
-		// 	console.log("Message received in foreground:", payload);
-		// 	// Optionally show toast or alert
-		// });
+		// orderTrackingHistory("FSPP0004351903").then(res => console.log(res)).catch(err => console.log(err.message));
+		// orderCurrentStatus("FSPP0004350065").then(res => console.log(res)).catch(err => console.log(err.message));
 		// sendSms().then(res => console.log(res)).catch(err => console.log(err.message));
 	}, [])
 
@@ -204,7 +196,7 @@ function ProductDetailsPage({ id, data }) {
 					<span>Gear Blueprint📘<br />
 						<p className="text-xs font-normal">Explore every detail, dimension, and feature — decoded for you</p>
 					</span>
-					<p className="font-medium text-sm">Home {">"} Clothing {">"} T-Shirt {">"} <span className="text-[rgb(240,85,120)] font-semibold">LXS-M-TS-0001</span></p>
+					<p className="font-medium text-sm">Home {">"} Clothing {">"} T-Shirt {">"} <span className="text-[rgb(253,84,120)] font-semibold">LXS-M-TS-0001</span></p>
 				</div>
 				<button onClick={() => setIsOpen(true)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3">Share <i className="fi fi-sr-share relative top-[2px]"></i></button>
 			</div>
@@ -274,7 +266,7 @@ function ProductDetailsPage({ id, data }) {
 						<div className="flex gap-2 items-center justify-start border-[rgb(8,43,61)] pt-1">
 							<p className="xl:text-3xl 2xl:text-4xl font-bold">₹{productData?.salePrice}.00</p>
 							<p className="text-xl text-gray-600 font-semibold opacity-60">MRP  ₹<span className="line-through ">{productData?.price}.00</span></p>
-							<p className="text-[rgb(240,85,120)] font-bold">({`${Math.floor(((productData?.price - productData?.salePrice) * 100) / productData?.price)}`}% OFF)</p>
+							<p className="text-[rgb(253,84,120)] font-bold">({`${Math.floor(((productData?.price - productData?.salePrice) * 100) / productData?.price)}`}% OFF)</p>
 						</div>
 						<p className="text-sm 2xl:text-base text-green-600">Inclusive of all taxes, 100% Original Product</p>
 					</div>
@@ -300,23 +292,23 @@ function ProductDetailsPage({ id, data }) {
 					<div className="">
 						<h6 className="font-semibold text-lg 2xl:text-xl mb-1">Additional Information:</h6>
 						<p className="text-sm leading-4 font-medium">
-							Product Code: <span className="text-[rgb(240,85,120)]">LXS-M-TS-0001</span> <br />
-							Brand: <Link className="text-[rgb(240,85,120)] lg:hover:underline">{productData?.brand}</Link> <br />
-							Seller: <Link className="text-[rgb(240,85,120)] lg:hover:underline">LXS Lifestyle Store</Link> <br />
+							Product Code: <span className="text-[rgb(253,84,120)]">{productData?.SKU}</span> <br />
+							Brand: <Link className="text-[rgb(253,84,120)] lg:hover:underline">{productData?.brand}</Link> <br />
+							Seller: <Link className="text-[rgb(253,84,120)] lg:hover:underline">LXS Lifestyle Store</Link> <br />
 						</p>
 					</div>
 
 					<div className="flex flex-col w-full relative">
 						<p className="text-lg font-semibold mb-1">Check Pincode:</p>
-						<input type="number" className="h-9 w-48 shadow-[inset_0px_0px_10px_-3px_rgb(8,43,61)] rounded-full pl-4 bg-gray-200 outline-none font-medium" placeholder="Enter Pincode" value={pincode ? pincode : ""} onChange={handlePincodeChange} />
-						<button onClick={() => handlePincodeCheck(pincode)} className="text-white absolute left-44 top-8 h-9 w-10 bg-[rgb(8,43,61)] rounded-r-full outline-none"><i className="fi fi-rs-search relative top-[2px]"></i></button>
+						<input type="number" className="h-9 w-48 shadow border border-slate-300 rounded-xl pl-4 outline-none font-medium" placeholder="Enter Pincode" value={pincode ? pincode : ""} onChange={handlePincodeChange} />
+						<button onClick={() => handlePincodeCheck(pincode)} className="text-white absolute left-44 top-8 h-9 w-10 bg-[rgb(8,43,61)] rounded-r-xl outline-none"><i className="fi fi-rs-search relative top-[2px]"></i></button>
 						{
 							pincode?.length === 6 ? (
 								<>
-									<p className="text-sm leading-4 mt-1 text-[rgb(240,85,120)] font-medium capitalize">{pincodeResult.response}</p>
+									<p className="text-sm leading-4 mt-1 text-green-600 font-medium capitalize">{pincodeResult.response}</p>
 									{
 										pincodeResult && pincodeResult.response !== "Pincode is not Serviceable Right Now." ? (
-											<p className="text-sm leading-4 text-[rgb(240,85,120)] font-medium">Expected Delivery by {
+											<p className="text-sm leading-4 text-green-600 font-medium">Expected Delivery by {
 												pincodeResult?.date
 											}</p>
 										)
@@ -329,13 +321,13 @@ function ProductDetailsPage({ id, data }) {
 						}
 					</div>
 					<div className="">
-						<p className="text-sm font-medium leading-4">Return & Exchange Availability: <span className="text-[rgb(240,85,120)]">{productData?.returnAvailability}</span></p>
-						<p className="text-sm font-medium leading-4">Pay on Delivery: <span className="text-[rgb(240,85,120)]">{productData?.codAvailability === "Yes" ? "Available" : "Not Available"}</span></p>
+						<p className="text-sm font-medium leading-4">Return & Exchange Availability: <span className="text-[rgb(253,84,120)]">{productData?.returnAvailability}</span></p>
+						<p className='text-sm font-medium leading-4'>Pay on Delivery: <span className={`${productData?.codAvailability === "Yes" ? "text-green-600" : "text-[rgb(253,84,120)]"}`}>{productData?.codAvailability === "Yes" ? "Available" : "Not Available"}</span></p>
 					</div>
 					<div className="flex flex-col gap-5 ">
-						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(240,85,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
+						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-2xl w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(253,84,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
 
-						<button onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-full w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] ${wishlist.some(p => p.item_id === id) ? "bg-[rgb(8,43,61)] text-white" : "bg-slate-200"}`}><i className="fi fi-ss-heart scale-x-[-1] h-6 text-2xl mr-4"></i>{wishlist.some(p => p.item_id === id) ? "Remove from" : "Save to"} Favourites</button>
+						<button onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-2xl w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] ${wishlist.some(p => p.item_id === id) ? "bg-[rgb(8,43,61)] text-white" : "bg-slate-200"}`}><i className="fi fi-ss-heart scale-x-[-1] h-6 text-2xl mr-4"></i>{wishlist.some(p => p.item_id === id) ? "Remove from" : "Save to"} Favourites</button>
 					</div>
 				</div>
 			</div>

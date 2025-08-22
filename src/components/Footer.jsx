@@ -207,8 +207,8 @@ function Footer() {
             </div>
             <div className="bg-[rgb(8,43,61)] text-white flex flex-col px-3 py-5 gap-2 lg:gap-5 w-full overflow-hidden text-xs lg:text-sm">
                 <div className="flex flex-col items-center justify-between lg:w-full lg:flex-row gap-2 lg:gap-20 mx-auto lg:px-[85px]">
-                    <div className="text-slate-400 text-left w-[35%]"><p>Don't test me, I'm watching 👁👁</p><p>Copyright &copy; {date.getFullYear()} LXS Lifestyle Store - All Trademark & Rights Reserved</p><p>Peek at our Secrets <Link to="/blank" className="font-semibold text-[rgb(240,85,120)] ml-1 text-xs">View</Link></p></div>
-                    <button className="text-white px-3 flex justify-center items-center gap-1 h-10 rounded-full border border-white lg:hover:bg-white lg:hover:text-[rgb(8,43,61)] font-medium" onClick={(e) => { e.preventDefault(), setIsOpen(true) }} onMouseEnter={() => setIsHovered(true)} onMouseOut={() => setIsHovered(false)}><i className={`${isHovered ? "fi fi-sr-file-edit" : "fi fi-rr-file-edit"} relative top-[1px]`}></i> Write Website Review</button>
+                    <div className="text-slate-400 text-left w-[35%]"><p>Don't test me, I'm watching 👁👁</p><p>Copyright &copy; {date.getFullYear()} LXS Lifestyle Store - All Trademark & Rights Reserved</p><p>Peek at our Secrets <Link to="/blank" className="font-semibold text-[rgb(253,84,120)] ml-1 text-xs">View</Link></p></div>
+                    <button className="text-white px-3 flex justify-center items-center gap-1 h-10 rounded-xl border border-white lg:hover:bg-white lg:hover:text-[rgb(8,43,61)] font-medium" onClick={(e) => { e.preventDefault(), setIsOpen(true) }} onMouseEnter={() => setIsHovered(true)} onMouseOut={() => setIsHovered(false)}><i className={`${isHovered ? "fi fi-sr-file-edit" : "fi fi-rr-file-edit"} relative top-[1px] `}></i> Write Website Review</button>
                     <div className="text-slate-400 text-right w-[35%]"><p>Attention, Earthlings! This starship—uhh, I mean</p><p>This website - is officially Operated by LXSLIFESTYLESTORE (OPC) PRIVATE LIMITED</p>
                         <p className="space-x-5"><span>Director: Sachin Kumar</span><span>GSTIN: 20AAGCL3501L1ZW</span></p></div>
                 </div>
@@ -246,7 +246,7 @@ function Footer() {
                                 Cancel
                             </button>
                             <button
-                                className="h-9 w-[82px] rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]"
+                                className="h-9 w-[82px] rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]"
                                 onClick={handleSubmit}
                             >
                                 Submit

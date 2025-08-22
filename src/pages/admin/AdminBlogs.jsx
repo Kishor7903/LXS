@@ -66,7 +66,7 @@ function AdminBlogs() {
                                 </div>
                                 <div className="relative h-[50%] md:h-[45%] px-2 lg:px-5 py-[2px] flex flex-col justify-between">
                                     <div className="">
-                                        <p className='text-[7px] md:text-[8px] lg:text-[10px] xl:text-[11px] text-[rgb(240,85,120)] font-semibold'>{`${item.timestamp.split(" ")[1]} ${item.timestamp.split(" ")[2]} ${item.timestamp.split(" ")[3].split(",")[0]}`}</p>
+                                        <p className='text-[7px] md:text-[8px] lg:text-[10px] xl:text-[11px] text-[rgb(253,84,120)] font-semibold'>{`${item.timestamp.split(" ")[1]} ${item.timestamp.split(" ")[2]} ${item.timestamp.split(" ")[3].split(",")[0]}`}</p>
                                         <h4 className="text-[10px] md:text-[11px] lg:text-[13px] xl:text-[16px] font-semibold leading-[1] mt-[2px] line-clamp-2">{item.heading}</h4>
                                         <p className='text-[8px] lg:text-[9px] xl:text-[11px] text-slate-500 tracking-tight leading-[1.2] font-medium mt-1 line-clamp-4 lg:line-clamp-5 xl:line-clamp-5 mb-1'>{item.intro}</p>
                                     </div>

@@ -166,12 +166,12 @@ export const displayRazorpay = async (
                                             title: "Delivered",
                                             details: [],
                                         },
-                                    ]
+                                    ];
 
                                     updateOrderInfo(user.id, res.id, {
                                         waybill: respo.waybill,
                                         apiOrderId: respo.apiorderid,
-                                        orderUpdates
+                                        orderUpdates,
                                     }).then(() => {
                                         dispatch(
                                             updateProduct({
@@ -179,7 +179,7 @@ export const displayRazorpay = async (
                                                 ...orderInfo,
                                                 waybill: respo.waybill,
                                                 apiOrderId: respo.apiorderid,
-                                                orderUpdates
+                                                orderUpdates,
                                             })
                                         );
                                     });
@@ -221,3 +221,15 @@ export const displayRazorpay = async (
         console.error("Payment error:", error);
     }
 };
+
+export const initiateRefund = async (payment_id, amount) => {
+    try {
+        let response = await axios.post(
+            "/lxslifestylestore-8935b/us-central1/refundPayment",
+            { payment_id, amount }
+        );
+        return response.data;
+    } catch (error) {
+        console.log("Error at initating refund:", error.message);
+    }
+}

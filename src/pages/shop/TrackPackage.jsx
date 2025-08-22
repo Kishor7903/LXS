@@ -46,7 +46,7 @@ function TrackPackage() {
                     <h6 className="font-semibold tracking-wider leading-4">Orbital Tracking Hub 🛸</h6>
                     <div className="flex text-xs font-medium relative">
                         <p className="mr-7">Your drop is circling the orbit — ready for planetary touchdown!</p>
-                        <p className=" absolute right-0 -top-[1.5px] text-sm font-semibold">Tracking ID: {orderDetails?.wayBill}<span className="lg:hover:underline text-[rgb(240,85,120)] cursor-pointer">{orderDetails?.waybill}</span></p>
+                        <p className=" absolute right-0 -top-[1.5px] text-sm font-semibold">Tracking ID: {orderDetails?.wayBill}<span className="lg:hover:underline text-[rgb(253,84,120)] cursor-pointer">{orderDetails?.waybill}</span></p>
                     </div>
                     <div className="rounded-3xl bg-slate-100 shadow-md border border-slate-300 h-[92.2%] mt-5 px-8 py-5 flex overflow-y-scroll no-scrollbar">
                         <div className="flex flex-col gap-2 text-sm w-full">

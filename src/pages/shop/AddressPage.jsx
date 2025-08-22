@@ -23,7 +23,7 @@ let addressDetails = {
 
 
 
-function AddressPage() {
+function AddressPage({ cartItems }) {
     let [selectedAddress, setSelectedAddress] = useState("")
     let [formData, setFormData] = useState(addressDetails);
     let [isOpen, setIsOpen] = useState(false);
@@ -31,7 +31,6 @@ function AddressPage() {
     let { user } = useSelector(state => state.auth);
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    let cartItems = JSON.parse(localStorage.getItem("cart"));
     let [open, setOpen] = useState(false);
 
     let totalPrice = cartItems.reduce((sum, cart) => sum + Number(cart.price * cart.quantity), 0);
@@ -71,12 +70,13 @@ function AddressPage() {
                         <CheckoutNavigator />
                         <div className="w-full flex flex-col lg:flex-row gap-8">
                             <div className="w-full lg:w-[60%] space-y-4">
+                                <p className="text-sm font-medium"><span className="text-[rgb(253,84,120)] font-semibold">Note:</span> Once a product has been shipped, it cannot be cancelled.</p>
                                 {
                                     address.map((item, index) => (
                                         <div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-5 overflow-hidden cursor-pointer ${selectedAddress === item ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "scale-95 lg:hover:scale-[0.97] duration-150 shadow-md border border-slate-300"}`} onClick={() => setSelectedAddress(item)}>
                                             <div className="font-bold text-sm lg:text-base flex items-center gap-3">
                                                 <span className="bg-[rgb(8,43,61)] h-4 text-white rounded flex justify-center items-center select-none px-2 text-[10px] font-medium ">{item.address_type}</span>
-                                                <label htmlFor="address1">ADDRESS {index + 1} <span className="text-[rgb(240,85,120)] text-[10px] lg:text-xs ml-2">{`${item.isDefault ? "(Default)" : ""}`}</span></label>
+                                                <label htmlFor="address1">ADDRESS {index + 1} <span className="text-[rgb(253,84,120)] text-[10px] lg:text-xs ml-2">{`${item.isDefault ? "(Default)" : ""}`}</span></label>
                                             </div>
                                             <div className="grid grid-rows-3 grid-cols-2 gap-y-[6px] lg:gap-y-2 gap-x-8 lg:gap-x-10" >
                                                 <p className="text-[9px] lg:text-[11px] leading-[1]">Name <br /> <span className="text-[12px] lg:text-[14px] font-semibold">{item.name}</span></p>
@@ -101,18 +101,18 @@ function AddressPage() {
                                 <AddNewAddressButton isOpen={open} setIsOpen={setOpen} formData={formData} setFormData={setFormData} addressDetails={addressDetails} />
                                 <button onClick={(e) => handleAddAddressButton(e)} className="w-[95%] relative left-3.5 lg:hover:scale-[1.05] duration-200 h-10 shadow-md border border-slate-300 rounded-xl font-semibold">+ Add New Address</button>
                             </div>
-                            <div className="w-full lg:w-[40%]">
-                                <div className="mt-3 leading-3 font-semibold">
+                            <div className="w-full lg:w-[40%] mt-1">
+                                <div className="leading-3 font-semibold">
                                     <span className="font-bold">Price Details ({cartItems.length > 0 ? cartItems.reduce((sum, i) => {return sum + i.quantity}, 0) : 0} Items)</span>
                                     <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
                                     <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
-                                    <span className="flex justify-between text-xs text-[rgb(240,85,120)]">Discount on MRP <p className="text-[rgb(240,85,120)]">- ₹{discountOnMRP}</p></span>
-                                    <span className="flex justify-between text-xs text-[rgb(240,85,120)]">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
+                                    <span className="flex justify-between text-xs text-[rgb(253,84,120)]">Discount on MRP <p className="text-[rgb(253,84,120)]">- ₹{discountOnMRP}</p></span>
+                                    <span className="flex justify-between text-xs text-[rgb(253,84,120)]">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
                                     <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                 </div>
-                                <button className="w-full h-11 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={() => address ? navigate("/checkout/payment") : null}>Continue To Payment<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
+                                <button className="w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={() => address ? navigate("/checkout/payment") : null}>Continue To Payment<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
                             </div>
                         </div>
                     </div>

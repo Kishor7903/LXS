@@ -20,7 +20,7 @@ function ShopSettingPaymentOptions() {
                                 <Link className="lg:hover:underline">Edit</Link>
                                 <Link className="lg:hover:underline">Remove</Link>
                             </div>
-                            <div className="w-3/5 rounded-xl border border-[rgb(8,43,61)] ml-4 mt-2 p-5 bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] text-white">
+                            <div className="w-3/5 rounded-xl border border-[rgb(8,43,61)] ml-4 mt-2 p-5 bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white">
                                 <div className="h-[45%] w-full flex justify-between ">
                                     <p className="text-[12px]">Debit Card</p>
                                     <h5 className="text-xl font-extrabold text-right leading-3 tracking-wider">LXS Store <br /><span className="text-sm font-medium tracking-normal">Prime Card</span></h5>

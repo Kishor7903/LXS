@@ -87,6 +87,9 @@ import AdminBlogs from "./pages/admin/AdminBlogs"
 import ReturnedAndCancelled from "./pages/shop/ReturnedAndCancelled"
 import BlankPage from "./components/BlankPage"
 import loader from "./assets/GIF/Page Reload Animation 2.gif"
+import { getUserInfo } from "./firebase/auth"
+import { useToast } from "./components/ToastProvider"
+import TrackOrders from "./pages/shop/TrackOrders"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -96,14 +99,24 @@ function App() {
 	// });
 	let [loading, setLoading] = useState(true);
 	let dispatch = useDispatch();
+	let toast = useToast();
 
 	useEffect(() => {
-		let user = JSON.parse(sessionStorage.getItem("user"));
-		if (user) {
-			dispatch(login(user))
+		async function fetchData(){
+			let user = JSON.parse(sessionStorage.getItem("user"));
+			if (user) {
+				await getUserInfo(user.id).then((res) => {
+					dispatch(login(res))
+				})
+			}
+			setLoading(false)
 		}
-		setLoading(false)
+		fetchData();
 	}, [dispatch])
+
+	// useEffect(() => {
+	// 	listenForMessages(toast);
+	// }, [])
 
 	if(loading){
 		return <div className="h-screen flex justify-center items-center">
@@ -190,15 +203,16 @@ function App() {
 					{/* <Route path="payment-options" element={<ShopSettingPaymentOptions />} /> */}
 					{/* <Route path="subscriptions" element={<ShopSettingSubscriptions />} /> */}
 					<Route path="my-ratings-reviews" element={<ShopSettingMyRatingsAndReviews />} />
-					<Route path="settings" element={<ShopSettingSettings />} >
-						<Route path="notification" element={<Notification />} />
-						<Route path="account-preference" element={<AccountPreference />} />
-						<Route path="Security-login" element={<SecurityLogin />} />
-						<Route path="privacy-data" element={<PrivacyData />} />
-					</Route>
+					<Route path="notification" element={<Notification />} />
+					<Route path="account-preference" element={<AccountPreference />} />
+					<Route path="security-login" element={<SecurityLogin />} />
+					<Route path="privacy-data" element={<PrivacyData />} />
+					{/* <Route path="settings" element={<ShopSettingSettings />} >
+					</Route> */}
 					<Route path="hidden-orders" element={<HiddenOrders />} />
 					<Route path="contact-us" element={<ShopSettingContactUs />} />
 					<Route path="returned-and-cancelled-orders" element={<ReturnedAndCancelled />} />
+					<Route path="track-orders" element={<TrackOrders />} />
 				</Route>
 				<Route path="/orders" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

@@ -16,6 +16,8 @@ import {
     where,
 } from "firebase/firestore";
 import { auth, fireDB } from "./FirebaseConfig.js";
+import { getToken, onMessage } from "firebase/messaging";
+import { getTimestamp } from "@/utils/commomFunctions.js";
 
 
 export const registerUser = async (formData) => {
@@ -37,14 +39,29 @@ export const registerUser = async (formData) => {
                 profilePic: "",
                 uid: users.user.uid,
                 role: formData.role,
-                timestamp: new Date().toLocaleString("en-US", {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    second: "numeric",
-                }),
+                notifications: {
+                    push: {
+                        orderUpdates: false,
+                        promotionsOffers: false,
+                        securityAlerts: false
+                    },
+                    sms: {
+                        orderUpdates: false,
+                        promotionsOffers: false,
+                        securityAlerts: false
+                    },
+                    whatsapp: {
+                        orderUpdates: false,
+                        promotionsOffers: false,
+                        securityAlerts: false
+                    },
+                    email: {
+                        orderUpdates: false,
+                        promotionsOffers: false,
+                        securityAlerts: false
+                    }
+                },
+                timestamp: getTimestamp()
             };
 
             const userReference = doc(fireDB, "user", users.user.uid);
@@ -533,28 +550,30 @@ export const addNewRecentProduct = async (user_id, item, maxItems = 50) => {
     try {
         const userRef = collection(fireDB, "user", user_id, "Recently Viewed");
 
-        // Remove if exists
-        const q = query(userRef, orderBy("timestamp", "desc"));
-        const snapshot = await getDocs(q);
+        // Check if item already exists
+        const existingQ = query(userRef, where("item_id", "==", item.item_id));
+        const existingSnap = await getDocs(existingQ);
 
-        for (const docSnap of snapshot.docs) {
-            if (docSnap.item_id === item.item_id) {
-                exists = true;
-                await deleteDoc(docSnap.ref);
+        if (!existingSnap.empty) {
+            // If exists, delete the old one
+            await deleteDoc(existingSnap.docs[0].ref);
+        }
+
+        // Add new document with timestamp
+        await setDoc(doc(userRef), {
+            ...item,
+        });
+
+        // Limit to maxItems (keep most recent)
+        const recentQ = query(userRef, orderBy("timestamp", "desc"));
+        const recentSnap = await getDocs(recentQ);
+        if (recentSnap.docs.length > maxItems) {
+            const docsToDelete = recentSnap.docs.slice(maxItems);
+            for (const docSnap of docsToDelete) {
+              await deleteDoc(docSnap.ref);
             }
         }
 
-        // Add to the front
-        await addDoc(userRef, {...item});
-
-        // Limit to maxItems
-        const updatedSnapshot = await getDocs(
-            query(userRef, orderBy("timestamp", "desc"))
-        );
-        const docsToDelete = updatedSnapshot.docs.slice(maxItems);
-        for (const docSnap of docsToDelete) {
-            await deleteDoc(docSnap.ref);
-        }
     } catch (error) {
         console.log("Adding New Recent Product Error: ", error.message);
     }
@@ -603,3 +622,35 @@ export const getBlogWithId = async (id) => {
     }
 }
 
+// export const requestPermissionAndGetToken = async () => {
+//     try {
+//       const permission = await Notification.requestPermission();
+//       if (permission === "granted") {
+//             const token = await getToken(messaging, {
+//             vapidKey: import.meta.env.VITE_VAPID_KEY
+//         });
+//         return token;
+//       } else {
+//         console.warn("Notification permission not granted");
+//         return null;
+//       }
+//     } catch (error) {
+//       console.error("Error getting FCM token", error);
+//       return null;
+//     }
+// };
+
+// export const listenForMessages = (toast) => {
+//     onMessage(messaging, (payload) => {
+//         toast(payload.notification.title);
+//     });
+// };
+
+// export const addNewNotification = async (user_id, message) => {
+//     try {
+//         let messageRef = collection(fireDB, "user", user_id, "Notifications");
+//         let dataSnap = await
+//     } catch (error) {
+//         console.log("Error at adding new notification: ", error.message);
+//     }
+// }

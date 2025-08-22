@@ -76,19 +76,19 @@ function ProductsContainer() {
                 <div className="leading-[1] font-semibold h-10">Supply Station🚀<br />
                     <p className="text-xs font-normal">All drops, ready for deployment — choose your fit, ignite your identity</p>
                 </div>
-                <div className="flex items-center gap-2 text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
+                <div className="flex items-center gap-2 text-xs lg:text-base px-2 py-1 rounded-xl tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="sort-by">Price :</label>
                         <DualRangeSlider min={300} max={5000} minValue={minValue} setMinValue={setMinValue} maxValue={maxValue} setMaxValue={setMaxValue} />
                         {
                             <p className='font-medium text-sm w-[160px] py-[2px] text-center'>Min: {minValue} - Max: {maxValue}</p>
                         }
-                        <button className='h-7 px-3 text-sm bg-[rgb(8,43,61)] text-white font-medium rounded-full' onClick={handleRangeChange}>Apply</button>
+                        <button className='h-7 px-3 text-sm bg-[rgb(8,43,61)] text-white font-medium rounded-[8px]' onClick={handleRangeChange}>Apply</button>
                     </div>
                 </div>
 
 
                 <div className="flex justify-end gap-3">
-                    <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
+                    <div className="text-xs lg:text-base px-2 py-1 rounded-xl tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="brand">Brand :</label>
                         <select name='brand' value={filters.brand} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
                             {
@@ -107,7 +107,7 @@ function ProductsContainer() {
                         <option value="">XL</option>
                     </select>
                 </div> */}
-                    <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
+                    <div className="text-xs lg:text-base px-2 py-1 rounded-xl tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="category">Category :</label>
                         <select name='category' value={filters.category} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
                         {
@@ -117,7 +117,7 @@ function ProductsContainer() {
                             }
                         </select>
                     </div>
-                    <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
+                    <div className="text-xs lg:text-base px-2 py-1 rounded-xl tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="subCategory">Sub Category :</label>
                         <select name='subCategory' value={filters.subCategory} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
                         {
@@ -127,7 +127,7 @@ function ProductsContainer() {
                             }
                         </select>
                     </div>
-                    <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
+                    <div className="text-xs lg:text-base px-2 py-1 rounded-xl tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="category">Discount % :</label>
                         <select name='discount' value={filters.discount} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
                         {
@@ -137,7 +137,7 @@ function ProductsContainer() {
                             }
                         </select>
                     </div>
-                    <div className="text-xs lg:text-base px-2 py-1 rounded-full tracking-tight shadow-md border border-slate-300">
+                    <div className="text-xs lg:text-base px-2 py-1 rounded-xl tracking-tight shadow-md border border-slate-300">
                         <label htmlFor="sortBy">Sort By :</label>
                         <select name='sortBy' value={filters.sortBy} onChange={handleFilterChange} className='rounded-full focus:outline-none font-semibold bg-white cursor-pointer'>
                             <option value="all">Popularity</option>
@@ -149,7 +149,7 @@ function ProductsContainer() {
                 </div>
             </div>
             <div className="h-full flex my-1 lg:my-3 px-5 md:px-8 lg:px-12 xl:px-16">
-                <div className="h-auto w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-4 md:gap-x-5 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 xl:gap-x-7 xl:gap-y-8 py-2 lg:py-1">
+                <div className="h-auto w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-4 md:gap-x-5 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 xl:gap-x-5 xl:gap-y-5 py-2 lg:py-1">
                     {
                         product.map((item) =>
                             <ProductCard item={item} />

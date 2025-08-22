@@ -14,17 +14,22 @@ function AccountPreference() {
                 },
                 {
                     key: "membership status:",
-                    value: "Free (Upgrade)",
+                    value: "Free",
                     slug: ""
                 },
                 {
-                    key: "subscription plan & renewal data:",
-                    value: "Basic (Free)",
+                    key: "subscription plan:",
+                    value: "Basic (Upgrade)",
                     slug: ""
                 },
                 {
-                    key: "account creation date:",
-                    value: `${user.timestamp.split(",")[0].split(" ")[1]} ${user.timestamp.split(",")[0].split(" ")[0]}, ${user.timestamp.split(",")[1]} -${user.timestamp.split(",")[2]}`,
+                    key: "renewal data:",
+                    value: "12 Aug, 2025",
+                    slug: ""
+                },
+                {
+                    key: "account creation date & time:",
+                    value: `${user.timestamp}`,
                     slug: ""
                 },
             ],
@@ -62,7 +67,8 @@ function AccountPreference() {
     ];
 
     return (
-        <div className="w-full space-y-2">
+        <div className="w-full h-full pl-5 flex gap-5 ">
+            <div className="w-[60%] space-y-2">
             <div className="leading-[1] font-semibold h-10">Identity Deck 🪪<br />
                 <p className="text-xs font-normal">This is your space - Adjust your profile, preferences, and cosmic controls</p>
             </div>
@@ -75,7 +81,7 @@ function AccountPreference() {
                             {items.content.map((item,idx) => (
                                 <div key={idx} className="">
                                     <span key={idx} className="capitalize mr-3 ">{item.key}</span>
-                                    <span to={item.slug} className="capitalize text-[rgb(240,85,120)] ">{item.value}</span>
+                                    <span to={item.slug} className="capitalize text-[rgb(253,84,120)] font-semibold">{item.value}</span>
                                 </div>
                             ))}
                         </div>
@@ -83,6 +89,8 @@ function AccountPreference() {
                 ))
             }
             </div>
+        </div>
+            <div className="border w-[40%] h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
         </div>
     )
 }

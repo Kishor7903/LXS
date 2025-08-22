@@ -13,14 +13,15 @@ const authSlice = createSlice({
 		login: (state, actions) => {
 			state.isAuthenticated = true,
 			state.user = actions.payload,
-			sessionStorage.setItem("user", JSON.stringify(actions.payload));
+			sessionStorage.setItem("user", JSON.stringify({id: actions.payload.id, name: actions.payload.name, email: actions.payload.email}));
 		},
 		logout: (state) => {
 			state.isAuthenticated = false,
 			state.user = null
 		},
 		updateUserInfo: (state, actions) => {
-			state.user = actions.payload
+			state.user = actions.payload,
+			sessionStorage.setItem("user", JSON.stringify({id: actions.payload.id, name: actions.payload.name, email: actions.payload.email}));
 		},
 		loadingTrue: (state) => {
 			state.isLoading = true

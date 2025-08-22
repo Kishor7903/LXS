@@ -75,7 +75,7 @@ export default function OrderProgressStepper({ steps, currentStep, currentState 
                                         delay: 1 * ((index + 1) / steps.length),
                                     }}
                                     className={`absolute -left-[30px] top-[1px] w-4 h-4 ${currentStep === index
-                                        ? "bg-[rgb(240,85,120)]"
+                                        ? "bg-[rgb(253,84,120)]"
                                         : "bg-white"
                                         } rounded-full border-4 mt-1 ${isActive
                                             ? "border-[rgb(38,165,65)]"
@@ -86,7 +86,7 @@ export default function OrderProgressStepper({ steps, currentStep, currentState 
 
                             <div>
                                 <h3
-                                    className={`font-semibold text-lg ${isActive ? index === currentStep ? currentState === "Cancelled" ? "text-[rgb(240,85,120)]" : currentState === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]" : "text-[rgb(38,165,65)]" : "opacity-40"
+                                    className={`font-semibold text-lg ${isActive ? index === currentStep ? currentState === "Cancelled" ? "text-[rgb(253,84,120)]" : currentState === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]" : "text-[rgb(38,165,65)]" : "opacity-40"
                                         }`}
                                 >
                                     {step.title}

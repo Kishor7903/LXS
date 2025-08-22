@@ -22,7 +22,7 @@ function Breadcrum({ items }) {
 					))
 				}
 				<BreadcrumbItem>
-					<BreadcrumbPage className="text-[rgb(240,85,120)]" >{lastItem.label}</BreadcrumbPage>
+					<BreadcrumbPage className="text-[rgb(253,84,120)]" >{lastItem.label}</BreadcrumbPage>
 				</BreadcrumbItem>
 			</BreadcrumbList>
 		</Breadcrumb>

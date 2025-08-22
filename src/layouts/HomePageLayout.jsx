@@ -13,8 +13,9 @@ import { getCarouselImgs } from "@/store/features/adminSlice"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import banner1 from "../assets/Banners/Carousel Image 1.png"
-import banner2 from "../assets/Banners/Carousel Image 4.png"
+import banner1 from "../assets/Banners/Banner 1.jpg"
+import banner2 from "../assets/Banners/Banner 2.jpg"
+import ShiftingNavbar from "@/pages/shop/ShiftingNavbar"
 
 
 function HomePageLayout() {
@@ -39,7 +40,7 @@ function HomePageLayout() {
     }, []);
     return (
         <>
-            {/* <ShiftingNavbar /> */}
+            <ShiftingNavbar />
             {/* <Carousel carouselImg={carouselImg} /> */}
             <div className="flex flex-wrap gap-12 xl:px-20 2xl:px-32 pt-10">
                 {

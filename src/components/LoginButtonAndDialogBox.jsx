@@ -175,9 +175,9 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                             autoComplete="off"
                                             className="h-8 w-full rounded-full px-3 font-semibold placeholder:text-[rgb(8,43,61,0.5)] focus:outline-none shadow-[inset_0px_0px_10px_-5px_rgb(8,43,61)] placeholder:opacity-70"
                                         />
-                                        <button type="submit" className="h-8 lg:h-9 px-5 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.9] duration-200">Create Account</button>
+                                        <button type="submit" className="h-8 lg:h-9 px-5 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.9] duration-200">Create Account</button>
                                     </form>
-                                    <p className="text-xs text-center mt-2 font-medium">Already have an Account? <button className="text-[rgb(240,85,120)] lg:hover:underline font-bold" onClick={() => {
+                                    <p className="text-xs text-center mt-2 font-medium">Already have an Account? <button className="text-[rgb(253,84,120)] lg:hover:underline font-bold" onClick={() => {
                                         setUserState("login")
                                         setFormData(userData)
                                     }}>Log In</button></p>
@@ -243,9 +243,9 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                                 <img src={!showPassword ? viewPasswordIcon : hidePasswordIcon} alt="" className="h-5 relative top-[2px]" />
                                             </button>
                                         </div>
-                                        <button className="h-8 lg:h-9 px-5 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(240,85,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.9] duration-200" type="submit">Log In</button>
+                                        <button className="h-8 lg:h-9 px-5 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] relative lg:top-2 self-center lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.05] lg:active:scale-[0.9] duration-200" type="submit">Log In</button>
                                     </form>
-                                    <p className="text-xs text-center font-medium mt-2">Already have an Account? <button className="text-[rgb(240,85,120)] font-bold lg:hover:underline" onClick={() => {
+                                    <p className="text-xs text-center font-medium mt-2">Already have an Account? <button className="text-[rgb(253,84,120)] font-bold lg:hover:underline" onClick={() => {
                                         setUserState("signup")
                                         setFormData(userData)
                                     }}>Sign Up</button></p>

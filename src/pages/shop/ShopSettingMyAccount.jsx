@@ -46,8 +46,8 @@ function ShopSettingMyAccount() {
                             <img src={flagIcon} alt="" className="h-16 rounded-full" />
                             <img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-14 w-14 absolute top-1 left-1 rounded-full" />
                         </div>
-                        <p className="text-2xl h-10 leading-[0.7] font-bold relative top-1">{user.name} <br /> <span className="text-base font-medium text-[rgb(240,85,120)]">User Account</span></p>
-                        <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium" onClick={handleProfilePicEditButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
+                        <p className="text-2xl h-10 leading-[0.7] font-bold relative top-1">{user.name} <br /> <span className="text-base font-medium text-[rgb(253,84,120)]">User Account</span></p>
+                        <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium rounded-[8px]" onClick={handleProfilePicEditButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
                     </div>
                     <div className="bg-slate-100 flex flex-col gap-2 border border-slate-300 rounded-xl mx-5 relative py-3 px-5 shadow-md">
                         <h6 className="font-bold">Personal Information</h6>
@@ -58,7 +58,7 @@ function ShopSettingMyAccount() {
                             <p className="text-[12px] leading-[1.1]">Alternate Phone No. <br /> <span className="text-[15px] font-semibold">{user?.altPhone ? `+91 ${user.altPhone}` : "_"}</span></p>
                             <p className="text-[12px] leading-[1.1]">Email <br /> <span className="text-[15px] font-semibold">{user.email}</span></p>
                             <p className="text-[12px] leading-[1.1]">Date of Birth <br /> <span className="text-[15px] font-semibold">{user.DOB}</span></p>
-                            <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium" onClick={handleEditPersonalInfoButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
+                            <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium rounded-[8px]" onClick={handleEditPersonalInfoButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
                         </div>
                     </div>
                 </div>
