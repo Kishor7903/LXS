@@ -1,4 +1,3 @@
-import { Switch } from '@/components/ui/switch';
 import { useEffect, useState } from 'react'
 
 function SecurityLogin() {
@@ -79,14 +78,14 @@ function SecurityLogin() {
 
     return (
         <div className="w-full h-full pl-5 flex gap-5 ">
-            <div className="w-[60%] space-y-2">
+            <div className="w-[60%] flex flex-col justify-between">
             <div className="leading-[1] font-semibold h-10">Guardian Console 🛡️<br />
                 <p className="text-xs font-normal">Defend your data, verify your logins, and trace intrusions</p>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
             {
                 securityData.map((items,index) => (
-                    <div key={index} className="border border-slate-300 shadow-md bg-slate-100 p-3 rounded-xl">
+                    <div key={index} className="border border-slate-300 shadow-md bg-slate-100 px-4 py-2 rounded-xl">
                         <div key={index} className="flex gap-5 items-center justify-between">
                             <h3 className="font-bold tracking-wide text-lg capitalize">{items.name}</h3>
                             {

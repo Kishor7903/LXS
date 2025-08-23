@@ -19,7 +19,7 @@ function ShopSettingMyRatingsAndReviews() {
                     </div>
                 </div>
 
-                <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
+                <div className="space-y-3 h-full py-4 px-2 overflow-y-scroll no-scrollbar">
                     {
                         [1, 2, 3, 4, 5].map((_, index) => (
                             <div key={index} className="border border-slate-300 shadow-md bg-slate-100 rounded-xl relative p-2 space-y-2 lg:hover:scale-[1.02] lg:active:scale-[0.98] duration-200 cursor-pointer">

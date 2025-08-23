@@ -16,7 +16,7 @@ function Breadcrum({ items }) {
 				{
 					items.map((item, index) => (
 							<BreadcrumbItem key={index}>
-								<BreadcrumbLink className="text-blue-500 lg:hover:underline" href={item.path}>{item.label}</BreadcrumbLink>
+								<BreadcrumbLink className="lg:hover:underline" href={item.path}>{item.label}</BreadcrumbLink>
 								<BreadcrumbSeparator />
 							</BreadcrumbItem>
 					))

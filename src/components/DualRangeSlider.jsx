@@ -57,7 +57,7 @@ const DualRangeSlider = ({ min, max, minValue, setMinValue, maxValue, setMaxValu
   }, [dragging]);
 
   return (
-    <div className="w-[133px] mx-auto select-none">
+    <div className="w-[148px] mx-auto select-none">
       {/* Slider Track */}
       <div
         ref={sliderRef}

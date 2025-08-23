@@ -90,6 +90,8 @@ import loader from "./assets/GIF/Page Reload Animation 2.gif"
 import { getUserInfo } from "./firebase/auth"
 import { useToast } from "./components/ToastProvider"
 import TrackOrders from "./pages/shop/TrackOrders"
+import PaymentHistory from "./pages/shop/PaymentHistory"
+import CustomOrders from "./pages/shop/CustomOrders"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -209,17 +211,13 @@ function App() {
 					<Route path="privacy-data" element={<PrivacyData />} />
 					{/* <Route path="settings" element={<ShopSettingSettings />} >
 					</Route> */}
-					<Route path="hidden-orders" element={<HiddenOrders />} />
 					<Route path="contact-us" element={<ShopSettingContactUs />} />
-					<Route path="returned-and-cancelled-orders" element={<ReturnedAndCancelled />} />
-					<Route path="track-orders" element={<TrackOrders />} />
 				</Route>
 				<Route path="/orders" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
 						<OrdersPageLayout />
 					</CheckAuth>
 				} >
-					<Route path="notifications" element={<Notifications />} />
 					<Route path="order-details/:id" element={<OrderDetailsPage />} />
 					<Route path="track-package/:id" element={<TrackPackage />} />
 					<Route path="product-reviews/:id" element={<ProductReviewPage />} />
@@ -228,6 +226,12 @@ function App() {
 					<Route path="product-return/:id" element={<ProductReturn />} />
 					<Route path="track-return/:id" element={<TrackReturnAndRefund />} />
 					<Route path="successfull/:id" element={<SuccessfulPopup />} />
+					<Route path="payment-history" element={<PaymentHistory />} />
+					<Route path="notifications" element={<Notifications />} />
+					<Route path="returned-and-cancelled-orders" element={<ReturnedAndCancelled />} />
+					<Route path="track-orders" element={<TrackOrders />} />
+					<Route path="custom-orders" element={<CustomOrders />} />
+					<Route path="hidden-orders" element={<HiddenOrders />} />
 				</Route>
 				<Route path="/admin" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

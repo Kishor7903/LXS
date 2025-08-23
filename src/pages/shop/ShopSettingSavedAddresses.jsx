@@ -96,7 +96,7 @@ function ShopSettingSavedAddresses() {
 					</span>
 					<AddNewAddressButton isOpen={isOpen} setIsOpen={setIsOpen} currentEditId={currentEditId} setCurrentEditId={setCurrentEditId} formData={formData} setFormData={setFormData} addressDetails={addressDetails} />
 				</div>
-				<div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
+				<div className="space-y-3 h-full py-4 px-2 overflow-y-scroll no-scrollbar">
 					{
 						address?.map((item, index) => (
 							!loading ? (

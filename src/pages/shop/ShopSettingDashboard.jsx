@@ -21,21 +21,21 @@ let tiles = [
     title1: "Custom",
     title2: "Orders",
     className: "bg-[rgb(111,54,123)]",
-    navigate: ""
+    navigate: "/orders/custom-orders"
   },
   {
     icon: tile4Icon,
     title1: "Returned &",
     title2: "Cancelled",
     className: "bg-[rgb(111,54,123)]",
-    navigate: "/setting/returned-and-cancelled-orders"
+    navigate: "/orders/returned-and-cancelled-orders"
   },
   {
     icon: tile7Icon,
     title1: "Track",
     title2: "Orders",
     className: "bg-[rgb(111,54,123)]",
-    navigate: "/setting/track-orders"
+    navigate: "/orders/track-orders"
   },
   {
     icon: tile2Icon,
@@ -49,14 +49,14 @@ let tiles = [
     title1: "Payment",
     title2: "History",
     className: "bg-[rgb(111,54,123)]",
-    navigate: "/setting/payment-history"
+    navigate: "/orders/payment-history"
   },
   {
     icon: tile6Icon,
     title1: "LXS",
     title2: "Updates",
     className: "bg-[rgb(111,54,123)]",
-    navigate: ""
+    navigate: "/orders/notifications"
   },
   // {
   //   bgImage: tile1Icon,

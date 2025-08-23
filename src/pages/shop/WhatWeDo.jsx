@@ -49,11 +49,11 @@ function WhatWeDo() {
                 {
                     items.map((item, index) => {
                         return (
-                            <div key={index} className={`flex flex-col items-center w-1/5 gap-2 md:gap-1 lg:gap-0 text-sm border-[2px] border-[rgb(8,43,61)] rounded-3xl p-5 relative overflow-hidden ${item.isIntegratingSoon ? "" : "scale-[1.05] bg-slate-200"}`}>
+                            <div key={index} className={`flex flex-col items-center w-1/5 gap-2 md:gap-1 lg:gap-0 text-sm border-[2px] rounded-3xl p-5 relative overflow-hidden ${item.isIntegratingSoon ? "border-[rgb(253,84,120)] bg-[rgb(253,238,241)]" : " bg-slate-200 border-[rgb(8,43,61)] "}`}>
                                 <img src={item.image} alt="" className='h-8 md:h-12 lg:h-20' />
                                 <span className='font-bold text-[10px] md:text-[13px] lg:text-[18px] lg:mt-1 text-center leading-[1] flex gap-1 flex-col'>{item.text1}</span>
                                 <p className='relative -top-3 -md:top-2 sm:top-0 text-[7px] md:text-[9px] lg:text-[13px] text-center leading-[1.1] tracking-tight md:tracking-normal mt-1 font-medium lg:mt-2'>{item.text2}</p>
-                                <div className={`h-12 w-12 absolute -top-[1px] -right-[1px] flex justify-center items-center rounded-bl-3xl ${item.isIntegratingSoon ? "bg-transparent border-b-[2px] border-l-[2px] border-[rgb(8,43,61)]" : "bg-[rgb(8,43,61)]"}`}>
+                                <div className={`h-12 w-12 absolute -top-[1px] -right-[1px] flex justify-center items-center rounded-bl-3xl ${item.isIntegratingSoon ? "bg-transparent border-b-[2px] border-l-[2px] text-[rgb(253,84,120)] border-[rgb(253,84,120)]" : "bg-[rgb(8,43,61)]"}`}>
                                 <i className={`text-2xl relative top-1 left-[2px] ${!item.isIntegratingSoon ? "fi fi-rr-badge-check text-white" : "fi fi-sr-duration-alt"}`}></i>
                                 </div>
                             </div>

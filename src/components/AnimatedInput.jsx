@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const placeholders = ["Products", "Jobs", "Company", "Art Works", "Artists", "Creators"];
+const placeholders = ["Products", "Clothing"];
 
 export default function AnimatedInput() {
 	const [index, setIndex] = useState(0);
@@ -14,10 +14,32 @@ export default function AnimatedInput() {
 	let location = useLocation().pathname;
 	const dropdownRef = useRef(null);
 
-	let searchedProducts = products.filter((obj) => obj.name.toLowerCase().includes(searchText.toLowerCase())).slice(0,5);
+	let words = searchText.toLowerCase().split(/\s+/).filter(Boolean);
+
+	let searchedProducts = [];
+
+	products.forEach((obj) => {
+		const productName = obj.name.toLowerCase();
+		const sku = obj.SKU?.toLowerCase() || "";
+
+		// check if any word matches product name
+		if (words.some(word => productName.includes(word))) {
+			searchedProducts.push({ ...obj, matchType: "name" });
+		}
+
+		// check if any word matches SKU
+		if (words.some(word => sku.includes(word))) {
+			searchedProducts.push({ ...obj, matchType: "sku" });
+		}
+	});
+
+	// ✅ limit results
+	searchedProducts = searchedProducts.slice(0, 5);
+
 
 	const handleBlur = () => {
 		setIsFocused(false);
+		setSearchText("");   // ✅ clear input
 	};
 
 	useEffect(() => {
@@ -25,10 +47,9 @@ export default function AnimatedInput() {
 			if (
 				inputRef.current &&
 				!inputRef.current.contains(event.target) &&
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target)
+				(!dropdownRef.current || !dropdownRef.current.contains(event.target))
 			) {
-				handleBlur();
+				handleBlur();   // ✅ clears input & closes dropdown
 			}
 		}
 
@@ -61,7 +82,7 @@ export default function AnimatedInput() {
 				className={`w-full px-4 h-[34px] focus:outline-none ${searchText && searchedProducts.length > 0 ? "rounded-t-[17px] border-x border-t" : "rounded-xl border border-slate-300"} shadow`}
 			/>
 			{
-				!searchText && (
+				!searchText && !isFocused && (   // ✅ hide animation when focused
 					<div className="absolute left-5 top-[6px] text-gray-400 pointer-events-none w-5/6">
 						<span
 							key={index}
@@ -76,31 +97,37 @@ export default function AnimatedInput() {
 					</div>
 				)
 			}
+
 			<i className="fi fi-rr-search absolute right-3 top-2 text-gray-500"></i>
 			{
 				searchText && searchedProducts.length > 0 ? (
 					<div ref={dropdownRef} onClick={() => setIsFocused(true)} className="w-full rounded-b-[17px] absolute top-[34px] bg-white border border-slate-300 flex flex-col overflow-hidden">
-						{
-							searchedProducts.map((item, index) => (
-								<div
-									key={index}
-									tabIndex={0}
-									className="cursor-pointer hover:bg-gray-100 py-2 line-clamp-1 flex gap-2 items-center px-4"
-									onClick={() => {
-										(location.includes("/setting") || location.includes("/orders") || location.includes("/checkout"))
-										  ? navigate(`../product-details/${item.id}`)
-										  : navigate(`product-details/${item.id}`);
-									  
-										setSearchText("");      // ✅ clear only on selection
-										setIsFocused(false);
-										setTimeout(() => setIsFocused(false), 0);
-									  }}
-								>
-									<img src={item.images[0]} alt="" className="h-8" />
-									<span className="line-clamp-1">{item.name}</span>
+						{searchedProducts.map((item, index) => (
+							<div
+								key={index + item.matchType}  // to avoid duplicate key
+								tabIndex={0}
+								className="cursor-pointer hover:bg-gray-100 py-2 flex gap-2 items-center px-4"
+								onClick={() => {
+									(location.includes("/setting") || location.includes("/orders") || location.includes("/checkout"))
+										? navigate(`../product-details/${item.id}`)
+										: navigate(`product-details/${item.id}`);
+
+									setSearchText("");
+									setIsFocused(false);
+								}}
+							>
+								<img src={item.images[0]} alt="" className="h-8" />
+								<div className="flex flex-col">
+									{item.matchType === "name" && (
+										<span className="line-clamp-1">{item.name}</span>
+									)}
+									{item.matchType === "sku" && (
+										<span className="line-clamp-1 text-gray-600">{item.SKU}</span>
+									)}
 								</div>
-							))
-						}
+							</div>
+						))}
+
 					</div>
 				)
 					:

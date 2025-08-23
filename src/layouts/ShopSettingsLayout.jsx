@@ -183,7 +183,7 @@ function ShopSettingsLayout() {
         <>
             <Header className="h-16" />
             <div className="flex w-full h-[calc(100vh-64px)]">
-                <div className="w-[16%] 2xl:w-[14%] flex flex-col px-2 py-5">
+                <div className="w-[16%] 2xl:w-[14%] flex flex-col pl-5 py-5">
                     {/* <div className="h-[13%] w-full flex items-center px-5 gap-1">
                         <div>
                             <img src={user.profilePic ? user.profilePic.img_url : accountIcon} alt="" className="h-12 rounded-full" />
@@ -219,7 +219,7 @@ function ShopSettingsLayout() {
                         </div> */}
                     </div>
                     <div className="flex justify-between items-center w-full">
-                        <Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-slate-200 w-[60%]  xl:px-3 pt-1 xl:py-1 rounded-l rounded-r-[20px]">
+                        <Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-slate-200 w-[60%]  xl:px-3 pt-1 xl:py-1 rounded-[8px]">
                             <img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Updates
                         </Link>
                         <button onClick={handleLogout} className="flex gap-1 items-center text-[rgb(253,84,120)] hover:underline font-medium">
@@ -227,7 +227,7 @@ function ShopSettingsLayout() {
                         </button>
                     </div>
                 </div>
-                <div className="w-[84%] 2xl:w-[86%] m-5 rounded-xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-hidden"><Outlet /></div>
+                <div className="w-[84%] 2xl:w-[86%] m-5 rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-hidden"><Outlet /></div>
             </div>
         </>
     )

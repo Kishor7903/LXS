@@ -62,13 +62,13 @@ function Notification() {
 
     return (
         <div className="w-full h-full pl-5 flex gap-5 ">
-            <div className="w-[60%] space-y-2 font-medium">
+            <div className="w-[60%] flex flex-col justify-between font-medium">
             <div className="leading-[1] font-semibold h-10">Comms Control 🔔<br />
                 <p className="text-xs font-normal">Customize how you receive transmissions from the LXS galaxy.</p>
             </div>
             {
                 !loading ?
-                <div className="space-y-4">
+                <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
                 {Object.entries(notification)
                   .sort(([a], [b]) => a.localeCompare(b)) // sort categories alphabetically
                   .map(([category, options]) => (

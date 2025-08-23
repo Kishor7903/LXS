@@ -26,6 +26,7 @@ import productsIcon from "../assets/commonIcons/Products (Stroke).png";
 import productsIconActive from "../assets/commonIcons/Products (Fill).png";
 import subscriptionIcon from "../assets/commonIcons/Subscription (Stroke).png";
 import subscriptionIconActive from "../assets/commonIcons/Subscription (Fill).png";
+import notificationIconFill from "../assets/commonIcons/Updates (Fill).png";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LxsLogo from "./LxsLogo";
@@ -399,6 +400,7 @@ function Header({ className }) {
 				<div className="flex justify-between items-center text-xl lg:text-3xl ">
 
 					<div className="flex gap-2 lg:gap-4 mr-3 lg:mr-6">
+						<img src={notificationIconFill} alt="" className="h-7 cursor-pointer active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => navigate("/orders/notifications")} />
 						<img src={heartIcon} alt="" className="h-6 lg:h-7 cursor-pointer active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/setting/wishlist") : null} />
 						<div className="relative active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/checkout/cart") : null}>
 							{

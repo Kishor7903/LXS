@@ -196,7 +196,7 @@ function ProductDetailsPage({ id, data }) {
 					<span>Gear Blueprint📘<br />
 						<p className="text-xs font-normal">Explore every detail, dimension, and feature — decoded for you</p>
 					</span>
-					<p className="font-medium text-sm">Home {">"} Clothing {">"} T-Shirt {">"} <span className="text-[rgb(253,84,120)] font-semibold">LXS-M-TS-0001</span></p>
+					<p className="font-medium text-sm">Home {">"} Clothing {">"} T-Shirt {">"} <span className="text-[rgb(253,84,120)] font-semibold">{productData?.SKU}</span></p>
 				</div>
 				<button onClick={() => setIsOpen(true)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3">Share <i className="fi fi-sr-share relative top-[2px]"></i></button>
 			</div>
