@@ -94,7 +94,7 @@ function ShopSettingWishlist() {
 										<div className="flex flex-col items-center">
 											{
 												cart.some((p) => p.item_id === item.id) ? (
-													<span className='text-[9px] mt-1 lg:text-[13px] mb-2 font-medium text-center leading-[1] text-green-700 flex gap-1'>Added to Basket <i className="fi fi-rs-check-circle relative text-[13px] "></i></span>
+													<span className='text-[9px] mt-1 lg:text-[13px] mb-2 font-medium text-center leading-[1] text-[rgb(34,197,94)] flex gap-1'>Added to Basket <i className="fi fi-rs-check-circle relative text-[13px] "></i></span>
 												) : (
 													<HoverButton onClick={(e) => { e.stopPropagation(), moveToCart(e, item.id) }} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1 rounded-xl'>Add to Basket</HoverButton>
 												)

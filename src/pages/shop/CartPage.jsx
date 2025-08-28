@@ -147,8 +147,12 @@ function CartPage({ cart }) {
     };
 
     const handleProceedToAddress = () => {
-        localStorage.setItem("cart", JSON.stringify(selectedItems));
-        navigate("/checkout/address");
+        if(selectedItems.length > 0){
+            localStorage.setItem("cart", JSON.stringify(selectedItems));
+            navigate("/checkout/address");
+        }else{
+            toast("Select atleast a product.")
+        }
     };
 
     useEffect(() => {
@@ -437,15 +441,13 @@ function CartPage({ cart }) {
                                         </p>
                                     </span>
                                 </div>
-                                {selectedItems.length > 0 && (
                                     <button
-                                        className="w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"
+                                        className={`w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]  ${selectedItems.length === 0 ? "cursor-not-allowed opacity-50" : "lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-200"}`}
                                         onClick={handleProceedToAddress}
                                     >
                                         Proceed To Checkout
                                         <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i>
                                     </button>
-                                )}
                             </div>
                         </div>
                     ) : (

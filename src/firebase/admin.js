@@ -31,6 +31,8 @@ export const addProduct = async (item) => {
             returnAvailability: item.returnAvailability,
             SKU: item.SKU,
             description: item.description,
+            avgRating: 0,
+            totalRating: 0,
             timestamp: new Date().toLocaleString("en-US", {
                 month: "short",
                 day: "2-digit",
@@ -303,7 +305,7 @@ export const getBlogs = async () => {
 export const editBlog = async (item_id, item) => {
     try {
         const blogRef = doc(fireDB, "Blogs", item_id);
-        await updateDoc(blogRef, item);
+        await updateDoc(blogRef, {...item});
     } catch (error) {
         console.log("Edit Blog Error: ", error.message);
     }
@@ -338,5 +340,21 @@ export const deleteImage = async (img) => {
         await deleteObject(imageRef);
     } catch (error) {
         console.error("Error deleting image:", error);
+    }
+}
+
+export const getAllUsers = async () => {
+    try {
+        let usersRef = collection(fireDB, "user");
+        let docSnap = await getDocs(usersRef);
+
+        const users = docSnap.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        return users
+    } catch (error) {
+        console.log("Error att getting all user: ", error.message);
     }
 }

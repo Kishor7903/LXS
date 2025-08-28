@@ -131,7 +131,7 @@ function PrivacyData() {
             <div className="space-y-3 h-full py-2 px-2 overflow-y-scroll no-scrollbar">
             {
                 privacyData.map((items,index) => (
-                    <div key={index} className="border border-slate-300 bg-slate-100 shadow-md px-4 py-2 rounded-xl">
+                    <div key={index} className="border border-slate-300 bg-slate-100 shadow-md px-4 pt-2 pb-4 rounded-xl">
                         <h3 className="font-bold tracking-wide text-lg capitalize">{items.name}</h3>
                         <div className="space-y-1 text-xs leading-3 mt-2 flex flex-col gap-1 font-medium ml-3">
                             {items.content.map((item,idx) => (

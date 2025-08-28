@@ -8,6 +8,7 @@ let options = { weekday: "long", day: '2-digit', month: 'short', year: 'numeric'
 
 function ShopSettingMyOrders() {
     let { orders } = useSelector(state => state.cart);
+    let { products } = useSelector(state => state.admin);
     let [order, setOrder] = useState([]);
     // let { products } = useSelector(state => state.admin);
     let [loading, setLoading] = useState(false);
@@ -63,8 +64,13 @@ function ShopSettingMyOrders() {
                                                         </div>
                                                         <div className="w-full">
                                                             <div className="flex gap-2">
-                                                                <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[90px] px-2"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[8px] text-white font-medium">LXS Certified</span>
-                                                                </div>
+                                                                {(() => {
+                                                                    let item = products.find((i) => i.id === product?.id);
+                                                                    if (item.isLxsCertified === "Yes") {
+                                                                        return <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[90px] px-2"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[8px] text-white font-medium">LXS Certified</span>
+                                                                        </div>
+                                                                    }
+                                                                })()}
                                                                 <p className="text-gray-500 text-[11px] uppercase font-bold line-clamp-1">Apparel & Fashion</p>
                                                                 <p className="text-xs ml-3 font-bold">Quantity: <span className="text-[rgb(253,84,120)]">{product.quantity < 10 ? `0${product.quantity}` : product.quantity}</span></p>
                                                             </div>
@@ -72,33 +78,33 @@ function ShopSettingMyOrders() {
                                                             <div className="flex flex-col">
                                                                 <p className="text-xs tracking-tight font-semibold pr-2 mr-2 leading-4">Order Date: <span className="text-[rgb(253,84,120)]">{`${item.timestamp.split(",")[0]}, ${item.timestamp.split(",")[1]}`}</span></p>
                                                                 {
-                                                                    item.orderStatus !== "Cancelled" && 
+                                                                    item.orderStatus !== "Cancelled" &&
                                                                     <p className="text-xs tracking-tight font-semibold leading-4">
-                                                                    {
-                                                                        order[index]?.orderStatus !== "Delivered" ? (
-                                                                            <>
-                                                                                Expected Delivery:{" "}
-                                                                                <span className="text-[rgb(253,84,120)]">
-                                                                                    {(() => {
-                                                                                        const orderDate = new Date(item.timestamp);
-                                                                                        const expectedDate = new Date(orderDate);
-                                                                                        expectedDate.setDate(orderDate.getDate() + 6);
+                                                                        {
+                                                                            order[index]?.orderStatus !== "Delivered" ? (
+                                                                                <>
+                                                                                    Expected Delivery:{" "}
+                                                                                    <span className="text-[rgb(253,84,120)]">
+                                                                                        {(() => {
+                                                                                            const orderDate = new Date(item.timestamp);
+                                                                                            const expectedDate = new Date(orderDate);
+                                                                                            expectedDate.setDate(orderDate.getDate() + 6);
 
-                                                                                        const date = expectedDate.toLocaleDateString("en-US", options);
-                                                                                        return `${date.split(" ")[0]} ${date.split(" ")[2].split(",")[0]} ${date.split(" ")[1]} ${date.split(",")[2]}`
-                                                                                    })()}
-                                                                                </span>
-                                                                            </>
-                                                                        ) : (
-                                                                            <>
-                                                                                Delivered Date:{" "}
-                                                                                <span className="text-[rgb(38,165,65)]">
-                                                                                    {`${order[index]?.orderUpdates[5]?.details[0]?.timestamp.split(",")[0]}, ${order[index]?.orderUpdates[5]?.details[0]?.timestamp.split(",")[1]}`}
-                                                                                </span>
-                                                                            </>
-                                                                        )
-                                                                    }
-                                                                </p>
+                                                                                            const date = expectedDate.toLocaleDateString("en-US", options);
+                                                                                            return `${date.split(" ")[0]} ${date.split(" ")[2].split(",")[0]} ${date.split(" ")[1]} ${date.split(",")[2]}`
+                                                                                        })()}
+                                                                                    </span>
+                                                                                </>
+                                                                            ) : (
+                                                                                <>
+                                                                                    Delivered Date:{" "}
+                                                                                    <span className="text-[rgb(34,197,94)]">
+                                                                                        {`${order[index]?.orderUpdates[5]?.details[0]?.timestamp.split(",")[0]}, ${order[index]?.orderUpdates[5]?.details[0]?.timestamp.split(",")[1]}`}
+                                                                                    </span>
+                                                                                </>
+                                                                            )
+                                                                        }
+                                                                    </p>
                                                                 }
 
                                                             </div>
@@ -113,7 +119,7 @@ function ShopSettingMyOrders() {
                                                 </div>
                                             ))
                                         }
-                                        <div className="absolute top-2 right-3 text-sm font-semibold">Status: <span className={`${order[index].orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : order[index].orderStatus === "Cancelled" ? "text-[rgb(253,84,120)]" : "text-[rgb(248,181,44)]"}`}>{item.orderStatus}</span></div>
+                                        <div className="absolute top-2 right-3 text-sm font-semibold">Status: <span className={`${order[index].orderStatus === "Delivered" ? "text-[rgb(34,197,94)]" : order[index].orderStatus === "Cancelled" ? "text-[rgb(253,84,120)]" : "text-[rgb(248,181,44)]"}`}>{item.orderStatus}</span></div>
                                     </div>
                                 )) :
                                 <div className="text-xl font-semibold flex justify-center items-center h-40">No Orders Yet!!</div>

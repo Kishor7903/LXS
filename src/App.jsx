@@ -209,6 +209,7 @@ function App() {
 					<Route path="account-preference" element={<AccountPreference />} />
 					<Route path="security-login" element={<SecurityLogin />} />
 					<Route path="privacy-data" element={<PrivacyData />} />
+					<Route path="hidden-orders" element={<HiddenOrders />} />
 					{/* <Route path="settings" element={<ShopSettingSettings />} >
 					</Route> */}
 					<Route path="contact-us" element={<ShopSettingContactUs />} />
@@ -220,7 +221,7 @@ function App() {
 				} >
 					<Route path="order-details/:id" element={<OrderDetailsPage />} />
 					<Route path="track-package/:id" element={<TrackPackage />} />
-					<Route path="product-reviews/:id" element={<ProductReviewPage />} />
+					<Route path="product-reviews/:orderId/:productId" element={<ProductReviewPage />} />
 					<Route path="seller-profile/:id" element={<SellerProfile />} />
 					<Route path="product-exchange/:id" element={<ProductExchange />} />
 					<Route path="product-return/:id" element={<ProductReturn />} />
@@ -231,7 +232,6 @@ function App() {
 					<Route path="returned-and-cancelled-orders" element={<ReturnedAndCancelled />} />
 					<Route path="track-orders" element={<TrackOrders />} />
 					<Route path="custom-orders" element={<CustomOrders />} />
-					<Route path="hidden-orders" element={<HiddenOrders />} />
 				</Route>
 				<Route path="/admin" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >

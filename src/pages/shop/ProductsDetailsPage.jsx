@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addCartItem, addNewRecentProduct, addWishlistItem, deleteWishlistItem } from "@/firebase/auth";
+import { addCartItem, addNewRecentProduct, addWishlistItem, deleteWishlistItem, getReviewsByProduct } from "@/firebase/auth";
 import { addToCart, addToRecentViewed, addToWishlist, deleteFromWishlist } from "@/store/features/cartSlice";
 import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 import facebookLogo from "../../assets/Socials/Facebook.png"
@@ -12,7 +12,8 @@ import linkedinLogo from "../../assets/Socials/Linkedin.png"
 import whatsappLogo from "../../assets/Socials/Whatsapp.png"
 // import reviewLogo from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import reviewLogoActive from "../../assets/commonIcons/Ratings & Reviews (Fill).png"
-import starIcon from "../../assets/commonIcons/Rewards 2 (Fill).png"
+import starIconFill from "../../assets/commonIcons/Rewards 2 (Fill).png"
+import starIconStroke from "../../assets/commonIcons/Rewards 2 (Stroke).png"
 import { addShippingLabel, checkPincode, orderCurrentStatus, orderTrackingHistory, sendEmail, sendPushNotification, sendSms, sendWhatsAppMessage } from "@/firebase/fship";
 import { useToast } from "@/components/ToastProvider";
 import DialogBox from "@/components/DialogBox";
@@ -30,21 +31,21 @@ function ProductDetailsPage({ id, data }) {
 	let [productData, setProductData] = useState(null);
 	let [mainPic, setMainPic] = useState(null);
 	let [pincode, setPincode] = useState(null);
+	let [reviews, setReviews] = useState([]);
 	let [pincodeResult, setPincodeResult] = useState({})
 	let { cart, wishlist } = useSelector(state => state.cart);
+	let { user } = useSelector(state => state.auth);
+	let { address } = useSelector(state => state.cart);
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
 	const toast = useToast();
-	let toaster = useToast();
-	let { user } = useSelector(state => state.auth);
-	let { address } = useSelector(state => state.cart);
 
 	const addCart = (e, item_id) => {
 		e.preventDefault();
 
 		let quantity = 1;
 		if (selectedSize === "") {
-			toaster("Please select any size..");
+			toast("Please select any size..");
 			return;
 		}
 
@@ -58,7 +59,7 @@ function ProductDetailsPage({ id, data }) {
 			addCartItem(user?.id, itemDetails).then(() => {
 				dispatch(addToCart(itemDetails));
 				toast("Product Added To Cart ...");
-				toaster("Added to cart..")
+				toast("Added to cart..")
 			})
 		} else {
 			toast("Please Login First ...")
@@ -121,10 +122,10 @@ function ProductDetailsPage({ id, data }) {
 		const currentUrl = window.location.href;
 		navigator.clipboard.writeText(currentUrl)
 			.then(() => {
-				toaster("URL Copied to Clipboard.")
+				toast("URL Copied to Clipboard.")
 			})
 			.catch(() => {
-				toaster("Failed to Copy.",)
+				toast("Failed to Copy.",)
 			});
 	}
 
@@ -159,6 +160,10 @@ function ProductDetailsPage({ id, data }) {
 
 
 	useEffect(() => {
+		getReviewsByProduct(id).then((res) => {
+			let review = res.sort((a, b) => { return new Date(b.timestamp) - new Date(a.timestamp) })
+			setReviews(review);
+		})
 		// sendPushNotification(user.permissions.push, "Hii", "This is body").then(res => {
 		// 	console.log(res);
 
@@ -179,24 +184,12 @@ function ProductDetailsPage({ id, data }) {
 
 	return (
 		<div className="px-16 pt-5 w-full flex flex-col gap-5">
-			{
-				productData && (
-					<Helmet>
-						
-						<meta property="og:title" content={productData?.name} />
-						<meta property="og:description" content={productData?.description?.text} />
-						<meta property="og:image" content={productData?.images[0]} />
-						<meta property="og:url" content={window.location.href} />
-					</Helmet>
-				)
-			}
-
 			<div className="leading-[1] font-semibold flex justify-between items-center">
 				<div className="flex flex-col gap-3">
 					<span>Gear Blueprint📘<br />
 						<p className="text-xs font-normal">Explore every detail, dimension, and feature — decoded for you</p>
 					</span>
-					<p className="font-medium text-sm">Home {">"} Clothing {">"} T-Shirt {">"} <span className="text-[rgb(253,84,120)] font-semibold">{productData?.SKU}</span></p>
+					<p className="font-medium text-sm">Home {">"} {productData?.category} {">"} {productData?.subCategory} {">"} <span className="text-[rgb(253,84,120)] font-semibold">{productData?.SKU}</span></p>
 				</div>
 				<button onClick={() => setIsOpen(true)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3">Share <i className="fi fi-sr-share relative top-[2px]"></i></button>
 			</div>
@@ -206,7 +199,7 @@ function ProductDetailsPage({ id, data }) {
 					<div className="h-full grid gap-4 grid-cols-2 grid-rows-3">
 						{
 							productData?.images.slice(0, 6).map((item, index) => (
-								item && 
+								item &&
 								<img onClick={() => setMainPic(item)} key={index} src={item} alt="" className={`col-span-1 row-span-1 h-full rounded-[20px] cursor-pointer ${mainPic === item ? "border-2 border-[rgb(8,43,61)] shadow-[0px_0px_5px_0px_rgb(8,43,61)]" : "shadow-[0px_0px_5px_0px_rgb(8,43,61,0.6)] lg:hover:border lg:hover:border-[rgb(8,43,61)]"}`} />
 							))
 						}
@@ -219,12 +212,15 @@ function ProductDetailsPage({ id, data }) {
 					<div className="flex flex-col justify-between">
 						<div className="flex gap-3 items-center justify-between mb-1">
 							<div className="flex gap-3 items-center">
-								<div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[145px] 2xl:w-[130px] px-3 2xl:px-3 py-[3px] 2xl:py-[4px]"><img src={lxsLogo} alt="" className="h-5" /> <span className="text-xs text-white font-medium">LXS Certified</span></div>
+								{
+									productData?.isLxsCertified === "Yes" &&
+									<div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] py-0.5 pl-3 pr-4"><img src={lxsLogo} alt="" className="h-5" /> <span className="text-[13px] text-white font-medium">LXS Certified</span></div>
+								}
 								<span className="opacity-50 mr-7 font-semibold tracking-tight text-sm">APPAREL & FASHION</span>
 							</div>
 							<Link className="text-sm lg:hover:underline flex h-3 items-center 2xl:text-sm space-x-0.5">
-								<img src={starIcon} alt="" className="h-3 relative bottom-[1px]" />
-								<span className="ml-2 font-medium ">4.5 Rating | 95 Reviews</span>
+								<img src={starIconFill} alt="" className="h-3 relative bottom-[1px]" />
+								<span className="ml-2 font-medium ">{productData?.avgRating.toFixed(1)} Rating | {productData?.totalRating} Reviews</span>
 							</Link>
 						</div>
 						<div className="flex justify-between items-start w-full">
@@ -268,7 +264,7 @@ function ProductDetailsPage({ id, data }) {
 							<p className="text-xl text-gray-600 font-semibold opacity-60">MRP  ₹<span className="line-through ">{productData?.price}.00</span></p>
 							<p className="text-[rgb(253,84,120)] font-bold">({`${Math.floor(((productData?.price - productData?.salePrice) * 100) / productData?.price)}`}% OFF)</p>
 						</div>
-						<p className="text-sm 2xl:text-base text-green-600">Inclusive of all taxes, 100% Original Product</p>
+						<p className="text-sm 2xl:text-base text-[rgb(34,197,94)]">Inclusive of all taxes, 100% Original Product</p>
 					</div>
 
 					<div className="flex flex-col xl:gap-3 2xl:gap-5">
@@ -305,10 +301,10 @@ function ProductDetailsPage({ id, data }) {
 						{
 							pincode?.length === 6 ? (
 								<>
-									<p className="text-sm leading-4 mt-1 text-green-600 font-medium capitalize">{pincodeResult.response}</p>
+									<p className="text-sm leading-4 mt-1 text-[rgb(34,197,94)] font-medium capitalize">{pincodeResult.response}</p>
 									{
 										pincodeResult && pincodeResult.response !== "Pincode is not Serviceable Right Now." ? (
-											<p className="text-sm leading-4 text-green-600 font-medium">Expected Delivery by {
+											<p className="text-sm leading-4 text-[rgb(34,197,94)] font-medium">Expected Delivery by {
 												pincodeResult?.date
 											}</p>
 										)
@@ -322,7 +318,7 @@ function ProductDetailsPage({ id, data }) {
 					</div>
 					<div className="">
 						<p className="text-sm font-medium leading-4">Return & Exchange Availability: <span className="text-[rgb(253,84,120)]">{productData?.returnAvailability}</span></p>
-						<p className='text-sm font-medium leading-4'>Pay on Delivery: <span className={`${productData?.codAvailability === "Yes" ? "text-green-600" : "text-[rgb(253,84,120)]"}`}>{productData?.codAvailability === "Yes" ? "Available" : "Not Available"}</span></p>
+						<p className='text-sm font-medium leading-4'>Pay on Delivery: <span className={`${productData?.codAvailability === "Yes" ? "text-[rgb(34,197,94)]" : "text-[rgb(253,84,120)]"}`}>{productData?.codAvailability === "Yes" ? "Available" : "Not Available"}</span></p>
 					</div>
 					<div className="flex flex-col gap-5 ">
 						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-2xl w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(253,84,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
@@ -333,7 +329,7 @@ function ProductDetailsPage({ id, data }) {
 			</div>
 
 			<div className="w-full flex gap-14 mb-10 mt-14">
-				<div className="flex flex-col gap-5 w-[40%] order-2">
+				<div className="flex flex-col gap-5 w-[60%]">
 					<HeadingWithUnderline name="Product Description" textClassName="text-2xl after:left-10" />
 					<p className="text-sm leading-[1.5] ml-2 font-medium">{productData?.description?.text}</p>
 					<div className="flex flex-col">
@@ -407,34 +403,60 @@ function ProductDetailsPage({ id, data }) {
 					</div>
 				</div>
 
-				<div className="w-[60%] rounded-xl flex flex-col order-1">
+				<div className="w-[40%] rounded-xl flex flex-col">
 					<HeadingWithUnderline name="RATING & REVIEWS" textClassName="text-2xl after:left-9" />
-					<div className="flex items-center gap-5 mt-8">
-						<span className="text-[45px] font-semibold leading-6">4.4</span>
-						<img src={reviewLogoActive} alt="" className="h-12 relative bottom-1" />
-					</div>
-					<p className="font-semibold">Customer Reviews <span className="text-sm font-bold">(75)</span> </p>
-					<div className="mt-3 space-y-3">
-						{
-							[1, 2, 3].map((_, index) => (
-								<div key={index} className="tracking-tight leading-[1.2] text-sm border-b border-slate-300 shadow-[0px_7px_6px_-10px_rgb(8,43,61)] relative">
-									<div className="flex gap-3 items-center mb-2">
-										<div className="flex gap-[1px]">{
-											[1, 2, 3, 4, 5].map((_, index) => (
-												<img key={index} src={starIcon} alt="" className="h-4" />
-											))
-										}</div>
-										<span className="font-semibold text-base">Amazing Quality! </span>
-									</div>
-									<p className="pb-1 w-[85%]">
-										{'"'}This Fabric is super Soft and Comfortable. The print is high quality and hasn't faded after multiple washes. Definitely worth it! {'"'} <br /> - <span className="font-semibold">Rahul Kumar</span>
-									</p>
-									<p className="text-xs absolute bottom-0 right-1 font-semibold">24 Jan, 2025</p>
+					{
+						productData?.totalRating > 0 ?
+							<>
+								<div className="flex gap-8">
+
 								</div>
-							))
-						}
-					</div>
-					<ViewAllIcon className="text-xs" />
+								<div className="flex items-center gap-5 mt-8">
+									<span className="text-[45px] font-semibold leading-6">{productData?.avgRating.toFixed(1)}</span>
+									<img src={reviewLogoActive} alt="" className="h-12 relative bottom-2" />
+								</div>
+								<p className="font-semibold text-xl">User Ratings <span className="text-lg font-bold">({productData?.totalRating})</span> </p>
+								<div className="mt-3 space-y-3">
+									{
+										reviews.slice(0, 3).map((review, index) => (
+											<div key={index} className="tracking-tight leading-[1.2] text-sm border-b border-slate-300 shadow-[0px_7px_6px_-10px_rgb(8,43,61)] relative">
+												<div className="flex justify-between pr-5">
+													<div className="flex gap-3">
+														{
+															review.images.map((img, idx) => (
+																<img key={idx} src={img} alt="" className="h-14 w-14 rounded-[6px]" />
+															))
+														}
+													</div>
+													<div className="flex flex-col gap-1 items-end mb-2">
+														<div className="flex gap-[2px]">{
+															[1, 2, 3, 4, 5].map((_, idx) => (
+																<img key={idx} src={idx < review.productRating ? starIconFill : starIconStroke} alt="" className="h-5" />
+															))
+														}</div>
+
+														<span className="text-xs font-semibold leading-3">{review.timestamp.split(",")[1]}</span>
+													</div>
+												</div>
+												<div className="flex items-center mb-1 mt-2">
+													<p className="font-semibold line-clamp-1 max-w-[70%]">{review.title} </p>
+													<span className="font-semibold text-[rgb(253,84,120)] ml-1"> - {review.user}</span>
+												</div>
+												<p className="mb-2">
+													<span className="line-clamp-2">"{review.description}"</span>
+												</p>
+											</div>
+										))
+									}
+								</div>
+								{
+									reviews.length >= 3 &&
+									<ViewAllIcon className="text-xs" />
+								}
+							</>
+							:
+							<div className="text-xl font-semibold flex justify-center h-40 items-center">No Reviews Yet....</div>
+					}
 				</div>
 			</div>
 		</div>

@@ -61,7 +61,7 @@ function AboutUs() {
                                     <div className="leading-4">
                                         {
                                             item.points.map((point, idx) => (
-                                                <p key={idx}><i className="fi fi-sr-badge-check text-green-700 relative top-[8px] text-3xl"></i> <span className="opacity-60">{point}</span></p>
+                                                <p key={idx}><i className="fi fi-sr-badge-check text-[rgb(34,197,94)] relative top-[8px] text-3xl"></i> <span className="opacity-60">{point}</span></p>
                                             ))
                                         }
                                     </div>

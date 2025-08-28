@@ -622,6 +622,56 @@ export const getBlogWithId = async (id) => {
     }
 }
 
+export const addNewReview = async (userId, productId, data) => {
+    try {
+        const userRef = collection(fireDB, "Reviews");
+        let docSnap = await addDoc(userRef, {
+            userId,
+            productId,
+            ...data,
+            timestamp: getTimestamp()
+        })
+        return docSnap.id
+    } catch (error) {
+        console.log("Error at adding new review: ",error.message);
+    }
+}
+
+export const getReviewsByProduct = async (productId) => {
+    try {
+        const reviewsRef = collection(fireDB, "Reviews");
+        const q = query(reviewsRef, where("productId", "==", productId));
+        const snapshot = await getDocs(q);
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+        console.log("Getting reviews by product error: ", error.message);
+    }
+}
+
+export const getAllReviewsByUser = async (userId) => {
+    try {
+        const reviewsRef = collection(fireDB, "Reviews");
+        const q = query(reviewsRef, where("userId", "==", userId));
+        const snapshot = await getDocs(q);
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+        console.log("Getting reviews by user error: ", error.message);
+    }
+}
+
+export const getReviewById = async (itemId) => {
+    try {
+        let reviewRef = doc(fireDB, "Reviews", itemId);
+        let docSnap = await getDoc(reviewRef);
+
+        return {id: docSnap.id, ...docSnap.data()}
+    } catch (error) {
+        console.log("Getting review by Id Error: ", error.message);
+    }
+}
+
 // export const requestPermissionAndGetToken = async () => {
 //     try {
 //       const permission = await Notification.requestPermission();

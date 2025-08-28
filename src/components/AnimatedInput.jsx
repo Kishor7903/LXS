@@ -69,7 +69,7 @@ export default function AnimatedInput() {
 	}, [isFocused]);
 
 	return (
-		<div className="relative w-[700px] hidden sm:block flex-1 ml-10">
+		<div className="relative w-[700px] hidden sm:block flex-1 2xl:ml-10">
 			<input
 				ref={inputRef}
 				onFocus={() => setIsFocused(true)}

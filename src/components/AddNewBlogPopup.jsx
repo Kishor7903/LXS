@@ -1,6 +1,6 @@
 import DialogBox from './DialogBox';
 import { useToast } from './ToastProvider';
-import { addBlog, editBlog } from '@/firebase/admin';
+import { addBlog, editBlog, uploadImage } from '@/firebase/admin';
 import { useDispatch } from 'react-redux';
 import { addNewBlog, editABlog } from '@/store/features/adminSlice';
 import { useEffect, useRef, useState } from 'react';
@@ -131,20 +131,13 @@ function AddNewBlogPopup({ isOpen, setIsOpen, data, form, setForm, currentEditId
         }
 
         if (files) {
-            let response = await uploadToCloudinary(files);
+            let response = uploadImage(files, 'blogs')
 
-            let url = response?.url;
-            let publicId = response?.public_id;
-
-            let imageData = {
-                img_url: url,
-                publicId: publicId
-            }
-
-            addBlog({...form, ...imageData}).then((res) => {
+            addBlog({...form, img_url: response,}).then((res) => {
                 dispatch(addNewBlog(res))
                 setIsOpen(false);
                 setForm(data);
+                toast("Blog added successfully.")
             })
         }
     };
@@ -157,24 +150,22 @@ function AddNewBlogPopup({ isOpen, setIsOpen, data, form, setForm, currentEditId
         }
 
         let urls;
-        let ids;
         if(form.img_url && previews && files === null){
             urls = form.img_url;
-            ids = form.publicId
         }
         else if(form.img_url && previews === null && files === null){
             urls = null;
-            ids = null
         }
         else if (form.img_url && files) {
-            let response = await uploadToCloudinary(files[i]);
-            urls = response?.url;
-            ids = response?.public_id
+            await uploadImage(files, 'blogs').then((res) => {
+                urls = res
+            })
         }
-        editBlog(currentEditId, {...form, img_url: urls, publicId: ids}).then(() => {
-            dispatch(editABlog({...form, img_url: urls, publicId: ids, id: currentEditId}))
+        editBlog(currentEditId, {...form, img_url: urls}).then(() => {
+            dispatch(editABlog({...form, img_url: urls, id: currentEditId}))
             setIsOpen(false);
             setForm(data);
+            toast("Blog edited successfully..")
         })
     }
 

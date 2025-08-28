@@ -25,6 +25,7 @@ function AdminBlogs() {
     const [form, setForm] = useState(data);
     let [currentEditId, setCurrentEditId] = useState(null);
     let { blogs } = useSelector(state => state.admin);
+    console.log(blogs);
     let dispatch = useDispatch();
 
     const handleEditButton = (e, item_id) => {

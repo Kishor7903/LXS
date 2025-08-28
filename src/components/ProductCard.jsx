@@ -39,15 +39,18 @@ function ProductCard({ item }) {
     }
 
     return (
-        <div className="w-[100%] rounded-3xl overflow-hidden p-[6px] md:p-2 xl:p-3 cursor-pointer duration-200 border-slate-300 border-[1px] bg-white relative lg:hover:shadow-md lg:hover:scale-[1.02]">
+        <div className="w-[100%] rounded-3xl overflow-hidden p-[6px] md:p-2 xl:p-3 cursor-pointer duration-200 border-slate-300 border-[1px] bg-white relative shadow-md">
             <div onClick={() => navigate(`/product-details/${item.id}`)} className='w-full rounded-2xl overflow-hidden border relative'>
                 <img src={item.images[0]} alt="" className='h-full w-full object-fill' />
                 {/* <div className="h-5 lg:h-7 px-1 lg:px-2 bg-[rgb(255,162,0)] absolute top-1 md:top-2 right-1 md:right-2 flex justify-center items-center rounded-full text-[8px] lg:text-xs font-medium text-white">Save {`${Math.floor(((item.price - item.salePrice) * 100)/item.price)}`}%</div> */}
             </div>
             <div className="relative h-[100px]">
                 <div className="flex gap-2 items-center justify-between mt-1">
-                    <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] px-3 2xl:pl-2 2xl:pr-3 "><img src={lxsLogo} alt="" className="h-[14px]" /> <span className="text-[10px] text-white font-medium">LXS Certified</span></div>
-                    <p className='text-[6px] md:text-[8px] lg:text-[9px] xl:text-[12px] font-semibold'>Brand: <span className='text-[rgb(253,84,120)]'>{item.brand}</span></p>
+                    {
+                        item.isLxsCertified === "Yes" &&
+                        <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] pl-1.5 pr-2.5"><img src={lxsLogo} alt="" className="h-[14px]" /> <span className="text-[9px] text-white font-medium">LXS Certified</span></div>
+                    }
+                    <p className='text-[6px] md:text-[8px] lg:text-[9px] xl:text-[11px] 2xl:text-[12px] font-semibold'>Brand: <span className='text-[rgb(253,84,120)]'>{item.brand}</span></p>
                 </div>
                 <p className='text-[14px] font-medium text-[rgb(8,43,61)] line-clamp-1 opacity-70'>{item.name}</p>
                 <div className="flex justify-between items-center w-full bg-transparent relative bottom-1">
@@ -70,6 +73,7 @@ function ProductCard({ item }) {
                 </div>
             </div>
             <SizeSelectionPopup isOpen={isOpen} setIsOpen={setIsOpen} item={item} selectedSize={selectedSize} setSelectedSize={setSelectedSize} />
+            
         </div>
     )
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import DialogBox from './DialogBox'
-import { uploadToCloudinary } from '@/firebase/cloudinary';
 import { addProduct, editProduct, uploadImage } from '@/firebase/admin';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewProduct, updateProduct } from '@/store/features/adminSlice';
@@ -26,7 +25,6 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
     const [previews, setPreviews] = useState([null, null, null, null, null, null]);
     const [files, setFiles] = useState([null, null, null, null, null, null]);
     const [uploadedUrls, setUploadedUrls] = useState([null, null, null, null, null, null]);
-    const [publicIds, setPublicIds] = useState([null, null, null, null, null, null])
     const fileInputs = useRef([]);
     let dispatch = useDispatch();
     const toast = useToast();
@@ -176,7 +174,6 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
         setFiles([null, null, null, null, null, null]);
         setPreviews([null, null, null, null, null, null]);
         setUploadedUrls([null, null, null, null, null, null]);
-        setPublicIds([null, null, null, null, null, null]);
 
         toast("Product Added Successfully ...")
         setIsOpen(false);

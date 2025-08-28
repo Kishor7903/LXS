@@ -7,9 +7,9 @@ function BulkOrder() {
         <>
             <div className="h-[650px] w-full " style={({ backgroundImage: `url(${img})`, backgroundPosition: "center", backgroundSize: "cover" })}>
                 <div className="w-1/2 h-full flex flex-col gap-5 pl-20 py-10">
-                    <h2 className="text-3xl font-extrabold text-green-800">COSMIC SUPPLY HUB - GEAR UP IN BULK</h2>
+                    <h2 className="text-3xl font-extrabold text-[rgb(34,197,94)]">COSMIC SUPPLY HUB - GEAR UP IN BULK</h2>
                     <span className="text-[100px] text-orange-500 font-extrabold relative bottom-7 dancingScript tracking-wide">Bulk</span>
-                    <span className="text-[130px] font-extrabold relative bottom-28 text-green-800">ORDER</span>
+                    <span className="text-[130px] font-extrabold relative bottom-28 text-[rgb(34,197,94)]">ORDER</span>
                     <div className="relative bottom-36">
                         <p className="w-2/3 text-lg leading-6 opacity-80 mb-10">Embark on a journey with us! Whether you're outfitting your starship crew or gearing up for an epic mission, our bulk order service ensures you're equipped for the voyage ahead.</p>
                         <span className=" text-xl font-semibold">EXPLORE THIS UNIVERSE WITH US! </span>

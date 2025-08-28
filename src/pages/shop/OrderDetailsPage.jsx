@@ -188,7 +188,7 @@ function OrderDetailsPage() {
     return (
         <div className="px-16 py-6 h-[calc(100%-64px)] flex gap-10">
             <div className="w-[65%] flex flex-col gap-5">
-            <Breadcrum items={items} />
+                <Breadcrum items={items} />
                 {!loading ? (
                     <div className="flex flex-col">
                         <div className="flex justify-between">
@@ -325,7 +325,7 @@ function OrderDetailsPage() {
                                     <p className="">₹ {platformFee}</p>
                                 </span>
                                 <hr className="pb-1 mt-1" />
-                                <span className="flex justify-between mt-[2px] text-base font-bold text-green-500">
+                                <span className="flex justify-between mt-[2px] text-base font-bold text-[rgb(34,197,94)]">
                                     Grand Total{" "}
                                     <p>
                                         ₹
@@ -356,7 +356,7 @@ function OrderDetailsPage() {
                             >
                                 <p>
                                     Status:{" "}
-                                    <span className={`ml-2 font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "text-[rgb(253,84,120)]" : orderDetails?.orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : "text-[rgb(248,181,44)]"}`}>
+                                    <span className={`ml-2 font-semibold ${orderDetails?.orderStatus === "Cancelled" ? "text-[rgb(253,84,120)]" : orderDetails?.orderStatus === "Delivered" ? "text-[rgb(34,197,94)]" : "text-[rgb(248,181,44)]"}`}>
                                         {orderDetails?.orderStatus}
                                     </span>
                                 </p>{" "}
@@ -425,16 +425,22 @@ function OrderDetailsPage() {
                                             />
                                             <div className="text-[11px] leading-[1.3] relative w-[68%]">
                                                 <div className="flex gap-2 items-center">
-                                                    <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]">
-                                                        <img
-                                                            src={lxsLogo}
-                                                            alt=""
-                                                            className="h-[12px]"
-                                                        />{" "}
-                                                        <span className="text-[10px] text-white font-medium">
-                                                            LXS Certified
-                                                        </span>
-                                                    </div>
+                                                    {(() => {
+                                                        let it = products.find((i) => i.id === item?.id);
+                                                        if (it.isLxsCertified === "Yes") {
+                                                            return <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]">
+                                                            <img
+                                                                src={lxsLogo}
+                                                                alt=""
+                                                                className="h-[12px]"
+                                                            />{" "}
+                                                            <span className="text-[10px] text-white font-medium">
+                                                                LXS Certified
+                                                            </span>
+                                                        </div>
+                                                        }
+                                                    })()}
+                                                    
                                                     <span className="opacity-50 mr-3 font-semibold tracking-tight">
                                                         APPAREL & FASHION
                                                     </span>
@@ -482,9 +488,9 @@ function OrderDetailsPage() {
                                             </div>
                                             {
                                                 orderDetails?.orderStatus === "Delivered" ?
-                                                    <div className="flex flex-col space-y-2 font-semibold w-[20%]">
-                                                        <button onClick={() => navigate(`/orders/product-exchange/${id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-feedback relative top-[2px] mr-1"></i>Product Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button>
-                                                        <button onClick={() => navigate(`/orders/product-return/${id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-talent-alt relative top-[2px] mr-1"></i>Seller Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button>
+                                                    <div className="flex flex-col self-end font-semibold w-[25%]">
+                                                        <button onClick={() => navigate(`/orders/product-reviews/${id}/${item.id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-feedback relative top-[2px] mr-1"></i>{item.isReviewed ? "Edit Product" : "Product"} Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button>
+                                                        {/* <button onClick={() => navigate(`/orders/product-return/${id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-talent-alt relative top-[2px] mr-1"></i>Seller Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button> */}
                                                     </div> :
                                                     null
                                             }
@@ -496,15 +502,7 @@ function OrderDetailsPage() {
                                     </div>
                                 </div>
                             ))}
-                            <span className="text-[11px] font-medium lg:text-xs absolute -bottom-0.5 lg:right-2">
-                                Need Help?{" "}
-                                <Link
-                                    to="/setting/contact-us"
-                                    className="text-blue-500 lg:hover:underline font-bold"
-                                >
-                                    Contact Us
-                                </Link>
-                            </span>
+                            
                         </div>
                     </div>
                 ) : (

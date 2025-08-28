@@ -90,7 +90,7 @@ export async function getAllCourierList() {
     return response.data;
 }
 
-export async function checkPincode(sourcePincode, destinationPincode) {
+export async function checkPincode(sourcePincode, destinationPincode="827013") {
     let response = await axios.post(
         "/lxslifestylestore-8935b/us-central1/checkPincodeServiceability",
         {

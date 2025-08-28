@@ -158,12 +158,12 @@ function Footer() {
                     <div className="">
                         <h5 className='text-[rgb(8,43,61)] font-semibold text-center lg:text-left text-xs lg:text-xl pl-[2px]'>Connect With Our Socials!</h5>
                         <div className="flex gap-4 lg:gap-8 mt-2">
-                            <Link to="https://www.instagram.com/lxslifestylestore" target="_blank"><img src={instagramLogo} alt="" className='h-6 lg:h-9 cursor-pointer' /></Link>
-                            <Link to="https://www.linkedin.com/company/lxslifestylestore" target="_blank"><img src={linkedinLogo} alt="" className='h-6 lg:h-9 cursor-pointer' /></Link>
-                            <Link to="https://www.x.com/lxs_store" target="_blank"><img src={twitterLogo} alt="" className='h-6 lg:h-9 cursor-pointer' /></Link>
-                            <Link to="https://www.youtube.com/channel/UCGA1Te3h14lK5ePC-LGD3pg?sub_confirmation=1" target="_blank"><img src={youtubeLogo} alt="" className='h-6 lg:h-9 cursor-pointer' /></Link>
-                            <Link onClick={handleSendWhatsApp} target="_blank"><img src={whatsappLogo} alt="" className='h-6 lg:h-9 cursor-pointer' /></Link>
-                            <Link to="https://www.facebook.com/lxslifestylestore" target="_blank"><img src={facebookLogo} alt="" className='h-6 lg:h-9 cursor-pointer' /></Link>
+                            <Link to="https://www.instagram.com/lxslifestylestore" target="_blank"><img src={instagramLogo} alt="" className='h-6 lg:h-9 cursor-pointer lg:hover:scale-[1.1] lg:active:scale-[1] duration-200' /></Link>
+                            <Link to="https://www.linkedin.com/company/lxslifestylestore" target="_blank"><img src={linkedinLogo} alt="" className='h-6 lg:h-9 cursor-pointer lg:hover:scale-[1.1] lg:active:scale-[1] duration-200' /></Link>
+                            <Link to="https://www.x.com/lxs_store" target="_blank"><img src={twitterLogo} alt="" className='h-6 lg:h-9 cursor-pointer lg:hover:scale-[1.1] lg:active:scale-[1] duration-200' /></Link>
+                            <Link to="https://www.youtube.com/channel/UCGA1Te3h14lK5ePC-LGD3pg?sub_confirmation=1" target="_blank"><img src={youtubeLogo} alt="" className='h-6 lg:h-9 cursor-pointer lg:hover:scale-[1.1] lg:active:scale-[1] duration-200' /></Link>
+                            <Link onClick={handleSendWhatsApp} target="_blank"><img src={whatsappLogo} alt="" className='h-6 lg:h-9 cursor-pointer lg:hover:scale-[1.1] lg:active:scale-[1] duration-200' /></Link>
+                            <Link to="https://www.facebook.com/lxslifestylestore" target="_blank"><img src={facebookLogo} alt="" className='h-6 lg:h-9 cursor-pointer lg:hover:scale-[1.1] lg:active:scale-[1] duration-200' /></Link>
                         </div>
                     </div>
                     <div className="flex gap-6 ">

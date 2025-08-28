@@ -40,6 +40,7 @@ import PhoneLogin from "./PhoneLogin";
 import DialogBox from "./DialogBox";
 import HoverButton from "./HoverButton";
 import { getAllBlogs, getProducts } from "@/store/features/adminSlice";
+import { useToast } from "./ToastProvider";
 
 
 function Header({ className }) {
@@ -51,6 +52,7 @@ function Header({ className }) {
 	const [userPopup, setUserPopup] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	let toast = useToast();
 	const dialogRef = useRef(null);
 	let { isAuthenticated, user } = useSelector(state => state.auth);
 	let { cart } = useSelector(state => state.cart);
@@ -352,7 +354,7 @@ function Header({ className }) {
 
 				<LxsLogo className="h-9 md:h-10 lg:h-11 xl:h-12" />
 
-				<nav className={`lg:flex hidden ml-10 gap-8`}>
+				<nav className={`lg:flex hidden ml-10 gap-6 2xl:gap-8`}>
 
 					{
 						navItems.map((item, index) => (
@@ -400,9 +402,9 @@ function Header({ className }) {
 				<div className="flex justify-between items-center text-xl lg:text-3xl ">
 
 					<div className="flex gap-2 lg:gap-4 mr-3 lg:mr-6">
-						<img src={notificationIconFill} alt="" className="h-7 cursor-pointer active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => navigate("/orders/notifications")} />
-						<img src={heartIcon} alt="" className="h-6 lg:h-7 cursor-pointer active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/setting/wishlist") : null} />
-						<div className="relative active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/checkout/cart") : null}>
+						<img src={notificationIconFill} alt="" className="h-7 cursor-pointer active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/orders/notifications") : toast("Login First!")} />
+						<img src={heartIcon} alt="" className="h-6 lg:h-7 cursor-pointer active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/setting/wishlist") : toast("Login First!")} />
+						<div className="relative active:scale-[0.8] duration-200 hover:scale-[1.1]" onClick={() => user ? navigate("/checkout/cart") : toast("Login First!")}>
 							{
 								user && cart?.length > 0 && (
 									<div className="h-[12px] lg:h-[15px] w-[12px] lg:w-[15px] rounded-full bg-[rgb(253,84,120)] absolute -top-1 lg:-top-[6px] -right-[6px] lg:-right-2 flex justify-center items-center text-white text-[10px] lg:text-xs cursor-pointer " >{cart.length}</div>

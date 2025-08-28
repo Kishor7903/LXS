@@ -91,7 +91,7 @@ function ReturnedAndCancelled() {
                                                                                     ) : (
                                                                                         <>
                                                                                             Delivered Date:{" "}
-                                                                                            <span className="text-[rgb(38,165,65)]">
+                                                                                            <span className="text-[rgb(34,197,94)]">
                                                                                                 {`${order[index]?.orderUpdates[5]?.details[0]?.timestamp.split(",")[0]}, ${order[index]?.orderUpdates[5]?.details[0]?.timestamp.split(",")[1]}`}
                                                                                             </span>
                                                                                         </>
@@ -112,7 +112,7 @@ function ReturnedAndCancelled() {
                                                         </div>
                                                     ))
                                                 }
-                                                <div className="absolute top-2 right-3 text-sm font-semibold">Status: <span className={`${order[index].orderStatus === "Delivered" ? "text-[rgb(38,165,65)]" : order[index].orderStatus === "Cancelled" ? "text-[rgb(253,84,120)]" : "text-[rgb(248,181,44)]"}`}>{item.orderStatus}</span></div>
+                                                <div className="absolute top-2 right-3 text-sm font-semibold">Status: <span className={`${order[index].orderStatus === "Delivered" ? "text-[rgb(34,197,94)]" : order[index].orderStatus === "Cancelled" ? "text-[rgb(253,84,120)]" : "text-[rgb(248,181,44)]"}`}>{item.orderStatus}</span></div>
                                             </div>
                                         )) :
                                         <div className="text-xl font-semibold flex justify-center items-center h-40">No Returned or Cancelled Orders Yet!!</div>

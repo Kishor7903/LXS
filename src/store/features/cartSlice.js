@@ -5,7 +5,8 @@ let initialState = {
     wishlist: [],
     address: [],
     orders: [],
-    recentViewed: []
+    recentViewed: [],
+    reviews: []
 }
 
 
