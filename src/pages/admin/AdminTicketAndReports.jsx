@@ -7,6 +7,7 @@ function AdminTicketAndReports() {
 
   useEffect(() => {
     getAllReportAndIssue().then((res) => {
+      console.log(res);
       setIssues(res)
     })
   }, [])
@@ -20,7 +21,7 @@ function AdminTicketAndReports() {
           issues.map((item, index) => (
             <div key={index} className="relative w-full border border-[rgb(8,43,61)] px-4 py-2 rounded-xl flex gap-10">
               <div className="w-2/3">
-                <h6 className='text-xl font-semibold mb-2'>Issue: <span className=''>{item.title}</span></h6>
+                <h6 className='text-xl font-semibold mb-2'>Issue: <span className=''>{item.reason}</span></h6>
                 <p>Date : <span className='font-semibold'>{item.timestamp}</span></p>
                 <p>Description: <span className='font-semibold'>{item.description}</span></p>
               </div>

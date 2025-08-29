@@ -233,7 +233,7 @@ function CartPage({ cart }) {
                                 {cartItems.map((item, index) => (
                                     <div
                                         key={index}
-                                        className={` border-[rgb(8,43,61)] rounded-xl p-[6px] lg:p-2 flex gap-2 lg:gap-4 relative overflow-hidden cursor-pointer ${item.isSelected
+                                        className={` border-[rgb(8,43,61)] rounded-xl p-[6px] lg:p-2 flex gap-2 lg:gap-2 relative overflow-hidden cursor-pointer ${item.isSelected
                                             ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200"
                                             : "border-slate-300 border shadow-md lg:hover:scale-[0.97] duration-150 scale-95"
                                             }`}
@@ -252,7 +252,7 @@ function CartPage({ cart }) {
                                             }}
                                             src={item.images[0]}
                                             alt=""
-                                            className="w-20 rounded border lg:border-2"
+                                            className="w-20 shadow-md rounded-[6px]"
                                         />
                                         <div className="leading-[0.7] lg:leading-3 w-[83%]">
                                             <h4 className="text-sm lg:text-base font-bold w-[90%] line-clamp-1">
@@ -280,8 +280,8 @@ function CartPage({ cart }) {
                                                             options={sizes}
                                                             selected={item.size[idx]}
                                                             onSelect={(val) => handleSizeChange({ target: { value: val } }, item, idx)}
-                                                            placeholder={`Size${idx+1}`}
-                                                            className="bg-transparent border border-[rgb(8,43,61)] text-[rgb(8,43,61)]"
+                                                            placeholder={`Size ${idx+1}`}
+                                                            className="bg-transparent shadow-md bg-white text-[rgb(8,43,61)]"
                                                         />
 
                                                     ))
@@ -313,7 +313,7 @@ function CartPage({ cart }) {
                                                 Delivered by {formattedDate}
                                             </p>
                                         </div>
-                                        <div className="absolute bottom-0 lg:bottom-1 right-3 flex gap-3 items-center">
+                                        <div className="absolute bottom-0 lg:bottom-2 right-3 flex gap-3 items-center">
                                             {wishlist.some(
                                                 (p) => p.item_id === item.item_id
                                             ) ? (
@@ -347,7 +347,7 @@ function CartPage({ cart }) {
                                                             item.id
                                                         );
                                                 }}
-                                                className="px-2 py-1 text-[10px] font-semibold rounded-[8px]"
+                                                className="px-2 py-1 text-[10px] font-semibold rounded-[8px] border-none shadow-md bg-white"
                                             >
                                                 Remove
                                             </HoverButton>
@@ -442,7 +442,7 @@ function CartPage({ cart }) {
                                     </span>
                                 </div>
                                     <button
-                                        className={`w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]  ${selectedItems.length === 0 ? "cursor-not-allowed opacity-50" : "lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-200"}`}
+                                        className={`w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 ${selectedItems.length === 0 ? "cursor-not-allowed opacity-50" : "lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-200"}`}
                                         onClick={handleProceedToAddress}
                                     >
                                         Proceed To Checkout

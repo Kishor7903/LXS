@@ -23,16 +23,16 @@ function AdminSideBar() {
             slug: "/admin/dashboard",
             icon: "fi fi-sr-apps"
         },
-        {
-            name: "Carousel",
-            slug: "/admin/carousel",
-            icon: "fi fi-sr-add-image"
-        },
-        {
-            name: "Promotional Banners",
-            slug: "/admin/promotional-banners",
-            icon: "fi fi-sr-multiple"
-        },
+        // {
+        //     name: "Carousel",
+        //     slug: "/admin/carousel",
+        //     icon: "fi fi-sr-add-image"
+        // },
+        // {
+        //     name: "Promotional Banners",
+        //     slug: "/admin/promotional-banners",
+        //     icon: "fi fi-sr-multiple"
+        // },
         {
             name: "Products",
             slug: "/admin/products",

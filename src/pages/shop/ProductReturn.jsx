@@ -155,7 +155,7 @@ function ProductReturn() {
                                     {
                                         !imgFile ?
                                             <label htmlFor='image-upload' className="flex flex-col justify-center items-center border-2 border-dashed border-slate-400 rounded-xl w-16 h-16 cursor-pointer text-slate-400" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, 1)}>
-                                                <i className="fi fi-rs-cloud-upload text-xl"></i>
+                                                <i className="fi fi-sr-camera-viewfinder text-xl"></i>
                                                 <p className='text-xs text-center'>Image1</p>
                                             </label> :
                                             <div className="h-16 w-16 flex flex-col justify-between items-center relative">
@@ -167,7 +167,7 @@ function ProductReturn() {
                                     {
                                         !imgFile2 ?
                                             <label htmlFor='image-upload-2' className="flex flex-col justify-center items-center border-2 border-dashed border-slate-400 rounded-xl h-16 w-16 cursor-pointer text-slate-400" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, 2)}>
-                                                <i className="fi fi-rs-cloud-upload text-xl"></i>
+                                                <i className="fi fi-sr-camera-viewfinder text-xl"></i>
                                                 <p className='text-xs text-center'>Image2</p>
                                             </label> :
                                             <div className="h-16 w-16 flex flex-col justify-between items-center relative">
@@ -179,7 +179,7 @@ function ProductReturn() {
                                     {
                                         !imgFile3 ?
                                             <label htmlFor='image-upload-3' className="flex flex-col justify-center items-center border-2 border-dashed border-slate-400 rounded-xl h-16 w-16 cursor-pointer text-slate-400" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, 3)}>
-                                                <i className="fi fi-rs-cloud-upload text-xl"></i>
+                                                <i className="fi fi-sr-camera-viewfinder text-xl"></i>
                                                 <p className='text-xs text-center'>Image3</p>
                                             </label> :
                                             <div className="h-16 w-16 flex flex-col justify-between items-center relative">
@@ -192,7 +192,7 @@ function ProductReturn() {
                                     {
                                         !imgFile4 ?
                                             <label htmlFor='image-upload-4' className="flex flex-col justify-center items-center border-2 border-dashed border-slate-400 rounded-xl h-16 w-16 cursor-pointer text-slate-400" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, 4)}>
-                                                <i className="fi fi-rs-cloud-upload text-xl"></i>
+                                                <i className="fi fi-sr-camera-viewfinder text-xl"></i>
                                                 <p className='text-xs text-center'>Image4</p>
                                             </label> :
                                             <div className="h-16 w-16 flex flex-col justify-between items-center relative">

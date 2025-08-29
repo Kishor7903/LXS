@@ -6,7 +6,7 @@ import { updateUserInfo } from '@/store/features/authSlice';
 import { useToast } from './ToastProvider';
 import { deleteImage, uploadImage } from '@/firebase/admin';
 
-function EditProfilePicPopup({isOpen, setIsOpen, user}) {
+function EditProfilePicPopup({ isOpen, setIsOpen, user }) {
     const [previews, setPreviews] = useState(null);
     const [files, setFiles] = useState(null);
     const fileInputs = useRef(null);
@@ -44,16 +44,16 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (files) {
-            if(files.size > (1024 * 1024)){
+            if (files.size > (1024 * 1024)) {
                 toast("Image size should not exceeds 1MB.")
                 return
             }
             uploadImage(files, `user/${user.id}`).then((res) => {
-                editUserDetails({ ...user, profilePic: res}).then(() => {
+                editUserDetails({ ...user, profilePic: res }).then(() => {
                     deleteImage(user.profilePic).then(() => {
-                        dispatch(updateUserInfo({ ...user, profilePic: res}));
+                        dispatch(updateUserInfo({ ...user, profilePic: res }));
                         toast("Profile Picture Edited...")
                         setIsOpen(false);
                         setPreviews(null);
@@ -64,28 +64,28 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
                     })
                 })
             })
-        } else if(!files && previews){
+        } else if (!files && previews) {
             toast("Select New Image First...")
-        } else{
+        } else {
             toast("Select Image First...")
         }
     }
 
-    useEffect(() =>{
-        if(user.profilePic){
+    useEffect(() => {
+        if (user.profilePic) {
             setPreviews(user.profilePic);
         }
-    }, [user])
+    }, [isOpen])
 
     return (
         <DialogBox
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            className="py-6 px-10 bg-white rounded-xl flex flex-col"
+            className="py-8 px-10 bg-white rounded-3xl flex flex-col items-center"
             parentDivClassName="flex justify-center items-center"
         >
-            <h2 className="text-center text-xl font-semibold flex gap-1 justify-center items-center">
-                Edit User Profile Picture
+            <h2 className="text-center text-2xl rounded-2xl font-bold border-b border-slate-300 shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white w-96">
+                Edit Picture !
             </h2>
             <form autoComplete="off" className='flex flex-col items-center'>
                 <div
@@ -109,7 +109,7 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
                                 className="w-full h-full object-fill rounded-2xl border border-[rgb(196,185,185)]"
                             />
                             <button
-                                className="absolute -top-2 -right-2 bg-black text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
+                                className="absolute -top-2 -right-2 bg-[rgb(8,43,61)] text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     removeImage();
@@ -123,30 +123,29 @@ function EditProfilePicPopup({isOpen, setIsOpen, user}) {
                         :
 
                         (
-                            <label htmlFor="image" className="h-full w-full rounded-2xl flex flex-col justify-center items-center border-[2px] border-dashed border-[rgb(196,185,185)]">
-                                <i className="fi fi-rs-cloud-upload text-[70px]"></i>
-                                <span className='text-xl'>Drag or Click to Upload</span>
+                            <label htmlFor="image" className="h-full w-full cursor-pointer rounded-2xl flex flex-col justify-center items-center border-[2px] border-dashed border-[rgb(8,43,61)]">
+                                <i className="fi fi-sr-camera-viewfinder text-[rgb(8,43,61)] text-[120px]"></i>
                             </label>
                         )}
                 </div>
-                <div className="flex justify-end gap-6 mt-5">
-                <button
-                    className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
-                    onClick={(e) => {
-                        e.preventDefault(),
-                        setIsOpen(false),
-                        removeImage()
-                    }}
-                >
-                    Cancel
-                </button>
-                <button
-                    className="h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] active:scale-[0.95]"
-                    onClick={handleSubmit}
-                >
-                    Apply
-                </button>
-            </div>
+                <div className="flex gap-6 mt-5 w-full">
+                    <button
+                        className="border-2 font-semibold border-[rgb(8,43,61)] h-12 w-60 rounded-xl lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
+                        onClick={(e) => {
+                            e.preventDefault(),
+                                setIsOpen(false),
+                                removeImage()
+                        }}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="h-12 w-60 rounded-xl font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:scale-[1.1] duration-200 lg:active:scale-[0.95]"
+                        onClick={handleSubmit}
+                    >
+                        Apply
+                    </button>
+                </div>
             </form>
         </DialogBox>
     )

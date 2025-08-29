@@ -201,7 +201,7 @@ function ProductExchange() {
                                                         className="w-full h-full object-fill rounded-2xl border border-[rgb(196,185,185)]"
                                                     />
                                                     <button
-                                                        className="absolute -top-2 -right-2 bg-black text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
+                                                        className="absolute -top-2 -right-2 bg-[rgb(8,43,61)] text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             removeImage(index);
@@ -212,7 +212,7 @@ function ProductExchange() {
                                                 </>
                                             ) : (
                                                 <div className="h-full w-full rounded-2xl flex flex-col justify-center items-center border-[2px] border-dashed border-[rgb(196,185,185)]">
-                                                    <i className="fi fi-rs-cloud-upload text-2xl"></i>
+                                                    <i className="fi fi-sr-camera-viewfinder text-2xl"></i>
                                                     <span>Image{index + 1}</span>
                                                 </div>
                                             )}

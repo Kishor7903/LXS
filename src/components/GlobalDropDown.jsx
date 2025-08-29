@@ -73,7 +73,7 @@ const GlobalDropdown = ({
       <div
         ref={triggerRef}
         key={selected}
-        className={`bg-[rgb(8,43,61)] rounded-full pl-2 pr-1 py-[3px] text-[11px] font-bold cursor-pointer flex items-center gap-1 ${className}`}
+        className={`bg-[rgb(8,43,61)] rounded-[7px] pl-2 pr-1 py-[3px] text-[11px] font-bold cursor-pointer flex items-center gap-1 ${className}`}
         onClick={openDropdown}
       >
         <span>{placeholder} : {renderLabel(selected)}</span>

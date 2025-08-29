@@ -74,10 +74,10 @@ function ShopSettingWishlist() {
 								wishlistItems?.map((item, index) => (
 									<div key={index} className="bg-slate-100 flex gap-2 justify-between items-center border border-slate-300 shadow-md rounded-xl w-[99%] mx-auto p-2 pr-5 lg:hover:scale-[1.01] lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] lg:hover:duration-200 cursor-pointer" onClick={() => navigate(`/product-details/${item.id}`)}>
 										<div className="flex gap-2">
-											<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1" >
+											<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1 shadow-muted" >
 												<img
 													src={item.images[0]}
-													className="h-24 w-full object-fill rounded border"
+													className="h-24 w-full object-fill rounded"
 												/>
 											</div>
 											<div className="">
@@ -96,7 +96,7 @@ function ShopSettingWishlist() {
 												cart.some((p) => p.item_id === item.id) ? (
 													<span className='text-[9px] mt-1 lg:text-[13px] mb-2 font-medium text-center leading-[1] text-[rgb(34,197,94)] flex gap-1'>Added to Basket <i className="fi fi-rs-check-circle relative text-[13px] "></i></span>
 												) : (
-													<HoverButton onClick={(e) => { e.stopPropagation(), moveToCart(e, item.id) }} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1 rounded-xl'>Add to Basket</HoverButton>
+													<HoverButton onClick={(e) => { e.stopPropagation(), moveToCart(e, item.id) }} className='text-[13px] font-semibold px-2 text-nowrap py-[5px] mb-1 rounded-xl border-slate-300 shadow-md bg-white'>Add to Basket</HoverButton>
 												)
 											}
 											<p onClick={(e) => { e.stopPropagation(), deleteItemFromWishlist(e, item.id) }} className="text-xs text-blue-400 tracking-tighter font-medium cursor-pointer lg:hover:underline">Remove</p>

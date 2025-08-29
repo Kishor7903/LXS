@@ -18,7 +18,7 @@ function GlobalLoader({ onFinish }) {
   };
 
   return (
-    <div className="w-screen h-screen fixed z-50 top-0 left-0 items-center justify-center bg-black">
+    <div className="w-screen h-screen fixed z-50 top-0 left-0 items-center justify-center bg-[rgb(8,43,61)]">
       <video
         src={loader}
         autoPlay

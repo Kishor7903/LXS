@@ -71,13 +71,13 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
         <DialogBox
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            className="w-[550px] p-6 bg-white rounded-xl flex flex-col"
+            className="w-[550px] p-6 bg-white rounded-3xl flex flex-col items-center"
             parentDivClassName="flex justify-center items-center"
         >
-            <h2 className="text-center text-xl font-semibold flex gap-1 justify-center items-center">
-                Edit User Info
+            <h2 className="text-center text-2xl rounded-2xl font-bold border-b border-slate-300 shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white w-80">
+            Edit User Info !
             </h2>
-            <form autoComplete="off">
+            <form autoComplete="off" className="w-full">
                 <div className="">
                     <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">
                         {" "}
@@ -181,13 +181,13 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
             </form>
             <div className="flex justify-center gap-6 mt-5">
                 <button
-                    className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
+                    className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-xl lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
                     onClick={handleCancelButton}
                 >
                     Cancel
                 </button>
                 <button
-                    className={`h-10 w-28 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white ${!isEdited ? "select-none cursor-not-allowed opacity-40" : "cursor-pointer lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] active:scale-[0.95]"}`}
+                    className={`h-10 w-28 rounded-xl font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white ${!isEdited ? "select-none cursor-not-allowed opacity-40" : "cursor-pointer lg:hover:scale-[1.1] duration-200 lg:active:scale-[0.95]"}`}
                     onClick={isEdited ? handleSubmit : null}
                     disabled={isEdited === false}
                 >

@@ -197,8 +197,8 @@ function ShopSettingsLayout() {
                     <div className="flex flex-col items-end h-full text-sm pt-5 relative">
                         {
                             settingItems.map((item, index) => (
-                                <NavLink to={item.slug} key={index} className={({ isActive }) => `h-8 w-full flex flex-col items-end font-semibold  ${isActive ? "text-[rgb(253,84,120)]" : ""}`}>
-                                    <span onClick={() => handleDropdown(index)} className="flex justify-end lg:hover:bg-slate-200 w-full px-2 py-1 rounded-[8px]">{item.name} <img src={`${location.includes(item.slug) || (item.childrens && openDropdown) ? item.activeIcon : item.icon}`} alt="" className="h-5 ml-2" /></span>
+                                <NavLink to={item.slug} key={index} className={({ isActive }) => `h-9 w-full 2xl:w-[95%] flex flex-col justify-center items-end font-semibold rounded-[8px] lg:hover:bg-slate-200 ${isActive ? "text-[rgb(253,84,120)]" : ""}`}>
+                                    <span onClick={() => handleDropdown(index)} className="flex justify-end w-full px-2 py-1">{item.name} <img src={`${location.includes(item.slug) || (item.childrens && openDropdown) ? item.activeIcon : item.icon}`} alt="" className="h-5 ml-2" /></span>
                                     {/* {
                                         index === 6 && openDropdown ? (
                                             <div className="mr-5">

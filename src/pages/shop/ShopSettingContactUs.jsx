@@ -1,5 +1,6 @@
 import DialogBox from "@/components/DialogBox";
 import { useToast } from "@/components/ToastProvider";
+import { uploadImage } from "@/firebase/admin";
 import { addNewReportAndIssue, talkToAnAgent } from "@/firebase/auth";
 import { uploadToCloudinary } from "@/firebase/cloudinary";
 import { useEffect, useRef, useState } from "react";
@@ -20,7 +21,6 @@ function ShopSettingContactUs() {
     const [previews, setPreviews] = useState([null, null, null, null, null]);
     const [files, setFiles] = useState([null, null, null, null, null]);
     const [uploadedUrls, setUploadedUrls] = useState([null, null, null, null, null]);
-    const [publicIds, setPublicIds] = useState([null, null, null, null, null]);
     const [isEnabled, setIsEnabled] = useState(false);
     const fileInputs = useRef([]);
     const toast = useToast();
@@ -64,7 +64,18 @@ function ShopSettingContactUs() {
 
     const handleImageChange = (e, index) => {
         const file = e.target.files[0];
-        if (file && file.type.startsWith('image/')) {
+
+        if (file) {
+            if (!file.type.startsWith("image/")) {
+                toast("Please select a valid image file.");
+                return;
+            }
+
+            if (file.size > 1024 * 1024) { // 1MB = 1048576 bytes
+                toast("Image size must be less than 1 MB.");
+                return;
+            }
+
             const newPreviews = [...previews];
             const newFiles = [...files];
             newPreviews[index] = URL.createObjectURL(file);
@@ -120,27 +131,24 @@ function ShopSettingContactUs() {
     };
 
     const handleReportIssueSubmit = async () => {
+        if (!formData.reason || !formData.description) {
+            toast("Required all fields!")
+            return;
+        }
         const urls = [...uploadedUrls];
-        const ids = [...publicIds];
 
         for (let i = 0; i < files.length; i++) {
             if (files[i]) {
-                let response = await uploadToCloudinary(files[i]);
-                urls[i] = response?.url;
-                ids[i] = response?.public_id
+                await uploadImage(files[i], `Report Issue`).then((res) => {
+                    urls[i] = res;
+                })
             }
         }
 
-        let imageData = {
-            urls,
-            ids
-        }
-
-        addNewReportAndIssue(formData, imageData, user).then(() => {
+        addNewReportAndIssue({ ...formData, urls }, user).then(() => {
             setFiles([null, null, null, null, null]);
             setPreviews([null, null, null, null, null]);
             setUploadedUrls([null, null, null, null, null]);
-            setPublicIds([null, null, null, null, null]);
 
             toast("Issue Send Successfully...")
         })
@@ -194,6 +202,7 @@ function ShopSettingContactUs() {
 
         updateState(); // Run once on mount
         const interval = setInterval(updateState, 60 * 1000); // Update every minute
+        setFormData(data);
 
         return () => clearInterval(interval); // Cleanup
     }, []);
@@ -226,7 +235,7 @@ function ShopSettingContactUs() {
                 </div>
             </div>
             <div className="border w-[40%] h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
-            <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-[40vw] bg-white rounded-xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
+            <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-[40vw] bg-white rounded-3xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
                 <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
                     Talk to an Agent
                 </h2>
@@ -249,15 +258,15 @@ function ShopSettingContactUs() {
                     <button className={`h-9 px-4 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white flex justify-center items-center ${isEnabled ? "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" : "opacity-60 cursor-not-allowed"}`} onClick={handleTalkToAgentConfirm} disabled={isEnabled === false}>{!isEnabled ? <i className="fi fi-br-ban relative top-[2px] mr-1 text-red-500"></i> : null}{isEnabled ? "Request Callback" : "Retry on Working Hours"}</button>
                 </div>
             </DialogBox>
-            <DialogBox isOpen={open} setIsOpen={setOpen} className="min-w-[35vw]  bg-white rounded-xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
-                <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
-                    Report an Issue
+            <DialogBox isOpen={open} setIsOpen={setOpen} className="min-w-[35vw] bg-white rounded-3xl flex flex-col p-8 items-center overflow-hidden" parentDivClassName="flex justify-center items-center">
+                <h2 className="text-center text-2xl rounded-2xl font-bold border-b border-slate-300 shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white w-80">
+                    Report an Issue !
                 </h2>
-                <form className="px-6">
+                <form className="w-full">
                     <div className="">
-                        <label name="reason" value={formData.reason} onChange={handleChange} className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Reason<span className="text-red-600">*</span></label>
+                        <label name="reason"className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Reason<span className="text-red-600">*</span></label>
                         <br />
-                        <select name='category' value={formData.category} onChange={handleChange} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
+                        <select name='reason' value={formData.reason} onChange={handleChange} className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none">
                             {
                                 reasonOptions.map((opt, idx) => (
                                     <option key={idx} value={opt}>{opt}</option>
@@ -268,11 +277,11 @@ function ShopSettingContactUs() {
                     <div className="">
                         <label className="relative top-2 left-3 pl-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Describe in Details<span className="text-red-600">*</span></label>
                         <br />
-                        <textarea name='description' value={formData.description} onChange={handleChange} className='border-[rgb(196,185,185)] border px-3 rounded-xl h-32 leading-4 w-full outline-none py-[6px]' autoComplete='off'></textarea>
+                        <textarea name='description' value={formData.description} onChange={handleChange} className='border-[rgb(196,185,185)] border px-3 rounded-xl h-32 leading-4 w-full outline-none py-2' autoComplete='off'></textarea>
                     </div>
-                    <label className="mt-2 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Proof of Issue (file size max 1 MB)<span className="text-red-600">*</span></label>
+                    <label className="mt-2 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Proof of Issue (Only <span className="font-semibold text-[rgb(8,43,61)]">.jpg </span>and <span className="font-semibold text-[rgb(8,43,61)]">.png </span>image files are allowed. Maximum file size: <span className="font-semibold text-[rgb(8,43,61)]">1 MB</span>.)</label>
                     <br />
-                    <div className="flex gap-4 mt-3">
+                    <div className="flex gap-4 mt-1">
                         {previews.map((image, index) => (
                             <div
                                 key={index}
@@ -296,7 +305,7 @@ function ShopSettingContactUs() {
                                             className="w-full h-full object-fill rounded-2xl border border-[rgb(196,185,185)]"
                                         />
                                         <button
-                                            className="absolute -top-2 -right-2 bg-black text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
+                                            className="absolute -top-2 -right-2 bg-[rgb(8,43,61)] text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 removeImage(index);
@@ -306,18 +315,17 @@ function ShopSettingContactUs() {
                                         </button>
                                     </>
                                 ) : (
-                                    <div className="h-full w-full rounded-2xl flex flex-col justify-center items-center border-[2px] border-dashed border-[rgb(196,185,185)]">
-                                        <i className="fi fi-rs-cloud-upload text-2xl"></i>
-                                        <span>Image{index + 1}</span>
+                                    <div className="h-full w-full rounded-2xl flex flex-col justify-center items-center border-[2px] border-dashed border-[rgb(8,43,61)]">
+                                        <i className="fi fi-sr-camera-viewfinder text-3xl text-[rgb(8,43,61)] relative top-1"></i>
                                     </div>
                                 )}
                             </div>
                         ))}
                     </div>
                 </form>
-                <div className='flex justify-center gap-6 py-5'>
-                    <button className='border-2 font-semibold border-[rgb(8,43,61)] h-9 w-24 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white' onClick={(e) => { e.preventDefault(), setOpen(false) }} >Cancel</button>
-                    <button className='h-9 w-24 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]' onClick={handleReportIssueSubmit}>Report</button>
+                <div className='flex justify-center gap-8 mt-7'>
+                    <button className='border-2 font-semibold border-[rgb(8,43,61)] h-12 w-60 rounded-xl lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white' onClick={(e) => { e.preventDefault(), setOpen(false) }} >Cancel</button>
+                    <button className='h-12 w-60 rounded-xl font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:scale-[1.05] duration-200 lg:active:scale-[0.98]' onClick={handleReportIssueSubmit}>Report</button>
                 </div>
             </DialogBox>
         </div>

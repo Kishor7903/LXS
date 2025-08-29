@@ -161,6 +161,7 @@ function AddNewBlogPopup({ isOpen, setIsOpen, data, form, setForm, currentEditId
                 urls = res
             })
         }
+        console.log({...form, img_url: urls});
         editBlog(currentEditId, {...form, img_url: urls}).then(() => {
             dispatch(editABlog({...form, img_url: urls, id: currentEditId}))
             setIsOpen(false);
@@ -208,7 +209,7 @@ function AddNewBlogPopup({ isOpen, setIsOpen, data, form, setForm, currentEditId
                                     className="w-full h-full object-fill rounded-2xl border border-[rgb(196,185,185)]"
                                 />
                                 <button
-                                    className="absolute -top-2 -right-2 bg-black text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
+                                    className="absolute -top-2 -right-2 bg-[rgb(8,43,61)] text-white text-lg rounded-full w-5 h-5 flex items-center justify-center shadow"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         removeImage();
@@ -223,7 +224,7 @@ function AddNewBlogPopup({ isOpen, setIsOpen, data, form, setForm, currentEditId
 
                             (
                                 <label htmlFor="image" className="h-full w-full rounded-2xl flex flex-col justify-center items-center border-[2px] border-dashed border-[rgb(196,185,185)] cursor-pointer">
-                                    <i className="fi fi-rs-cloud-upload text-[70px]"></i>
+                                    <i className="fi fi-sr-camera-viewfinder text-[70px]"></i>
                                     <span className='text-xl'>Image</span>
                                 </label>
                             )}

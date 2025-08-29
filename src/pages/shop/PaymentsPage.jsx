@@ -230,7 +230,7 @@ function PaymentsPage() {
                                             <input type="text" value={formattedNumber} onChange={handleGiftCardNumberChange} className='bg-white px-3 h-8 text-[12px] font-medium rounded-xl w-full mt-2 outline-none shadow-md border border-slate-300' placeholder='Enter Gift Card Number' />
                                             <input type="text" value={pinNumber} onChange={handleGiftCardPinChange} className='bg-white px-3 h-8 text-[12px] font-medium rounded-xl w-full mt-2 outline-none shadow-md border border-slate-300' placeholder='Enter Gift Card Pin' />
                                         </div>
-                                        <HoverButton className="h-8 px-4 text-sm font-semibold self-end rounded-xl">Apply</HoverButton>
+                                        <HoverButton className="h-8 px-4 text-sm font-semibold self-end rounded-xl bg-[rgb(8,43,61)] text-white lg:hover:scale-[1.05] lg:active:scale-[0.95] duration-200">Apply</HoverButton>
                                     </div>
                                 </div>
                                 <div className="">
@@ -272,14 +272,14 @@ function PaymentsPage() {
                                         cartItems.map((product, idx) => (
                                             <div key={idx}>
                                                 <div key={idx} className=" gap-4 flex items-center">
-                                                    <img src={product.images[0]} alt="" className='h-16 rounded-[6px]' />
+                                                    <img src={product.images[0]} alt="" className='h-16 rounded-[6px] shadow-md' />
                                                     <div className="flex flex-col">
                                                         <p className='font-semibold opacity-70 line-clamp-1'>{product.name}</p>
                                                         <p className='text-xs'>Estimated Delivery by <span className='font-semibold'>{formattedDate}</span></p>
                                                     <div className="flex gap-3 items-center text-xs">
                                                         {
                                                             product?.size.map((size, i) => (
-                                                                <p key={i} className='px-1.5 py-0.5 my-0.5 border bg-white border-slate-300 rounded-full font-medium'>Size{i+1}: <span className="text-[rgb(253,84,120)] font-bold ">{size}</span></p>
+                                                                <p key={i} className='px-1.5 py-0.5 my-0.5 shadow-md bg-white border-slate-300 rounded-[6px] font-medium'>Size {i+1}: <span className="text-[rgb(253,84,120)] font-bold ">{size}</span></p>
                                                             ))
                                                         }
                                                     </div>
@@ -298,7 +298,7 @@ function PaymentsPage() {
                                 <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300 font-medium bg-slate-100'><span className='text-[rgb(253,84,120)] font-semibold text-xs'>Please Note:</span> If you cancel any item after pickup but before delivery, all items in the same shipment will be cancelled. However, items in separate shipments will continue to be delivered if already in transit.</p>
                                 <div className="w-full flex gap-2 text-sm">
                                     <input type="text" className="px-3 h-8 text-[12px] font-medium rounded-xl w-full outline-none shadow-md border border-slate-300" placeholder="Apply Coupons" />
-                                    <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white rounded-xl ">Apply</button>
+                                    <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] rounded-xl bg-[rgb(8,43,61)] text-white lg:hover:scale-[1.05] lg:active:scale-[0.95] duration-200">Apply</button>
                                 </div>
                                 <div className="w-full">
                                     <div className="leading-3 font-semibold">
@@ -312,7 +312,7 @@ function PaymentsPage() {
                                         <span className="flex justify-between text-xs">Payment Method: <p className="text-blue-500">{paymentOptions[paymentMode]?.type}</p></span>
                                         <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                     </div>
-                                    <button className={`w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 flex gap-2 justify-center items-center ${paymentMode === "" ? "cursor-not-allowed opacity-50" : "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"}`} onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
+                                    <button className={`w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 flex gap-2 justify-center items-center ${paymentMode === "" ? "cursor-not-allowed opacity-50" : "lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"}`} onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
                                     <p className='opacity-70 font-medium text-[11px] mt-1 text-center'>(You can tell your Brother and Sister to Pay, bcoz Sharing is Caring 💸😅)</p>
                                 </div>
                             </div>

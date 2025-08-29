@@ -44,22 +44,22 @@ function AdminPickupWarehouse() {
                             <div key={index} className="w-[96%] flex justify-between items-center gap-20 mx-auto border rounded px-5 py-3 text-slate-700 bg-gray-50">
                                 <div className="grid grid-cols-2 w-[82%]">
                                     <div className="py-2">
-                                        <p className="text-black leading-5">Warehouse Name : <span className="font-semibold">{warehouse.warehouseName}</span></p>
+                                        <p className="text-[rgb(8,43,61)] leading-5">Warehouse Name : <span className="font-semibold">{warehouse.warehouseName}</span></p>
                                     </div>
                                     <div className="py-2">
-                                        <p className="text-black leading-5">Warehouse ID : <span className="font-semibold">{warehouse.warehouseId}</span></p>
+                                        <p className="text-[rgb(8,43,61)] leading-5">Warehouse ID : <span className="font-semibold">{warehouse.warehouseId}</span></p>
                                     </div>
                                     <div className="py-2">
-                                        <p className="text-black leading-5">Seller Name : <span className="font-semibold">{warehouse.contactName}</span></p>
+                                        <p className="text-[rgb(8,43,61)] leading-5">Seller Name : <span className="font-semibold">{warehouse.contactName}</span></p>
                                     </div>
                                     <div className="py-2">
-                                        <p className="text-black leading-5">Seller Address 1 : <span className="font-semibold">{warehouse.addressLine1}</span></p>
+                                        <p className="text-[rgb(8,43,61)] leading-5">Seller Address 1 : <span className="font-semibold">{warehouse.addressLine1}</span></p>
                                     </div>
                                     <div className="py-2">
-                                        <p className="text-black leading-5">Seller Phone No. : <span className="font-semibold">{warehouse.phoneNumber}</span></p>
+                                        <p className="text-[rgb(8,43,61)] leading-5">Seller Phone No. : <span className="font-semibold">{warehouse.phoneNumber}</span></p>
                                     </div>
                                     <div className="py-2">
-                                        <p className="text-black leading-5">Seller Email : <span className="font-semibold">{warehouse.email}</span></p>
+                                        <p className="text-[rgb(8,43,61)] leading-5">Seller Email : <span className="font-semibold">{warehouse.email}</span></p>
                                     </div>
                                 </div>
 

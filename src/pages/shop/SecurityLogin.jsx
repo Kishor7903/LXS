@@ -1,65 +1,42 @@
+import { Switch } from '@/components/ui/switch';
 import { useEffect, useState } from 'react'
 
 function SecurityLogin() {
     let [IP, setIP] = useState("");
-
-    const securityData = [
+    const [securityData, setSecurityData] = useState([
         {
-            name: "Two Factor Authentication(2FA)",
-            content: [
-                {
-                    key: "Authenticator app",
-                    value: "False",
-                    slug: ""
-                },
-                {
-                    key: "SMS Verification",
-                    value: "False",
-                    slug: ""
-                },
-                {
-                    key: "Email Verification",
-                    value: "False",
-                    slug: ""
-                },
-            ],
+          name: "Two Factor Authentication(2FA)",
+          content: [
+            { key: "Authenticator app", value: false, switch: true },
+            { key: "SMS Verification", value: false, switch: true },
+            { key: "Email Verification", value: false, switch: true },
+          ],
         },
         {
-            name: "Logged In Device",
-            subHeading: IP,
-            content: [
-                {
-                    key: "Log out from All Devices:",
-                    value: "View All"
-                }
-            ]
-        }
-    ]
-
-    // const [security, setSecurity] = useState({
-    //     // "password management": {
-    //     //     "change password:": "change",
-    //     //     "forgot password:": "forgot",
-    //     // },
-    //     "two factor authentication(2FA)": {
-    //         "Authenticator app": false,
-    //         "SMS Verification": false,
-    //         "Email verification": false
-    //     },
-    //     "Logged In Devices": {
-    //         "log out from all devices:": "view all",
-    //     },
-    // });
-
-    const toggleSetting = (category, key) => {
-        setSettings((prev) => ({
-            ...prev,
-            [category]: {
-                ...prev[category],
-                [key]: !prev[category][key],
+          name: "Logged In Device",
+          subHeading: "", // will be updated with IP
+          content: [
+            {
+              key: "Log out from All Devices:",
+              value: "View All",
+              switch: false,
             },
-        }));
-    };
+          ],
+        },
+      ]);
+
+    const toggleSetting = (sectionIndex, itemIndex) => {
+        setSecurityData((prev) => {
+          const updated = [...prev];
+          updated[sectionIndex] = { ...updated[sectionIndex] };
+          updated[sectionIndex].content = [...updated[sectionIndex].content];
+          updated[sectionIndex].content[itemIndex] = {
+            ...updated[sectionIndex].content[itemIndex],
+            value: !updated[sectionIndex].content[itemIndex].value,
+          };
+          return updated;
+        });
+      };
 
     useEffect(() => {
         const fetchIP = async () => {
@@ -95,12 +72,22 @@ function SecurityLogin() {
                                     }
                                 </div>
                                 <div className="space-y-1 text-xs leading-3 mt-2 flex flex-col gap-1 font-medium ml-3">
-                                    {items.content.map((item, idx) => (
-                                        <div key={idx} className="">
-                                            <span key={idx} className="capitalize mr-3 ">{item.key}</span>
-                                            <span to={item.slug} className="capitalize text-[rgb(253,84,120)] ">{item.value}</span>
-                                        </div>
-                                    ))}
+                                    {items.content.map((item, idx) =>
+                                        item.switch ?
+                                            <div key={idx} className="flex justify-between items-center">
+                                                <span className="capitalize">{item.key}</span>
+                                                <Switch
+                                                    checked={item.value}
+                                                    onCheckedChange={() => toggleSetting(index, idx)}
+                                                    className="data-[state=unchecked]:bg-slate-100"
+                                                />
+                                            </div>
+                                            :
+                                            <div key={idx} className="">
+                                                <span key={idx} className="capitalize mr-3 ">{item.key}</span>
+                                                <span to={item.slug} className="capitalize text-[rgb(253,84,120)] ">{item.value}</span>
+                                            </div>
+                                    )}
                                 </div>
                             </div>
                         ))

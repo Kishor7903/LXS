@@ -140,7 +140,7 @@ function ShopSettingSavedAddresses() {
 											<p className="text-[14px] font-semibold">{item.state}</p>
 										</div>
 										<div className="absolute bottom-3 right-2 flex flex-col gap-1 justify-center items-center">
-											<HoverButton className="px-3 text-sm font-medium rounded-[8px]" onClick={(e) => handleAddressEditButton(e, item)} icon={editIcon} iconActive={editIconActive} iconClassName="h-4">Edit</HoverButton>
+											<HoverButton className="px-3 text-sm font-medium rounded-[8px] bg-white border-slate-300 shadow-md" onClick={(e) => handleAddressEditButton(e, item)} icon={editIcon} iconActive={editIconActive} iconClassName="h-4">Edit</HoverButton>
 											{
 												item.isDefault !== true ? (
 													<span className="cursor-pointer lg:hover:underline text-xs text-blue-500 font-semibold right-[22px]" onClick={() => { setConfirmPopupOpen(true), setDeleteItemId(item.id) }}>Delete</span>

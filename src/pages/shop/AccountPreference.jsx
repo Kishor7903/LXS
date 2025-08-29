@@ -14,19 +14,19 @@ function AccountPreference() {
                 },
                 {
                     key: "membership status:",
-                    value: "Free",
+                    value: "Basic (Free)",
                     slug: ""
                 },
-                {
-                    key: "subscription plan:",
-                    value: "Basic (Upgrade)",
-                    slug: ""
-                },
-                {
-                    key: "renewal data:",
-                    value: "12 Aug, 2025",
-                    slug: ""
-                },
+                // {
+                //     key: "subscription plan:",
+                //     value: "Basic (Upgrade)",
+                //     slug: ""
+                // },
+                // {
+                //     key: "renewal data:",
+                //     value: "12 Aug, 2025",
+                //     slug: ""
+                // },
                 {
                     key: "account creation date & time:",
                     value: `${user.timestamp}`,

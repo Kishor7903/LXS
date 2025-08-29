@@ -107,7 +107,7 @@ export const loginUser = async (formData) => {
 
 export const logoutUser = async () => {
     try {
-        localStorage.clear();
+        sessionStorage.clear();
     } catch (error) {
         console.log("Logout Error: ", error.message);
     }
@@ -503,27 +503,19 @@ export const removeUserFromTalkToAgents = async (user_id) => {
     }
 };
 
-export const addNewReportAndIssue = async (formData, imageData, user) => {
+export const addNewReportAndIssue = async (data, user) => {
     try {
         const newIssue = {
-            title: formData.title,
-            description: formData.description,
+            reason: data.reason,
+            description: data.description,
             user_id: user.uid,
-            images: imageData.urls,
-            imagesId: imageData.ids,
-            timestamp: new Date().toLocaleString("en-US", {
-                month: "short",
-                day: "2-digit",
-                year: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-            }),
+            images: data.urls,
+            timestamp: getTimestamp()
         };
 
         const userReference = collection(fireDB, "Report-and-Issue");
 
-        addDoc(userReference, newIssue);
+        await addDoc(userReference, newIssue);
     } catch (error) {
         console.log("Adding New Report and Issue: ", error.message);
     }

@@ -7,6 +7,7 @@ import accountIcon from "../assets/commonIcons/Account.png";
 import popupMenuIcon from "../assets/commonIcons/Popup Menu (Fill).png";
 import LoginButtonAndDialogBox from "./LoginButtonAndDialogBox";
 import customOrderIcon from "../assets/More (Title Bar)/Custom (Stroke).png";
+import flagIcon from "../assets/commonIcons/IND Bg frame.png"
 import customOrderIconActive from "../assets/More (Title Bar)/Custom (Fill).png";
 import bulkOrderIcon from "../assets/More (Title Bar)/Bulk Order (Stroke).png";
 import bulkOrderIconActive from "../assets/More (Title Bar)/Bulk Order (Fill).png";
@@ -22,11 +23,14 @@ import aboutUsIconActive from "../assets/commonIcons/About Us (Fill).png";
 import moreIcon from "../assets/commonIcons/More (Stroke).png";
 import moreIconFill from "../assets/commonIcons/More (Fill).png";
 import logoutRedIcon from "../assets/commonIcons/Log Out (Fill) Pink.png";
+import logoutWhiteIcon from "../assets/commonIcons/Log Out (Fill) White.png";
 import productsIcon from "../assets/commonIcons/Products (Stroke).png";
 import productsIconActive from "../assets/commonIcons/Products (Fill).png";
 import subscriptionIcon from "../assets/commonIcons/Subscription (Stroke).png";
 import subscriptionIconActive from "../assets/commonIcons/Subscription (Fill).png";
 import notificationIconFill from "../assets/commonIcons/Updates (Fill).png";
+import editIcon from "../assets/commonIcons/Edit (Fill).png"
+import editIconActive from "../assets/commonIcons/Edit White (Fill).png"
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LxsLogo from "./LxsLogo";
@@ -46,6 +50,8 @@ import { useToast } from "./ToastProvider";
 function Header({ className }) {
 	const [userState, setUserState] = useState("login");
 	const [isHovered, setIsHovered] = useState(false);
+	const [isHoveredEdit, setIsHoveredEdit] = useState(false);
+	const [isHoveredLogout, setIsHoveredLogout] = useState(false);
 	const [isSheetOpen, setIsSheetOpen] = useState(false);
 	const [openIndex, setOpenIndex] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
@@ -243,7 +249,7 @@ function Header({ className }) {
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
 								transition={{ duration: 0.2, ease: "easeInOut" }}  // faster fade out
-								className="fixed inset-0 bg-black bg-opacity-50 z-30 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4"
+								className="fixed inset-0 bg-[rgb(8,43,61)] bg-opacity-50 z-30 flex py-2 lg:py-0 2xl:py-5 pl-3 lg:pl-4"
 							>
 								<motion.div
 									ref={dialogRef}
@@ -428,15 +434,41 @@ function Header({ className }) {
 												<span className="text-base font-semibold flex items-center text-center leading-4 mr-1 pr-1 pl-2">{`${user.name.split(" ")[0]}`} </span>
 												<i className={`fi fi-br-angle-small-down text-lg relative duration-200 ${userPopup ? "top-1 right-[2px]" : "-rotate-90"}`}></i>
 											</div>
-											<DialogBox isOpen={userPopup} setIsOpen={setUserPopup} className="w-[300px] p-6 bg-white rounded-xl flex flex-col gap-4" parentDivClassName="flex justify-center items-center">
-												<div className="h-14 w-full bg-slate-200 rounded-2xl flex items-center px-2 gap-3 shadow-[0px_0px_10px_-2px_rgb(8,43,61)]">
-													<img src={accountIcon} alt="" className="h-12" />
-													<div className="flex flex-col relative top-[2px]">
-														<p className="text-base font-semibold leading-4">{user?.name}</p>
-														<p className="text-sm font-medium">Type: User Account</p>
+											<DialogBox isOpen={userPopup} setIsOpen={setUserPopup} className="p-6 bg-white rounded-3xl flex flex-col gap-6" parentDivClassName="flex justify-center items-center">
+												<div className="w-full bg-slate-100 rounded-2xl flex items-center py-3 px-5 gap-5 shadow-md border border-slate-300">
+													<div className="relative">
+														<img src={flagIcon} alt="" className="h-56 rounded-full" />
+														<img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-[212px] w-[212px] absolute top-[6px] left-[6px] border-[3px] border-slate-100 rounded-full" />
+													</div>
+													<div className="flex flex-col items-start gap-3">
+														<div className="flex flex-col relative top-[2px] border border-slate-300 rounded-xl pt-2 pb-1 px-5 bg-white shadow-md">
+															<p className="text-2xl font-semibold leading-4">{user?.name}</p>
+															<p className="text-sm font-medium text-center text-[rgb(253,84,120)]">User Account</p>
+														</div>
+														<div className="flex flex-col gap-y-2 gap-x-10 text-[13px]" >
+															<div className="flex flex-col leading-4">
+																<p>Phone No</p>
+																<p className="text-[16px] font-semibold">{user.phone}</p>
+															</div>
+															<div className="flex flex-col leading-4">
+																<p>Date of Birth </p>
+																<p className="text-[16px] font-semibold">{`${user.DOB.split("-")[2]}-${user.DOB.split("-")[1]}-${user.DOB.split("-")[0]}`}</p>
+															</div>
+															<div className="flex flex-col leading-4">
+																<p>Gender</p>
+																<p className="text-[16px] font-semibold">{user.gender}</p>
+															</div>
+															<div className="flex flex-col leading-4">
+																<p>Email</p>
+																<p className="text-[16px] font-semibold">{user.email}</p>
+															</div>
+														</div>
 													</div>
 												</div>
-												<HoverButton className="h-8 w-full text-lg flex justify-center items-center border-" >Add +</HoverButton>
+												<div className="flex gap-6">
+												<button onClick={() => navigate("/setting/my-account")} onMouseEnter={() => setIsHoveredEdit(true)} onMouseLeave={() => setIsHoveredEdit(false)} className="h-12 w-full text-lg flex justify-center items-center border border-slate-300 shadow-md rounded-xl font-semibold duration-200 lg:hover:bg-[rgb(8,43,61)] lg:active:scale-[0.93] lg:hover:text-white"><img src={isHoveredEdit ? editIconActive : editIcon} alt="" className="h-5 mr-4" />Edit Profile</button>
+												<button onClick={handleLogout} onMouseEnter={() => setIsHoveredLogout(true)} onMouseLeave={() => setIsHoveredLogout(false)} className="h-12 w-full text-lg flex justify-center items-center border-2 border-[rgb(253,84,120)] lg:hover:bg-[rgb(253,84,120)] shadow-md rounded-xl text-[rgb(253,84,120)] lg:active:scale-[0.93] lg:hover:text-white font-semibold duration-200"><img src={isHoveredLogout ? logoutWhiteIcon : logoutRedIcon} alt="" className="h-5 mr-4" />Logout</button>
+												</div>
 											</DialogBox>
 										</>
 

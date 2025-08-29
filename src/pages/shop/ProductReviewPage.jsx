@@ -20,8 +20,6 @@ function ProductReviewPage() {
     const [files, setFiles] = useState([null, null, null, null]);
     const [uploadedUrls, setUploadedUrls] = useState([null, null, null, null]);
     let [productRating, setProductRating] = useState(0);
-    let [deliveryRating, setDeliveryRating] = useState(0);
-    let [sellerRating, setSellerRating] = useState(0);
     let [order, setOrder] = useState(null);
     let [product, setProduct] = useState(null);
     let [open, setOpen] = useState(false);

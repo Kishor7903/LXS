@@ -34,7 +34,17 @@ function ShopSettingMyOrders() {
                     </span>
                     <div className="flex text-right gap-3 text-[12px] self-end mb-1 font-semibold leading-4">
                         <p>Total Orders: <span className="text-[rgb(253,84,120)]">{order.length > 9 ? order.length : `0${order.length}`}</span></p>
-                        <p>Total Items: <span className="text-[rgb(253,84,120)]">{order.reduce((sum, product) => { return sum + product.products.length }, 0) > 9 ? order.reduce((sum, product) => { return sum + product.products.length }, 0) : `0${order.reduce((sum, product) => { return sum + product.products.length }, 0)}`}</span></p>
+                        <p>
+                            Total Items:{" "}
+                            <span className="text-[rgb(253,84,120)]">
+                                {(() => {
+                                    const ids = order.flatMap(o => o.products.map(p => p.id));
+                                    const uniqueIds = new Set(ids);
+                                    const count = uniqueIds.size;
+                                    return count > 9 ? count : `0${count}`;
+                                })()}
+                            </span>
+                        </p>
                         <p>Total Quantity: <span className="text-[rgb(253,84,120)]">
                             {(() => {
                                 let total = order.reduce((sum, product) => {
@@ -56,10 +66,10 @@ function ShopSettingMyOrders() {
                                             item.products.map((product, idx) => (
                                                 <div key={product.id} className="w-full">
                                                     <div key={idx} className={`flex w-full relative`}>
-                                                        <div className="w-16 rounded-[6px] overflow-hidden mr-3">
+                                                        <div className="w-16 rounded-[6px] overflow-hidden mr-3 shadow-md">
                                                             <img
                                                                 src={product.image}
-                                                                className="h-full w-full object-fill rounded border"
+                                                                className="h-full w-full object-fill rounded"
                                                             />
                                                         </div>
                                                         <div className="w-full">

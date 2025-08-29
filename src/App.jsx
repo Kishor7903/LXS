@@ -239,8 +239,8 @@ function App() {
 					</CheckAuth>
 				}>
 					<Route path="dashboard" element={<AdminDashboard />} />
-					<Route path="carousel" element={<AdminCarousel />} />
-					<Route path="promotional-banners" element={<AdminPromotionalBanners />} />
+					{/* <Route path="carousel" element={<AdminCarousel />} />
+					<Route path="promotional-banners" element={<AdminPromotionalBanners />} /> */}
 					<Route path="products" element={<AdminProducts />} />
 					<Route path="pickup-warehouse" element={<AdminPickupWarehouse />} />
 					<Route path="orders" element={<AdminOrders />} />

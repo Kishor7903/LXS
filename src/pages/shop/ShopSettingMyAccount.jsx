@@ -40,16 +40,16 @@ function ShopSettingMyAccount() {
                 <div className="leading-[1] font-semibold h-10">Mission Control 🚀 <br />
                     <p className="text-xs font-normal">Because you are the boss of your Shopping Universe!</p>
                 </div>
-                <div className="space-y-3 mt-2 h-full overflow-y-scroll no-scrollbar">
-                    <div className="bg-slate-100 py-3 px-5 border border-slate-300 flex items-center rounded-xl mx-5 relative shadow-md">
+                <div className="space-y-3 mt-2 h-full overflow-y-scroll no-scrollbar mx-2">
+                    <div className="bg-slate-100 py-3 px-5 border border-slate-300 flex items-center rounded-xl relative shadow-md">
                         <div className="relative mr-4">
                             <img src={flagIcon} alt="" className="h-16 rounded-full" />
                             <img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-14 w-14 absolute top-1 left-1 rounded-full" />
                         </div>
                         <p className="text-2xl h-10 leading-[0.7] font-bold relative top-1">{user.name} <br /> <span className="text-base font-medium text-[rgb(253,84,120)]">User Account</span></p>
-                        <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium rounded-[8px]" onClick={handleProfilePicEditButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
+                        <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium rounded-[8px] border-slate-300 shadow-md bg-white" onClick={handleProfilePicEditButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
                     </div>
-                    <div className="bg-slate-100 flex flex-col gap-2 border border-slate-300 rounded-xl mx-5 relative py-3 px-5 shadow-md">
+                    <div className="bg-slate-100 flex flex-col gap-2 border border-slate-300 rounded-xl relative py-3 px-5 shadow-md">
                         <h6 className="font-bold">Personal Information</h6>
                         <div className="grid grid-rows-3 grid-cols-2 gap-y-2 gap-x-10">
                             <p className="text-[12px] leading-[1.1]">Full Name <br /> <span className="text-[15px] font-semibold">{user.name}</span></p>
@@ -57,8 +57,8 @@ function ShopSettingMyAccount() {
                             <p className="text-[12px] leading-[1.1]">Phone No. <br /> <span className="text-[15px] font-semibold">+91 {user.phone}</span></p>
                             <p className="text-[12px] leading-[1.1]">Alternate Phone No. <br /> <span className="text-[15px] font-semibold">{user?.altPhone ? `+91 ${user.altPhone}` : "_"}</span></p>
                             <p className="text-[12px] leading-[1.1]">Email <br /> <span className="text-[15px] font-semibold">{user.email}</span></p>
-                            <p className="text-[12px] leading-[1.1]">Date of Birth <br /> <span className="text-[15px] font-semibold">{user.DOB}</span></p>
-                            <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium rounded-[8px]" onClick={handleEditPersonalInfoButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
+                            <p className="text-[12px] leading-[1.1]">Date of Birth <br /> <span className="text-[15px] font-semibold">{`${user.DOB.split("-")[2]}-${user.DOB.split("-")[1]}-${user.DOB.split("-")[0]}`}</span></p>
+                            <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium rounded-[8px] border-slate-300 shadow-md bg-white" onClick={handleEditPersonalInfoButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
                         </div>
                     </div>
                 </div>

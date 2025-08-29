@@ -119,7 +119,7 @@ function AdminProducts() {
                                         <img src={product.images[0]} alt="" className="h-full w-full object-fill" />
                                     </div>
                                     <div className="py-2 col-span-3 flex flex-col justify-between relative bottom-1">
-                                        <p className="font-bold text-black text-lg leading-5">{product.name}</p>
+                                        <p className="font-bold text-[rgb(8,43,61)] text-lg leading-5">{product.name}</p>
                                         <p className="tracking-tighter">Price: <s className="text-slate-500 mx-1 text-sm">₹{product.price}</s> ₹{product.salePrice}</p>
                                     </div>
                                     <div className="py-2 col-span-2 flex flex-col justify-between relative bottom-1">

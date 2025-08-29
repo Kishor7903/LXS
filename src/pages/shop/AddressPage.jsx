@@ -81,7 +81,7 @@ function AddressPage({ cartItems }) {
                             <p className="text-xs font-normal">Where should we warp your delivery? Input your Earth-based coordinates</p></span>
                         <span className="text-sm font-semibold flex items-center gap-1"><img src={secureIcon} alt="" className="h-7" /> 100% Secure</span>
                     </div>
-                    <div className="flex flex-col gap-2 rounded-3xl relative py-5 px-4 lg:p-8 shadow-[0px_0px_10px_-2px_rgb(8,43,61)] lg:min-h-[80vh]">
+                    <div className="flex flex-col gap-4 rounded-3xl relative py-5 px-4 lg:p-8 shadow-[0px_0px_10px_-2px_rgb(8,43,61)] lg:min-h-[80vh]">
                         <CheckoutNavigator />
                         <div className="w-full flex flex-col lg:flex-row gap-8">
                             <div className="w-full lg:w-[60%] space-y-4">
@@ -127,7 +127,7 @@ function AddressPage({ cartItems }) {
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                 </div>
-                                <button className="w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)] lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={handleContinueToPayment}>Continue To Payment<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
+                                <button className="w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150" onClick={handleContinueToPayment}>Continue To Payment<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i></button>
                             </div>
                         </div>
                     </div>
