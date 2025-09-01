@@ -190,7 +190,7 @@ function App() {
 						<UserLayout />
 					</CheckAuth>
 				} >
-					<Route path="recent-viewed-products" element={<RecentViewedProducts />} />
+					
 				</Route>
 				<Route path="/setting" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
@@ -232,6 +232,7 @@ function App() {
 					<Route path="returned-and-cancelled-orders" element={<ReturnedAndCancelled />} />
 					<Route path="track-orders" element={<TrackOrders />} />
 					<Route path="custom-orders" element={<CustomOrders />} />
+					<Route path="recent-viewed-products" element={<RecentViewedProducts />} />
 				</Route>
 				<Route path="/admin" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
@@ -245,7 +246,7 @@ function App() {
 					<Route path="pickup-warehouse" element={<AdminPickupWarehouse />} />
 					<Route path="orders" element={<AdminOrders />} />
 					<Route path="blogs" element={<AdminBlogs />} />
-					<Route path="reviews" element={<AdminReviews />} />
+					<Route path="ratings-reviews" element={<AdminReviews />} />
 					<Route path="event-gallery" element={<EventGallery />} />
 					<Route path="sellers" element={<AdminSellers />} />
 					<Route path="newsletter" element={<AdminNewsletter />} />

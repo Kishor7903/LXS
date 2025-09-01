@@ -165,3 +165,18 @@ export const sendPushNotification = async (token, title, body) => {
     return response.data;
 }
   
+// export const getPdfFromDocx = async (file) => {
+//     let response = await axios.post(
+//         "/lxslifestylestore-8935b/us-central1/convertDocxToPdf",
+//         {
+//             ...file
+//         },
+//         {
+//             headers: {
+//                 "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+//             },
+//         }
+//     )
+//     console.log(response.data);
+//     return response.data;
+// }

@@ -182,7 +182,7 @@ function ShopSettingsLayout() {
     return (
         <>
             <Header className="h-16" />
-            <div className="flex w-full h-[calc(100vh-64px)]">
+            <main className="flex w-full h-[calc(100vh-64px)]">
                 <div className="w-[16%] 2xl:w-[14%] flex flex-col pl-5 py-5">
                     {/* <div className="h-[13%] w-full flex items-center px-5 gap-1">
                         <div>
@@ -228,7 +228,7 @@ function ShopSettingsLayout() {
                     </div>
                 </div>
                 <div className="w-[84%] 2xl:w-[86%] m-5 rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-hidden"><Outlet /></div>
-            </div>
+            </main>
         </>
     )
 }

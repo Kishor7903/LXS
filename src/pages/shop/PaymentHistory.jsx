@@ -1,10 +1,13 @@
+import Breadcrumb from "@/components/Breadcrum"
+
+let breadcrum = ["My Account", "Dashboard", "Payment History"];
 
 
 function PaymentHistory() {
     return (
         <div className="flex gap-10 h-[calc(100vh-104px)] rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border m-5 px-5 py-5 overflow-hidden">
             <div className="pl-5 w-[65%]">
-            <p className="font-medium text-sm">My Account {">"} Dashboard {">"} <span className="text-[rgb(253,84,120)] font-semibold">Payment History</span></p>
+            <Breadcrumb items={breadcrum} />
                 <div className="w-full flex gap-10 mt-4 ml-4">
                 <div className="w-full flex items-center pb-2">
                         <div className="leading-[1] font-semibold">Mission Expenses 📜<br />

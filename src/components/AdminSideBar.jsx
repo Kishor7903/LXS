@@ -97,11 +97,11 @@ function AdminSideBar() {
     ]
 
     return (
-        <div className="h-[92vh] flex flex-col justify-between fixed w-[16%] border-r shadow-sm py-3 px-1 text-[rgb(8,43,61,0.8)] top-[70px]">
+        <div className="h-[calc(100vh-64px)] w-[16vw] flex flex-col justify-between border-r py-3 px-1 text-[rgb(8,43,61,0.8)]">
             <div className="flex flex-col items-end">
                 {
                     navItems.map((item, index) => (
-                        <NavLink key={index} to={item.slug} className={({ isActive }) => `hover:bg-slate-200 w-[97%] px-3 text-right py-2 rounded-[6px] ${isActive ? "font-semibold text-[rgb(8,43,61)]" : ""}`}>{item.name}<i className={`${item.icon} relative top-[2px] ml-2`} ></i></NavLink>
+                        <NavLink key={index} to={item.slug} className={({ isActive }) => `hover:bg-slate-200 w-full px-3 text-right py-2 rounded-[6px] font-medium text-[17px] ${isActive ? "font-semibold text-[rgb(8,43,61)]" : ""}`}>{item.name}<i className={`${item.icon} relative top-[2px] ml-2`} ></i></NavLink>
                     ))
                 }
             </div>

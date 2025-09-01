@@ -14,6 +14,7 @@ import starIconStroke from "../assets/commonIcons/Rewards 2 (Stroke).png"
 import starIconFill from "../assets/commonIcons/Rewards 2 (Fill).png"
 import { addWebsiteReview } from "@/firebase/auth"
 import { useToast } from "./ToastProvider"
+import { useSelector } from "react-redux"
 
 let menu = [
     {
@@ -89,6 +90,7 @@ let menu = [
 function Footer() {
     let [isHovered, setIsHovered] = useState(false);
     let [isOpen, setIsOpen] = useState(false);
+    let { user } = useSelector(state => state.auth);
     let [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -126,8 +128,12 @@ function Footer() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!formData.name || !formData.description || !formData.email || formData.rating === 0) {
+            toast("Required all fields !");
+            return
+        }
 
-        addWebsiteReview(formData).then(() => {
+        addWebsiteReview({ ...formData, userId: user ? user.id : null }).then(() => {
             toast("Reviewed Successfully");
             setIsOpen(false);
             setFormData({
@@ -167,22 +173,22 @@ function Footer() {
                         </div>
                     </div>
                     <div className="flex gap-6 ">
-                        <div className="w-44 py-2 rounded-xl px-[14px] flex items-center gap-2 cursor-pointer lg:hover:scale-[1.05] bg-slate-100 border border-slate-300 shadow-md lg:active:scale-[0.98] duration-150">
+                        <div className="w-44 py-2 rounded-xl px-[14px] flex items-center gap-2 cursor-pointer lg:hover:scale-[1.05] bg-slate-100 border border-slate-300 shadow-md lg:active:scale-[0.98] duration-200">
                             <img src={playStoreImg} alt="" className="h-9" />
                             <div className="flex flex-col justify-center items-start h-10">
-                            <p className="text-[11px] font-medium">ADDING SOON ON</p>
+                                <p className="text-[11px] font-medium">ADDING SOON ON</p>
                                 <p className="text-base font-semibold leading-4">Play Store</p>
                             </div>
                         </div>
-                        <div className="w-44 py-2 rounded-xl px-[14px] flex items-center gap-2 cursor-pointer lg:hover:scale-[1.03] bg-slate-100 border border-slate-300 shadow-md lg:active:scale-[0.98] duration-150">
+                        <div className="w-44 py-2 rounded-xl px-[14px] flex items-center gap-2 cursor-pointer lg:hover:scale-[1.05] bg-slate-100 border border-slate-300 shadow-md lg:active:scale-[0.98] duration-200">
                             <img src={appStoreImg} alt="" className="h-9" />
                             <div className="flex flex-col justify-center items-start h-10">
                                 <p className="text-[11px] font-medium">ADDING SOON ON</p>
                                 <p className="text-base font-semibold leading-4">App Store</p>
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
 
                 </div>
@@ -208,7 +214,7 @@ function Footer() {
             <div className="bg-[rgb(8,43,61)] text-white flex flex-col px-3 py-5 gap-2 lg:gap-5 w-full overflow-hidden text-xs lg:text-sm">
                 <div className="flex flex-col items-center justify-between lg:w-full lg:flex-row gap-2 lg:gap-20 mx-auto lg:px-[85px]">
                     <div className="text-slate-400 text-left w-[35%]"><p>Don't test me, I'm watching 👁👁</p><p>Copyright &copy; {date.getFullYear()} LXS Lifestyle Store - All Trademark & Rights Reserved</p><p>Peek at our Secrets <Link to="/blank" className="font-medium text-slate-300 lg:hover:underline active:underline ml-1 text-xs">View</Link></p></div>
-                    <button className="text-white px-3 flex justify-center items-center gap-1 h-10 rounded-xl border border-white lg:hover:bg-white lg:hover:text-[rgb(8,43,61)] font-medium" onClick={(e) => { e.preventDefault(), setIsOpen(true) }} onMouseEnter={() => setIsHovered(true)} onMouseOut={() => setIsHovered(false)}><i className={`${isHovered ? "fi fi-sr-file-edit" : "fi fi-rr-file-edit"} relative top-[1px] `}></i> Write Website Review</button>
+                    <button className="text-white px-3 flex justify-center items-center gap-1 h-10 rounded-xl border border-white lg:hover:bg-white lg:hover:text-[rgb(8,43,61)] font-medium" onClick={(e) => { e.preventDefault(), setIsOpen(true) }} onMouseEnter={() => setIsHovered(true)} onMouseOut={() => setIsHovered(false)}><i className='fi fi-sr-file-edit relative top-[1px]'></i> Write Website Review</button>
                     <div className="text-slate-400 text-right w-[35%]"><p>Attention, Earthlings! This starship—uhh, I mean</p><p>This website - is officially Operated by LXSLIFESTYLESTORE (OPC) PRIVATE LIMITED</p>
                         <p className="space-x-5"><span>Director: Sachin Kumar</span><span>GSTIN: 20AAGCL3501L1ZW</span></p></div>
                 </div>
@@ -218,35 +224,37 @@ function Footer() {
                 <DialogBox
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
-                    className="w-[32vw] bg-white rounded-xl flex flex-col overflow-hidden"
+                    className="w-[38vw] bg-white rounded-3xl flex flex-col items-center py-6 px-10 overflow-hidden"
                     parentDivClassName="flex justify-center items-center"
                 >
-                    <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
-                        🌌 Write Your Review of the LXS Universe 🛸
+                    <h2 className="text-center text-2xl rounded-2xl font-bold border-b border-slate-300 shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white w-96">
+                        Rate the LXS Universe 🛸
                     </h2>
-                    <p className="px-10 text-sm leading-4 pt-5 italic">"Tell us about your journey through the LXS website — what stood out, what felt smooth, and how the experience was overall. Also, rate your visit from 1 to 5 stars to help guide future explorers across the galaxy ⭐"</p>
-                    <form autoComplete="off" className="px-10 space-y-4 py-5 text-sm font-semibold">
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" className="h-9 rounded-full w-full px-4 border border-[rgb(8,43,61)] outline-none" />
-                        <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="h-9 rounded-full w-full px-4 border border-[rgb(8,43,61)] outline-none" />
-                        <textarea type="text" name="description" value={formData.description} onChange={handleChange} placeholder="Write Website Review" className="h-32 rounded-xl w-full px-4 py-2 border border-[rgb(8,43,61)] outline-none" ></textarea>
+                    <p className="text-sm leading-4 pt-5 italic">"Tell us about your journey through the LXS Website — what stood out, what felt smooth, and how the experience was overall. <br /> Also, rate your visit from 1 to 5 stars to help guide future explorers across the galaxy ⭐"</p>
+                    <form autoComplete="off" className="space-y-5 py-5 text-sm font-medium w-full">
+                        <div className="flex gap-5">
+                            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" className="h-9 rounded-xl w-full px-4 border border-slate-300 shadow-md outline-none" />
+                            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="h-9 rounded-xl w-full px-4 border border-slate-300 shadow-md outline-none" />
+                        </div>
+                        <textarea type="text" name="description" value={formData.description} onChange={handleChange} placeholder="Write Website Review" className="h-32 rounded-xl w-full px-4 py-2 border border-slate-300 shadow-md outline-none" ></textarea>
                     </form>
-                    <div className="flex justify-between items-center px-10 mb-7">
-                        <div className="flex justify-between gap-1 mr-2">
+                    <div className="flex justify-between items-center w-full">
+                        <div className="flex justify-between gap-2 mr-2">
                             {
                                 [1, 2, 3, 4, 5].map((item, index) => (
-                                    <img key={index} src={item <= formData.rating ? starIconFill : starIconStroke} alt="" className="h-9 cursor-pointer" onClick={(e) => { e.preventDefault(), setFormData({ ...formData, rating: item }) }} />
+                                    <img key={index} src={item <= formData.rating ? starIconFill : starIconStroke} alt="" className="h-10 cursor-pointer" onClick={(e) => { e.preventDefault(), setFormData({ ...formData, rating: item }) }} />
                                 ))
                             }
                         </div>
-                        <div className="space-x-2">
+                        <div className="space-x-4">
                             <button
-                                className="border-2 font-semibold border-[rgb(8,43,61)] h-9 w-[82px] rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"
+                                className="border-2 font-semibold border-[rgb(8,43,61)] h-10 px-5 rounded-xl lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.97]"
                                 onClick={handleCancelButton}
                             >
                                 Cancel
                             </button>
                             <button
-                                className="h-9 w-[82px] rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]"
+                                className="h-10 px-5 rounded-xl lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.97] font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white"
                                 onClick={handleSubmit}
                             >
                                 Submit

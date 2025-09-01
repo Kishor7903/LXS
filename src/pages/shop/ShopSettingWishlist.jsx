@@ -74,7 +74,7 @@ function ShopSettingWishlist() {
 								wishlistItems?.map((item, index) => (
 									<div key={index} className="bg-slate-100 flex gap-2 justify-between items-center border border-slate-300 shadow-md rounded-xl w-[99%] mx-auto p-2 pr-5 lg:hover:scale-[1.01] lg:hover:shadow-[0px_0px_10px_-1px_rgb(8,43,61)] lg:hover:duration-200 cursor-pointer" onClick={() => navigate(`/product-details/${item.id}`)}>
 										<div className="flex gap-2">
-											<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1 shadow-muted" >
+											<div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1 shadow-md" >
 												<img
 													src={item.images[0]}
 													className="h-24 w-full object-fill rounded"

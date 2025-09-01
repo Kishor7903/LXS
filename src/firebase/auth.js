@@ -430,15 +430,8 @@ export const saveNewsletterInfo = async (email) => {
         const dataReference = collection(fireDB, "Newsletter");
 
         await addDoc(dataReference, {
-            email,
-            timestamp: new Date().toLocaleString("en-US", {
-                month: "short",
-                day: "2-digit",
-                year: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-            }),
+            ...email,
+            timestamp: getTimestamp(),
         });
     } catch (error) {
         console.log("Newsletter Info Save Error: ", error.message);
@@ -546,15 +539,12 @@ export const addNewRecentProduct = async (user_id, item, maxItems = 50) => {
         const existingQ = query(userRef, where("item_id", "==", item.item_id));
         const existingSnap = await getDocs(existingQ);
 
-        if (!existingSnap.empty) {
-            // If exists, delete the old one
-            await deleteDoc(existingSnap.docs[0].ref);
+        for (const docSnap of existingSnap.docs) {
+            await deleteDoc(doc(fireDB, "user", user_id, "Recently Viewed", docSnap.id));
         }
 
         // Add new document with timestamp
-        await setDoc(doc(userRef), {
-            ...item,
-        });
+        await addDoc(userRef, item);
 
         // Limit to maxItems (keep most recent)
         const recentQ = query(userRef, orderBy("timestamp", "desc"));
@@ -562,7 +552,7 @@ export const addNewRecentProduct = async (user_id, item, maxItems = 50) => {
         if (recentSnap.docs.length > maxItems) {
             const docsToDelete = recentSnap.docs.slice(maxItems);
             for (const docSnap of docsToDelete) {
-              await deleteDoc(docSnap.ref);
+              await deleteDoc(doc(fireDB, "user", user_id, "Recently Viewed", docSnap.id));
             }
         }
 
@@ -598,7 +588,7 @@ export const getAllRecentPoducts = async (user_id) => {
 export const addWebsiteReview = async (formData) => {
     try {
         let docRef = collection(fireDB, "Website Reviews");
-        await addDoc(docRef, formData);
+        await addDoc(docRef, {...formData, timestamp: getTimestamp()});
     } catch (error) {
         console.log("Adding New Website Review Error: ", error.message);
     }
@@ -644,7 +634,7 @@ export const getReviewsByProduct = async (productId) => {
 export const getAllReviewsByUser = async (userId) => {
     try {
         const reviewsRef = collection(fireDB, "Reviews");
-        const q = query(reviewsRef, where("userId", "==", userId));
+        const q = query(reviewsRef, where("userId", "==", userId))
         const snapshot = await getDocs(q);
 
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -661,6 +651,17 @@ export const getReviewById = async (itemId) => {
         return {id: docSnap.id, ...docSnap.data()}
     } catch (error) {
         console.log("Getting review by Id Error: ", error.message);
+    }
+}
+
+export const getWebsiteReview = async () => {
+    try {
+        const reviewsRef = collection(fireDB, "Website Reviews");
+        const snapshot = await getDocs(reviewsRef);
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+        console.log("Getting website review by user error: ", error.message);
     }
 }
 

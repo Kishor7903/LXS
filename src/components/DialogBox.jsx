@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 function DialogBox({ isOpen, setIsOpen, className, children, parentDivClassName }) {
     const dialogRef = useRef(null);
+    let location = useLocation().pathname;
 
     const handleClickOutside = (event) => {
         if (dialogRef.current && !dialogRef.current.contains(event.target)) {
@@ -36,7 +38,7 @@ function DialogBox({ isOpen, setIsOpen, className, children, parentDivClassName 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen absolute z-40">
             {isOpen && (
-                <div className={`fixed inset-0 flex bg-[rgb(8,43,61)] bg-opacity-50 z-40 ${parentDivClassName}`}>
+                <div className={`fixed inset-0 flex ${location === "/orders/recent-viewed-products" ? "bg-[rgb(8,43,61,0.2)]" : "bg-[rgb(8,43,61,0.5)]"} z-40 ${parentDivClassName}`}>
                     <motion.div
                         ref={dialogRef}
                         initial={{ scale: 0.8, opacity: 0 }}

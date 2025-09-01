@@ -4,6 +4,8 @@ import { addProduct, editProduct, uploadImage } from '@/firebase/admin';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewProduct, updateProduct } from '@/store/features/adminSlice';
 import { useToast } from './ToastProvider';
+import HoverButton from './HoverButton';
+import RgbButton from './RgbButton';
 
 let category = ['Select', 'Mens', 'Womens', 'Kids'];
 let subCategory = ['Select', 'T-Shirts', 'Shirts', 'Jeans', 'Sweatshirts', 'Hoddies', 'Shoes', 'Watches', 'Shorts', 'Joggers'];
@@ -233,7 +235,7 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
 
     return (
         <div className='h-12'>
-            <button className="bg-blue-600 text-white font-medium px-4 py-2 rounded-[6px] border items-end" onClick={handleAddProductButton}>+ Create New</button>
+            <HoverButton className="border-2 rounded-xl px-4 py-1.5 font-semibold" onClick={handleAddProductButton} >Add New Product</HoverButton>
 
             <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="w-[80vw] p-6 bg-white rounded-[30px] flex flex-col" parentDivClassName="flex justify-center items-center">
                 <h2 className='text-center text-2xl font-semibold'>{currentEditId === null ? "Add Product" : "Edit Product"}</h2>
@@ -488,8 +490,8 @@ function AddProductButtonAndPopup({ isOpen, setIsOpen, productData, formData, se
                     </div>
                 </form>
                 <div className='flex justify-center gap-10 mt-7'>
-                    <button onClick={() => setIsOpen(false)} className='bg-slate-800 text-white rounded h-12 px-10' >Cancel</button>
-                    <button onClick={currentEditId === null ? handleAddProductSubmit : handleEditProductSubmit} className='bg-blue-600 text-white rounded h-12 px-10' >{currentEditId === null ? "Upload" : "Edit"}</button>
+                    <HoverButton className="px-8 h-12 rounded-xl font-semibold border-2 lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.97]" onClick={() => setIsOpen(false)}>Cancel</HoverButton>
+                    <RgbButton className='text-lg px-8 h-12 font-semibold lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.97]' onClick={currentEditId === null ? handleAddProductSubmit : handleEditProductSubmit}>{currentEditId === null ? "Submit" : "Edit"}</RgbButton>
                 </div>
             </DialogBox>
 

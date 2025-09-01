@@ -5,38 +5,38 @@ function SecurityLogin() {
     let [IP, setIP] = useState("");
     const [securityData, setSecurityData] = useState([
         {
-          name: "Two Factor Authentication(2FA)",
-          content: [
-            { key: "Authenticator app", value: false, switch: true },
-            { key: "SMS Verification", value: false, switch: true },
-            { key: "Email Verification", value: false, switch: true },
-          ],
+            name: "Two Factor Authentication(2FA)",
+            content: [
+                { key: "Authenticator app", value: false, switch: true },
+                { key: "SMS Verification", value: false, switch: true },
+                { key: "Email Verification", value: false, switch: true },
+            ],
         },
         {
-          name: "Logged In Device",
-          subHeading: "", // will be updated with IP
-          content: [
-            {
-              key: "Log out from All Devices:",
-              value: "View All",
-              switch: false,
-            },
-          ],
+            name: "Logged In Device",
+            subHeading: true,
+            content: [
+                {
+                    key: "Log out from All Devices:",
+                    value: "View All",
+                    switch: false,
+                },
+            ],
         },
-      ]);
+    ]);
 
     const toggleSetting = (sectionIndex, itemIndex) => {
         setSecurityData((prev) => {
-          const updated = [...prev];
-          updated[sectionIndex] = { ...updated[sectionIndex] };
-          updated[sectionIndex].content = [...updated[sectionIndex].content];
-          updated[sectionIndex].content[itemIndex] = {
-            ...updated[sectionIndex].content[itemIndex],
-            value: !updated[sectionIndex].content[itemIndex].value,
-          };
-          return updated;
+            const updated = [...prev];
+            updated[sectionIndex] = { ...updated[sectionIndex] };
+            updated[sectionIndex].content = [...updated[sectionIndex].content];
+            updated[sectionIndex].content[itemIndex] = {
+                ...updated[sectionIndex].content[itemIndex],
+                value: !updated[sectionIndex].content[itemIndex].value,
+            };
+            return updated;
         });
-      };
+    };
 
     useEffect(() => {
         const fetchIP = async () => {
@@ -66,8 +66,8 @@ function SecurityLogin() {
                                 <div key={index} className="flex gap-5 items-center justify-between">
                                     <h3 className="font-bold tracking-wide text-lg capitalize">{items.name}</h3>
                                     {
-                                        items?.subHeading && (
-                                            <span className='text-sm font-semibold opacity-70'>(Detected IP 🌍: {items.subHeading})</span>
+                                        IP && items.subHeading && (
+                                            <span className='text-sm font-semibold opacity-70'>(Detected IP 🌍: {IP})</span>
                                         )
                                     }
                                 </div>

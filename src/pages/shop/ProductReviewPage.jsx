@@ -11,7 +11,6 @@ import { useToast } from "@/components/ToastProvider";
 import { addNewReview, getReviewById, updateOrderInfo } from "@/firebase/auth";
 import { editProduct, uploadImage } from "@/firebase/admin";
 import SizeSelectionPopup from "@/components/SizeSelectionPopup";
-import { Link } from "react-router-dom"
 import { updateOrder } from "@/store/features/cartSlice";
 
 
@@ -36,19 +35,7 @@ function ProductReviewPage() {
     let { orderId, productId } = useParams();
 
 
-    let items = [
-        {
-            label: "Your Orders",
-            path: "/setting/my-orders"
-        },
-        {
-            label: "Orders Details",
-            path: `/orders/order-details/${orderId}`
-        },
-        {
-            label: "Product Reviews",
-        },
-    ]
+    let breadcrum = ["My Account", "Orders", "Order Details", "Product Review"];
 
     const handleChange = (e) => {
         setReviewData({
@@ -135,7 +122,7 @@ function ProductReviewPage() {
             let orderProducts = orders.find((i) => i.id === orderId).products.filter((i) => i.id !== productId);
             let updatedOrder = orders.find((i) => i.id === orderId);
             updateOrderInfo(user.id, orderId, { products: [...orderProducts, { ...newInfo, reviewId: id, isReviewed: true }] }).then(() => {
-                dispatch(updateOrder({...updatedOrder, products: [...orderProducts, {...newInfo, reviewId: id, isReviewed: true}]}))
+                dispatch(updateOrder({ ...updatedOrder, products: [...orderProducts, { ...newInfo, reviewId: id, isReviewed: true }] }))
             })
             toast("Submited Successfully.")
             navigate(-1)
@@ -156,12 +143,12 @@ function ProductReviewPage() {
         if (isEditedOrder?.isReviewed) {
             getReviewById(isEditedOrder?.reviewId).then((res) => {
                 setProductRating(res.productRating);
-                setReviewData({title: res.title, description: res.description});
+                setReviewData({ title: res.title, description: res.description });
                 let images = []
-                for(let i=0; i<4; i++){
-                    if(res.images[i]){
+                for (let i = 0; i < 4; i++) {
+                    if (res.images[i]) {
                         images.push(res.images[i]);
-                    }else{
+                    } else {
                         images.push(null);
                     }
                 }
@@ -172,9 +159,9 @@ function ProductReviewPage() {
 
     return (
         <div className="flex gap-10 h-[calc(100vh-104px)] rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border m-5 px-5 py-5 overflow-hidden">
-            <div className="pl-5 w-[65%] relative">
-                <Breadcrum items={items} />
-                <div className="w-full h-full flex flex-col gap-2 pl-4">
+            <div className="pl-5 w-[65%] relative overflow-hidden">
+                <Breadcrum items={breadcrum} />
+                <div className="w-full flex flex-col gap-2 pl-4">
                     <div className="flex justify-between">
                         <div className="leading-[1] font-semibold py-3">Feedback Hub ⭐<br />
                             <p className="text-xs font-normal">Where your insights light the way for fellow travelers.</p>
@@ -184,16 +171,23 @@ function ProductReviewPage() {
                             <p className="text-xl font-bold">LXS STORE</p>
                         </div>
                     </div>
-                    <div className="flex flex-col overflow-y-scroll no-scrollbar w-full h-full">
+                    <div className="flex flex-col overflow-y-scroll no-scrollbar w-full h-full ">
                         <div className="flex gap-5">
                             <img src={product?.image} alt="" className="w-32 rounded-2xl shadow-md" />
                             <div className="w-[85%] text-xs leading-4 flex flex-col items-start relative">
-                                {(() => {
-                                    let it = products.find((i) => i.id === productId);
-                                    if (it?.isLxsCertified === "Yes") {
-                                        return <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] py-0.5 pl-2 pr-4"><img src={lxsLogo} alt="" className="h-4" /> <span className="text-[11px] text-white font-medium">LXS Certified</span></div>
-                                    }
-                                })()}
+                                {
+                                    product?.isLxsCertified === "Yes" &&
+                                    <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]">
+                                        <img
+                                            src={lxsLogo}
+                                            alt=""
+                                            className="h-[12px]"
+                                        />{" "}
+                                        <span className="text-[10px] text-white font-medium">
+                                            LXS Certified
+                                        </span>
+                                    </div>
+                                }
 
                                 <h3 className="font-semibold text-xl text-[rgb(8,43,61,0.7)] w-[70%] line-clamp-1">{product?.productName}</h3>
                                 <p className="text-sm lg:text-[18px] leading-5 font-semibold">
@@ -220,8 +214,8 @@ function ProductReviewPage() {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full h-full flex gap-5 mt-20 relative">
-                            <div className="flex flex-wrap gap-x-10 h-[410px] w-[35%]">
+                        <div className="w-full flex gap-5 mt-5 2xl:mt-20 relative">
+                            <div className="flex flex-wrap gap-x-10 w-[35%]">
                                 {previews.map((image, index) => (
                                     <div
                                         key={index}
@@ -271,7 +265,7 @@ function ProductReviewPage() {
                                     }
                                 </div>
                                 <input name="title" value={reviewData.title} onChange={handleChange} type="text" className="h-10 w-[95%] rounded-xl border border-slate-300 shadow-md px-3 placeholder:font-medium font-medium text-[15px] outline-none" placeholder="Title" />
-                                <textarea name="description" value={reviewData.description} onChange={handleChange} className="h-[40%] w-[95%] rounded-2xl border border-slate-300 shadow-md text-[15px] px-3 py-2 placeholder:font-medium outline-none font-medium" placeholder="Description about the product.."></textarea>
+                                <textarea name="description" value={reviewData.description} onChange={handleChange} className="h-28 w-[95%] rounded-2xl border border-slate-300 shadow-md text-[15px] px-3 py-2 placeholder:font-medium outline-none font-medium" placeholder="Description about the product.."></textarea>
                                 <button onClick={handleReviewSubmit} className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] h-12 px-3 rounded-xl text-white text-lg font-semibold w-[95%] mr-10 lg:hover:scale-[1.03] lg:hover:shadow-md duration-200 lg:active:scale-[0.98]">Submit<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-3"></i></button>
                             </div>
                         </div>
@@ -281,15 +275,6 @@ function ProductReviewPage() {
                     item &&
                     <SizeSelectionPopup isOpen={open} setIsOpen={setOpen} item={item} selectedSize={selectedSize} setSelectedSize={setSelectedSize} />
                 }
-                <span className="text-[11px] font-medium lg:text-xs absolute bottom-0 right-0">
-                    Need Help?{" "}
-                    <Link
-                        to="/setting/contact-us"
-                        className="text-blue-500 lg:hover:underline font-bold"
-                    >
-                        Contact Us
-                    </Link>
-                </span>
             </div>
             <div className="w-[35%] h-[100%] rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)] border sticky top-[92px]"></div>
         </div>

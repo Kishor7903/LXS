@@ -81,7 +81,7 @@ function EditProfilePicPopup({ isOpen, setIsOpen, user }) {
         <DialogBox
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            className="py-8 px-10 bg-white rounded-3xl flex flex-col items-center"
+            className="py-6 px-10 bg-white rounded-3xl flex flex-col items-center"
             parentDivClassName="flex justify-center items-center"
         >
             <h2 className="text-center text-2xl rounded-2xl font-bold border-b border-slate-300 shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white w-96">

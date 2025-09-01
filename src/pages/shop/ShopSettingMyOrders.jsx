@@ -74,13 +74,11 @@ function ShopSettingMyOrders() {
                                                         </div>
                                                         <div className="w-full">
                                                             <div className="flex gap-2">
-                                                                {(() => {
-                                                                    let item = products.find((i) => i.id === product?.id);
-                                                                    if (item.isLxsCertified === "Yes") {
-                                                                        return <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[90px] px-2"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[8px] text-white font-medium">LXS Certified</span>
+                                                                {
+                                                                    product.isLxsCertified === "Yes" && 
+                                                                    <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[90px] px-2"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[8px] text-white font-medium">LXS Certified</span>
                                                                         </div>
-                                                                    }
-                                                                })()}
+                                                                }
                                                                 <p className="text-gray-500 text-[11px] uppercase font-bold line-clamp-1">Apparel & Fashion</p>
                                                                 <p className="text-xs ml-3 font-bold">Quantity: <span className="text-[rgb(253,84,120)]">{product.quantity < 10 ? `0${product.quantity}` : product.quantity}</span></p>
                                                             </div>

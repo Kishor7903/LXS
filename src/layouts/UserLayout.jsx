@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 function UserLayout() {
     return (
-        <div className='bg-[rgb(8,43,61)]'>
+        <div className=''>
             <Header className="h-16" />
             <Outlet />
         </div>

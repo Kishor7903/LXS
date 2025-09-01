@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
 import { useNavigate } from 'react-router-dom';
+import Breadcrumb from '@/components/Breadcrum';
 
 let options = { weekday: "long", day: '2-digit', month: 'short', year: 'numeric' };
+let breadcrum = ["My Account", "Dashboard", "Returned & Cancelled"];
 
 
 function ReturnedAndCancelled() {
@@ -24,7 +26,7 @@ function ReturnedAndCancelled() {
     return (
         <div className="flex gap-10 h-[calc(100vh-104px)] rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border m-5 px-5 py-5 overflow-hidden">
             <div className="pl-5 w-[65%]">
-                <p className="font-medium text-sm">My Account {">"} Dashboard {">"} <span className="text-[rgb(253,84,120)] font-semibold">Returned & Cancelled</span></p>
+                <Breadcrumb items={breadcrum} />
                 <div className="w-full flex gap-10 mt-4 ml-4">
                     <div className="w-full flex flex-col pb-2">
                     <div className="w-full flex items-end justify-between pb-2">
@@ -62,8 +64,11 @@ function ReturnedAndCancelled() {
                                                                 </div>
                                                                 <div className="w-full">
                                                                     <div className="flex gap-2">
+                                                                    {
+                                                                        product?.isLxsCertified === "Yes" &&
                                                                         <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[90px] px-2"><img src={lxsLogo} alt="" className="h-[12px]" /> <span className="text-[8px] text-white font-medium">LXS Certified</span>
                                                                         </div>
+                                                                    }
                                                                         <p className="text-gray-500 text-[11px] uppercase font-bold line-clamp-1">Apparel & Fashion</p>
                                                                         <p className="text-xs ml-3 font-bold">Quantity: <span className="text-[rgb(253,84,120)]">{product.quantity < 10 ? `0${product.quantity}` : product.quantity}</span></p>
                                                                     </div>

@@ -2,7 +2,7 @@ import DialogBox from "@/components/DialogBox";
 import HoverButton from "@/components/HoverButton";
 import RgbButton from "@/components/RgbButton";
 import { saveNewsletterInfo, saveWorkWithUsInfo } from "@/firebase/auth";
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useSelector } from "react-redux";
 import flagIcon from "../../assets/commonIcons/Indian Flag (Fill).png"
 import { useToast } from "@/components/ToastProvider";
@@ -24,6 +24,7 @@ function WorkWithUsAndNewsletter() {
     let [isOpen, setIsOpen] = useState(false);
     let [open, setOpen] = useState(false);
     const toast = useToast();
+    const fileInputs = useRef(null);
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -73,7 +74,12 @@ function WorkWithUsAndNewsletter() {
     const handleNewsletterSubmit = (e) => {
         e.preventDefault();
 
-        saveNewsletterInfo(email).then(() => {
+        if(!email){
+            toast("All Fields Required !");
+            return
+        }
+
+        saveNewsletterInfo({email, userId: user.id}).then(() => {
             setOpen(false)
             setEmail("");
             toast("Subscribed Successfully...")
@@ -93,26 +99,36 @@ function WorkWithUsAndNewsletter() {
                     <input name="email" value={formData.email} onChange={handleChange} className="w-full h-10 lg:h-12 bg-slate-100 rounded-[12px] lg:rounded-xl px-3 lg:px-5 focus:outline-none text-xs lg:text-base font-medium placeholder:text-[rgb(8,43,61,0.6)] shadow-md border border-slate-300" placeholder="Email" autoComplete="off" />
                     <input name="address" value={formData.address} onChange={handleChange} className="w-full h-10 lg:h-12 bg-slate-100 rounded-[12px] lg:rounded-xl px-3 lg:px-5 focus:outline-none text-xs lg:text-base font-medium placeholder:text-[rgb(8,43,61,0.6)] shadow-md border border-slate-300" placeholder="Full Address" autoComplete="off" />
                     <textarea name="describe" value={formData.describe} onChange={handleChange} className="w-full h-20 md:h-32 lg:h-40 bg-slate-100 rounded-[6px] lg:rounded-xl px-3 lg:px-5 text-xs md:text-base font-medium py-3 focus:outline-none placeholder:text-[rgb(8,43,61,0.6)] shadow-md border border-slate-300" placeholder="Describe!" cols="30" rows="10" autoComplete="off"></textarea>
-                    <div className="flex justify-between gap-4">
-                        <input name="skill" value={formData.skill} onChange={handleChange} className="w-[48%] h-10 lg:h-12 bg-slate-100 rounded-[12px] lg:rounded-xl px-3 lg:px-5 focus:outline-none text-xs lg:text-base font-medium placeholder:text-[rgb(8,43,61,0.6)] shadow-md border border-slate-300" placeholder="Your Skills" autoComplete="off" />
-                        <HoverButton className="px-4 h-12 flex justify-center items-center font-semibold self-end rounded-xl" onClick={workWithUsButton}>Submit</HoverButton>
+                    <div className="flex justify-between items-start gap-4">
+                        <div className="flex gap-4">
+                            <input name="skill" value={formData.skill} onChange={handleChange} className="w-[40%] h-10 lg:h-12 bg-slate-100 rounded-[12px] lg:rounded-xl px-3 lg:px-5 focus:outline-none text-xs lg:text-base font-medium placeholder:text-[rgb(8,43,61,0.6)] shadow-md border border-slate-300" placeholder="Your Skills" autoComplete="off" />
+                            <input
+                                id='resume'
+                                type="file"
+                                accept="application/pdf"
+                                className="hidden"
+                                ref={(el) => (fileInputs.current = el)}
+                            />
+                            <label htmlFor="resume" className="h-10 lg:h-12 flex gap-2 justify-center items-center bg-slate-100 rounded-[12px] lg:rounded-xl px-3 lg:px-5 focus:outline-none text-xs lg:text-base font-medium placeholder:text-[rgb(8,43,61,0.6)] shadow-md border border-slate-300 cursor-pointer text-[rgb(8,43,61,0.6)] lg:hover:text-[rgb(8,43,61  )]">Upload Resume<i className="fi fi-sr-file-upload relative top-[2px]"></i></label>
+                        </div>
+                        <HoverButton className="px-4 h-10 text-lg flex justify-center items-center font-semibold rounded-xl" onClick={workWithUsButton}>Submit</HoverButton>
                     </div>
                 </form>
-                <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="w-[40vw] bg-white rounded-[40px] flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
-                    <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 after:h-1 after:absolute after:w-40 after:left-6 after:bottom-0 after:bg-[rgb(8,43,61)] after:rounded-full">
-                        Work With Us!
+                <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="w-[40vw] bg-white rounded-3xl flex flex-col items-center py-6 px-10 overflow-hidden" parentDivClassName="flex justify-center items-center">
+                    <h2 className="text-center text-2xl rounded-2xl font-bold border-b border-slate-300 shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white w-80">
+                        Work With Us !
                     </h2>
-                    <div className="w-full px-8 py-5 flex flex-col">
+                    <div className="w-full flex flex-col">
                         <div className="flex space-x-5">
                             <div className="w-1/2 relative">
                                 <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Name</label>
                                 <br />
-                                <input type="text" value={formData.name} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
+                                <input type="text" value={formData.name} disabled className="border-slate-300 border px-3 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
                             </div>
                             <div className="w-1/2 relative">
                                 <label className="relative top-2 left-3 pl-1 pr-5 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium"> Phone<img src={flagIcon} alt="" className="h-2 absolute top-1 right-0 pr-1" /></label>
                                 <br />
-                                <input type="number" value={formData.phone} disabled className="border-[rgb(196,185,185)] border pr-3 pl-12 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
+                                <input type="number" value={formData.phone} disabled className="border-slate-300 border pr-3 pl-12 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
                                 <p className="absolute top-[32px] left-[8px]">+91</p>
                                 <hr className="border w-7 absolute left-[28px] opacity-30 top-[44px] rotate-90 border-[rgb(8,43,61)]" />
                             </div>
@@ -121,27 +137,27 @@ function WorkWithUsAndNewsletter() {
                             <div className="w-1/2 relative">
                                 <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Email</label>
                                 <br />
-                                <input type="text" value={formData.email} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
+                                <input type="text" value={formData.email} disabled className="border-slate-300 border px-3 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
                             </div>
                             <div className="w-1/2 relative">
                                 <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Skills</label>
                                 <br />
-                                <input type="text" value={formData.skill} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
+                                <input type="text" value={formData.skill} disabled className="border-slate-300 border px-3 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
                             </div>
                         </div>
                         <div className="">
                             <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Address</label>
                             <br />
-                            <input type="text" value={formData.address} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
+                            <input type="text" value={formData.address} disabled className="border-slate-300 border px-3 rounded-xl h-10 w-full outline-none bg-white shadow-md" />
                         </div>
                         <div className="mb-2">
                             <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Describe</label>
                             <br />
-                            <textarea value={formData.describe} disabled className="border-[rgb(196,185,185)] border px-3 py-1 rounded-xl h-44 w-full outline-none bg-white shadow-md leading-5" ></textarea>
+                            <textarea value={formData.describe} disabled className="border-slate-300 border px-3 py-1 rounded-xl h-44 w-full outline-none bg-white shadow-md leading-5" ></textarea>
                         </div>
                         <div className="flex gap-6 justify-center">
-                            <HoverButton onClick={() => setIsOpen(false)} className="px-6 py-2 border-2 font-semibold rounded-xl" >Cancel</HoverButton>
-                            <RgbButton onClick={handleWorkWithUsSubmit} className="text-base font-semibold px-6 py-2 rounded-xl" >Confirm</RgbButton>
+                            <HoverButton onClick={() => setIsOpen(false)} className="px-6 py-2 border-2 font-semibold rounded-xl lg:hover:scale-[1.05] duration-200 lg:active:scale-[0.97]" >Cancel</HoverButton>
+                            <RgbButton onClick={handleWorkWithUsSubmit} className="text-base font-semibold px-6 py-2 rounded-xl lg:hover:scale-[1.05] duration-200 lg:active:scale-[0.97]" >Confirm</RgbButton>
                         </div>
                     </div>
 
@@ -162,21 +178,21 @@ function WorkWithUsAndNewsletter() {
                 </span>
                 <form className="flex flex-col gap-4">
                     <textarea type="text" value={email} onChange={(e) => { e.preventDefault(), setEmail(e.target.value) }} className="h-9 xl:h-[128px] lg:h-10 w-full py-3 lg:px-5 mt-3 lg:mt-5 text-xs lg:text-base rounded-xl font-medium focus:outline-none placeholder:text-[rgb(8,43,61,0.4)] bg-slate-100 shadow-md border border-slate-300" placeholder="Cosmic Feedback..." ></textarea>
-                    <HoverButton className="px-4 h-12 flex justify-center items-center font-semibold self-end rounded-xl" onClick={(e) => email ? (e.preventDefault(), setOpen(true)) : (e.preventDefault(), toast("Please enter your email"))}>Transmit</HoverButton>
+                    <HoverButton className="px-4 h-10 text-lg flex justify-center items-center font-semibold self-end rounded-xl" onClick={(e) => email ? (e.preventDefault(), setOpen(true)) : (e.preventDefault(), toast("Please enter your email"))}>Transmit</HoverButton>
                 </form>
-                <DialogBox isOpen={open} setIsOpen={setOpen} className="w-[40vw] bg-white rounded-[40px] flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
-                    <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
+                <DialogBox isOpen={open} setIsOpen={setOpen} className="w-[40vw] bg-white rounded-3xl flex flex-col items-center py-6 px-10 overflow-hidden" parentDivClassName="flex justify-center items-center">
+                    <h2 className="text-center text-2xl rounded-2xl font-bold shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white">
                         Uplink your Thoughts! 🔮📡
                     </h2>
-                    <div className="w-full px-7 py-5 flex flex-col gap-5">
+                    <div className="w-full  flex flex-col gap-5">
                         <div className="">
                             <label className="relative top-2 left-3 px-1 bg-white text-[rgb(8,43,61,0.7)] text-xs font-medium">Feedback</label>
                             <br />
-                            <textarea type="text" value={email} disabled className="border-[rgb(196,185,185)] border px-3 rounded-xl h-56 w-full outline-none py-2 bg-white shadow-md leading-5" ></textarea>
+                            <textarea type="text" value={email} disabled className="border-slate-300 border px-3 rounded-xl h-56 w-full outline-none py-2 bg-white shadow-md leading-5" ></textarea>
                         </div>
                         <div className="flex gap-6 justify-center">
-                            <HoverButton onClick={() => setOpen(false)} className="px-6 py-2 border-2 font-semibold rounded-xl" >Cancel</HoverButton>
-                            <RgbButton onClick={handleNewsletterSubmit} className="text-base font-semibold px-6 py-2 rounded-xl" >Confirm</RgbButton>
+                            <HoverButton onClick={() => setOpen(false)} className="px-6 py-2 border-2 font-semibold rounded-xl lg:hover:scale-[1.05] duration-200 lg:active:scale-[0.97]" >Cancel</HoverButton>
+                            <RgbButton onClick={(e) => user ? handleNewsletterSubmit(e) : toast("Login First!")} className="text-base font-semibold px-6 py-2 rounded-xl lg:hover:scale-[1.05] duration-200 lg:active:scale-[0.97]" >Confirm</RgbButton>
                         </div>
                     </div>
 

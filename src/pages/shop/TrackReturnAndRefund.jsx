@@ -28,7 +28,7 @@ function TrackReturnAndRefund() {
                         <p className="mr-7">Ordered On 5 January, 2025</p>
                         <p className=" absolute right-0">
                             Tracking ID:{" "}
-                            <span className="lg:hover:underline text-blue-500 cursor-pointer">
+                            <span className="lg:hover:underline text-[rgb(59,130,246)] cursor-pointer">
                                 LSX2876GY12
                             </span>
                         </p>
@@ -39,14 +39,14 @@ function TrackReturnAndRefund() {
                             <div className="leading-3 text-right">
                                 <p className="font-semibold">SELLER</p>
                                 <p className="text-xl font-extrabold">LXS STORE</p>
-                                <p className="text-xs font-medium text-blue-500 lg:hover:underline relative bottom-[5px] cursor-pointer">View Seller Profile</p>
+                                <p className="text-xs font-medium text-[rgb(59,130,246)] lg:hover:underline relative bottom-[5px] cursor-pointer">View Seller Profile</p>
                             </div>
                         </div>
                         <div className="h-[35%] w-full mt-5 flex gap-5 relative bottom-4">
                             <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/smartwatch/n/v/1/-original-imah6s6pq7wxa4u6.jpeg?q=70" alt="" className="h-44 w-44 border rounded-2xl" />
                             <div className="w-[65%] text-xs leading-4">
-                                <h3 className="font-bold text-xl text-blue-500">LXS Signature Tee</h3>
-                                <p >Sold By : <span className="text-blue-500">LXS Store</span></p>
+                                <h3 className="font-bold text-xl text-[rgb(59,130,246)]">LXS Signature Tee</h3>
+                                <p >Sold By : <span className="text-[rgb(59,130,246)]">LXS Store</span></p>
                                 <p>Size : M</p>
                                 <p className="text-sm font-bold">₹ 1048.00</p>
                                 <p>Return & Exchange window closes on 18 Jan</p>

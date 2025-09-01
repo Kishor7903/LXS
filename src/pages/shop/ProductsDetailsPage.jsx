@@ -21,6 +21,7 @@ import { Helmet } from "react-helmet-async";
 import HeadingWithUnderline from "@/components/HeadingWithUnderline";
 import ViewAllIcon from "@/components/ViewAllIcon";
 import { getTimestamp } from "@/utils/commomFunctions";
+import Breadcrum from "@/components/Breadcrum";
 
 const sizes = ["S", "M", "L", "XL"];
 
@@ -39,6 +40,8 @@ function ProductDetailsPage({ id, data }) {
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
 	const toast = useToast();
+
+	let breadcrum = ["Home", `${productData?.category}`, `${productData?.subCategory}`, `${productData?.SKU}`]
 
 	const addCart = (e, item_id) => {
 		e.preventDefault();
@@ -108,7 +111,7 @@ function ProductDetailsPage({ id, data }) {
 					const formattedDate = sixDaysLater.toLocaleDateString('en-GB', options);
 					setPincodeResult({ response: res.destination, date: `${formattedDate.split(" ")[0]}, ${formattedDate.split(" ")[1]} ${formattedDate.split(" ")[2]} ${formattedDate.split(" ")[3]}` });
 				} else {
-					setPincodeResult({ response: "Pincode is not Serviceable Right Now.", date: "" })
+					setPincodeResult({ response: "Oops! Our delivery rocket hasn’t reached this planet yet 🚀", date: "" })
 				}
 			}).catch((err) => {
 				console.log("Error at Pincode Check: ", err.message);
@@ -189,7 +192,7 @@ function ProductDetailsPage({ id, data }) {
 					<span>Gear Blueprint📘<br />
 						<p className="text-xs font-normal">Explore every detail, dimension, and feature — decoded for you</p>
 					</span>
-					<p className="font-medium text-sm">Home {">"} {productData?.category} {">"} {productData?.subCategory} {">"} <span className="text-[rgb(253,84,120)] font-semibold">{productData?.SKU}</span></p>
+					<Breadcrum items={breadcrum} />
 				</div>
 				<button onClick={() => setIsOpen(true)} className=" text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3">Share <i className="fi fi-sr-share relative top-[2px]"></i></button>
 			</div>
@@ -269,7 +272,7 @@ function ProductDetailsPage({ id, data }) {
 
 					<div className="flex flex-col xl:gap-3 2xl:gap-5">
 						<div className="flex flex-col justify-between h-full">
-							<div className="flex justify-between items-center w-[230px]"><p className="font-semibold 2xl:text-lg">Select Size:</p><Link className="lg:hover:underline text-blue-500 cursor-pointer font-medium text-xs">Size Chart</Link></div>
+							<div className="flex justify-between items-center w-[230px]"><p className="font-semibold 2xl:text-lg">Select Size:</p><Link className="lg:hover:underline text-[rgb(59,130,246)] cursor-pointer font-medium text-xs">Size Chart</Link></div>
 							<div className="flex space-x-3 mt-1">
 								{sizes.map((size) => (
 									<button
@@ -285,25 +288,18 @@ function ProductDetailsPage({ id, data }) {
 						</div>
 					</div>
 
-					<div className="">
-						<h6 className="font-semibold text-lg 2xl:text-xl mb-1">Additional Information:</h6>
-						<p className="text-sm leading-4 font-medium">
-							Product Code: <span className="text-[rgb(253,84,120)]">{productData?.SKU}</span> <br />
-							Brand: <Link className="text-[rgb(253,84,120)] lg:hover:underline">{productData?.brand}</Link> <br />
-							Seller: <Link className="text-[rgb(253,84,120)] lg:hover:underline">LXS Lifestyle Store</Link> <br />
-						</p>
-					</div>
-
-					<div className="flex flex-col w-full relative">
+					<div className="flex flex-col w-full relative h-28">
 						<p className="text-lg font-semibold mb-1">Check Pincode:</p>
+						<form>
 						<input type="number" className="h-9 w-48 shadow border border-slate-300 rounded-xl pl-4 outline-none font-medium" placeholder="Enter Pincode" value={pincode ? pincode : ""} onChange={handlePincodeChange} />
 						<button onClick={() => handlePincodeCheck(pincode)} className="text-white absolute left-44 top-8 h-9 w-10 bg-[rgb(8,43,61)] rounded-r-xl outline-none"><i className="fi fi-rs-search relative top-[2px]"></i></button>
+						</form>
 						{
 							pincode?.length === 6 ? (
 								<>
-									<p className="text-sm leading-4 mt-1 text-[rgb(34,197,94)] font-medium capitalize">{pincodeResult.response}</p>
+									<p className={`text-sm leading-4 mt-1 font-medium capitalize ${pincodeResult?.date ? "text-[rgb(34,197,94)]" : "text-[rgb(253,84,120)]"}`}>{pincodeResult.response}</p>
 									{
-										pincodeResult && pincodeResult.response !== "Pincode is not Serviceable Right Now." ? (
+										pincodeResult && pincodeResult?.date ? (
 											<p className="text-sm leading-4 text-[rgb(34,197,94)] font-medium">Expected Delivery by {
 												pincodeResult?.date
 											}</p>
@@ -316,14 +312,25 @@ function ProductDetailsPage({ id, data }) {
 								null
 						}
 					</div>
+
+					<div className="flex flex-col gap-5 ">
+						<button onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-2xl w-full lg:hover:scale-[1.03] duration-200 lg:active:scale-[0.97] ${wishlist.some(p => p.item_id === id) ? "bg-[rgb(8,43,61)] text-white" : "bg-slate-200"}`}><i className="fi fi-ss-heart scale-x-[-1] h-6 text-2xl mr-4"></i>{wishlist.some(p => p.item_id === id) ? "Remove from" : "Save to"} Favourites</button>
+
+						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-2xl w-full lg:hover:scale-[1.03] duration-200 lg:active:scale-[0.97] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(253,84,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
+					</div>
+
 					<div className="">
-						<p className="text-sm font-medium leading-4">Return & Exchange Availability: <span className="text-[rgb(253,84,120)]">{productData?.returnAvailability}</span></p>
+						<p className="text-sm font-medium leading-4">Return & Exchange Availability: <span className={`${productData?.returnAvailability === "No" ? "text-[rgb(253,84,120)]" : "text-[rgb(34,197,94)]"}`}>{productData?.returnAvailability}</span></p>
 						<p className='text-sm font-medium leading-4'>Pay on Delivery: <span className={`${productData?.codAvailability === "Yes" ? "text-[rgb(34,197,94)]" : "text-[rgb(253,84,120)]"}`}>{productData?.codAvailability === "Yes" ? "Available" : "Not Available"}</span></p>
 					</div>
-					<div className="flex flex-col gap-5 ">
-						<button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-2xl w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === id) ? "bg-gradient-to-r from-[rgb(253,84,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === id) ? "Go to" : "Add to"} Basket {cart?.some((p) => p.item_id === id) ? <i className="fi fi-br-angle-double-small-right relative top-[3px] ml-2"></i> : ""}</button>
 
-						<button onClick={(e) => wishlist.some(p => p.item_id === id) ? deleteItemFromWishlist(e, id) : addWishlist(e, id)} className={`flex items-center justify-center xl:text-xl 2xl:text-2xl font-semibold xl:py-[10px] 2xl:py-5 rounded-2xl w-full lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] ${wishlist.some(p => p.item_id === id) ? "bg-[rgb(8,43,61)] text-white" : "bg-slate-200"}`}><i className="fi fi-ss-heart scale-x-[-1] h-6 text-2xl mr-4"></i>{wishlist.some(p => p.item_id === id) ? "Remove from" : "Save to"} Favourites</button>
+					<div className="">
+						<h6 className="font-semibold text-lg 2xl:text-xl mb-1">Additional Information:</h6>
+						<p className="text-sm leading-4 font-medium">
+							Product Code: <span className="text-[rgb(253,84,120)]">{productData?.SKU}</span> <br />
+							Brand: <Link className="text-[rgb(253,84,120)] lg:hover:underline">{productData?.brand}</Link> <br />
+							Seller: <Link className="text-[rgb(253,84,120)] lg:hover:underline">LXS Lifestyle Store</Link> <br />
+						</p>
 					</div>
 				</div>
 			</div>
@@ -408,9 +415,6 @@ function ProductDetailsPage({ id, data }) {
 					{
 						productData?.totalRating > 0 ?
 							<>
-								<div className="flex gap-8">
-
-								</div>
 								<div className="flex items-center gap-5 mt-8">
 									<span className="text-[45px] font-semibold leading-6">{productData?.avgRating.toFixed(1)}</span>
 									<img src={reviewLogoActive} alt="" className="h-12 relative bottom-2" />

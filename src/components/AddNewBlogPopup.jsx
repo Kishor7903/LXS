@@ -131,7 +131,7 @@ function AddNewBlogPopup({ isOpen, setIsOpen, data, form, setForm, currentEditId
         }
 
         if (files) {
-            let response = uploadImage(files, 'blogs')
+            let response = await uploadImage(files, 'blogs')
 
             addBlog({...form, img_url: response,}).then((res) => {
                 dispatch(addNewBlog(res))
@@ -161,7 +161,6 @@ function AddNewBlogPopup({ isOpen, setIsOpen, data, form, setForm, currentEditId
                 urls = res
             })
         }
-        console.log({...form, img_url: urls});
         editBlog(currentEditId, {...form, img_url: urls}).then(() => {
             dispatch(editABlog({...form, img_url: urls, id: currentEditId}))
             setIsOpen(false);
@@ -301,7 +300,7 @@ function AddNewBlogPopup({ isOpen, setIsOpen, data, form, setForm, currentEditId
                                             <button
                                                 type="button"
                                                 onClick={() => addBulletToList(sectionIndex, itemIndex)}
-                                                className="text-sm text-blue-500 absolute bottom-2"
+                                                className="text-sm text-[rgb(59,130,246)] absolute bottom-2"
                                             >
                                                 + Add Bullet
                                             </button>

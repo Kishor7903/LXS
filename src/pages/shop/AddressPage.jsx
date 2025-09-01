@@ -123,7 +123,7 @@ function AddressPage({ cartItems }) {
                                     <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
                                     <span className="flex justify-between text-xs text-[rgb(253,84,120)]">Discount on MRP <p className="text-[rgb(253,84,120)]">- ₹{discountOnMRP}</p></span>
                                     <span className="flex justify-between text-xs text-[rgb(253,84,120)]">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
-                                    <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
+                                    <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-[rgb(59,130,246)] lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                 </div>
@@ -131,7 +131,7 @@ function AddressPage({ cartItems }) {
                             </div>
                         </div>
                     </div>
-                    <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-3 right-4 lg:right-5">Need Help? <Link to="/setting/contact-us" className="text-blue-500 lg:hover:underline font-bold">Contact Us</Link></span>
+                    <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-3 right-4 lg:right-5">Need Help? <Link to="/setting/contact-us" className="text-[rgb(59,130,246)] lg:hover:underline font-bold">Contact Us</Link></span>
                 </div>
                 <div className="border hidden lg:inline-block w-[35%] h-[85vh] sticky top-10 rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)]"></div>
             </div>

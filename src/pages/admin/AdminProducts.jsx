@@ -1,5 +1,6 @@
 import AddProductButtonAndPopup from "@/components/AddProductButtonAndPopup"
 import AdminHeadings from "@/components/AdminHeadings"
+import HoverButton from "@/components/HoverButton";
 import { useToast } from "@/components/ToastProvider";
 import { deleteProduct } from "@/firebase/admin";
 import { useState } from "react";
@@ -114,24 +115,20 @@ function AdminProducts() {
                     {
                         products && products.length > 0 ? (
                             products?.map((product, index) => (
-                                <div key={index} className="h-28 w-[96%] mx-auto border rounded shadow grid grid-cols-10 justify-center gap-5 px-5 py-3 text-slate-700 font-semibold bg-gray-50">
-                                    <div className="h-24 w-full col-span-1 rounded overflow-hidden mr-2 relative bottom-1">
-                                        <img src={product.images[0]} alt="" className="h-full w-full object-fill" />
+                                <div key={index} className="w-[96%] mx-auto border rounded-xl shadow-md flex gap-5 p-3 font-semibold bg-gray-50 text-sm relative">
+                                    <img src={product.images[0]} alt="" className="h-24 object-fill rounded-[6px]" />
+                                    <div className="flex flex-col justify-between ">
+                                        <p className="font-bold text-[rgb(8,43,61)] text-lg leading-5 line-clamp-1 text-[rgb(8,43,61,0.7)]">{product.name}</p>
+                                        <div className="grid grid-rows-2 grid-cols-2">
+                                            <p className="tracking-tighter">Price: <s className="text-[rgb(253,84,120)] mx-1">₹{product.price}</s> <span className="text-base">₹{product.salePrice}</span></p>
+                                            <p className="">Category: {product.category}</p>
+                                            <p className="">Brand: {product.brand}</p>
+                                            <p className="">Sub Category: {product.subCategory}</p>
+                                        </div>
                                     </div>
-                                    <div className="py-2 col-span-3 flex flex-col justify-between relative bottom-1">
-                                        <p className="font-bold text-[rgb(8,43,61)] text-lg leading-5">{product.name}</p>
-                                        <p className="tracking-tighter">Price: <s className="text-slate-500 mx-1 text-sm">₹{product.price}</s> ₹{product.salePrice}</p>
-                                    </div>
-                                    <div className="py-2 col-span-2 flex flex-col justify-between relative bottom-1">
-                                        <p className="">Brand: {product.brand}</p>
-                                        <p className="">Category: {product.category}</p>
-                                    </div>
-                                    <div className="py-2 col-span-2 flex flex-col justify-between relative bottom-1">
-                                        
-                                    </div>
-                                    <div className="space-x-5 col-span-2 flex items-center justify-center relative bottom-1">
-                                        <button onClick={(e) => handleEditProduct(e, product)} className="bg-blue-500 rounded px-4 py-2 text-white hover:bg-blue-600 active:scale-95" >Edit</button>
-                                        <button onClick={(e) => handleDeleteProduct(e, product.id)} className="bg-red-500 rounded px-4 py-2 text-white hover:bg-red-600 active:scale-95" >Delete</button>
+                                    <div className="space-x-5 flex items-center justify-center absolute right-3 top-[calc(50%-20px)]">
+                                        <HoverButton className="border-2 w-24 h-11 rounded-xl text-base" onClick={(e) => handleEditProduct(e, product)}>Edit</HoverButton>
+                                        <button onClick={(e) => handleDeleteProduct(e, product.id)} className="lg:hover:bg-[rgb(253,84,120)] rounded-xl border-2 border-[rgb(253,84,120)] text-[rgb(253,84,120)] w-24 h-11 lg:hover:text-white hover:bg-red-600 active:scale-95 text-base" >Delete</button>
                                     </div>
                                 </div>
                             ))

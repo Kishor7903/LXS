@@ -35,6 +35,7 @@ function OrderDetailsPage() {
     let toast = useToast();
 
     let platformFee = 15;
+    let breadcrum = ["My Account", "Orders", "Order Details"];
 
     const handleHideOrder = (e) => {
         e.preventDefault();
@@ -175,20 +176,11 @@ function OrderDetailsPage() {
         setProduct(result);
     }, [orderDetails]);
 
-    let items = [
-        {
-            label: "My Orders",
-            path: "../../setting/my-orders",
-        },
-        {
-            label: "Order Details",
-        },
-    ];
 
     return (
         <div className="px-16 py-6 h-[calc(100%-64px)] flex gap-10">
             <div className="w-[65%] flex flex-col gap-5">
-                <Breadcrum items={items} />
+                <Breadcrum items={breadcrum} />
                 {!loading ? (
                     <div className="flex flex-col">
                         <div className="flex justify-between">
@@ -317,7 +309,7 @@ function OrderDetailsPage() {
                                                 e.preventDefault(),
                                                     setOpen(true);
                                             }}
-                                            className="text-[10px] text-blue-500 lg:hover:underline font-semibold"
+                                            className="text-[10px] text-[rgb(59,130,246)] lg:hover:underline font-semibold"
                                         >
                                             (Know More)
                                         </Link>
@@ -416,19 +408,18 @@ function OrderDetailsPage() {
                                             <img
                                                 src={item.image}
                                                 alt=""
-                                                className="border h-[121px] rounded-[6px] object-fit"
+                                                className="h-[121px] rounded-[6px] object-fit shadow-md"
                                                 onClick={() =>
                                                     navigate(
                                                         `/product-details/${item?.id}`
                                                     )
                                                 }
                                             />
-                                            <div className="text-[11px] leading-[1.3] relative w-[68%]">
+                                            <div className="text-[11px] leading-[1.3] relative">
                                                 <div className="flex gap-2 items-center">
-                                                    {(() => {
-                                                        let it = products.find((i) => i.id === item?.id);
-                                                        if (it.isLxsCertified === "Yes") {
-                                                            return <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]">
+                                                    {
+                                                        item?.isLxsCertified === "Yes" &&
+                                                        <div className="flex items-center gap-1 rounded-tl-full rounded-br-full bg-[rgb(8,43,61)] w-[100px] px-2 py-[1px]">
                                                             <img
                                                                 src={lxsLogo}
                                                                 alt=""
@@ -438,8 +429,7 @@ function OrderDetailsPage() {
                                                                 LXS Certified
                                                             </span>
                                                         </div>
-                                                        }
-                                                    })()}
+                                                    }
                                                     
                                                     <span className="opacity-50 mr-3 font-semibold tracking-tight">
                                                         APPAREL & FASHION
@@ -488,8 +478,8 @@ function OrderDetailsPage() {
                                             </div>
                                             {
                                                 orderDetails?.orderStatus === "Delivered" ?
-                                                    <div className="flex flex-col self-end font-semibold w-[25%]">
-                                                        <button onClick={() => navigate(`/orders/product-reviews/${id}/${item.id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-feedback relative top-[2px] mr-1"></i>{item.isReviewed ? "Edit Product" : "Product"} Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button>
+                                                    <div className="flex flex-col self-end font-semibold w-[35%] 2xl:w-[30%]">
+                                                        <button onClick={() => navigate(`/orders/product-reviews/${id}/${item.id}`)} className="text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3"><i className="fi fi-sr-feedback relative top-[2px] mr-1"></i>{item.isReviewed ? "Edit Product" : "Product"} Review <i className="fi fi-br-angle-double-small-right relative top-[2px]"></i></button>
                                                         {/* <button onClick={() => navigate(`/orders/product-return/${id}`)} className="w-full text-sm rounded-xl lg:hover:scale-[1.05] lg:active:scale-[0.98] duration-200 lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white bg-white border border-slate-300 shadow px-3 py-2 flex justify-start items-center font-semibold gap-2 self-end relative top-3 mb-3 mr-2"><i className="fi fi-sr-talent-alt relative top-[2px] mr-1"></i>Seller Review <i className="fi fi-br-angle-double-small-right absolute top-[10px] right-2"></i></button> */}
                                                     </div> :
                                                     null

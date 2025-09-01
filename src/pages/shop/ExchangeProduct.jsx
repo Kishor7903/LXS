@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom"
 
 let sizes = ["Select", "S", "M", "L", "XL", "2XL"];
 let reasons = ["Select", "Wrong Size", "Wrong Color", "Defective or Damaged Product", "Received different Product", "Others"]
+let breadcrum = ["My Account", "Orders", "Order Details", "Product Exchange"];
 
 function ProductExchange() {
     let [showExchangeSuccessfullPopup, setShowExchangeSuccessfullPopup] = useState(false);
@@ -131,7 +132,7 @@ function ProductExchange() {
 
     return (
         <div className="px-16 py-6 h-[91vh]">
-            <Breadcrum items={items} />
+            <Breadcrum items={breadcrum} />
             <div className="w-full h-[95%] pl-4 mt-4 flex gap-10">
                 <div className="w-7/12">
                     <div className="leading-[1] font-semibold">Hassle Free Products Exchange <br />
@@ -143,14 +144,14 @@ function ProductExchange() {
                             <div className="leading-3 text-right absolute right-0">
                                 <p className="font-semibold">SELLER</p>
                                 <p className="text-xl font-extrabold">LXS STORE</p>
-                                <p className="text-xs font-medium text-blue-500 lg:hover:underline relative bottom-[5px] cursor-pointer">View Seller Profile</p>
+                                <p className="text-xs font-medium text-[rgb(59,130,246)] lg:hover:underline relative bottom-[5px] cursor-pointer">View Seller Profile</p>
                             </div>
                         </div>
                         <div className="h-[40%] w-full mt-5 flex gap-5">
                             <img src={productInfo?.images[0]} alt="" className="h-44 w-44 border rounded-2xl" />
                             <div className="w-[65%] text-xs leading-4 font-medium">
                                 <h3 className="font-bold text-xl">{productInfo?.name}</h3>
-                                <p >Sold By : <span className="text-blue-500">LXS Store</span></p>
+                                <p >Sold By : <span className="text-[rgb(59,130,246)]">LXS Store</span></p>
                                 <p>Size : M</p>
                                 <p className="text-lg font-bold">₹ 1048.00</p>
                                 <p>Return & Exchange window closes on 18 Jan</p>

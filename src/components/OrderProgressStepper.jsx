@@ -4,7 +4,7 @@ import rocketGreen from "../assets/commonIcons/Track Rocket (Fill) Green.png";
 import rocketYellow from "../assets/commonIcons/Track Rocket (Fill) Yellow.png";
 import rocketPink from "../assets/commonIcons/Track Rocket (Fill) Pink.png";
 
-export default function OrderProgressStepper({ steps, currentStep, currentState }) {
+export default function OrderProgressStepper({ steps, currentStep, currentState, className }) {
     const containerRef = useRef(null);
     const stepRefs = useRef([]);
     const [lineHeight, setLineHeight] = useState(0);
@@ -30,7 +30,7 @@ export default function OrderProgressStepper({ steps, currentStep, currentState 
 
 
     return (
-        <div className="relative pl-8" ref={containerRef}>
+        <div className={`relative pl-8 h-[96%] ${className}`} ref={containerRef}>
             {/* Vertical progress background */}
             <div
                 className="absolute top-2 left-[8.5px] w-[3px] bg-gray-300 overflow-hidden rounded"

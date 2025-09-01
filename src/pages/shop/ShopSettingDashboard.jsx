@@ -14,7 +14,7 @@ let tiles = [
     title1: "Recently",
     title2: "Viewed",
     className: "bg-[rgb(8,43,61)]",
-    navigate: "/user/recent-viewed-products"
+    navigate: "/orders/recent-viewed-products"
   },
   {
     icon: tile3Icon,

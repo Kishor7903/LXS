@@ -92,7 +92,7 @@ function SellerProfile() {
                                     <span className="text-xs leading-[0.3]">
                                         <p>Since 5 January, 2025 </p>
                                         <p className="text-xl font-extrabold">LXS Store</p>
-                                        <Link className="text-blue-500 font-medium">View all products of this seller</Link>
+                                        <Link className="text-[rgb(59,130,246)] font-medium">View all products of this seller</Link>
                                     </span>
                                     <span className="text-xs leading-[1.2] mt-3">
                                         <p className="text-orange-500 font-medium">Seller Information</p>

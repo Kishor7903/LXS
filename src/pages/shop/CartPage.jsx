@@ -334,7 +334,7 @@ function CartPage({ cart }) {
                                                                     item.item_id
                                                                 );
                                                     }}
-                                                    className="text-[9px] lg:text-[11px] font-semibold text-center leading-[1] lg:hover:underline cursor-pointer text-blue-500"
+                                                    className="text-[9px] lg:text-[11px] font-semibold text-center leading-[1] lg:hover:underline cursor-pointer text-[rgb(59,130,246)]"
                                                 >
                                                     Add to Favourites
                                                 </span>
@@ -414,7 +414,7 @@ function CartPage({ cart }) {
                                                     e.preventDefault(),
                                                         setIsOpen(true);
                                                 }}
-                                                className="text-[10px] text-blue-500 lg:hover:underline"
+                                                className="text-[10px] text-[rgb(59,130,246)] lg:hover:underline"
                                             >
                                                 (Know More)
                                             </Link>
@@ -461,7 +461,7 @@ function CartPage({ cart }) {
                                 No Worries:{" "}
                                 <Link
                                     to="/products"
-                                    className="text-blue-500 lg:hover:underline active:underline"
+                                    className="text-[rgb(59,130,246)] lg:hover:underline active:underline"
                                 >
                                     Browse Products
                                 </Link>
@@ -473,7 +473,7 @@ function CartPage({ cart }) {
                     Need Help?{" "}
                     <Link
                         to="/setting/contact-us"
-                        className="text-blue-500 lg:hover:underline font-bold"
+                        className="text-[rgb(59,130,246)] lg:hover:underline font-bold"
                     >
                         Contact Us
                     </Link>

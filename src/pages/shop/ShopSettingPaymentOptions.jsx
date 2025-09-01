@@ -15,7 +15,7 @@ function ShopSettingPaymentOptions() {
                             <input type="radio" id="card" name="card" /> <label htmlFor="card" className="font-semibold">DEFAULT CARD</label>
                         </div>
                         <div className="h-[90%] w-full flex justify-between">
-                            <div className="h-full w-1/5 text-xs text-blue-500 flex flex-col gap-1 py-5">
+                            <div className="h-full w-1/5 text-xs text-[rgb(59,130,246)] flex flex-col gap-1 py-5">
                                 <Link className="lg:hover:underline">View Details</Link>
                                 <Link className="lg:hover:underline">Edit</Link>
                                 <Link className="lg:hover:underline">Remove</Link>
@@ -45,7 +45,7 @@ function ShopSettingPaymentOptions() {
                             <input type="radio" id="card2" name="card" checked /> <label htmlFor="card2">UPI 2</label>
                             <p className="text-[14px] pl-3 mt-2 leading-4">S*C*I* K*M*R <br />sachi*************@okaxis</p>
                         </div>
-                        <div className="w-1/3 flex flex-col items-end mr-2 justify-center text-xs text-blue-500">
+                        <div className="w-1/3 flex flex-col items-end mr-2 justify-center text-xs text-[rgb(59,130,246)]">
                             <Link className="lg:hover:underline">View Details</Link>
                             <Link className="lg:hover:underline">Edit</Link>
                             <Link className="lg:hover:underline">Remove</Link>
@@ -56,7 +56,7 @@ function ShopSettingPaymentOptions() {
                             <input type="radio" id="card2" name="card" checked /> <label htmlFor="card2">UPI 2</label>
                             <p className="text-[14px] pl-3 mt-2 leading-4">S*C*I* K*M*R <br />sachi*************@okaxis</p>
                         </div>
-                        <div className="w-1/3 flex flex-col items-end mr-2 justify-center text-xs text-blue-500">
+                        <div className="w-1/3 flex flex-col items-end mr-2 justify-center text-xs text-[rgb(59,130,246)]">
                             <Link className="lg:hover:underline">View Details</Link>
                             <Link className="lg:hover:underline">Edit</Link>
                             <Link className="lg:hover:underline">Remove</Link>
@@ -67,7 +67,7 @@ function ShopSettingPaymentOptions() {
                             <input type="radio" id="card2" name="card" checked /> <label htmlFor="card2">UPI 2</label>
                             <p className="text-[14px] pl-3 mt-2 leading-4">S*C*I* K*M*R <br />sachi*************@okaxis</p>
                         </div>
-                        <div className="w-1/3 flex flex-col items-end mr-2 justify-center text-xs text-blue-500">
+                        <div className="w-1/3 flex flex-col items-end mr-2 justify-center text-xs text-[rgb(59,130,246)]">
                             <Link className="lg:hover:underline">View Details</Link>
                             <Link className="lg:hover:underline">Edit</Link>
                             <Link className="lg:hover:underline">Remove</Link>
@@ -78,7 +78,7 @@ function ShopSettingPaymentOptions() {
                             <input type="radio" id="card2" name="card" checked /> <label htmlFor="card2">UPI 2</label>
                             <p className="text-[14px] pl-3 mt-2 leading-4">S*C*I* K*M*R <br />sachi*************@okaxis</p>
                         </div>
-                        <div className="w-1/3 flex flex-col items-end mr-2 justify-center text-xs text-blue-500">
+                        <div className="w-1/3 flex flex-col items-end mr-2 justify-center text-xs text-[rgb(59,130,246)]">
                             <Link className="lg:hover:underline">View Details</Link>
                             <Link className="lg:hover:underline">Edit</Link>
                             <Link className="lg:hover:underline">Remove</Link>
@@ -90,7 +90,7 @@ function ShopSettingPaymentOptions() {
         else {
             return (
                 <div className="text-xs relative top-2 flex flex-col gap-2 text-center">
-                    <div className="flex font-semibold text-blue-500 justify-between border-b border-[rgb(8,43,61)] mb-2">
+                    <div className="flex font-semibold text-[rgb(59,130,246)] justify-between border-b border-[rgb(8,43,61)] mb-2">
                         <p className="w-[27%]">Name of Transaction</p>
                         <p className="w-[27%]">Product/Service</p>
                         <p className="w-[30%]">Date & Time</p>

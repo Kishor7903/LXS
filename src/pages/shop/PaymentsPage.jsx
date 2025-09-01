@@ -113,7 +113,8 @@ function PaymentsPage() {
                 size: item.size,
                 brand: item.brand,
                 quantity: item.quantity,
-                image: item.images[0]
+                image: item.images[0],
+                isLxsCertified: item.isLxsCertified
             }))
     
             displayRazorpay(order, cart, address, navigate, user, dispatch, paymentMode);
@@ -211,13 +212,13 @@ function PaymentsPage() {
                                     <div className="space-y-2 ml-5">
                                         {
                                             !showMore ? (
-                                                <p className='xl:text-xs 2xl:text-sm mt-1'>{offers[0].item}<Link className='text-blue-500 lg:hover:underline'>Terms & Conditions </Link>Applied</p>
+                                                <p className='xl:text-xs 2xl:text-sm mt-1'>{offers[0].item}<Link className='text-[rgb(59,130,246)] lg:hover:underline'>Terms & Conditions </Link>Applied</p>
                                             )
 
                                                 :
 
                                                 offers.map((item, idx) => (
-                                                    <p key={idx} className='xl:text-xs 2xl:text-sm mt-1'>{item.item}<Link className='text-blue-500 lg:hover:underline'>Terms & Conditions Applied</Link></p>
+                                                    <p key={idx} className='xl:text-xs 2xl:text-sm mt-1'>{item.item}<Link className='text-[rgb(59,130,246)] lg:hover:underline'>Terms & Conditions Applied</Link></p>
                                                 ))
                                         }
                                     </div>
@@ -259,12 +260,12 @@ function PaymentsPage() {
                                     <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
                                     <span className="flex justify-between text-xs">Discount on MRP <p className="text-red-500">- ₹{discountOnMRP}</p></span>
                                     <span className="flex justify-between text-xs">Discount on Delivery <p className="text-red-500">- ₹{deliveryDiscount}</p></span>
-                                    <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
+                                    <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-[rgb(59,130,246)] lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
                                     <hr className="pb-1 mt-1" />
                                     <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                 </div>
                                 <button className="w-full h-10 rounded-full bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" onClick={handleProceedToPayment}>Proceed To Payments</button>
-                                <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-2 right-4 lg:right-5">Need Help? <Link className="text-blue-500 lg:hover:underline font-bold">Contact Us</Link></span>
+                                <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-2 right-4 lg:right-5">Need Help? <Link className="text-[rgb(59,130,246)] lg:hover:underline font-bold">Contact Us</Link></span>
                             </div> */}
                             <div className="flex flex-col gap-5 w-[45%]">
                                 <div className="p-2 shadow-md border border-slate-300 rounded-xl flex flex-col bg-slate-100">
@@ -307,9 +308,9 @@ function PaymentsPage() {
                                         <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
                                         <span className="flex justify-between text-xs text-red-500">Discount on MRP <p className="">- ₹{discountOnMRP}</p></span>
                                         <span className="flex justify-between text-xs text-red-500">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
-                                        <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-blue-500 lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
+                                        <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-[rgb(59,130,246)] lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
                                         <hr className="pb-1 mt-1" />
-                                        <span className="flex justify-between text-xs">Payment Method: <p className="text-blue-500">{paymentOptions[paymentMode]?.type}</p></span>
+                                        <span className="flex justify-between text-xs">Payment Method: <p className="text-[rgb(59,130,246)]">{paymentOptions[paymentMode]?.type}</p></span>
                                         <span className="flex justify-between font-bold text-green-500 mt-1">Grand Total <p>₹{totalPrice - discountOnMRP + deliveryPrice - deliveryDiscount + platformFee}</p></span>
                                     </div>
                                     <button className={`w-full h-11 rounded-xl bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-lg font-semibold text-white my-2 lg:mt-6 flex gap-2 justify-center items-center ${paymentMode === "" ? "cursor-not-allowed opacity-50" : "lg:hover:scale-[1.03] lg:active:scale-[0.97] duration-150"}`} onClick={handleProceedToPayment}>Pay Now <img src={paymentIcon} alt="" className='h-4' /></button>
@@ -319,7 +320,7 @@ function PaymentsPage() {
 
                         </div>
                     </div>
-                    <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-3 right-4 lg:right-5">Need Help? <Link to="/setting/contact-us" className="text-blue-500 lg:hover:underline font-bold">Contact Us</Link></span>
+                    <span className="text-[11px] font-medium lg:text-xs absolute bottom-1 lg:bottom-3 right-4 lg:right-5">Need Help? <Link to="/setting/contact-us" className="text-[rgb(59,130,246)] lg:hover:underline font-bold">Contact Us</Link></span>
                 </div>
                 <div className="border hidden lg:inline-block w-[35%] h-[85vh] sticky top-10 rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)]"></div>
             </div>

@@ -1,6 +1,6 @@
 import AddNewBlogPopup from '@/components/AddNewBlogPopup'
 import AdminHeadings from '@/components/AdminHeadings'
-import { deleteBlog } from '@/firebase/admin';
+import { deleteBlog, deleteImage } from '@/firebase/admin';
 import { deleteABlog } from '@/store/features/adminSlice';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,9 +44,12 @@ function AdminBlogs() {
 
     const handleDeleteButton = (e, item) => {
         e.preventDefault();
+        console.log(item);
 
-        deleteBlog(item).then(() => {
-            dispatch(deleteABlog(item.publicId))
+        deleteBlog(item).then(async () => {
+            deleteImage(item.img_url).then(() => {
+                dispatch(deleteABlog(item))
+            })
         })
     }
 

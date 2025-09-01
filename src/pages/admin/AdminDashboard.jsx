@@ -15,13 +15,11 @@ import sellerNewAppliedIcon from "../../assets/Admin Dashboard/New Seller.png"
 import sellerKycPendingIcon from "../../assets/Admin Dashboard/Pending Seller.png"
 import sellerRejectedIcon from "../../assets/Admin Dashboard/Rejected Seller.png"
 import totalProductsIcon from "../../assets/Admin Dashboard/New Product added.png"
-import { getAllUsers } from "@/firebase/admin"
 
 
 function AdminDashboard() {
 	let { products } = useSelector(state => state.admin);
-	let { orders } = useSelector(state => state.admin);
-	let [users, setUsers] = useState([]);
+	let { orders, users } = useSelector(state => state.admin);
 
 	let dashboard = [
 		{
@@ -83,7 +81,7 @@ function AdminDashboard() {
 			title: "USERS",
 			tiles: [
 				{
-					value: `${users.length-1}`,
+					value: `${users.length}`,
 					content: "Total Users",
 					icon: totalUserIcon
 				},
@@ -126,18 +124,12 @@ function AdminDashboard() {
 		},
 	]
 
-	useEffect(() => {
-		getAllUsers().then(res => {
-			setUsers(res);
-		})
-	}, [])
-
 	return (
-		<div className="flex flex-col justify-between gap-10">
+		<div className="flex flex-col justify-between gap-10 py-10">
 			{
 				dashboard.map((section, index) => (
-					<div key={index} className="">
-						<h5 className="text-xl font-semibold">{section.title}</h5>
+					<div key={index}>
+						<h5 className="text-2xl font-semibold">{section.title}</h5>
 						<div className="flex gap-5 mt-2">
 							{
 								section.tiles.map((tile, idx) => (

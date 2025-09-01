@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-function TabSwitcher({activeTab, setActiveTab, tabs, layoutId, className="h-12 md:h-16 p-[6px] lg:p-2 w-full md:w-5/6", activeClassName}) {
+function TabSwitcher({activeTab, setActiveTab, tabs, layoutId, className="h-12 md:h-16 p-[6px] lg:p-2 w-full md:w-5/6", activeClassName, textClassName}) {
 
     return (
         <div className={`relative flex bg-[rgb(8,43,61)] mx-auto rounded-3xl ${className}`}>
@@ -17,7 +17,7 @@ function TabSwitcher({activeTab, setActiveTab, tabs, layoutId, className="h-12 m
                   transition={{ type: "spring", stiffness: 400, damping: 35 }}
                 />
               )}
-              <span className="relative z-20">{tab}</span>
+              <span className={`relative z-20 ${textClassName}`}>{tab}</span>
             </div>
           ))}
         </div>

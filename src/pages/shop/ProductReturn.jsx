@@ -86,24 +86,12 @@ function ProductReturn() {
         }
     }
 
-    let items = [
-        {
-            label: "Your Orders",
-            path: "../setting/my-orders"
-        },
-        {
-            label: "Order Details",
-            path: `/orders/order-details/${id}`
-        },
-        {
-            label: "Request Product Return"
-        }
-    ]
+    let breadcrum = ["My Account", "Orders", "Order Details", "Product Return"];
 
 
     return (
         <div className="px-16 py-6 h-[91vh]">
-            <Breadcrum items={items} />
+            <Breadcrum items={breadcrum} />
             <div className="w-full h-[95%] pl-4 mt-4 flex gap-10">
                 <div className="w-7/12">
                     <div className="leading-[1] font-semibold">Return & Refund Request <br />
@@ -115,14 +103,14 @@ function ProductReturn() {
                             <div className="leading-3 text-right">
                                 <p className="font-semibold">SELLER</p>
                                 <p className="text-xl font-extrabold">LXS STORE</p>
-                                <p className="text-xs font-medium text-blue-500 lg:hover:underline relative bottom-[5px] cursor-pointer">View Seller Profile</p>
+                                <p className="text-xs font-medium text-[rgb(59,130,246)] lg:hover:underline relative bottom-[5px] cursor-pointer">View Seller Profile</p>
                             </div>
                         </div>
                         <div className="h-[40%] w-full mt-5 flex gap-5 relative bottom-4">
                             <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/smartwatch/n/v/1/-original-imah6s6pq7wxa4u6.jpeg?q=70" alt="" className="h-44 w-44 border rounded-2xl" />
                             <div className="w-[65%] text-xs leading-4">
-                                <h3 className="font-bold text-xl text-blue-500">LXS Signature Tee</h3>
-                                <p >Sold By : <span className="text-blue-500">LXS Store</span></p>
+                                <h3 className="font-bold text-xl text-[rgb(59,130,246)]">LXS Signature Tee</h3>
+                                <p >Sold By : <span className="text-[rgb(59,130,246)]">LXS Store</span></p>
                                 <p>Size : M</p>
                                 <p className="text-sm font-bold">₹ 1048.00</p>
                                 <p>Return & Exchange window closes on 18 Jan</p>
@@ -147,7 +135,7 @@ function ProductReturn() {
                                         <option value="">LXS Credit</option>
                                         <option value="">Bank Account</option>
                                     </select>
-                                    <Link className="text-blue-500 font-xs font-medium lg:hover:underline">Add Bank Account</Link>
+                                    <Link className="text-[rgb(59,130,246)] font-xs font-medium lg:hover:underline">Add Bank Account</Link>
                                 </div>
                                 <p className="text-orange-500"><span className="relative top-1 text-base">*</span> Upload Proof of Issue</p>
                                 <div className="h-[25%] w-full flex justify-between relative top-2 pr-10">

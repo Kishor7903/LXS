@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import CryptoJS from "crypto-js";
 import axios from "axios";
 import sibApiV3Sdk from "sib-api-v3-sdk";
+import officeToPdf from "office-to-pdf";
 import admin from "firebase-admin";
 admin.initializeApp();
 
@@ -663,3 +664,23 @@ export const sendNotification = functions.https.onRequest(async (req, res) => {
         res.status(500).send(error);
     }
 });
+
+
+// export const convertDocxToPdf = functions.https.onRequest(async (req, res) => {
+//     try {
+//       if (!req.rawBody || !req.headers["content-type"].includes("application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
+//         return res.status(400).send("Invalid request. Expecting DOCX file.");
+//       }
+  
+//       // Convert Buffer
+//       const pdfBuffer = await officeToPdf(req.rawBody);
+  
+//       res.setHeader("Content-Type", "application/pdf");
+//       res.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
+//       res.send(pdfBuffer);
+  
+//     } catch (err) {
+//       console.error("Conversion error:", err);
+//       res.status(500).send("Error converting file");
+//     }
+// });
