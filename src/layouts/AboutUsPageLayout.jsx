@@ -1,21 +1,20 @@
 import { getWebsiteReview } from '@/firebase/auth'
 import AboutUs from '@/pages/shop/AboutUs'
 import Contributers from '@/pages/shop/Contributers'
-import InfoIconsContainer from '@/pages/shop/InfoIconsContainer'
 import reviewLogoActive from "../assets/commonIcons/Ratings & Reviews (Fill).png"
 import starIconFill from "../assets/commonIcons/Rewards 2 (Fill).png"
 import starIconStroke from "../assets/commonIcons/Rewards 2 (Stroke).png"
 import accountIcon from "../assets/commonIcons/Account.png"
 import WhatWeDo from '@/pages/shop/WhatWeDo'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { getAllUsers } from '@/firebase/admin'
 
 function AboutUsPageLayout() {
     let navigate = useNavigate();
     let [reviews, setReviews] = useState([]);
     let [users, setUsers] = useState([]);
+    let location = useLocation();
 
     useEffect(() => {
         getWebsiteReview().then(res => {
@@ -26,10 +25,19 @@ function AboutUsPageLayout() {
         })
     }, [])
 
+    useEffect(() => {
+        if (location.hash) {
+          const element = document.querySelector(location.hash);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      }, [location]);
+
     return (
         <>
             <AboutUs />
-            <div className="px-16 border-t flex flex-col items-center w-full gap-6 py-6">
+            <div className="px-16 border-t flex flex-col items-center w-full gap-6 py-6" id='global-ratings'>
                 <h2 className='text-xl md:text-3xl font-bold relative after:h-1 after:absolute after:w-2/3 after:left-[16%] after:bottom-0 after:bg-[rgb(8,43,61)] after:rounded-full'>GLOBAL RATINGS !</h2>
                 <div className="flex flex-col items-center">
                     <div className="flex items-center gap-5">
@@ -60,7 +68,6 @@ function AboutUsPageLayout() {
                     }
                 </div>
             </div>
-            <InfoIconsContainer />
             <Contributers />
             <WhatWeDo />
             <div className="flex justify-center items-center gap-5 border-t py-5 font-semibold">

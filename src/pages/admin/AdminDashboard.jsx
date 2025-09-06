@@ -125,7 +125,7 @@ function AdminDashboard() {
 	]
 
 	return (
-		<div className="flex flex-col justify-between gap-10 py-10">
+		<div className="flex flex-col justify-between gap-10 overflow-hidden h-full overflow-y-scroll no-scrollbar">
 			{
 				dashboard.map((section, index) => (
 					<div key={index}>

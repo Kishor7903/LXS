@@ -249,10 +249,13 @@ function LoginButtonAndDialogBox({ userState, setUserState, isOpen, setIsOpen })
                                             </div>
                                             <button className="h-8 lg:h-9 px-5 text-sm lg:text-lg rounded-full font-bold text-white bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] relative lg:top-2 self-center lg:hover:scale-[1.05] lg:active:scale-[0.9] duration-200" type="submit">Log In</button>
                                         </form>
-                                        <p className="text-xs text-center font-medium mt-2">Don't have an Account? <button className="text-[rgb(253,84,120)] font-bold lg:hover:underline" onClick={() => {
-                                            setUserState("signup")
-                                            setFormData(userData)
-                                        }}>Sign Up</button></p>
+                                        <div className="flex flex-col gap-1 items-center mt-5 ">
+                                            <p className="text-xs font-medium">Don't have an Account? <button className="text-[rgb(253,84,120)] font-bold lg:hover:underline" onClick={() => {
+                                                setUserState("signup")
+                                                setFormData(userData)
+                                            }}>Sign Up</button></p>
+                                            <p className="text-xs font-medium">Lost Your Password?<Link className="text-[rgb(253,84,120)] font-bold lg:hover:underline"> Click to Reset</Link></p>
+                                        </div>
                                     </div>
                                 </div>
                                 <p className="text-xs text-center mt-24 lg:mt-40 ">By Creating an account you agree to LXS Store's <br /><Link onClick={() => setIsOpen(false)} to="/terms-and-conditions" className="font-bold lg:hover:underline active:underline">Terms and Conditions</Link> and <Link onClick={() => setIsOpen(false)} to="/privacy-policy" className="font-bold lg:hover:underline active:underline ">Privacy Policy</Link></p>

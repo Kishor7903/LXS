@@ -66,10 +66,12 @@ function ShopSettingMyRatingsAndReviews() {
                         productReviews.map((review, index) => (
                             <div key={index} className="border w-[99%] mx-auto border-slate-300 shadow-md bg-slate-100 rounded-xl relative p-3 space-y-2 cursor-pointer">
                                 <div className="flex gap-3 justify-start">
-                                    <img src={(() => {
-                                        let product = products.find((item) => item.id === review.productId);
-                                        return product.images[0];
-                                    })()} alt="" className="w-[70px] rounded-[6px] shadow-md" />
+                                    <div className="w-[90px] rounded-[6px] shadow-md">
+                                        <img src={(() => {
+                                            let product = products.find((item) => item.id === review.productId);
+                                            return product.images[0];
+                                        })()} alt="" className="w-full object-fill" />
+                                    </div>
                                     <div className="relative">
                                         <h4 className="text-xl font-bold line-clamp-1 w-[65%] text-[rgb(8,43,61,0.7)]">{(() => {
                                             let product = products.find((item) => item.id === review.productId);
@@ -78,7 +80,7 @@ function ShopSettingMyRatingsAndReviews() {
                                         <p className="text-xs font-semibold text-[rgb(253,84,120)]">{`${review.timestamp.split(",")[0]}, ${review.timestamp.split(",")[1]}`}</p>
                                         <p className="text-[15px] font-semibold absolute bottom-0 left-0 leading-[1.2] mt-1 line-clamp-1 w-[65%]">{review.title}</p>
                                     </div>
-                                    <div className="absolute right-4 top-0 pt-3 pb-4 flex flex-col justify-between h-full items-end ">
+                                    <div className="absolute right-4 top-0 py-3 flex flex-col justify-between h-full items-end ">
                                         <div className="flex items-end gap-1">
                                             {
                                                 [1, 2, 3, 4, 5].map((_, idx) => (

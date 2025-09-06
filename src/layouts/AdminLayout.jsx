@@ -208,7 +208,7 @@ function AdminLayout() {
                         <img src={logoutRedIcon} alt="" className="h-5" /> Logout
                     </button> */}
                 </div>
-                <div className="w-[84%] 2xl:w-[86%] rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-y-scroll no-scrollbar"><Outlet /></div>
+                <div className="w-[84%] 2xl:w-[86%] rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-8 "><Outlet /></div>
             </main>
             {/* <main className="flex">
                 <AdminSideBar />

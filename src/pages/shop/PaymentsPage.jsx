@@ -28,16 +28,16 @@ let paymentOptions = [
         //     iconActive: "fi fi-sr-sack"
         // },
     {
+        type: "UPI",
+        value: "upi",
+        icon: "fi fi-rr-qr-scan",
+        iconActive: "fi fi-br-qr-scan"
+    },
+    {
         type: "Wallet",
         value: "wallet",
         icon: "fi fi-rr-wallet",
         iconActive: "fi fi-sr-wallet"
-    },
-    {
-        type: "UPI / QR CODE",
-        value: "upi",
-        icon: "fi fi-rr-qr-scan",
-        iconActive: "fi fi-br-qr-scan"
     },
     {
         type: "Debit or Credit Card",
@@ -63,12 +63,12 @@ let paymentOptions = [
         icon: "fi fi-rr-payroll-calendar",
         iconActive: "fi fi-br-payroll-calendar"
     },
-    // {
-    //     type: "POD (Pay On Delivery)",
-    //     value: "pod",
-    //     icon: "fi fi-rr-money-bills-simple",
-    //     iconActive: "fi fi-sr-money-bills-simple"
-    // }
+    {
+        type: "POD (Pay On Delivery)",
+        value: "pod",
+        icon: "fi fi-rr-money-bills-simple",
+        iconActive: "fi fi-sr-money-bills-simple"
+    }
 ]
 
 function PaymentsPage() {
@@ -296,7 +296,7 @@ function PaymentsPage() {
                                         ))
                                     }
                                 </div>
-                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300 font-medium bg-slate-100'><span className='text-[rgb(253,84,120)] font-semibold text-xs'>Please Note:</span> If you cancel any item after pickup but before delivery, all items in the same shipment will be cancelled. However, items in separate shipments will continue to be delivered if already in transit.</p>
+                                <p className='leading-4 text-xs py-4 px-4 rounded-xl shadow-md border border-slate-300 font-medium bg-slate-100'><span className='text-[rgb(253,84,120)] font-semibold text-xs'>Please Note:</span> Once a product has been Shipped by the Seller, it cannot be cancelled.</p>
                                 <div className="w-full flex gap-2 text-sm">
                                     <input type="text" className="px-3 h-8 text-[12px] font-medium rounded-xl w-full outline-none shadow-md border border-slate-300" placeholder="Apply Coupons" />
                                     <button className="font-semibold w-[20%] border border-[rgb(8,43,61)] rounded-xl bg-[rgb(8,43,61)] text-white lg:hover:scale-[1.05] lg:active:scale-[0.95] duration-200">Apply</button>
@@ -306,8 +306,8 @@ function PaymentsPage() {
                                         <span className="">Price BreakDown ({cartItems.length > 0 ? cartItems.reduce((sum, i) => {return sum + i.quantity}, 0) : 0} Items)</span>
                                         <span className="flex justify-between mt-2 text-xs">Total MRP <p className="">₹{totalPrice}</p></span>
                                         <span className="flex justify-between text-xs">Delivery <p className="">₹{deliveryPrice}</p></span>
-                                        <span className="flex justify-between text-xs text-red-500">Discount on MRP <p className="">- ₹{discountOnMRP}</p></span>
-                                        <span className="flex justify-between text-xs text-red-500">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
+                                        <span className="flex justify-between text-xs text-[rgb(253,84,120)]">Discount on MRP <p className="">- ₹{discountOnMRP}</p></span>
+                                        <span className="flex justify-between text-xs text-[rgb(253,84,120)]">Discount on Delivery <p className="">- ₹{deliveryDiscount}</p></span>
                                         <span className="flex justify-between text-xs"><p>Platform Fee <Link onClick={(e) => { e.preventDefault(), setIsOpen(true) }} className="text-[10px] text-[rgb(59,130,246)] lg:hover:underline">(Know More)</Link></p> <p className="">₹{platformFee}</p></span>
                                         <hr className="pb-1 mt-1" />
                                         <span className="flex justify-between text-xs">Payment Method: <p className="text-[rgb(59,130,246)]">{paymentOptions[paymentMode]?.type}</p></span>

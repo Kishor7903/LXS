@@ -178,15 +178,16 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                         />
                     </div>
                 </div>
-            </form>
             <div className="flex justify-center gap-6 mt-5">
                 <button
+                    type="button"
                     className="border-2 font-semibold border-[rgb(8,43,61)] h-10 w-28 rounded-xl lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
                     onClick={handleCancelButton}
                 >
                     Cancel
                 </button>
                 <button
+                    type="submit"
                     className={`h-10 w-28 rounded-xl font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white ${!isEdited ? "select-none cursor-not-allowed opacity-40" : "cursor-pointer lg:hover:scale-[1.1] duration-200 lg:active:scale-[0.95]"}`}
                     onClick={isEdited ? handleSubmit : null}
                     disabled={isEdited === false}
@@ -194,6 +195,7 @@ function EditUserInfoPopup({ isOpen, setIsOpen, user }) {
                     Apply
                 </button>
             </div>
+            </form>
         </DialogBox>
     );
 }

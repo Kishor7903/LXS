@@ -85,6 +85,35 @@ function AboutUs() {
                     <h6 className="text-2xl font-bold">🔹 Community-DrivenGrowth</h6>
                     <p className="text-xl font-medium px-40">We empower individuals, businesses, and creatives to thrive in a futuristic marketplace.</p>
                 </div>
+                <h3 className="text-[40px] font-extrabold">Where Style Meets Substance, and Every Detail Tells a Story.</h3>
+                <p>At <span className="font-semibold">LXS Store</span>, we believe fashion is more than just clothing — it’s an experience, an expression, and a way of life. We’re proud to offer more than just stylish garments. We offer a curated, customer-first experience rooted in quality, sustainability, inclusivity, and innovation. Here's why LXS Store should be your ultimate destination for fashion that feels as good as it looks:</p>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">1. Premium Quality That Speaks for Itself</h6>
+                    <p>We don’t compromise when it comes to quality. Every LXS garment is crafted with care, precision, and purpose — designed to look stunning and stand the test of time.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">World-Class Fabrics:</span> From organic cotton to rich silks and resilient wools, we source only the finest materials globally.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Artisan Craftsmanship:</span> Each piece is stitched with passion and perfection by skilled artisans who bring our designs to life.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Stringent Quality Control:</span> Every product goes through multi-stage testing to ensure comfort, durability, and elegance.</li>
+                    </ul>
+                </div>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">2. Fashion-Forward Designs That Stay Ahead</h6>
+                    <p>Fashion moves fast — and so do we. Our collections are curated by visionary designers who live and breathe global trends, ensuring you're always dressed in what’s next.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Trend-Driven Collections:</span>  We stay on the pulse of global runways, fashion weeks, and influencer insights to bring you the freshest looks.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">All-Occasion Styles:</span>  From workwear to weekend vibes, from brunch to gala night — we’ve got your style covered.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]"> Signature Details:</span> Unique prints, clever cuts, and stand-out embroidery give each piece that “where’d-you-get-that?” energy.</li>
+                    </ul>
+                </div>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">3. Inclusive Sizing for Every Body, Every Style</h6>
+                    <p>We believe fashion should celebrate *every* body. That’s why we offer inclusive sizing and tailored options to ensure the perfect fit — always.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]"></span> Extensive Size Range**: Whether petite or plus, you’ll find your fit with ease.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]"></span> Flattering Fits**: Our silhouettes are thoughtfully designed for all body types, shapes, and curves.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]"></span> Custom Alterations**: Need something tweaked? We offer made-to-measure options for a flawless fit.</li>
+                    </ul>
+                </div>
                 <h3 className="text-[40px] font-extrabold mb-10">Join LXS Store today and explore a universe of opportunities!</h3>
             </div>
         </div>

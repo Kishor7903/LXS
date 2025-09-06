@@ -15,6 +15,31 @@ function PrivacyData() {
             ],
         },
         {
+            name: "Registrations & Certifications",
+            content: [
+                {
+                    key: "⁠MSME / Udyam Registration Certificate:",
+                    value: "View",
+                    slug: "#"
+                },
+                {
+                    key: "⁠Startup India / DPIIT Recognition Certificate:",
+                    value: "View",
+                    slug: "#"
+                },
+                {
+                    key: "⁠DLT Registration Certificate:",
+                    value: "View",
+                    slug: "#"
+                },
+                {
+                    key: "⁠Trademark Registration Certificate:",
+                    value: "View",
+                    slug: "#"
+                },
+            ],
+        },
+        {
             name: "Legal & compliances",
             content: [
                 {
@@ -38,6 +63,11 @@ function PrivacyData() {
                     slug: "/policy/return-and-refund-policy"
                 },
                 {
+                    key: "intergalactic framework policy:",
+                    value: "view",
+                    slug: "/policy/intergalactic-framework-policy"
+                },
+                {
                     key: "exchange & replacement policy:",
                     value: "view",
                     slug: "/policy/exchange-and-replacemennt-policy"
@@ -53,7 +83,7 @@ function PrivacyData() {
                     slug: "/policy/payments-and-checkout-policy"
                 },
                 {
-                    key: "order cncelletion policy:",
+                    key: "order cancellation policy:",
                     value: "view",
                     slug: "/policy/order-cancellation-policy"
                 },

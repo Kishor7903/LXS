@@ -64,15 +64,15 @@ function ShopSettingsLayout() {
         }
     }
 
-    const handleLogout = (e) => {
-        e.preventDefault();
+    // const handleLogout = (e) => {
+    //     e.preventDefault();
 
-        logoutUser().then(() => {
-            dispatch(logout());
-            toast("User Logout Successfully.")
-            navigate("/shop")
-        })
-    }
+    //     logoutUser().then(() => {
+    //         dispatch(logout());
+    //         toast("User Logout Successfully.")
+    //         navigate("/shop")
+    //     })
+    // }
 
     let settingItems = [
         {
@@ -218,14 +218,14 @@ function ShopSettingsLayout() {
                             <img src={rocket} alt="" className="h-5 rotate-180" />
                         </div> */}
                     </div>
-                    <div className="flex justify-between items-center w-full">
+                    {/* <div className="flex justify-between items-center w-full">
                         <Link to="/orders/notifications" className="flex gap-2 items-center lg:hover:bg-slate-200 w-[60%]  xl:px-3 pt-1 xl:py-1 rounded-[8px]">
                             <img src={notificationIcon} alt="" className="h-4 xl:h-5" /> Updates
                         </Link>
                         <button onClick={handleLogout} className="flex gap-1 items-center text-[rgb(253,84,120)] hover:underline font-medium">
                             <img src={logoutRedIcon} alt="" className="h-5" /> Logout
                         </button>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="w-[84%] 2xl:w-[86%] m-5 rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border p-5 overflow-hidden"><Outlet /></div>
             </main>

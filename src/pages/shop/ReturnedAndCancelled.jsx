@@ -56,10 +56,10 @@ function ReturnedAndCancelled() {
                                                     item.products.map((product, idx) => (
                                                         <div key={product.id} className="w-full">
                                                             <div key={idx} className={`flex w-full relative`}>
-                                                                <div className="w-16 rounded-[6px] overflow-hidden mr-3">
+                                                                <div className="w-16 rounded-[6px] overflow-hidden shadow-md mr-3">
                                                                     <img
                                                                         src={product.image}
-                                                                        className="h-full w-full object-fill rounded border"
+                                                                        className="h-full w-full object-fill"
                                                                     />
                                                                 </div>
                                                                 <div className="w-full">

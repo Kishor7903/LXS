@@ -329,7 +329,7 @@ function ProductDetailsPage({ id, data }) {
 						<p className="text-sm leading-4 font-medium">
 							Product Code: <span className="text-[rgb(253,84,120)]">{productData?.SKU}</span> <br />
 							Brand: <Link className="text-[rgb(253,84,120)] lg:hover:underline">{productData?.brand}</Link> <br />
-							Seller: <Link className="text-[rgb(253,84,120)] lg:hover:underline">LXS Lifestyle Store</Link> <br />
+							Seller: <Link className="text-[rgb(253,84,120)] lg:hover:underline">LXS Store</Link> <br />
 						</p>
 					</div>
 				</div>

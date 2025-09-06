@@ -130,6 +130,7 @@ function EditProfilePicPopup({ isOpen, setIsOpen, user }) {
                 </div>
                 <div className="flex gap-6 mt-5 w-full">
                     <button
+                        type="button"
                         className="border-2 font-semibold border-[rgb(8,43,61)] h-12 w-60 rounded-xl lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white active:scale-[0.95]"
                         onClick={(e) => {
                             e.preventDefault(),
@@ -140,6 +141,7 @@ function EditProfilePicPopup({ isOpen, setIsOpen, user }) {
                         Cancel
                     </button>
                     <button
+                        type="submit"
                         className="h-12 w-60 rounded-xl font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:scale-[1.1] duration-200 lg:active:scale-[0.95]"
                         onClick={handleSubmit}
                     >

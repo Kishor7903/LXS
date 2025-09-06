@@ -139,3 +139,6 @@ input[type="checkbox"]:checked {
     linear-gradient(to right, #f8b52c, #fd5478) border-box; /* border */
 }
 
+#global-ratings {
+  scroll-margin-top: 64px; /* same as your header height */
+}

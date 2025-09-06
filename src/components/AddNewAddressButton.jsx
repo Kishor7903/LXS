@@ -54,6 +54,11 @@ function AddNewAddressButton({ isOpen, setIsOpen, currentEditId = null, formData
             formData.isDefault = true;
         }
 
+        if(address.some((i) => i.address_type === "Home")){
+            toast("Home Address is already available.");
+            return
+        }
+
         addNewAddress(user.id, formData).then((res) => {
             dispatch(addAddress(res));
             toast("New Address Added Successfully ...");

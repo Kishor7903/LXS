@@ -40,7 +40,7 @@ function SizeSelectionPopup({ isOpen, setIsOpen, item, selectedSize, setSelected
             <h2 className="text-center text-2xl rounded-2xl font-bold border-b border-slate-300 shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white w-80">
                 Select Size !
             </h2>
-            <div className="flex gap-2 p-3 border border-slate-300 cursor-pointer bg-slate-100 rounded-xl mx-auto mb-4 mt-8 shadow-md " onClick={() => navigate(`/product-details/${item.id}`)}>
+            <div className="flex w-full gap-2 p-3 border border-slate-300 cursor-pointer bg-slate-100 rounded-xl mx-auto mb-4 mt-8 shadow-md " onClick={() => navigate(`/product-details/${item.id}`)}>
                 <div className="h-full rounded-[6px] overflow-hidden flex-shrink-0 mr-1 shadow-md" >
                     <img
                         src={item.images[0]}

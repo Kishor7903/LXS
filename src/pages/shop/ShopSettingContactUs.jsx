@@ -235,13 +235,13 @@ function ShopSettingContactUs() {
                 </div>
             </div>
             <div className="border w-[40%] h-full rounded-3xl shadow-[inset_0px_0px_10px_-1px_rgb(8,43,61)]"></div>
-            <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-[40vw] bg-white rounded-3xl flex flex-col overflow-hidden" parentDivClassName="flex justify-center items-center">
-                <h2 className="text-center text-xl font-bold border-b border-[rgb(8,43,61,0.4)] p-4 flex gap-1 justify-center items-center bg-slate-100 ">
-                    Talk to an Agent
+            <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-[40vw] bg-white rounded-3xl flex flex-col items-center p-6 overflow-hidden" parentDivClassName="flex justify-center items-center">
+                <h2 className="text-center text-2xl rounded-2xl font-bold border-b border-slate-300 shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white w-80">
+                    Talk to an Agent !
                 </h2>
                 <div className="mt-4 text-sm px-6 font-medium space-y-2">
                     <p>Have questions, concerns, or need help choosing the right product? Our customer support team is just a click away.</p>
-                    <p>By selecting <span className="font-bold">“Talk to an Agent,”</span> you can connect directly with a trained support representative who’s ready to assist you in real time. Whether you’re facing an issue with an order, need product recommendations, or simply want more information, we’re here to provide quick, friendly, and personalized support.</p>
+                    <p>By selecting <span className="font-bold">“Talk to an Agent”,</span> you can connect directly with a trained support representative who’s ready to assist you in real time. Whether you’re facing an issue with an order, need product recommendations, or simply want more information, we’re here to provide quick, friendly, and personalized support.</p>
                     <p>Once you click the button below, you can:</p>
                     <ul className="list-disc ml-10">
                         <li>Request a callback from our support team</li>
@@ -253,9 +253,10 @@ function ShopSettingContactUs() {
                     <p><span className="font-bold">After Hours?</span> No worries — just leave your message or number, and we’ll reach out to you as soon as we’re back online.</p>
                     <p>We value your time and are committed to resolving your queries with care and efficiency.</p>
                 </div>
-                <div className='flex justify-center gap-6 my-5'>
-                    <button className='border-2 font-semibold border-[rgb(8,43,61)] h-9 w-24 rounded-full lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white' onClick={(e) => { e.preventDefault(), setIsOpen(false) }} >Cancel</button>
-                    <button className={`h-9 px-4 rounded-full font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white flex justify-center items-center ${isEnabled ? "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" : "opacity-60 cursor-not-allowed"}`} onClick={handleTalkToAgentConfirm} disabled={isEnabled === false}>{!isEnabled ? <i className="fi fi-br-ban relative top-[2px] mr-1 text-red-500"></i> : null}{isEnabled ? "Request Callback" : "Retry on Working Hours"}</button>
+                <textarea type="text" className="border border-slate-300 shadow-md rounded-xl mt-3 w-3/4 h-32 outline-none py-2 text-sm px-3" placeholder="Describe your issue !"></textarea>
+                <div className='flex justify-center gap-6 mt-5'>
+                    <button className='border-2 font-semibold border-[rgb(8,43,61)] h-9 w-24 rounded-xl lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white' onClick={(e) => { e.preventDefault(), setIsOpen(false) }} >Cancel</button>
+                    <button className={`h-9 px-4 rounded-xl font-semibold bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white flex justify-center items-center ${isEnabled ? "lg:hover:shadow-[0px_0px_10px_-3px_rgb(8,43,61)]" : "opacity-60 cursor-not-allowed"}`} onClick={handleTalkToAgentConfirm} disabled={isEnabled === false}>{!isEnabled ? <i className="fi fi-br-ban relative top-[2px] mr-1 text-red-500"></i> : null}{isEnabled ? "Request Callback" : "Retry on Working Hours"}</button>
                 </div>
             </DialogBox>
             <DialogBox isOpen={open} setIsOpen={setOpen} className="min-w-[35vw] bg-white rounded-3xl flex flex-col p-8 items-center overflow-hidden" parentDivClassName="flex justify-center items-center">

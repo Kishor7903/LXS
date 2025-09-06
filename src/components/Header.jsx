@@ -444,16 +444,20 @@ function Header({ className }) {
 											<DialogBox isOpen={userPopup} setIsOpen={setUserPopup} className="p-6 bg-white rounded-3xl flex flex-col gap-6" parentDivClassName="flex justify-center items-center">
 												<div className="w-full bg-slate-100 rounded-2xl flex items-center p-5 gap-5 shadow-md border border-slate-300">
 													<div className="relative gradient-border">
-														<img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-[212px] w-[212px] rounded-[10px] border-[3px] border-slate-100" />
+														<img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-[220px] w-[220px] rounded-[10px] border-[3px] border-slate-100" />
 													</div>
 													<div className="flex flex-col items-start gap-3">
-														<div className="flex flex-col relative top-[2px] border border-slate-300 rounded-xl pt-2 pb-1 px-5 bg-white shadow-md">
-															<p className="text-xl font-semibold leading-4">{user?.name}</p>
-															<p className="text-base font-medium text-center text-[rgb(253,84,120)]">User Account</p>
-														</div>
-														<div className="flex flex-col gap-y-2 gap-x-10 text-[13px]" >
+														<div className="flex flex-col gap-y-2 gap-x-10 text-[12px]" >
 															<div className="flex flex-col leading-4">
-																<p>Phone No</p>
+																<p>Name</p>
+																<p className="text-[18px] font-semibold">{user.name}</p>
+															</div>
+															<div className="flex flex-col leading-4">
+																<p>Account Type</p>
+																<p className="text-[16px] font-semibold">User Account</p>
+															</div>
+															<div className="flex flex-col leading-4">
+																<p>Phone Number</p>
 																<p className="text-[16px] font-semibold">{user.phone}</p>
 															</div>
 															<div className="flex flex-col leading-4">

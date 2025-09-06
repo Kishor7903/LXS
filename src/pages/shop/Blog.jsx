@@ -28,7 +28,7 @@ function Blog() {
     return (
         <div className="">
             <h1 className="text-3xl font-bold mb-4 flex items-center justify-center bg-[rgb(8,43,61)] text-white px-32 text-center sticky top-16 py-3">{blog?.heading}</h1>
-                <p className="mb-4 pt-4 text-lg px-32" dangerouslySetInnerHTML={formatText(blog?.intro)} />
+                <p className="mb-4 pt-4 text-lg px-32 italic leading-6" dangerouslySetInnerHTML={formatText(blog?.intro)} />
 
             {/* Blog Sections */}
             {blog.sections.map((member, index) => (
@@ -45,15 +45,15 @@ function Blog() {
                                         :
                                         (
                                             item.type === "description" ?
-                                                <p className="my-3" dangerouslySetInnerHTML={formatText(item.content)} /> :
+                                                <p className="my-3 leading-6" dangerouslySetInnerHTML={formatText(item.content)} /> :
                                                 item.type === "list" ?
                                                 <div className="space-y-1 my-3">
                                                     <p dangerouslySetInnerHTML={formatText(item.heading)} />
-                                                    <ul className="list-disc ml-5">
+                                                    <ul className="list-disc ml-14 ">
                                                         {
                                                             // console.log(item.content)
                                                             item?.content.map((list, i) => (
-                                                                <li key={i} className="py-0.5" dangerouslySetInnerHTML={formatText(list)}/>
+                                                                <li key={i} className="leading-6" dangerouslySetInnerHTML={formatText(list)}/>
                                                             ))
                                                         }
                                                     </ul>

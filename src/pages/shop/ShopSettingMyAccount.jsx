@@ -41,9 +41,12 @@ function ShopSettingMyAccount() {
                     <p className="text-xs font-normal">Because you are the boss of your Shopping Universe!</p>
                 </div>
                 <div className="space-y-3 mt-2 h-full overflow-y-scroll no-scrollbar mx-2">
-                    <div className="bg-slate-100 p-5 border border-slate-300 flex gap-4 items-center rounded-xl relative shadow-md">
-                        <img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-14 w-14 rounded-[6px] shadow-md" />
-                        <p className="text-2xl h-10 leading-[0.7] font-bold relative top-1">{user.name} <br /> <span className="text-base font-medium text-[rgb(253,84,120)]">User Account</span></p>
+                    <div className="bg-slate-100 p-4 border border-slate-300 flex gap-4 items-center rounded-xl relative shadow-md">
+                        <img src={user.profilePic ? user.profilePic : accountIcon} alt="" className="h-16 rounded-[6px] shadow-md" />
+                        <div className="flex flex-col gap-1">
+                            <p className="text-2xl leading-[0.7] font-bold">{user.name}</p>
+                            <span className="text-base font-medium text-[rgb(253,84,120)]">User Account</span>
+                        </div>
                         <HoverButton className="absolute top-2 right-2 px-3 text-sm font-medium rounded-[8px] border-slate-300 shadow-md bg-white" onClick={handleProfilePicEditButton} icon={editIcon} iconActive={editIconActive}>Edit</HoverButton>
                     </div>
                     <div className="bg-slate-100 flex flex-col gap-2 border border-slate-300 rounded-xl relative py-3 px-5 shadow-md">

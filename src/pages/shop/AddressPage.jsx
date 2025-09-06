@@ -85,7 +85,10 @@ function AddressPage({ cartItems }) {
                         <CheckoutNavigator />
                         <div className="w-full flex flex-col lg:flex-row gap-8">
                             <div className="w-full lg:w-[60%] space-y-4">
-                                <p className="text-sm font-medium"><span className="text-[rgb(253,84,120)] font-semibold">Note:</span> Once a product has been shipped, it cannot be cancelled.</p>
+                                <div className="flex gap-2 text-[15px] font-medium mb-3 ml-1">
+                                    <input type="checkbox" checked className="" />
+                                    <p>Billing Address same as Shipping Address</p>
+                                </div>
                                 {
                                     address.map((item, index) => (
                                         <div key={index} className={`flex flex-col gap-2 border border-[rgb(8,43,61)] rounded-xl relative py-3 px-5 overflow-hidden cursor-pointer ${selectedAddress === item ? "shadow-[0px_0px_10px_-1px_rgb(8,43,61)] scale-100 border-2 bg-slate-200" : "scale-95 lg:hover:scale-[0.97] duration-150 shadow-md border border-slate-300"}`} onClick={() => setSelectedAddress(item)}>

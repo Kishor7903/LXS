@@ -109,9 +109,12 @@ function WorkWithUsAndNewsletter() {
                                 className="hidden"
                                 ref={(el) => (fileInputs.current = el)}
                             />
-                            <label htmlFor="resume" className="h-10 lg:h-12 flex gap-2 justify-center items-center bg-slate-100 rounded-[12px] lg:rounded-xl px-3 lg:px-5 focus:outline-none text-xs lg:text-base font-medium placeholder:text-[rgb(8,43,61,0.6)] shadow-md border border-slate-300 cursor-pointer text-[rgb(8,43,61,0.6)] lg:hover:text-[rgb(8,43,61  )]">Upload Resume<i className="fi fi-sr-file-upload relative top-[2px]"></i></label>
+                            <label htmlFor="resume" className="h-10 lg:h-12 flex gap-2 justify-center items-center bg-slate-100 rounded-[12px] lg:rounded-xl px-3 lg:px-5 focus:outline-none text-xs lg:text-base font-medium placeholder:text-[rgb(8,43,61,0.6)] shadow-md border border-slate-300 cursor-pointer text-[rgb(8,43,61,0.6)] lg:hover:text-[rgb(8,43,61)] duration-200">Upload Resume<i className="fi fi-sr-file-upload relative top-[2px]"></i></label>
                         </div>
-                        <HoverButton className="px-4 h-10 text-lg flex justify-center items-center font-semibold rounded-xl" onClick={workWithUsButton}>Submit</HoverButton>
+                        <div className="flex gap-5">
+                            <button className="border border-slate-300 shadow-md px-4 h-10 rounded-xl font-semibold lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.98]" onClick={(e) => {e.preventDefault(), setFormData(data)}}>Reset</button>
+                            <HoverButton className="px-4 h-10 flex justify-center items-center font-semibold rounded-xl lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.98] border-slate-300 shadow-md" onClick={workWithUsButton}>Submit</HoverButton>
+                        </div>
                     </div>
                 </form>
                 <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} className="w-[40vw] bg-white rounded-3xl flex flex-col items-center py-6 px-10 overflow-hidden" parentDivClassName="flex justify-center items-center">
@@ -174,11 +177,11 @@ function WorkWithUsAndNewsletter() {
                     <p>Whether it’s a cool feature you’d love to see, something we can do better, or just your honest thoughts — I’m all ears. This journey isn’t one-way; it’s a collaboration. Together, we’re shaping a smarter, more creative universe. 💫 </p>
                     <p>Drop your thoughts below — and let’s keep building something extraordinary, side by side.
                         I’m listening. Always. 🚀</p>
-                    <p className="font-semibold">— Lupin (Cipher)</p>
+                    <p className="font-semibold">— Cipher (LUPIN)</p>
                 </span>
                 <form className="flex flex-col gap-4">
                     <textarea type="text" value={email} onChange={(e) => { e.preventDefault(), setEmail(e.target.value) }} className="h-9 xl:h-[128px] lg:h-10 w-full py-3 lg:px-5 mt-3 lg:mt-5 text-xs lg:text-base rounded-xl font-medium focus:outline-none placeholder:text-[rgb(8,43,61,0.4)] bg-slate-100 shadow-md border border-slate-300" placeholder="Cosmic Feedback..." ></textarea>
-                    <HoverButton className="px-4 h-10 text-lg flex justify-center items-center font-semibold self-end rounded-xl" onClick={(e) => email ? (e.preventDefault(), setOpen(true)) : (e.preventDefault(), toast("Please enter your email"))}>Transmit</HoverButton>
+                    <HoverButton className="px-4 h-10 flex justify-center items-center font-semibold self-end rounded-xl lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.98] border-slate-300 shadow-md" onClick={(e) => email ? (e.preventDefault(), setOpen(true)) : (e.preventDefault(), toast("Required field value"))}>Transmit</HoverButton>
                 </form>
                 <DialogBox isOpen={open} setIsOpen={setOpen} className="w-[40vw] bg-white rounded-3xl flex flex-col items-center py-6 px-10 overflow-hidden" parentDivClassName="flex justify-center items-center">
                     <h2 className="text-center text-2xl rounded-2xl font-bold shadow-md uppercase p-4 flex gap-1 justify-center items-center bg-[rgb(8,43,61)] text-white">
@@ -192,7 +195,7 @@ function WorkWithUsAndNewsletter() {
                         </div>
                         <div className="flex gap-6 justify-center">
                             <HoverButton onClick={() => setOpen(false)} className="px-6 py-2 border-2 font-semibold rounded-xl lg:hover:scale-[1.05] duration-200 lg:active:scale-[0.97]" >Cancel</HoverButton>
-                            <RgbButton onClick={(e) => user ? handleNewsletterSubmit(e) : toast("Login First!")} className="text-base font-semibold px-6 py-2 rounded-xl lg:hover:scale-[1.05] duration-200 lg:active:scale-[0.97]" >Confirm</RgbButton>
+                            <RgbButton onClick={handleNewsletterSubmit} className="text-base font-semibold px-6 py-2 rounded-xl lg:hover:scale-[1.05] duration-200 lg:active:scale-[0.97]" >Confirm</RgbButton>
                         </div>
                     </div>
 

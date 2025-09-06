@@ -9,6 +9,7 @@ import { useToast } from "@/components/ToastProvider";
 import heartIcon from "../../assets/commonIcons/Wishlist (Stroke).png"
 import heartIcon2 from "../../assets/commonIcons/Wishlist (Fill).png"
 import Breadcrum from "@/components/Breadcrum";
+import HoverButton from "@/components/HoverButton";
 
 
 function RecentViewedProducts() {
@@ -64,9 +65,10 @@ function RecentViewedProducts() {
     return (
         <div className="h-[calc(100vh-64px)] w-full p-5 bg-white">
             <div className="flex gap-10 h-[calc(100vh-104px)] rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border px-5 py-5 overflow-hidden">
-                <div className="pl-5 w-[65%]">
+                <div className="pl-5 w-[65%] relative">
+                    <HoverButton className="text-xs font-semibold absolute top-0 right-0 border border-slate-300 shadow-md rounded-xl px-3 h-8 lg:hover:scale-[1.06] duration-200 lg:active:scale-[0.98]"><i className="fi fi-sr-trash relative top-[1px] mr-1"></i>Clear Recents</HoverButton>
                     <Breadcrum items={breadcrum} />
-                    <div className="w-full flex flex-col mt-4 ml-4 h-[calc(100vh-180px)] overflow-y-scroll no-scrollbar">
+                    <div className="w-full flex flex-col mt-4 pl-4 h-[calc(100vh-180px)] overflow-y-scroll no-scrollbar">
                         <div className="w-full flex justify-between items-end pb-1 sticky top-0 z-10 bg-white">
                             <div className="leading-[1] font-semibold">Cosmic Footprints 👣<br />
                                 <p className="text-xs font-normal"> The marks left behind through your interstellar shopping galaxy</p>
@@ -81,8 +83,9 @@ function RecentViewedProducts() {
                             {
                                 product.map((item) => {
                                     return (
-                                        <div className="w-[100%] rounded-3xl overflow-hidden p-[6px] md:p-2 2xl:p-3 cursor-pointer duration-200 border-slate-300 border-[1px] bg-white relative lg:hover:shadow-md">
-                                            <div onClick={() => navigate(`/product-details/${item.id}`)} className='w-full rounded-2xl overflow-hidden border relative'>
+                                        <div className="w-[100%] rounded-2xl overflow-hidden p-[6px] md:p-2 2xl:p-3 cursor-pointer duration-200 border-slate-300 border-[1px] bg-white relative shadow-md">
+                                            <div onClick={(e) => {e.stopPropagation()}} className="absolute top-1.5 z-10 right-1.5 rounded-xl h-8 w-8 flex justify-center items-center bg-white border border-slate-300 shadow-md lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.92] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"><i className="fi fi-sr-trash relative top-[2px] text-xs"></i></div>
+                                            <div onClick={() => navigate(`/product-details/${item.id}`)} className='w-full rounded-xl overflow-hidden border relative'>
                                                 <img src={item.images[0]} alt="" className='h-full w-full object-fill' />
                                                 {/* <div className="h-5 lg:h-7 px-1 lg:px-2 bg-[rgb(255,162,0)] absolute top-1 md:top-2 right-1 md:right-2 flex justify-center items-center rounded-full text-[8px] lg:text-xs font-medium text-white">Save {`${Math.floor(((item.price - item.salePrice) * 100)/item.price)}`}%</div> */}
                                             </div>
@@ -98,13 +101,13 @@ function RecentViewedProducts() {
                                                 <div className="flex justify-between items-center w-full bg-transparent relative bottom-1">
                                                     <p className='text-[12px] font-bold'>₹{item.salePrice} <s className='text-slate-400 mr-1 text-[10px] md:text-xs lg:text-[12px] xl:text-[10px] font-semibold'>₹{item.price}</s><span className='text-[rgb(253,84,120)] text-[19px] md:text-xs lg:text-[14px] xl:text-[9px] hidden lg:inline-block'>(-{`${Math.floor(((item.price - item.salePrice) * 100) / item.price)}`}%)</span></p>
                                                 </div>
-                                                <div className="flex justify-between items-center w-full relative bottom-0.5">
+                                                <div className="flex justify-between items-center w-full relative bottom-0">
 
-                                                    <button onClick={(e) => user ? cart?.some((p) => p.item_id === item.id) ? navigate("/checkout/cart") : handleAddToCartButton(e, item) : toast("Login Required.")} className={`flex items-center justify-center text-[12px] 2xl:text-[14px] font-semibold h-8 w-[78%] rounded-full  tracking-tight ${user ? cart?.some((p) => p.item_id === item.id) ? "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:scale-[1.04] duration-150 lg:active:scale-[0.97]" : "bg-white border-2 border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white" : "bg-white border-2 border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"}`}><i className="fi fi-sr-cart-shopping-fast relative top-0.5 text-sm 2xl:text-base mr-1"></i>{user ? cart?.some((p) => p.item_id === item.id) ? "Go to" : "Add to" : "Add to"} Basket</button>
+                                                    <button onClick={(e) => user ? cart?.some((p) => p.item_id === item.id) ? navigate("/checkout/cart") : handleAddToCartButton(e, item) : toast("Login Required.")} className={`flex items-center justify-center text-[12px] 2xl:text-[14px] font-semibold h-8 w-[78%] rounded-xl  tracking-tight ${user ? cart?.some((p) => p.item_id === item.id) ? "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] text-white lg:hover:scale-[1.04] duration-200 lg:active:scale-[0.97]" : "bg-white border-2 border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white" : "bg-white border-2 border-[rgb(8,43,61)] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"}`}><i className="fi fi-sr-cart-shopping-fast relative top-0.5 text-sm 2xl:text-base mr-1"></i>{user ? cart?.some((p) => p.item_id === item.id) ? "Go to" : "Add to" : "Add to"} Basket</button>
 
                                                     {/* <button onClick={(e) => cart?.some((p) => p.item_id === id) ? navigate("/checkout/cart") : addCart(e, item.id)} className={`flex items-center justify-center 2xl:text-xl font-semibold xl:py-2 rounded-full w-3/4 lg:hover:scale-[1.03] duration-150 lg:active:scale-[0.97] lg:hover:shadow-[0px_0px_8px_-3px_rgb(8,43,61)] text-white ${cart?.some((p) => p.item_id === item.id) ? "bg-gradient-to-r from-[rgb(253,84,120)] to-[rgb(248,181,44)]" : "bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)]"}`}><i className="fi fi-sr-cart-shopping-fast h-6 text-2xl mr-4"></i>{cart?.some((p) => p.item_id === item.id) ? "Go to" : "Add to"} Basket</button> */}
 
-                                                    <div className="lg:hover:scale-[1.1] duration-150 lg:active:scale-[0.9]" onClick={(e) => { e.stopPropagation(), wishlist.some(p => p.item_id === item.id) ? deleteItemFromWishlist(e, item.id) : addWishlist(e, item.id) }}>
+                                                    <div className="lg:hover:scale-[1.1] duration-200 lg:active:scale-[0.9]" onClick={(e) => { e.stopPropagation(), wishlist.some(p => p.item_id === item.id) ? deleteItemFromWishlist(e, item.id) : addWishlist(e, item.id) }}>
                                                         <img
                                                             src={user ? wishlist.some(p => p.item_id === item.id) ? heartIcon2 : heartIcon : heartIcon}
                                                             alt=""

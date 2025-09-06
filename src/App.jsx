@@ -88,10 +88,14 @@ import ReturnedAndCancelled from "./pages/shop/ReturnedAndCancelled"
 import BlankPage from "./components/BlankPage"
 import loader from "./assets/GIF/Page Reload Animation 2.gif"
 import { getUserInfo } from "./firebase/auth"
-import { useToast } from "./components/ToastProvider"
 import TrackOrders from "./pages/shop/TrackOrders"
 import PaymentHistory from "./pages/shop/PaymentHistory"
 import CustomOrders from "./pages/shop/CustomOrders"
+import CookieAndTrackingPolicy from "./pages/shop/CookieAndTrackingPolicy"
+import AgeAndEligibilityPolicy from "./pages/shop/AgeAndEligibilityPolicy"
+import ThirdPartyServiceProviderPolicy from "./pages/shop/ThirdPartyServiceProviderPolicy"
+import LimitationOfLiabilityAndDisclaimerPolicy from "./pages/shop/LimitationOfLiabilityAndDisclaimerPolicy"
+import AdminUsers from "./pages/admin/AdminUsers"
 
 function App() {
 	let { isAuthenticated, user } = useSelector(state => state.auth);
@@ -101,7 +105,6 @@ function App() {
 	// });
 	let [loading, setLoading] = useState(true);
 	let dispatch = useDispatch();
-	let toast = useToast();
 
 	useEffect(() => {
 		async function fetchData(){
@@ -175,6 +178,10 @@ function App() {
 					<Route path="community-guidelines" element={<CommunityGuidelinesAndUserGeneratedContentPolicy />} />
 					<Route path="enviromental-ethical-sourcing-policy" element={<EnviromentalAndEthicalSourcingPolicy />} />
 					<Route path="FAQs" element={<FAQs />} />
+					<Route path="cookie-and-tracking-policy" element={<CookieAndTrackingPolicy />} />
+					<Route path="age-and-eligibility-policy" element={<AgeAndEligibilityPolicy />} />
+					<Route path="third-party-service-provider-policy" element={<ThirdPartyServiceProviderPolicy />} />
+					<Route path="limitation-of-liability-and-disclaimer-policy" element={<LimitationOfLiabilityAndDisclaimerPolicy />} />
 				</Route>
 				<Route path="/checkout" element={
 					<CheckAuth isAuthenticated={isAuthenticated} user={user} >
@@ -243,6 +250,7 @@ function App() {
 					{/* <Route path="carousel" element={<AdminCarousel />} />
 					<Route path="promotional-banners" element={<AdminPromotionalBanners />} /> */}
 					<Route path="products" element={<AdminProducts />} />
+					<Route path="users" element={<AdminUsers />} />
 					<Route path="pickup-warehouse" element={<AdminPickupWarehouse />} />
 					<Route path="orders" element={<AdminOrders />} />
 					<Route path="blogs" element={<AdminBlogs />} />
