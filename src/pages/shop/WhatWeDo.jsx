@@ -41,11 +41,11 @@ function WhatWeDo() {
     ];
 
     return (
-        <div className="pt-5 lg:pt-10 space-y-2 lg:space-y-5 lg:px-12 xl:px-20 border-t flex flex-col items-center">
+        <div className="py-5 lg:py-10 space-y-2 lg:space-y-5 lg:px-12 xl:px-20 border-t flex flex-col items-center">
 
             <HeadingWithUnderline name="What We Do!" />
 
-            <div className="h-auto w-full flex gap-x-10 justify-center flex-1 py-2 md:py-5">
+            <div className="h-auto w-full flex gap-x-10 justify-center flex-1">
                 {
                     items.map((item, index) => {
                         return (

@@ -573,6 +573,7 @@ export const getAllRecentPoducts = async (user_id) => {
         const docSnap = await getDocs(productsQuery);
 
         let products = docSnap.docs.map((doc) => ({
+            id: doc.id,
             ...doc.data(),
         }));
 
@@ -662,6 +663,27 @@ export const getWebsiteReview = async () => {
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
         console.log("Getting website review by user error: ", error.message);
+    }
+}
+
+export const deleteAllRecents = async (userId) => {
+    try {
+        let userRef = collection(fireDB, "user", userId, "Recently Viewed");
+        const snapshot = await getDocs(userRef);
+
+        const deletePromises = snapshot.docs.map((d) => deleteDoc(doc(userRef, d.id)));
+        await Promise.all(deletePromises);
+    } catch (error) {
+        console.log("Deleting all recent viewed products error: ", error.message);
+    }
+}
+
+export const deleteRecentProduct = async (userId, itemId) => {
+    try {
+        let userRef = doc(fireDB, "user", userId, "Recently Viewed", itemId);
+        await deleteDoc(userRef);
+    } catch (error) {
+        console.log("Deleting single recent viewed product error: ", error.message);
     }
 }
 

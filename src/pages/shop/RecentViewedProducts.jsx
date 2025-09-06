@@ -1,6 +1,6 @@
-import { addToWishlist, deleteFromWishlist } from "@/store/features/cartSlice";
+import { addToWishlist, deleteFromWishlist, deleteRecentViewed, getRecentViewed } from "@/store/features/cartSlice";
 import lxsLogo from "../../assets/commonIcons/LXS Certified Logo.png"
-import { addWishlistItem, deleteWishlistItem, getAllRecentPoducts } from "@/firebase/auth"
+import { addWishlistItem, deleteAllRecents, deleteRecentProduct, deleteWishlistItem, getAllRecentPoducts } from "@/firebase/auth"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
@@ -54,10 +54,29 @@ function RecentViewedProducts() {
         setIsOpen(true);
     }
 
+    const handelClearAllRecent = (e) => {
+        e.preventDefault();
+
+        deleteAllRecents(user.id).then(() => {
+            dispatch(getRecentViewed([]));
+            toast("All Products Deleted.")
+        })
+    }
+
+    const removeRecentProduct = (e, itemId) => {
+        console.log(itemId);
+        e.preventDefault();
+
+        deleteRecentProduct(user.id, itemId).then(() => {
+            dispatch(deleteRecentViewed(itemId))
+            toast("Product Removed from Recent.")
+        })
+    }
+
     useEffect(() => {
         let items = recentViewed.map(item => {
             let prods = products.find(p => p.id === item.item_id)
-            return prods ? {...prods, timestamp: item.timestamp} : null
+            return prods ? {...prods, item_id: item.id, timestamp: item.timestamp} : null
         }).filter(item => item !== null);
 
         setProduct(() => items.sort((a,b) => {return new Date(b.timestamp) - new Date(a.timestamp)}))
@@ -66,7 +85,7 @@ function RecentViewedProducts() {
         <div className="h-[calc(100vh-64px)] w-full p-5 bg-white">
             <div className="flex gap-10 h-[calc(100vh-104px)] rounded-3xl shadow-[0px_0px_10px_-2px_rgb(8,43,61)] border px-5 py-5 overflow-hidden">
                 <div className="pl-5 w-[65%] relative">
-                    <HoverButton className="text-xs font-semibold absolute top-0 right-0 border border-slate-300 shadow-md rounded-xl px-3 h-8 lg:hover:scale-[1.06] duration-200 lg:active:scale-[0.98]"><i className="fi fi-sr-trash relative top-[1px] mr-1"></i>Clear Recents</HoverButton>
+                    <HoverButton onClick={handelClearAllRecent} className="text-xs font-semibold absolute top-0 right-0 border border-slate-300 shadow-md rounded-xl px-3 h-8 lg:hover:scale-[1.06] duration-200 lg:active:scale-[0.98]"><i className="fi fi-sr-trash relative top-[1px] mr-1"></i>Clear Recents</HoverButton>
                     <Breadcrum items={breadcrum} />
                     <div className="w-full flex flex-col mt-4 pl-4 h-[calc(100vh-180px)] overflow-y-scroll no-scrollbar">
                         <div className="w-full flex justify-between items-end pb-1 sticky top-0 z-10 bg-white">
@@ -81,11 +100,11 @@ function RecentViewedProducts() {
                             product.length > 0 ? 
                             <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-3 gap-y-4 md:gap-x-5 md:gap-y-5 lg:gap-x-6 lg:gap-y-6 xl:gap-x-4 xl:gap-y-4 p-1">
                             {
-                                product.map((item) => {
+                                product.map((item, idx) => {
                                     return (
-                                        <div className="w-[100%] rounded-2xl overflow-hidden p-[6px] md:p-2 2xl:p-3 cursor-pointer duration-200 border-slate-300 border-[1px] bg-white relative shadow-md">
-                                            <div onClick={(e) => {e.stopPropagation()}} className="absolute top-1.5 z-10 right-1.5 rounded-xl h-8 w-8 flex justify-center items-center bg-white border border-slate-300 shadow-md lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.92] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"><i className="fi fi-sr-trash relative top-[2px] text-xs"></i></div>
-                                            <div onClick={() => navigate(`/product-details/${item.id}`)} className='w-full rounded-xl overflow-hidden border relative'>
+                                        <div key={idx} onClick={() => navigate(`/product-details/${item.id}`)} className="w-[100%] rounded-2xl overflow-hidden p-[6px] md:p-2 2xl:p-3 cursor-pointer duration-200 border-slate-300 border-[1px] bg-white relative shadow-md">
+                                            <div onClick={(e) => {e.stopPropagation(), removeRecentProduct(e, item.item_id)}} className="absolute top-1.5 z-10 right-1.5 rounded-xl h-8 w-8 flex justify-center items-center bg-white border border-slate-300 shadow-md lg:hover:scale-[1.08] duration-200 lg:active:scale-[0.92] lg:hover:bg-[rgb(8,43,61)] lg:hover:text-white"><i className="fi fi-sr-trash relative top-[2px] text-xs"></i></div>
+                                            <div className='w-full rounded-xl overflow-hidden border relative'>
                                                 <img src={item.images[0]} alt="" className='h-full w-full object-fill' />
                                                 {/* <div className="h-5 lg:h-7 px-1 lg:px-2 bg-[rgb(255,162,0)] absolute top-1 md:top-2 right-1 md:right-2 flex justify-center items-center rounded-full text-[8px] lg:text-xs font-medium text-white">Save {`${Math.floor(((item.price - item.salePrice) * 100)/item.price)}`}%</div> */}
                                             </div>

@@ -76,9 +76,12 @@ const cartSlice = createSlice({
         },
         getRecentViewed: (state, actions) => {
             state.recentViewed = actions.payload
+        },
+        deleteRecentViewed: (state, actions) => {
+            state.recentViewed = state.recentViewed.filter((i) => i.id !== actions.payload)
         }
     }
 })
 
-export const { addToCart, deleteFromCart, cartToggleSelect, toggleAllItems, updateCartProductQuantity, updateCartProductSize, updateCart, removeAllSelectedCartItems, addToWishlist, updateWishlist, deleteFromWishlist, addAddress, updateAddress, editAddress, deleteAnAddress, updateSetDefault, addNewOrder, getAllOrdersItems, updateOrder, addToRecentViewed, getRecentViewed } = cartSlice.actions;
+export const { addToCart, deleteFromCart, cartToggleSelect, toggleAllItems, updateCartProductQuantity, updateCartProductSize, updateCart, removeAllSelectedCartItems, addToWishlist, updateWishlist, deleteFromWishlist, addAddress, updateAddress, editAddress, deleteAnAddress, updateSetDefault, addNewOrder, getAllOrdersItems, updateOrder, addToRecentViewed, getRecentViewed, deleteRecentViewed } = cartSlice.actions;
 export default cartSlice.reducer;

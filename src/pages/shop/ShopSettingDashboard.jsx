@@ -37,13 +37,13 @@ let tiles = [
     className: "bg-[rgb(111,54,123)]",
     navigate: "/orders/track-orders"
   },
-  {
-    icon: tile2Icon,
-    title1: "LXS Crew",
-    title2: "Member",
-    className: "bg-[rgb(111,54,123)]",
-    navigate: ""
-  },
+  // {
+  //   icon: tile2Icon,
+  //   title1: "LXS Crew",
+  //   title2: "Member",
+  //   className: "bg-[rgb(111,54,123)]",
+  //   navigate: ""
+  // },
   {
     icon: tile5Icon,
     title1: "Payment",

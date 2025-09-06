@@ -173,7 +173,7 @@ function ProductReviewPage() {
                     </div>
                     <div className="flex flex-col overflow-y-scroll no-scrollbar w-full h-full ">
                         <div className="flex gap-5">
-                            <img src={product?.image} alt="" className="w-32 rounded-2xl shadow-md" />
+                            <img src={product?.image} alt="" className="w-32 rounded-xl shadow-md" />
                             <div className="w-[85%] text-xs leading-4 flex flex-col items-start relative">
                                 {
                                     product?.isLxsCertified === "Yes" &&
@@ -215,7 +215,7 @@ function ProductReviewPage() {
                             </div>
                         </div>
                         <div className="w-full flex gap-5 mt-5 2xl:mt-20 relative">
-                            <div className="flex flex-wrap gap-x-10 w-[35%]">
+                            <div className="flex flex-wrap gap-8 w-[35%]">
                                 {previews.map((image, index) => (
                                     <div
                                         key={index}
@@ -266,7 +266,7 @@ function ProductReviewPage() {
                                 </div>
                                 <input name="title" value={reviewData.title} onChange={handleChange} type="text" className="h-10 w-[95%] rounded-xl border border-slate-300 shadow-md px-3 placeholder:font-medium font-medium text-[15px] outline-none" placeholder="Title" />
                                 <textarea name="description" value={reviewData.description} onChange={handleChange} className="h-28 w-[95%] rounded-2xl border border-slate-300 shadow-md text-[15px] px-3 py-2 placeholder:font-medium outline-none font-medium" placeholder="Description about the product.."></textarea>
-                                <button onClick={handleReviewSubmit} className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] h-12 px-3 rounded-xl text-white text-lg font-semibold w-[95%] mr-10 lg:hover:scale-[1.03] lg:hover:shadow-md duration-200 lg:active:scale-[0.98]">Submit<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-3"></i></button>
+                                <button onClick={handleReviewSubmit} className="bg-gradient-to-r from-[rgb(248,181,44)] to-[rgb(253,84,120)] h-12 px-3 rounded-xl text-white text-lg font-semibold w-[95%] mr-10 lg:hover:scale-[1.03] duration-200 lg:active:scale-[0.98]">Submit<i className="fi fi-br-angle-double-small-right relative top-[3px] ml-3"></i></button>
                             </div>
                         </div>
                     </div>

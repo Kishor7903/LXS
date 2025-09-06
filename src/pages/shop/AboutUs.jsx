@@ -102,19 +102,84 @@ function AboutUs() {
                     <ul className="mt-2 ml-5">
                         <li><span className="font-semibold text-[rgb(253,84,120)]">Trend-Driven Collections:</span>  We stay on the pulse of global runways, fashion weeks, and influencer insights to bring you the freshest looks.</li>
                         <li><span className="font-semibold text-[rgb(253,84,120)]">All-Occasion Styles:</span>  From workwear to weekend vibes, from brunch to gala night — we’ve got your style covered.</li>
-                        <li><span className="font-semibold text-[rgb(253,84,120)]"> Signature Details:</span> Unique prints, clever cuts, and stand-out embroidery give each piece that “where’d-you-get-that?” energy.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Signature Details:</span> Unique prints, clever cuts, and stand-out embroidery give each piece that “where’d-you-get-that?” energy.</li>
                     </ul>
                 </div>
                 <div className="text-left">
                     <h6 className="text-lg font-semibold ">3. Inclusive Sizing for Every Body, Every Style</h6>
-                    <p>We believe fashion should celebrate *every* body. That’s why we offer inclusive sizing and tailored options to ensure the perfect fit — always.</p>
+                    <p>We believe fashion should celebrate <span className="font-semibold">every</span> body. That’s why we offer inclusive sizing and tailored options to ensure the perfect fit — always.</p>
                     <ul className="mt-2 ml-5">
-                        <li><span className="font-semibold text-[rgb(253,84,120)]"></span> Extensive Size Range**: Whether petite or plus, you’ll find your fit with ease.</li>
-                        <li><span className="font-semibold text-[rgb(253,84,120)]"></span> Flattering Fits**: Our silhouettes are thoughtfully designed for all body types, shapes, and curves.</li>
-                        <li><span className="font-semibold text-[rgb(253,84,120)]"></span> Custom Alterations**: Need something tweaked? We offer made-to-measure options for a flawless fit.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Extensive Size Range:</span>Whether petite or plus, you’ll find your fit with ease.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Flattering Fits:</span> Our silhouettes are thoughtfully designed for all body types, shapes, and curves.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Custom Alterations:</span>Need something tweaked? We offer made-to-measure options for a flawless fit.</li>
                     </ul>
                 </div>
-                <h3 className="text-[40px] font-extrabold mb-10">Join LXS Store today and explore a universe of opportunities!</h3>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">4. Sustainable Practices That Make an Impact</h6>
+                    <p>We’re deeply committed to creating fashion that’s kind to the planet and fair to the people who make it.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Eco-Friendly Materials:</span>  We use organic cotton, recycled polyester, bamboo, and other planet-friendly fabrics.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Ethical Manufacturing:</span>  Every piece is produced in fair-wage factories with safe working environments.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Low Carbon Impact:</span> We prioritize renewable energy, water-saving techniques, and low-emission processes in our production.</li>
+                    </ul>
+                </div>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">5. Exceptional Customer Service That Cares</h6>
+                    <p>You’re not just a customer — you’re family. Our team is here to support you every step of the way with care, expertise, and real-time help.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Personalized Styling Support:</span>  Need fashion advice? Our team helps you find the perfect pieces based on your style and needs.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Worry-Free Returns:</span>  Not satisfied? No stress. Our return & exchange process is simple and smooth.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Loyalty Rewards:</span> Enjoy perks like early access to new drops, exclusive discounts, and surprise gifts as a valued customer.</li>
+                    </ul>
+                </div>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">6. Affordable Luxury — Because You Deserve Both</h6>
+                    <p>We believe luxury should be lived, not just admired. That’s why we offer premium fashion at prices that are accessible.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Fair & Transparent Pricing:</span>  Designer-worthy quality without designer price tags.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Value-Packed Purchases:</span>  Every piece is an investment in quality, confidence, and timeless style.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Seasonal Sales & Deals:</span> Enjoy exclusive promotions to elevate your wardrobe without overspending.</li>
+                    </ul>
+                </div>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">7. Exclusive Collections You Won’t Find Anywhere Else</h6>
+                    <p>Our collections are designed to be *different*. Limited drops and signature edits ensure you wear what no one else is wearing.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Limited Edition Pieces:</span>  Shop one-of-a-kind items that won’t be restocked.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Designer Collaborations:</span>  We team up with emerging and established designers to craft truly unique collections.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Constantly Evolving Styles:</span> We refresh our catalog with every season, so your style stays fresh, relevant, and exciting.</li>
+                    </ul>
+                </div>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">8. A Community-Driven Brand Built on Real Connections</h6>
+                    <p>LXS Store isn’t just a brand — it’s a movement. We’re proud to build a fashion-forward community where creativity thrives and voices are heard.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Social Media Love:</span>  Connect with us on socials for behind-the-scenes looks, styling tips, and inspiring content.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Events & Workshops:</span>  We host digital and physical events to foster deeper connections with fashion lovers like you.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">You Speak, We Listen:</span> Customer feedback shapes our collections, policies, and innovations.</li>
+                    </ul>
+                </div>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">9. Seamless Shopping That Fits Your Lifestyle</h6>
+                    <p>From easy browsing to doorstep delivery, we’ve streamlined every step of your shopping journey.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Intuitive Website:</span>  Clean interface, crystal-clear photos, and smart filters make shopping a breeze.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Reliable Shipping:</span>  Enjoy fast delivery, live tracking, and guaranteed safety on every order.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Secure Checkout:</span> Advanced encryption protects your data, with flexible payment options for your ease.</li>
+                    </ul>
+                </div>
+                <div className="text-left">
+                    <h6 className="text-lg font-semibold ">10. Loved by Thousands, Trusted by You</h6>
+                    <p>Our customers say it best — and we’re proud to be their chosen destination for fashion that delivers on every front.</p>
+                    <ul className="mt-2 ml-5">
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">5-Star Satisfaction:</span>  Real reviews rave about our fabric quality, perfect fits, and unbeatable service.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Word-of-Mouth Magic:</span>  Our community grows organically through happy shoppers sharing the love.</li>
+                        <li><span className="font-semibold text-[rgb(253,84,120)]">Real Testimonials:</span> See what people are saying — their stories are our proof of promise.</li>
+                    </ul>
+                </div>
+                <h3 className="text-[40px] font-extrabold">Join LXS Store today and explore a universe of opportunities!</h3>
+                <p>By choosing <span className="font-semibold">LXS Store</span>, you’re not just shopping — you’re investing in a brand that stands for authenticity, quality, and sustainability. Your satisfaction is our highest priority, and we’re here to make sure every experience with us is exceptional.</p>
+                <h6 className="text-2xl font-bold mb-10">Welcome to the LXS family — let’s redefine this universe together.</h6>
             </div>
         </div>
     )
